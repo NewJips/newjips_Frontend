@@ -39,7 +39,7 @@ const toggleLike = (estateId) => {
 
 const blame_buildings = [
   { title: '매물 1', description: '도심에 위치한 넓고 현대적인 방입니다.', imageUrl: buildings1 },
-  { title: '매물 2', description: '교통이 편리한 위치에 있는 아파트입니다. 교통이 편리한 위치에 있는 아파트입니다. y', imageUrl:buildings2},
+  { title: '매물 2', description: '교통이 편리한 위치에 있는 아파트입니다. 교통이 편리한 위치에 있는 아파트입니다.', imageUrl:buildings2},
   { title: '매물 3', description: '바다가 보이는 멋진 스튜디오입니다.', imageUrl: buildings3 },
   { title: '매물 4', description: '조용하고 평화로운 시골 주택입니다.', imageUrl:  buildings4},
   { title: '매물 5', description: '럭셔리 스타일의 고급 주택입니다.', imageUrl: buildings5},
