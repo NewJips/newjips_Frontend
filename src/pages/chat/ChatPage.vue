@@ -119,7 +119,7 @@ import { useRoute, useRouter } from 'vue-router';
                         class="bg-white border-top border-bottom px-4 py-3">
                         <div
                             class="d-flex justify-content-between align-items-center">
-                            <!-- 채팅 상대 -->
+                            <!-- 채팅 상대 정보 -->
                             <div class="d-flex align-items-center">
                                 <a href="#" class="me-2 d-xl-none d-block" data-close
                                     ><i class="fe fe-arrow-left"></i
@@ -207,10 +207,10 @@ import { useRoute, useRouter } from 'vue-router';
                                         rows="1"
                                     ></textarea>
                                 </div>
-                                <div class="position-absolute end-0 mt-n7 me-4">
+                                <div class="position-absolute end-0 mt-n6 me-4">
                                     <button
                                         type="submit"
-                                        class="btn text-primary btn-focus-none">
+                                        class="btn btn-focus-none">
                                         <img src="@/assets/icons/icon_send.svg" style="height: 26px;"/>
                                     </button>
                                 </div>
@@ -248,6 +248,36 @@ import { useRoute, useRouter } from 'vue-router';
     visibility: visible;
     transform: translateX(0);
   }
+}
+
+.btn.btn-focus-none:focus {
+  box-shadow: none;
+}
+
+.btn {
+    --bs-btn-bg: transparent;
+    --bs-btn-border-color: transparent;
+}
+
+.position-relative {
+  position: relative !important;
+}
+
+.mt-auto {
+  margin-top: auto !important;
+}
+
+
+.position-absolute {
+  position: absolute !important;
+}
+
+.mt-n6 {
+  margin-top: -2.5rem !important;
+}
+
+.mt-n7 {
+  margin-top: -3rem !important;
 }
     
 .rounded-circle{border-radius:50%!important}

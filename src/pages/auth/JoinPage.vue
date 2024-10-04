@@ -2,36 +2,40 @@
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import authApi from '@/api/authApi';
+import { useAuthStore } from '@/stores/auth';
 
 const router = useRouter();
 const avatar = ref(null);
-const checkError = ref('');
+const authStore = useAuthStore; //pinia store 사용을 위한 초기화
 
 //////////////////////////////////////////////////////////
 const member = reactive({
-  id: 'test',
-  name: '홍길동',
-  email: 'hong@gmail.com',
-  password: '1212',
-  password2: '1212',
+  uno: '',
+  name: '박정빈',
+  userId: 'areoin@naver.com',
+  password: '1234',
+  password2: '1234',
+  nickname: '맹구',
   avatar: null,
+  gender: 'M',
 });
 //////////////////////////////////////////////////////////
 const disableSubmit = ref(true);
+const checkError = ref('');
 const checkId = async () => {
-  if (!member.id) {
+  if (!member.userId) {
     return alert('사용자 ID를 입력하세요.');
   }
 
-  disableSubmit.value = await authApi.checkId(member.id);
+  disableSubmit.value = await authApi.checkId(member.userId);
   console.log(disableSubmit.value, typeof disableSubmit.value);
   checkError.value = disableSubmit.value ? '이미 사용중인 ID입니다.' : '사용가능한 ID입니다.';
 };
 
 const changeId = () => {
   disableSubmit.value = true;
-  if (member.id) {
-    checkError.value = 'ID 중복 체크를 하셔야 합니다.';
+  if (member.userId) {
+    checkError.value = '아이디 중복 체크를 하셔야 합니다.';
   } else {
     checkError.value = '';
   }
@@ -42,12 +46,15 @@ const join = async () => {
     return alert('비밀번호가 일치하지 않습니다.');
   }
 
-  if (avatar.value.files.length > 0) {
-    member.avatar = avatar.value.files[0];
-  }
-
+  // if (avatar.value.files.length > 0) {
+  //   member.avatar = avatar.value.files[0];
+  // }
+  console.log('회원가입 정보:', member);
   try {
+    //회원가입 정보 전송
     await authApi.create(member);
+    localStorage.setItem('userId', member.userId); // userId 저장
+    localStorage.setItem('password', member.password); // password 저장
     router.push({ name: 'home' });
   } catch (e) {
     console.error(e);
@@ -92,33 +99,41 @@ const join = async () => {
             <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ오른쪽 화면ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
             <!-- col-md-6중간화면일때화면너비50% px-2좌우패딩 pt=2위쪽패딩 pb-4아래쪽패딩 px-sm-5작은화면일때수평패딩 pb-sm-5작은화면일때아래쪽패딩 pt-md-5증간화면일때위쪽패딩 -->
             <div class="col-md-6 px-2 pt-2 pb-2 px-sm-2 pb-sm-5 pt-md-5">
-              <a class="btn btn-outline-info w-100 mb-1" href="#">
-                <i class="fa-brands fa-google fs-lg me-1"></i>
-                Sign in with Google
-              </a>
-              <div class="d-flex align-items-center py-1 mb-1">
-                <hr class="w-100" />
-                <div class="px-3">or</div>
-                <hr class="w-100" />
-              </div>
-              <form class="needs-validation" @submit.prevent="login" novalidate>
-                <div class="mb-4">
-                  <label class="form-label" for="signin-name">Fullname</label>
-                  <input class="form-control" type="text" id="signin-name" placeholder="Enter your neme" required />
+              <form class="needs-validation" @submit.prevent="join" novalidate>
+                <div class="mb-2">
+                  <label class="form-label" for="name">이름 </label>
+                  <input class="form-control" type="text" id="name" v-model="member.name" placeholder="이름을 입력하세요." required />
+                </div>
+                <div class="mb-2">
+                  <label class="form-label" for="text"
+                    >아이디
+                    <button type="button" class="btn btn-success btn-sm py-0 me-2" @click="checkId">ID 중복 확인</button>
+                    <span :class="disableSubmit.value ? 'text-primary' : 'text-danger'">{{ checkError }}</span>
+                  </label>
+                  <input class="form-control" type="text" id="text" @input="changeId" v-model="member.userId" placeholder="아이디를 입력하세요." required />
+                </div>
+                <div class="mb-2">
+                  <label class="form-label" for="password">비밀번호</label>
+                  <input class="form-control" type="password" id="password" v-model="member.password" required />
+                </div>
+                <div class="mb-2">
+                  <label class="form-label" for="password2">비밀번호 확인</label>
+                  <input class="form-control" type="password" id="password2" v-model="member.password2" required />
+                </div>
+                <div class="mb-2">
+                  <label class="form-label" for="nickname">닉네임</label>
+                  <input class="form-control" type="text" id="nickname" v-model="member.nickname" placeholder="닉네임을 입력하세요." required />
                 </div>
                 <div class="mb-4">
-                  <label class="form-label" for="signin-email">Email</label>
-                  <input class="form-control" type="email" id="signin-email" placeholder="Enter your email" required />
+                  <label class="form-label">성별</label>
+                  <div>
+                    <input type="radio" id="male" value="M" v-model="member.gender" required />
+                    <label for="male" class="me-3">남성</label>
+                    <input type="radio" id="female" value="F" v-model="member.gender" required />
+                    <label for="female">여성</label>
+                  </div>
                 </div>
-                <div class="mb-4">
-                  <label class="form-label" for="signin-password">Password</label>
-                  <input class="form-control" type="password" id="signin-password" required />
-                </div>
-                <div class="mb-4">
-                  <label class="form-label" for="signin-password-confirm">Confirm password</label>
-                  <input class="form-control" type="password" id="signin-password" required />
-                </div>
-                <button class="btn-orange btn-lg w-100" type="submit">Sign in</button>
+                <button class="btn-orange btn-lg w-100" type="submit" :disabled="disableSubmit">Sign up</button>
               </form>
             </div>
           </div>
@@ -128,6 +143,7 @@ const join = async () => {
   </body>
 </template>
 
+<!-- :disabled="!isFormValid" -->
 <!-- <div class="mt-5 mx-auto" style="width: 500px">
     <h1 class="my-5">
       <i class="fa-solid fa-user-plus"></i>

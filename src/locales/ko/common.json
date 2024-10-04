@@ -1,0 +1,23 @@
+{
+    "notice" : "공지사항",
+    "buddiz" : "버디즈",
+    "exchange" : "환율",
+    "map" : "지도",
+    "chat" : "채팅",
+    "login" : "로그인",
+    "mypage" : "마이페이지",
+
+    "footer" : {
+        "question" : "자주묻는 질문",
+        "copyright" : "저작권"
+    },
+
+    "home" : {
+        "banner1" : "한국에서 방 구하기,",
+        "banner2" : "고민되고 걱정 되시나요?",
+        "banner3" : "가 친구, 동행자, 든든한 지원군이 되어줄게요!",
+        "banner4" : "뉴집스에서 원하는 방을 찾고 버디즈와 함께 방문해보세요!",
+        "find_buddiz" : "버디즈 찾기",
+        "find_room" : "방 찾기"
+    }
+}

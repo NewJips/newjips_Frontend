@@ -25,7 +25,7 @@
             </div>
             <!-- 별점, 달러 표시 -->
             <div class="card-body p-4">
-              <div class=" test" >
+              <div class=" test">
                 <div class="icon-rounded icon-rounded-sm bg-primary-light flex-shrink-0 me-2" style="width: 150px;">
                   <img src="/src/assets/icons/roundstar.png" alt="star" style="width: 35px; height: 35px;">
                   <span style="margin-left: 10px; margin-top: 15px; display: inline; white-space: nowrap;">
@@ -50,8 +50,10 @@
                 <br>
               </div>
               <div class="text-block">
-                <div class="badge2 badge-secondary-light2" style="font-size: 15px;"><img src="/src/assets/icons/heart.png" alt="star">  버디즈 찜하기</div>
-                <div class="badge2 badge-secondary-light2" style="font-size: 15px;"><img src="/src/assets/icons/chatIcon.png" alt="star">  채팅하기</div>
+                <div class="badge2 badge-secondary-light2" style="font-size: 15px;"><img
+                    src="/src/assets/icons/heart.png" alt="star"> 버디즈 찜하기</div>
+                <div class="badge2 badge-secondary-light2" style="font-size: 15px;"><img
+                    src="/src/assets/icons/chatIcon.png" alt="star"> 채팅하기</div>
               </div>
             </div>
           </div>
@@ -78,10 +80,10 @@
           </div> -->
           <div class="text-block">
             <p>
-              <span class="badge badge-secondary-light">한국 자취 28년</span>
-              <span class="badge badge-secondary-light">활동 77번</span>
-              <span class="badge badge-secondary-light">한국어</span>
-              <span class="badge badge-secondary-light">베트남어</span>
+              <span style="margin-right: 7px;" class="badge badge-secondary-light">한국 자취 28년</span>
+              <span style="margin-right: 7px;" class="badge badge-secondary-light">활동 77번</span>
+              <span style="margin-right: 7px;" class="badge badge-secondary-light">한국어</span>
+              <span style="margin-right: 7px;" class="badge badge-secondary-light">베트남어</span>
             </p>
           </div>
 
@@ -169,7 +171,7 @@
 
 
             <!-- 리뷰 작성란 시작 -->
-            <div class="py-5">
+            <!-- <div class="py-5">
               <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse"
                 data-bs-target="#leaveReview" aria-expanded="false" aria-controls="leaveReview">Leave a review</button>
               <div class="collapse mt-4" id="leaveReview">
@@ -209,8 +211,157 @@
                   <button class="btn btn-primary" type="submit">Post review</button>
                 </form>
               </div>
-            </div>
+            </div> -->
             <!-- 리뷰 작성란 끝 -->
+            <!-- 
+            <div class="py-5">
+                <button class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#leaveReview" aria-expanded="false" aria-controls="leaveReview">Leave a review</button>
+                <div class="collapse mt-4" id="leaveReview">
+                  <h5 class="mb-4">Leave a review</h5>
+                  <form class="form" id="contact-form" method="get" action="#">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="mb-4">
+                          <label class="form-label" for="name">Your name *</label>
+                          <input class="form-control" type="text" name="name" id="name" placeholder="Enter your name" required="required">
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="mb-4">
+                          <label class="form-label" for="rating">Your rating *</label>
+                          <select class="form-select focus-shadow-0" name="rating" id="rating">
+                            <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733; (5/5)</option>
+                            <option value="4">&#9733;&#9733;&#9733;&#9733;&#9734; (4/5)</option>
+                            <option value="3">&#9733;&#9733;&#9733;&#9734;&#9734; (3/5)</option>
+                            <option value="2">&#9733;&#9733;&#9734;&#9734;&#9734; (2/5)</option>
+                            <option value="1">&#9733;&#9734;&#9734;&#9734;&#9734; (1/5)</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="mb-4">
+                      <label class="form-label" for="email">Your email *</label>
+                      <input class="form-control" type="email" name="email" id="email" placeholder="Enter your  email" required="required">
+                    </div>
+                    <div class="mb-4">
+                      <label class="form-label" for="review">Review text *</label>
+                      <textarea class="form-control" rows="4" name="review" id="review" placeholder="Enter your review" required="required"></textarea>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Post review</button>
+                  </form>
+                </div>
+              </div> -->
+
+
+            <!-- <div class="py-5">
+    <button 
+      class="btn btn-outline-primary" 
+      type="button" 
+      @click="toggleReview"
+    >
+      Leave a review
+    </button>
+    <div class="collapse mt-4" v-show="isReviewVisible">
+      <h5 class="mb-4">Leave a review</h5>
+      <form class="form" id="contact-form" method="get" action="#">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="mb-4">
+              <label class="form-label" for="name">Your name *</label>
+              <input 
+                class="form-control" 
+                type="text" 
+                name="name" 
+                id="name" 
+                placeholder="Enter your name" 
+                required="required"
+              >
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="mb-4">
+              <label class="form-label" for="rating">Your rating *</label>
+              <select class="form-select focus-shadow-0" name="rating" id="rating">
+                <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733; (5/5)</option>
+                <option value="4">&#9733;&#9733;&#9733;&#9733;&#9734; (4/5)</option>
+                <option value="3">&#9733;&#9733;&#9733;&#9734;&#9734; (3/5)</option>
+                <option value="2">&#9733;&#9733;&#9734;&#9734;&#9734; (2/5)</option>
+                <option value="1">&#9733;&#9734;&#9734;&#9734;&#9734; (1/5)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="mb-4">
+          <label class="form-label" for="email">Your email *</label>
+          <input 
+            class="form-control" 
+            type="email" 
+            name="email" 
+            id="email" 
+            placeholder="Enter your email" 
+            required="required"
+          >
+        </div>
+        <div class="mb-4">
+          <label class="form-label" for="review">Review text *</label>
+          <textarea 
+            class="form-control" 
+            rows="4" 
+            name="review" 
+            id="review" 
+            placeholder="Enter your review" 
+            required="required"
+          ></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Post review</button>
+      </form>
+    </div>
+  </div> -->
+
+
+
+            <div class="py-5">
+              <button class="btn btn-outline-primary" type="button" @click="toggleReview">
+                Leave a review
+              </button>
+              <div v-show="isReviewVisible" class="mt-4">
+                <h5 class="mb-4">Leave a review</h5>
+                <form class="form" id="contact-form" method="get" action="#">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="mb-4">
+                        <label class="form-label" for="name">Your name *</label>
+                        <input class="form-control" type="text" name="name" id="name" placeholder="Enter your name"
+                          required="required" />
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="mb-4">
+                        <label class="form-label" for="rating">Your rating *</label>
+                        <select class="form-select focus-shadow-0" name="rating" id="rating">
+                          <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733; (5/5)</option>
+                          <option value="4">&#9733;&#9733;&#9733;&#9733;&#9734; (4/5)</option>
+                          <option value="3">&#9733;&#9733;&#9733;&#9734;&#9734; (3/5)</option>
+                          <option value="2">&#9733;&#9733;&#9734;&#9734;&#9734; (2/5)</option>
+                          <option value="1">&#9733;&#9734;&#9734;&#9734;&#9734; (1/5)</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label" for="email">Your email *</label>
+                    <input class="form-control" type="email" name="email" id="email" placeholder="Enter your email"
+                      required="required" />
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label" for="review">Review text *</label>
+                    <textarea class="form-control" rows="4" name="review" id="review" placeholder="Enter your review"
+                      required="required"></textarea>
+                  </div>
+                  <button class="btn btn-primary" type="submit">Post review</button>
+                </form>
+              </div>
+            </div>
           </div>
           <!-- 리뷰 끝 -->
 
@@ -227,6 +378,7 @@ export default {
     return {
       buddizDetail: null, // 사용자 상세 데이터
       currentPage: 1,
+      isReviewVisible: false, // 초기 상태 설정
       review: [
         {
           id: 1,
@@ -266,6 +418,9 @@ export default {
       ];
       this.user = users.find(user => user.id === parseInt(userId)); // ID로 사용자 찾기
     },
+    toggleReview() {
+      this.isReviewVisible = !this.isReviewVisible; // 버튼 클릭 시 상태 토글
+    },
   },
   computed: {
     filteredBuddizs() {
@@ -288,34 +443,39 @@ export default {
   margin: 0 auto;
 }
 
-.box{
-  display: flex; /* 한 줄에 배치 */
-  gap: 10px; /* 상자 간 간격 */
-  justify-content: flex-start; /* 좌측 정렬 */
-  align-items: center; /* 세로 가운데 정렬 */
-  flex-wrap: wrap; /* 필요할 경우 줄바꿈 허용 */
+.box {
+  display: flex;
+  /* 한 줄에 배치 */
+  gap: 10px;
+  /* 상자 간 간격 */
+  justify-content: flex-start;
+  /* 좌측 정렬 */
+  align-items: center;
+  /* 세로 가운데 정렬 */
+  flex-wrap: wrap;
+  /* 필요할 경우 줄바꿈 허용 */
 }
 
 .rounded-box {
-  
+
   /* align-items: center; 수직 가운데 정렬 */
   /* justify-content: center; 수평 가운데 정렬 */
   /* white-space: nowrap; 텍스트 줄바꿈 방지 */
   /* font-size: 1em; 텍스트 크기 */
-    border: 1px solid #ccc;  
-  border-radius: 15px; 
-  background-color: #f9f9f9; 
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  background-color: #f9f9f9;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
   padding: 5px 5px 0px 10px;
   display: flex;
   flex-direction: column;
-  }
+}
 
-  .badge {
+.badge {
   --bs-badge-padding-x: 0.7em;
   --bs-badge-padding-y: 0.5em;
-  --bs-badge-font-size:0.75em;
+  --bs-badge-font-size: 0.75em;
   --bs-badge-font-weight: 700;
   --bs-badge-color: #fff;
   --bs-badge-border-radius: 0.4rem;
@@ -339,7 +499,7 @@ export default {
 .badge2 {
   --bs-badge-padding-x: 0.7em;
   --bs-badge-padding-y: 0.5em;
-  --bs-badge-font-size:0.75em;
+  --bs-badge-font-size: 0.75em;
   --bs-badge-font-weight: 700;
   --bs-badge-color: #fff;
   --bs-badge-border-radius: 0.4rem;
@@ -355,9 +515,9 @@ export default {
   border-radius: var(--bs-badge-border-radius);
   margin-bottom: 10px;
 }
+
 .badge-secondary-light2 {
   color: #616B79;
   background-color: #F5F6F7;
 }
-
 </style>

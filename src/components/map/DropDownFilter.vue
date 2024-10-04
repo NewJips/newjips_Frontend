@@ -15,23 +15,25 @@
     <form class="dropdown-menu p-4">
       <!-- 체크박스 -->
       <div v-if="checkboxes && checkboxes.length" id="check-container">
-        <label class="form-label-bold">{{ checkboxLabel }}</label>
-        <div id="boxes">
-          <div
-            v-for="(checkbox, index) in checkboxes"
-            :key="index"
-            class="checkbox-item"
-          >
-            <input
-              type="checkbox"
-              class="form-check-input-outlined"
-              :id="`dropdownCheck${index}`"
-              :value="checkbox"
+        <label class="form-label"
+          >{{ checkboxLabel }}
+          <div id="boxes">
+            <div
+              v-for="(checkbox, index) in checkboxes"
+              :key="index"
+              class="checkbox-item"
               @change="handleCheckboxChange(checkbox, $event.target.checked)"
-            />
-            {{ checkbox }}
+            >
+              <input
+                type="checkbox"
+                class="form-check-input-outlined"
+                :id="`dropdownCheck${index}`"
+                :value="checkbox"
+              />
+              {{ checkbox }}
+            </div>
           </div>
-        </div>
+        </label>
       </div>
 
       <!-- 슬라이더 -->
@@ -65,7 +67,7 @@ const props = defineProps({
 const filterStore = useFilterStore();
 
 const handleCheckboxChange = (checkbox, checked) => {
-  const category = props.checkboxLabel; // 거래유형, 층수, 구조 등을 category로 사용
+  const category = props.checkboxLabel;
   filterStore.setCheckboxValue(category, checkbox, checked);
   console.log('penguin checked');
 };
@@ -108,13 +110,13 @@ const handleCheckboxChange = (checkbox, checked) => {
 
 #boxes {
   display: flex;
-  flex-wrap: wrap; /* 줄 바꿈을 허용 */
+  flex-wrap: wrap;
   gap: 1rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
 .checkbox-item {
-  flex: 0 0 calc(50% - 10px); /* 각 체크박스의 너비를 50%로 설정하고 간격을 고려 */
-  box-sizing: border-box; /* 패딩 및 테두리를 포함한 크기 계산 */
+  flex: 0 0 calc(50% - 8px);
+  box-sizing: border-box;
 }
 </style>

@@ -3,6 +3,7 @@ import { reactive, computed } from 'vue';
 import MenuGroup from './menu/MenuGroup.vue';
 import AccountMenuGroup from './menu/AccountMenuGroup.vue';
 import config from '@/config';
+import { useI18n } from 'vue-i18n';
 
 let state = reactive({ isNavShow: false });
 
@@ -11,6 +12,13 @@ let navClass = computed(() =>
 );
 
 const toggleNavShow = () => (state.isNavShow = !state.isNavShow);
+
+const { t, locale }  = useI18n();
+
+const changing = (lan)=>{
+    locale.value = lan;
+    console.log(lan);
+};
 </script>
 
 <template>
@@ -32,6 +40,8 @@ const toggleNavShow = () => (state.isNavShow = !state.isNavShow);
       >
         <span class="navbar-toggler-icon"></span>
       </button>
+      <!-- <button type="button" @click="changing('vn')">베트남어 {{ t('common.notice') }}</button>
+      <button type="button" @click="changing('ko')">한국어</button> -->
 
       <div :class="navClass" id="collapsibleNavbar" style="flex-grow: 0">
         <div style="flex-direction: row; display: flex">

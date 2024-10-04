@@ -1,96 +1,90 @@
 <template>
-  <div style="background-color: #F5F6F7; height: 130px;">
-    <div class="buddiz-banner">
-      <h1 style="font-size: 30px; padding-top: 30px; font-weight: bold;">버디즈</h1>
-      <p style="font-size: 25px">나에게 꼭 맞는 버디를 찾아보세요!</p>
+  <div class="fluid-container">
+    <div class="type-header">
+        <h2>버디즈</h2>
+        <div style="font-size: 17pt; margin-top: 8pt;">나에게 꼭 맞는 버디를 찾아보세요!</div>
     </div>
-  </div>
 
-  <div class="buddiz-search">
-
-    <!-- 필터와 목록을 가로로 정렬 -->
-    <div class="content">
-      <div class="filter-section">
-        <p>닉네임으로 검색</p>
-        <div class="search-bar">
-          <input v-model="searchQuery" type="text" placeholder="검색어입력" class="search-input" />
-          <button class="search-button"><i class="fa fa-search"></i></button>
-        </div>
-        <hr style="width:240px; border-bottom: 3px solid #ddd;">
-
-        <div class="filter-options">
-          <p>필터로 검색</p>
-          <div class="filter-buttons">
-            <button :class="{ 'active': selectedPersonality === '조용해요' }" @click="selectedPersonality = '조용해요'"
-              class="filter-select">조용해요</button>
-            <button :class="{ 'active': selectedPersonality === '친구해요' }" @click="selectedPersonality = '친구해요'"
-              class="filter-select">친구해요</button>
+    <div class="buddiz-search">
+      <!-- 필터와 목록을 가로로 정렬 -->
+      <div class="content">
+        <div class="filter-section">
+          <p>닉네임으로 검색</p>
+          <div class="search-bar">
+            <input v-model="searchQuery" type="text" placeholder="검색어입력" class="search-input" />
+            <button class="search-button"><i class="fa fa-search"></i></button>
           </div>
+          <hr style="width:240px; border-bottom: 1.5px solid #ddd;">
 
-          <div class="filter-buttons ">
-            <button :class="{ 'active': selectedGender === '여성' }" @click="selectedGender = '여성'"
-              class="filter-select">여성</button>
-            <button :class="{ 'active': selectedGender === '남성' }" @click="selectedGender = '남성'"
-              class="filter-select">남성</button>
-          </div>
-        </div>
-        <hr style="width:240px; border-bottom: 3px solid #ddd;">
-
-        <div class="sort-options">
-          <p>정렬</p>
-          <div class="filter-buttons">
-            <button :class="{ 'active': selectedSort === '별점순' }" @click="selectedSort = '별점순'"
-              class="filter-select">별점순</button>
-            <button :class="{ 'active': selectedSort === '가격순' }" @click="selectedSort = '가격순'"
-              class="filter-select">가격순</button>
-          </div>
-          <div class="filter-buttons">
-            <button :class="{ 'active': selectedSort === '리뷰 많은 순' }" @click="selectedSort = '리뷰 많은 순'"
-              style="width: 235px;" class="filter-select">리뷰 많은 순</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- 버디즈 목록 -->
-      <div class="buddiz-list">
-        <div v-for="buddiz in filteredBuddizs" :key="buddiz.id" class="buddiz-item under-line">
-          <router-link :to="{name: 'buddizDetail', params:{id:buddiz.id}}" class="user-link" 
-          exact-active-class="active-link">
-            <img :src="buddiz.profileImage" alt="buddiz image" class="buddiz-image" />
-            <div style="margin-top: 10px;">
-              <h3 style="font-size: 25px; font-weight: bold; margin-bottom: 5px;">{{ buddiz.name }}</h3>
-              <div style="font-size: 1em; margin: 5px;">
-                <p style="margin-bottom: 5px;"><img src="/src/assets/icons/starIcon.png" alt="star"
-                    style="height: 18px; width: 18px;"> {{ buddiz.rating }}</p>
-                <p style="margin-bottom: 5px;">{{ buddiz.description }}</p>
-                <p style="margin-bottom: 5px;">{{ buddiz.career }}</p>
-              </div>
+          <div class="filter-options">
+            <p>필터로 검색</p>
+            <div class="filter-buttons">
+              <button :class="{ 'active': selectedPersonality === '조용해요' }" @click="selectedPersonality = '조용해요'"
+                class="filter-select">조용해요</button>
+              <button :class="{ 'active': selectedPersonality === '친구해요' }" @click="selectedPersonality = '친구해요'"
+                class="filter-select">친구해요</button>
             </div>
-          </router-link>
+
+            <div class="filter-buttons ">
+              <button :class="{ 'active': selectedGender === '여성' }" @click="selectedGender = '여성'"
+                class="filter-select">여성</button>
+              <button :class="{ 'active': selectedGender === '남성' }" @click="selectedGender = '남성'"
+                class="filter-select">남성</button>
+            </div>
+          </div>
+          <hr style="width:240px; border-bottom: 1.5px solid #ddd;">
+
+          <div class="sort-options">
+            <p>정렬</p>
+            <div class="filter-buttons">
+              <button :class="{ 'active': selectedSort === '별점순' }" @click="selectedSort = '별점순'"
+                class="filter-select">별점순</button>
+              <button :class="{ 'active': selectedSort === '가격순' }" @click="selectedSort = '가격순'"
+                class="filter-select">가격순</button>
+            </div>
+            <div class="filter-buttons">
+              <button :class="{ 'active': selectedSort === '리뷰 많은 순' }" @click="selectedSort = '리뷰 많은 순'"
+                style="width: 235px;" class="filter-select">리뷰 많은 순</button>
+            </div>
+          </div>
         </div>
 
-        <!-- 페이지네이션 -->
-    <div class="my-5 d-flex justify-content-center">
-      <vue-awesome-paginate
-        :total-items="totalCount"
-        :items-per-page="pageRequest.amount"
-        :max-pages-shown="5"
-        :show-ending-buttons="true"
-        v-model="pageRequest.page"
-        @click="handlePageChange"
-      >
-        <template #first-page-button><i class="fa-solid fa-backward-fast"></i></template>
-        <template #prev-button><i class="fa-solid fa-caret-left"></i></template>
-        <template #next-button><i class="fa-solid fa-caret-right"></i></template>
-        <template #last-page-button><i class="fa-solid fa-forward-fast"></i></template>
-      </vue-awesome-paginate>
-    </div>
+        <!-- 버디즈 목록 -->
+        <div class="buddiz-list">
+          <div v-for="buddiz in filteredBuddizs" :key="buddiz.id" class="buddiz-item under-line">
+            <router-link :to="{name: 'buddizDetail', params:{id:buddiz.id}}" class="user-link" 
+            exact-active-class="active-link">
+              <img :src="buddiz.profileImage" alt="buddiz image" class="buddiz-image" />
+              <div style="margin-top: 10px;">
+                <h3 style="font-size: 25px; font-weight: bold; margin-bottom: 5px;">{{ buddiz.name }}</h3>
+                <div style="font-size: 1em; margin: 5px;">
+                  <p style="margin-bottom: 5px;"><img src="/src/assets/icons/starIcon.png" alt="star"
+                      style="height: 18px; width: 18px;"> {{ buddiz.rating }}</p>
+                  <p style="margin-bottom: 5px;">{{ buddiz.description }}</p>
+                  <p style="margin-bottom: 5px;">{{ buddiz.career }}</p>
+                </div>
+              </div>
+            </router-link>
+          </div>
 
-
+          <!-- 페이지네이션 -->
+          <div class="my-5 d-flex justify-content-center">
+            <vue-awesome-paginate
+              :total-items="totalCount"
+              :items-per-page="pageRequest.amount"
+              :max-pages-shown="5"
+              :show-ending-buttons="true"
+              v-model="pageRequest.page"
+              @click="handlePageChange"
+            >
+              <template #first-page-button><i class="fa-solid fa-backward-fast"></i></template>
+              <template #prev-button><i class="fa-solid fa-caret-left"></i></template>
+              <template #next-button><i class="fa-solid fa-caret-right"></i></template>
+              <template #last-page-button><i class="fa-solid fa-forward-fast"></i></template>
+            </vue-awesome-paginate>
+          </div>
+        </div>
       </div>
-
-
-
     </div>
   </div>
 </template>
@@ -116,7 +110,7 @@ export default {
         {
           id: 1,
           name: '하니',
-          profileImage: 'src/assets/images/face9.jpg',
+          profileImage: 'src/assets/images/face1.jpg',
           rating: 4.8,
           career: '한국 자취 3년차',
           description: '유쾌함, ENFP, 조용해요...',
@@ -124,7 +118,7 @@ export default {
         {
           id: 2,
           name: '레이',
-          profileImage: 'src/assets/images/face10.jpg',
+          profileImage: 'src/assets/images/face2.jpg',
           rating: 4.8,
           career: '한국 자취 3년차',
           description: '유쾌함, ENFP, 조용해요...',
@@ -132,7 +126,7 @@ export default {
         {
           id: 3,
           name: '카리나',
-          profileImage: '/src/assets/images/face1.jpg',
+          profileImage: '/src/assets/images/face3.jpg',
           rating: 4.8,
           career: '한국 자취 2년차',
           description: '유쾌함, ENFP, 친구해요',
@@ -180,7 +174,7 @@ export default {
         {
           id: 9,
           name: '다니엘',
-          profileImage: 'src/assets/images/face3.jpg',
+          profileImage: 'src/assets/images/face9.jpg',
           rating: 4.8,
           career: '한국 자취 3년차',
           description: '유쾌함, ENFP, 조용해요...',
@@ -188,7 +182,7 @@ export default {
         {
           id: 10,
           name: '마이콜',
-          profileImage: 'src/assets/images/face2.jpg',
+          profileImage: 'src/assets/images/face10.jpg',
           rating: 4.8,
           career: '한국 자취 3년차',
           description: '유쾌함, ENFP, 조용해요...',
@@ -282,9 +276,11 @@ export default {
 </script>
 
 <style scoped>
-.buddiz-banner {
-  max-width: 984px;
-  margin: 0 auto;
+.type-header {
+    background-color: #F5F6F7;
+    padding-top: 4vh;
+    padding-bottom: 4vh;
+    padding-left: 6vh;
 }
 
 .buddiz-search {
@@ -303,7 +299,8 @@ export default {
 
 .filter-select {
   margin: 5px;
- border-radius: 10px; 
+ border-radius: 10px;
+ background-color: #F5F6F7;
 
 }
 
@@ -318,7 +315,7 @@ export default {
   margin-bottom: 10px;
   padding-bottom: 10px;
   /* 여백 추가 */
-  border-bottom: 3px solid #ddd;
+  border-bottom: 1.5px solid #ddd;
   /* 각 항목 아래 밑줄 추가 */
 }
 
@@ -332,6 +329,8 @@ export default {
 .buddiz-image {
   width: 140px;
   height: 140px;
+  border-radius: 5px; 
+  object-fit: cover;
 }
 
 .buddiz-search {
@@ -356,13 +355,13 @@ export default {
   border: none;
   border-radius: 5px 0 0 5px;
   /* 버튼과 연결되는 부분의 모서리 라운드 처리 */
-  background-color: #e0e0e0;
+  background-color: #F5F6F7;
   max-width: 180px;
   border-radius: 10px 0 0 10px;
 }
 
 .search-button {
-  background-color: #e0e0e0;
+  background-color: #F5F6F7;
   color: black;
   padding: 10px 15px;
   border: none;

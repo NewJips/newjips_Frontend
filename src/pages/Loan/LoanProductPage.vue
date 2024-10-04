@@ -1,20 +1,18 @@
 <template>
-  <div class="loan-page">
+  <div class="fluid-container pb-5">
     <!-- Header with grey background -->
-    <section class="header grey-background">
-      <div class="header-content">
-        <h1>외국인을 위한 대출</h1>
-        <p>여러분을 위한 대출정보를 이용하세요!</p>
-      </div>
-    </section>
+    <div class="type-header">
+        <h2>외국인을 위한 대출</h2>
+        <div style="font-size: 17pt; margin-top: 8pt;">여러분을 위한 대출정보를 이용하세요!</div>
+    </div>
 
     <!-- Loan Details (Selected Loan Information) -->
-    <section class="loan-details" v-if="selectedLoan">
+    <section class="mt-4 mb-5 px-5" v-if="selectedLoan">
       <h3>{{ selectedLoan.name }} 전세 자금 대출</h3>
       <p class="loan-subtitle">{{ selectedLoan.subtitle }}</p>
 
       <!-- Highlighted Description -->
-      <div class="highlight-box">
+      <div class="highlight-box px-5 py-4">
         임대차 계약을 체결한 외국인 고객 및 소득을 증명할 수 있는 고객 대상. 대출 기간은 3개월에서 2년, 최대 10년까지 연장 가능.
       </div>
 
@@ -37,7 +35,7 @@
     </section>
 
     <!-- Loan Cards Section -->
-    <section class="loan-cards">
+    <section class="loan-cards px-5">
       <h2>다른 대출 정보</h2>
       <div class="loan-grid">
         <LoanCard v-for="(loan, index) in loans" :key="index" :loan="loan" @click="goToLoanDetail(loan)" />
@@ -123,9 +121,11 @@ const goToLoanDetail = (loan) => {
 </script>
 
 <style scoped>
-/* Global container */
-.loan-page {
-  padding: 2rem;
+.type-header {
+    background-color: #F5F6F7;
+    padding-top: 4vh;
+    padding-bottom: 4vh;
+    padding-left: 6vh;
 }
 
 /* Grey background for the header section */
@@ -151,9 +151,7 @@ const goToLoanDetail = (loan) => {
 .loan-details {
   margin-top: 20px;
   padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
 }
 
 .loan-details h3 {
@@ -169,10 +167,10 @@ const goToLoanDetail = (loan) => {
 
 /* Highlighted Description Box */
 .highlight-box {
-  background-color: #f0f0f0;
-  padding: 15px;
+  background-color: #F5F6F7;
   border-radius: 8px;
-  margin-bottom: 20px;
+  margin-top: 30px;
+  margin-bottom: 30px;
   font-size: 1.1rem;
   color: #333;
 }

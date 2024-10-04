@@ -40,9 +40,7 @@ const formatValue = (value) => {
     const bigUnit = Math.floor(value / 10000);
     if (bigUnit > 0) {
       // smallUnit이 0이면 '만원'을 생략
-      return smallUnit > 0
-        ? `${bigUnit}억 ${smallUnit}만원`.trim()
-        : `${bigUnit}억`.trim();
+      return smallUnit > 0 ? `${bigUnit}억 ${smallUnit}만원`.trim() : `${bigUnit}억`.trim();
     }
     return `${smallUnit}만원`.trim();
   }
@@ -57,18 +55,12 @@ const formattedTo = computed(() => {
   const baseValue = formatValue(sliderValues.value.to);
 
   // 보증금 슬라이더일 때만 물결표시 추가
-  if (
-    props.slider.label === '보증금' &&
-    sliderValues.value.to >= props.slider.maxRange
-  ) {
+  if (props.slider.label === '보증금' && sliderValues.value.to >= props.slider.maxRange) {
     return `${baseValue}~`; // 최대값 도달 시
   }
 
   // 월세와 방 크기 슬라이더일 때 최대값 도달 시 최대값과 물결표시 추가
-  if (
-    (props.slider.label === '월세' || props.slider.label === '방 크기') &&
-    sliderValues.value.to >= props.slider.maxRange
-  ) {
+  if ((props.slider.label === '월세' || props.slider.label === '방 크기') && sliderValues.value.to >= props.slider.maxRange) {
     return `${baseValue}~`; // 최대값 도달 시
   }
 

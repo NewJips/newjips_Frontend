@@ -54,27 +54,28 @@ const handlePageChange = async (pageNum) => {
   });
 };
 </script>
+
 <template>
-  <div class="notice-header-wrapper">
-    <div class="notice-header">
-      <h1 class="mb-3">공지 사항</h1>
-      <div class="form-label">새로운 소식과 공지를 확인하세요!</div>
+  <div class="fluid-container">
+    <div class="type-header">
+        <h2>공지 사항</h2>
+        <div style="font-size: 17pt; margin-top: 8pt;">새로운 소식과 공지를 확인하세요!</div>
     </div>
-  </div>
-  <div class="row row-cols-md-2 row-cols-1 gy-md-5 gy-4 mb-lg-5 mb-4 notice-content">
-    <article class="col pb-2 pb-md-1" v-for="item in articles" :key="item.id">
-          <a class="d-block position-relative mb-3" :href="`/board/${item.id}`">
-            <img class="d-block rounded-3 article-image"
-                 :src="item.imageUrl || 'https://image.ajunews.com/content/image/2022/04/04/20220404181310254680.jpg'"
-                 alt="공지 이미지">
-          </a>
-          <a class="fs-sm text-uppercase text-decoration-none" href="#">{{ item.title }}</a>
-          <h3 class="h5 mb-2 pt-1">
-            <a class="nav-link" :href="`/board/${item.id}`">{{ item.title }}</a>
-          </h3>
-          <p class="mb-3">{{ item.content }}</p>
-        </article>
-      </div>
+
+    <div class="row row-cols-md-2 row-cols-1 px-5 mb-lg-5 mb-4 notice-content">
+      <article class="col pb-3" v-for="item in articles" :key="item.id">
+        <a class="d-block position-relative mb-3" :href="`/board/${item.id}`">
+          <img class="d-block rounded-3 article-image"
+                :src="item.imageUrl || 'https://image.ajunews.com/content/image/2022/04/04/20220404181310254680.jpg'"
+                alt="공지 이미지">
+        </a>
+        <a class="fs-sm text-uppercase text-decoration-none" href="#">{{ item.title }}</a>
+        <h3 class="h5 mb-2 pt-1">
+          <a class="nav-link" :href="`/board/${item.id}`">{{ item.title }}</a>
+        </h3>
+        <p class="mb-3">{{ item.content }}</p>
+      </article>
+    </div>
 
 
     <!-- 페이지네이션 -->
@@ -93,16 +94,18 @@ const handlePageChange = async (pageNum) => {
         <template #last-page-button><i class="fa-solid fa-forward-fast"></i></template>
       </vue-awesome-paginate>
     </div>
+  </div>
+
+
 
 </template>
 
 <style scoped>
-.notice-header-wrapper {
-  background-color: #F5F6F7;  /* 회색 배경 */
-  width: 100vw;               /* 화면 전체 너비를 차지 */
-  margin-left: calc(-50vw + 50%); /* 중앙 정렬을 유지하며 화면 끝까지 확장 */
-  margin-right: calc(-50vw + 50%); /* 오른쪽 여백 제거 */
-  padding: 40px;
+.type-header {
+    background-color: #F5F6F7;
+    padding-top: 4vh;
+    padding-bottom: 4vh;
+    padding-left: 6vh;
 }
 
 .article-image {

@@ -5,12 +5,12 @@ export function useMap(HOME_PATH) {
   const visibleMarkerCount = 0;
   const markers = ref([]);
   const selectedMarker = ref(null);
-  const CustomMapMarker = (title) => {
+  const estateMarker = (title, price) => {
     return `
-      <div style="display: flex; align-items: center; justify-content: center; width: 4rem; height: 4rem; background-image: url('/estate_marker.svg'); background-size: contain; background-repeat: no-repeat; background-position: center; cursor: pointer;">
+      <div style="display: flex; align-items: center; justify-content: center; width: 4rem; height: 4rem; background-image: url('../src/assets/icons/estate_marker.svg'); background-size: contain; background-repeat: no-repeat; background-position: center; cursor: pointer;">
         <span style="color: white; font-size: 1rem; font-weight: 600; text-align: center;">
-          <p style="margin:0; font-size:12px; font-weight:400;">전세</p>
-          <p style="margin:0; font-size:20px; line-height:1;">3억</p>
+          <p style="margin:0; font-size:12px; font-weight:400;">${title}</p>
+          <p style="margin:0; font-size:16px; line-height:1.5;">${price}</p>
         </span>
         </span>
       </div>
@@ -30,7 +30,7 @@ export function useMap(HOME_PATH) {
       gap:5px
     "
   >
-    <img src="/train_icon.svg" style="width: 24px; height: 24px" />
+    <img src="../src/assets/icons/train_icon.svg" style="width: 24px; height: 24px" />
 
     <p style="color: white; margin-top: 15px; font-weight: bold">
       어린이대공원역
@@ -51,7 +51,7 @@ export function useMap(HOME_PATH) {
     "
   >
     <img
-      src="/hot_place_icon.svg"
+      src="../src/assets/icons/hot_place_icon.svg"
       style="width: 24px; height: 24px; margin-right: 10px"
     />
     <p style="color: white; font-weight: bold; margin: 0">정빈이네집</p>
@@ -75,9 +75,9 @@ export function useMap(HOME_PATH) {
     // 필터 버튼 HTML
     var filterButtonsHtml = `
         <div class="filter-buttons">
-  <button class="btn_filter" id="apartment" data-active="false">핫플</button>
-  <button class="btn_filter" id="villa" data-active="false">안전</button>
-  <button class="btn_filter" id="one-room" data-active="false">편의</button>
+  <button class="btn_filter" id="hotplace" data-active="false">핫플</button>
+  <button class="btn_filter" id="safety" data-active="false">안전</button>
+  <button class="btn_filter" id="convenient" data-active="false">편의</button>
 </div>`;
 
     // 맵이 초기화되면 버튼 추가
@@ -121,7 +121,8 @@ export function useMap(HOME_PATH) {
         origin: new naver.maps.Point(0, 0),
         anchor: new naver.maps.Point(11, 35),
       },
-    }); // hotpalce 고정 마커찍기
+    });
+    // hotpalce 고정 마커찍기
     const hotPlaceMarker = new naver.maps.Marker({
       map: map,
 
@@ -136,7 +137,7 @@ export function useMap(HOME_PATH) {
     });
 
     markers.value.push(hotPlaceMarker);
-    // 랜덤 마커찍기
+    // 랜덤 마커찍기(CustomMarker)
     const bounds = map.getBounds();
     const southWest = bounds.getSW();
     const northEast = bounds.getNE();
@@ -156,14 +157,15 @@ export function useMap(HOME_PATH) {
         map: map,
         position: position,
         title: key, // 마커의 title을 필터 구분자로 사용
+        animation: naver.maps.Animation.DROP,
         icon: {
-          content: CustomMapMarker(key),
+          content: estateMarker(key, MARKER_SPRITE_POSITION[key].price),
 
           size: new naver.maps.Size(24, 37),
           anchor: new naver.maps.Point(12, 37),
           origin: new naver.maps.Point(
-            MARKER_SPRITE_POSITION[key][0],
-            MARKER_SPRITE_POSITION[key][1]
+            MARKER_SPRITE_POSITION[key].position[0],
+            MARKER_SPRITE_POSITION[key].position[1]
           ),
         },
         zIndex: 100,

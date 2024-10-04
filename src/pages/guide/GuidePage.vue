@@ -8,7 +8,8 @@
           <h2>가이드</h2>
           <h1>NewJips가 알려주는 부동산 가이드</h1>
           <p>
-            어려운 부동산 계약이 처음이든, 뉴집스가 준비한 한국에서 집구하기 A to Z.<br />
+            어려운 부동산 계약이 처음이든, 뉴집스가 준비한 한국에서 집구하기 A
+            to Z.<br />
             안전한 한국 생활을 돕기 위해 다양한 가이드가 준비되어 있습니다.
           </p>
         </div>
@@ -16,9 +17,9 @@
     </section>
 
     <!-- Guide Cards Section -->
-    <section class="guide-cards">
-      <GuideCard 
-        v-for="(guide, index) in paginatedGuides" 
+    <section class="guide-cards px-5">
+      <GuideCard
+        v-for="(guide, index) in paginatedGuides"
         :key="index"
         :imageSrc="guide.imageSrc"
         :category="guide.category"
@@ -30,9 +31,21 @@
     </section>
 
     <!-- Pagination -->
-    <div class="pagination">
-      <a href="#" class="pagination-link" @click.prevent="prevPage" :disabled="currentPage === 1">← Older posts</a>
-      <a href="#" class="pagination-link" @click.prevent="nextPage" :disabled="currentPage === totalPages">Newer posts →</a>
+    <div class="pagination px-5">
+      <a
+        href="#"
+        class="pagination-link"
+        @click.prevent="prevPage"
+        :disabled="currentPage === 1"
+        >← Older posts</a
+      >
+      <a
+        href="#"
+        class="pagination-link"
+        @click.prevent="nextPage"
+        :disabled="currentPage === totalPages"
+        >Newer posts →</a
+      >
     </div>
   </div>
 </template>
@@ -44,77 +57,79 @@ import GuideCard from '@/components/GuideCard.vue';
 // Update the image paths to reference images from the public folder
 const guides = ref([
   {
-    imageSrc: '/images/guide1.jpeg',
+    imageSrc: '../src/assets/images/guide1.jpeg',
     category: 'Living',
     title: '원룸? 1.5룸? 이란',
     date: 'September 1, 2023',
-    description: 'Learn the differences between one-room and 1.5-room apartments.',
-    link: 'https://spacediver.tistory.com/2'
+    description:
+      'Learn the differences between one-room and 1.5-room apartments.',
+    link: 'https://spacediver.tistory.com/2',
   },
   {
-    imageSrc: '/images/guide2.jpeg',
+    imageSrc: '../src/assets/images/guide2.jpeg',
     category: 'Finance',
     title: '전세 대출 방법',
     date: 'September 2, 2023',
     description: 'Step-by-step guide on how to get a Jeonse loan in Korea.',
-    link: 'https://spacediver.tistory.com/3'
+    link: 'https://spacediver.tistory.com/3',
   },
   {
-    imageSrc: '/images/guide3.jpeg',
+    imageSrc: '../src/assets/images/guide3.jpeg',
     category: 'Living',
     title: '집을 구하는 과정',
     date: 'September 3, 2023',
     description: 'A guide to finding and securing your ideal home in Korea.',
-    link: 'https://spacediver.tistory.com/4'
+    link: 'https://spacediver.tistory.com/4',
   },
   {
-    imageSrc: '/images/guide4.jpeg',
+    imageSrc: '../src/assets/images/guide4.jpeg',
     category: 'Legal',
     title: '허위 매물 예방 방법',
     date: 'September 4, 2023',
     description: 'How to avoid fraudulent listings when searching for a house.',
-    link: 'https://spacediver.tistory.com/5'
+    link: 'https://spacediver.tistory.com/5',
   },
   {
-    imageSrc: '/images/guide5.jpeg',
+    imageSrc: '../src/assets/images/guide5.jpeg',
     category: 'Living',
     title: '한국 생활 가이드',
     date: 'September 5, 2023',
     description: 'The complete guide to living comfortably in Korea.',
-    link: 'https://spacediver.tistory.com/6'
+    link: 'https://spacediver.tistory.com/6',
   },
   {
-    imageSrc: '/images/guide6.jpeg',
+    imageSrc: '../src/assets/images/guide6.jpeg',
     category: 'Legal',
     title: '부동산 계약 팁',
     date: 'September 6, 2023',
-    description: 'Tips on how to successfully sign a real estate contract in Korea.',
-    link: 'https://spacediver.tistory.com/7'
+    description:
+      'Tips on how to successfully sign a real estate contract in Korea.',
+    link: 'https://spacediver.tistory.com/7',
   },
   {
-    imageSrc: '/images/guide7.jpeg',
+    imageSrc: '../src/assets/images/guide7.jpeg',
     category: 'Finance',
     title: '보증금 돌려받는 법',
     date: 'September 7, 2023',
     description: 'How to get your deposit back after your lease ends.',
-    link: 'https://spacediver.tistory.com/8'
+    link: 'https://spacediver.tistory.com/8',
   },
   {
-    imageSrc: '/images/guide8.jpeg',
+    imageSrc: '../src/assets/images/guide8.jpeg',
     category: 'Finance',
     title: '월세 대출 방법',
     date: 'September 8, 2023',
     description: 'Guide to applying for a rent loan in Korea.',
-    link: 'https://spacediver.tistory.com/9'
+    link: 'https://spacediver.tistory.com/9',
   },
   {
-    imageSrc: '/images/guide9.jpeg',
+    imageSrc: '../src/assets/images/guide9.jpeg',
     category: 'Legal',
     title: '집주인과의 분쟁 해결 방법',
     date: 'September 9, 2023',
     description: 'How to resolve disputes with your landlord in Korea.',
-    link: 'https://spacediver.tistory.com/10'
-  }
+    link: 'https://spacediver.tistory.com/10',
+  },
 ]);
 
 const currentPage = ref(1);
@@ -146,7 +161,6 @@ const prevPage = () => {
 <style scoped>
 .guide-page {
   width: 100%;
-  padding: 20px;
 }
 
 /* Hero Section Styles */
@@ -155,10 +169,10 @@ const prevPage = () => {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  padding: 100px 0;
+  padding: 13vh 0;
   text-align: left; /* Align text to the left */
   position: relative;
-  min-height: 400px; /* Set a minimum height for the banner */
+  min-height: 30vh; /* Set a minimum height for the banner */
 }
 
 .hero-content {
@@ -177,7 +191,6 @@ const prevPage = () => {
   padding: 40px;
   display: inline-block;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-  max-width: 400px; /* Limit the width of the card */
 }
 
 .hero h2 {

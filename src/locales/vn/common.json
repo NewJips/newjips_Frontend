@@ -1,0 +1,23 @@
+{
+    "notice" : "thông báo",
+    "buddiz" : "buddiz",
+    "exchange" : "tỷ giá hối đoái",
+    "map" : "bản đồ",
+    "chat" : "trò chuyện",
+    "login" : "đăng nhập",
+    "mypage" : "Trang của tôi",
+
+    "footer" : {
+        "question" : "câu hỏi",
+        "copyright" : "bản quyền"
+    },
+
+    "home" : {
+        "banner1" : "Tìm phòng ở Hàn Quốc,",
+        "banner2" : "Bạn đang lo lắng và lo lắng?",
+        "banner3" : "Tôi sẽ là người bạn, người đồng hành và người hỗ trợ mạnh mẽ của bạn!",
+        "banner4" : "Tìm phòng bạn muốn tại NewZips và ghé thăm phòng đó cùng Bạn bè!",
+        "find_buddiz" : "Tìm Buddiz",
+        "find_room" : "Tìm phòng"
+    }
+}

@@ -80,21 +80,19 @@
 }
 
 .noUi-horizontal .noUi-handle {
-  width: 3px !important;
+  width: 4px !important;
   height: 15px !important;
   right: -2px !important;
-  top: -5px;
+  top: -5px !important;
   background: #343a40;
+  top: -5px;
   border: none;
   border-radius: 0;
   cursor: pointer;
   box-shadow: none;
   outline: none;
 }
-.noUi-touch-area {
-  height: 300% !important;
-  width: 300% !important;
-}
+
 .noUi-horizontal .noUi-handle::before,
 .noUi-horizontal .noUi-handle::after {
   display: none;
@@ -107,11 +105,6 @@
 .text-primary .noUi-handle,
 .text-primary .noUi-connect {
   background: #4e66f8;
-}
-
-.text-secondary .noUi-handle,
-.text-secondary .noUi-connect {
-  background: #e83e8c;
 }
 
 .nouislider-values {

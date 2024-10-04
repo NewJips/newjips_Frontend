@@ -13,6 +13,7 @@ import mypageRoutes from './mypage';
 import JoinPage from '@/pages/auth/JoinPage.vue';
 import loanRoutes from './loan';
 import formRoutes from './buddizForm';
+import aiChatPage from '@/pages/ai/AiChatPage.vue';
 import estateRoutes from './estate';
 import NotFoundRoutes from './404NotFound';
 
@@ -39,6 +40,11 @@ const router = createRouter({
       name: 'Bdp',
       component: Bdp,
       props: true, // URL 파라미터를 props로 전달
+    },
+    {
+      path: '/ai',
+      name: 'ai',
+      component: aiChatPage,
     },
     ...authRoutes,
     ...boardRoutes,

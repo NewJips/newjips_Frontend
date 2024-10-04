@@ -6,14 +6,14 @@ export const FIXED_MARKER_DATA = [
 ];
 
 export const MARKER_SPRITE_POSITION = {
-  편의시설: [0, 0],
-  주거시설: [1, 0],
-  핫플레이스: [2, 0],
-  그외: [3, 0],
-  그외1: [4, 0],
-  그외2: [5, 0],
-  그외3: [6, 0],
-  그외4: [7, 0],
-  그외5: [8, 0],
-  그외6: [9, 0],
+  월세1: { position: [0, 0], price: '50만원' },
+  전세1: { position: [1, 0], price: '1억' },
+  월세2: { position: [2, 0], price: '60만원' },
+  월세3: { position: [3, 0], price: '70만원' },
+  월세4: { position: [4, 0], price: '80만원' },
+  월세5: { position: [5, 0], price: '100만원' },
+  전세2: { position: [6, 0], price: '2억' },
+  전세3: { position: [7, 0], price: '3억' },
+  전세4: { position: [8, 0], price: '2억' },
+  전세5: { position: [9, 0], price: '3억' },
 };

@@ -1,12 +1,6 @@
 <template>
   <div class="brief-detail">
-    <div class="picArea">
-      <i
-        :class="[isLiked(estateId) ? 'bi bi-heart-fill' : 'bi bi-heart']"
-        @click="toggleLike(estateId)"
-        class="heart-icon"
-      ></i>
-    </div>
+    <div class="picArea"></div>
     <!-- <div class="briefArea">
         <h4>{{estate.tradeType}}{{ estate.monthlyPee}}}</h4>
         <p>{{estate.houseType}}</p>
@@ -14,6 +8,11 @@
         <p>여의도광나루역 5분{{estate.distToSub}}</p>
       </div> -->
     <div class="briefArea">
+      <i
+        :class="[isLiked(estateId) ? 'bi bi-heart-fill' : 'bi bi-heart']"
+        @click="toggleLike(estateId)"
+        class="heart-icon"
+      ></i>
       <h4>월세 1000/55</h4>
       <p>원룸</p>
       <p>1층, 40㎡, 관리비 15만</p>
@@ -57,6 +56,7 @@ const toggleLike = likedEstateStore.toggleLike;
   height: 100%;
   background-color: black;
   min-height: 130px;
+  border-radius: 1.5pt;
 }
 
 .briefArea {
