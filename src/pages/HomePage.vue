@@ -158,44 +158,47 @@ const loans = [
             <div class="d-flex mb-4">
               <span class="subtitle ">가장 많은 별점을 받은 버디즈입니다.</span>
             </div>
-          
-            <div class="row ps-2">
-              <div class="col d-flex">
-                <div class="rounded-circle ranking-num mt-2" style="background-color: #FFEC82;">1</div>
-                <div class="ms-4 d-flex flex-column align-items-center">
-                  <img src="@/assets/images/face6.jpg" class="avatar ranking-img mb-3">
-                  <h5>제이미</h5>
-                  <div>
-                    <i class="fa fa-star" style="color: #FFC973;"></i>
-                    <span class="ms-1">4.8</span>
-                  </div>
-                </div>
-              </div>
 
-              <div class="col d-flex">
-                <div class="rounded-circle ranking-num" style="background-color: #D5E1F4;">2</div>
-                <div class="ms-4 d-flex flex-column align-items-center">
-                  <img src="@/assets/images/avatar-4.jpg" class="avatar ranking-img mb-3">
-                  <h5>제이크</h5>
-                  <div>
-                    <i class="fa fa-star" style="color: #FFC973;"></i>
-                    <span class="ms-1">4.7</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col d-flex">
-                <div class="rounded-circle ranking-num" style="background-color: #CEB796;">3</div>
-                <div class="ms-4 d-flex flex-column align-items-center">
-                  <img src="@/assets/images/avatar-7.jpg" class="avatar ranking-img mb-3">
-                  <h5>드레이크</h5>
-                  <div>
-                    <i class="fa fa-star" style="color: #FFC973;"></i>
-                    <span class="ms-1">4.5</span>
-                  </div>
+          <div class="row ps-2">
+            <!-- 첫 번째 인기 버디 -->
+            <div class="col d-flex" v-if="popularBuddiz.length >= 1">
+              <div class="rounded-circle ranking-num mt-2" style="background-color: #FFEC82;">1</div>
+              <div class="ms-4 d-flex flex-column align-items-center">
+                <img :src="popularBuddiz[0].imgFile" class="avatar ranking-img mb-3">
+                <h5>{{ popularBuddiz[0].nickname }}</h5>
+                <div>
+                  <i class="fa fa-star" style="color: #FFC973;"></i>
+                  <span class="ms-1">{{ popularBuddiz[0].averageRating }}</span>
                 </div>
               </div>
             </div>
+
+            <!-- 두 번째 인기 버디 -->
+            <div class="col d-flex" v-if="popularBuddiz.length >= 2">
+              <div class="rounded-circle ranking-num" style="background-color: #D5E1F4;">2</div>
+              <div class="ms-4 d-flex flex-column align-items-center">
+                <img :src="popularBuddiz[1].imgFile" class="avatar ranking-img mb-3">
+                <h5>{{ popularBuddiz[1].nickname }}</h5>
+                <div>
+                  <i class="fa fa-star" style="color: #FFC973;"></i>
+                  <span class="ms-1">{{ popularBuddiz[1].averageRating }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 세 번째 인기 버디 -->
+            <div class="col d-flex" v-if="popularBuddiz.length >= 3">
+              <div class="rounded-circle ranking-num" style="background-color: #CEB796;">3</div>
+              <div class="ms-4 d-flex flex-column align-items-center">
+                <img :src="popularBuddiz[2].imgFile" class="avatar ranking-img mb-3">
+                <h5>{{ popularBuddiz[2].nickname }}</h5>
+                <div>
+                  <i class="fa fa-star" style="color: #FFC973;"></i>
+                  <span class="ms-1">{{ popularBuddiz[2].averageRating }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       
         <!-- 환율 -->
@@ -316,7 +319,7 @@ const loans = [
 
           </div>
         </div>
-    </div>    
+    </div>
 
     <!-- 가이드 -->
     <div class="mb-5">
