@@ -10,6 +10,7 @@ const initState = {
   password2: '',
   nickname: '',
   avatar: '',
+  profilePic: '',
   gender: '',
   roles: [], //권한 목록
   token: '', //접근 토큰(JWT)
@@ -27,9 +28,12 @@ export const useAuthStore = defineStore('auth', () => {
   // 따라서 computed 함수는 사용자가 로그인 상태인지 (id 있는지) 여부를 계산하여
   // isLogin이라는 계산된 속성에 할당
 
-  const id = computed(() => state.value.userId);
+  const uno = computed(() => state.value.uno);
+  const userId = computed(() => state.value.userId);
+  const nickname = computed(() => state.value.nickname);
   const name = computed(() => state.value.name);
-  // const email = computed(() => state.value.email);
+  const gender = computed(() => state.value.gender);
+  const profilePic = computed(() => state.value.profilePic);
 
   const load = () => {
     const auth = localStorage.getItem('auth');
@@ -79,7 +83,10 @@ export const useAuthStore = defineStore('auth', () => {
 
   const changeProfile = (member) => {
     state.value.name = member.name;
-    state.value.email = member.email;
+    state.value.userId = member.userId;
+    state.value.nickname = member.nickname;
+    state.value.gender = member.gender;
+
     localStorage.setItem('auth', JSON.stringify(state.value));
   };
 
@@ -90,5 +97,7 @@ export const useAuthStore = defineStore('auth', () => {
   // changeProfile(member): 사용자의 이메일을 주어진 member.email로 변경하고, 변경된 상태를 localStorage에 저장합니다.
   // load(): 페이지가 로드될 때 localStorage에서 저장된 인증 정보를 불러와 state에 설정
 
-  return { state, id, name, isLogin, changeProfile, login, logout, getToken };
+
+  return { uno, state, userId, name, nickname, gender, profilePic, isLogin, changeProfile, login, logout, getToken };
+
 });

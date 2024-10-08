@@ -1,44 +1,181 @@
 <template>
-    <div class="container-fluid" style="height: 90vh;" >
-        <div class="chat-container">
-            <div class="chat-body px-2 py-2 overflow-auto" style="height: 80vh;" ref="chatBody">
-                <div id="chat-messages">
-                    <div v-for="message in messages" :key="message.id" :class="messageClass(message)">
-                        {{ message.text }}
-                    </div>
+    <div class="container-fluid px-0 py-0" style="height: 92vh;" >
+      <div class="chat-container" style="background-color: #F2F5F9;">
+        <div class="chat-body">
+          <div id="chat-messages"  class="flex px-4 py-4 overflow-auto" style="height: 82vh;">
+
+            <div>
+              <!-- 받은 메시지 케이스 -->
+              <div class="d-flex flex-column w-lg-40 mb-4" style="margin-right: 55vh;">
+                <div class="ms-3 mb-2">
+                  <img
+                    src="../../assets/images/ai_profile.png"
+                    alt=""
+                    class="rounded-circle avatar-md"
+                    style="object-fit: contain; border: 1px solid #caced4;"
+                  />
+                  <span class="ms-2" style="font-weight: 500; color: #353B43;">{{ t('common.chatting.torry') }}</span>
                 </div>
-            </div>
-            <div id="user-input" class="mt-auto">
-                <div class="bg-white p-1 shadow-sm">
-                    <div class="position-relative">
-                        <textarea
-                            class="form-control border-0 form-control-simple no-resize"
-                            placeholder="메시지를 입력해주세요"
-                            v-model="userMessage" @keydown.enter.prevent="sendMessage"
-                            rows="1"
-                        ></textarea>
+
+                <!-- media body -->
+                <div class="ms-3">
+                  <div class="d-flex">
+                    <div class="card mt-2 rounded-top-md-left-0">
+                      <div class="card-body p-3">
+                        <p class="mb-0 text-dark" v-html="t('common.chatting.aiIntro')"></p>
+                      </div>
                     </div>
-                    <div class="position-absolute end-0 mt-n6 me-4">
-                        <button
-                            @click="sendMessage"
-                            class="btn btn-focus-none">
-                            <img src="@/assets/icons/icon_send.svg" style="height: 26px;"/>
-                        </button>
-                    </div>
+                  </div>
                 </div>
+
+                <div class="ms-3">
+                  <div class="flex" style="margin-right: 65.2vh;" @click="sendBtnMessage(0)">
+                    <div class="card mt-2 rounded-top-md-left-0" style="background-color: #FF8F18; border: none; cursor: pointer;">
+                      <div class="card-body p-3" >
+                        <h6 class="mb-0" style="text-align: center; color: white; font-weight: 600; letter-spacing: 2px;">
+                          {{ t('common.chatting.special_terms') }}
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ms-3">
+                  <div class="flex" style="margin-right: 65.2vh;" @click="sendBtnMessage(1)">
+                    <div class="card mt-2 rounded-top-md-left-0" style="background-color: #FF8F18; border: none; cursor: pointer;">
+                      <div class="card-body p-3">
+                        <h6 class="mb-0" style="text-align: center; color: white; font-weight: 600; letter-spacing: 2px;">
+                          {{ t('common.chatting.insurance') }}
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+
+            <div v-for="message in messages" :key="message.id">
+                <div v-if="message.isUser">
+                  <!-- 보낸 메시지 케이스 -->
+                  <div class="d-flex justify-content-end mb-4" style="margin-left: 55vh;">
+                    <div class="d-flex w-lg-40">
+                      <!-- media body -->
+                      <div class=" me-3 text-end">
+                        <div class="d-flex">
+                          <!-- card -->
+                          <div
+                            class="card mt-2 rounded-top-md-end-0 text-white" style="background-color: #8892A0;">
+                            <!-- card body -->
+                            <div class="card-body text-start p-3">
+                              <p class="mb-0">
+                                {{ message.text }}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              <div v-else>
+                <!-- 받은 메시지 케이스 -->
+                <div class="d-flex flex-column w-lg-40 mb-4" style="margin-right: 55vh;">
+                  <div class="ms-3 mb-2">
+                    <img
+                      src="../../assets/images/ai_profile.png"
+                      alt=""
+                      class="rounded-circle avatar-md"
+                      style="object-fit: contain; border: 1px solid #caced4;"
+                    />
+                    <span class="ms-2" style="font-weight: 500; color: #353B43;">뉴집스 토리</span>
+                  </div>
+
+                  <!-- media body -->
+                  <div class="ms-3">
+                    <div class="d-flex">
+                      <div class="card mt-2 rounded-top-md-left-0">
+                        <div class="card-body p-3">
+                          <p class="mb-0 text-dark">
+                            {{ message.text }}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div v-if="isLoading" class="loading-animation ms-3">
+              <div class="dot"></div>
+              <div class="dot"></div>
+              <div class="dot"></div>
+            </div>
+          </div>
         </div>
+            
+        <div id="user-input" class="mt-auto px-3 py-3">
+          <div class="bg-white p-1 shadow-sm rounded-3">
+            <div class="position-relative">
+              <input
+                class="form-control border-0 form-control-simple no-resize"
+                :placeholder="t('common.chatting.placeholder')"
+                v-model="userMessage"
+                rows="1"
+                @keydown.enter="sendMessage()"
+              />
+            </div>
+            <div class="position-absolute end-0 mt-n6 me-4">
+              <button
+                v-on:click="sendMessage()"
+                class="btn btn-focus-none">
+                <img src="@/assets/icons/icon_send.svg" style="height: 26px;"/>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </template>
   
   <script>
+  import { useI18n } from 'vue-i18n';
+  import { useChatStore } from '@/stores/chat';
+  import { ref, onBeforeUnmount, onMounted } from 'vue';
+
   export default {
     data() {
       return {
         userMessage: '',
-        messages: [],  // 대화 목록 저장
         apiEndpoint: 'https://api.openai.com/v1/chat/completions',
         apiKey:   process.env.VUE_APP_OPENAI_API_KEY,
+      };
+    },
+    setup() {
+      const { t, locale } = useI18n();
+      const chatStore = useChatStore();
+      const messages = ref([]);
+      const isLoading = ref(false);
+
+      // 컴포넌트가 마운트될 때 Pinia에서 messages 불러오기
+      onMounted(() => {
+        console.log('컴포넌트가 마운트되었습니다. Pinia에서 messages 불러오기 ', chatStore.getMessages);
+        if (chatStore.getMessages.length > 0) {
+          messages.value = chatStore.getMessages;  // Pinia에서 messages 불러오기
+        }
+      });
+
+      onBeforeUnmount(() => {
+        console.log('컴포넌트 파괴 직전, messages 저장', messages.value);
+        chatStore.setMessages(messages.value);  // messages를 Pinia에 저장
+      });
+
+      return {
+        t,  // 번역 함수
+        locale,  // 현재 로케일
+        messages,
+        isLoading
       };
     },
     methods: {
@@ -161,13 +298,42 @@
         }
       },
       async sendMessage() {
+        this.isLoading = true;
+
         if (this.userMessage.trim() === '') return;
         const msg = this.userMessage;
         this.userMessage = '';
-
         this.addUserMessage(msg);
-        const aiResponse = await this.fetchAIResponse(msg);
-        this.addAIMessage(aiResponse);
+
+        try {
+          const aiResponse = await this.fetchAIResponse(msg);
+          this.addAIMessage(aiResponse);  // AI 메시지 추가
+        } catch (error) {
+          console.error('AI 응답 처리 중 오류 발생:', error);
+        } finally {
+          this.isLoading = false;
+        }
+      },
+      async sendBtnMessage(type) {
+        this.isLoading = true;
+        let msg = '';
+
+        if (type == 0) { // 특약이란?
+          msg = this.t('common.chatting.special_terms');
+          this.addUserMessage(msg);
+        } else if (type == 1) { // 보증보험이란?
+          msg = this.t('common.chatting.insurance');
+          this.addUserMessage(msg);
+        }
+
+        try {
+          const aiResponse = await this.fetchAIResponse(msg);
+          this.addAIMessage(aiResponse);  // AI 메시지 추가
+        } catch (error) {
+          console.error('AI 응답 처리 중 오류 발생:', error);
+        } finally {
+          this.isLoading = false;
+        }
       },
       scrollToBottom() {
         const chatMessages = document.getElementById('chat-messages');
@@ -177,27 +343,41 @@
   };
   </script>
   
-  <style scoped>
-  @media (max-width: 1199.98px) {
-    .chat-body {
-        position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        height: 100%;
-        width: 100%;
-        z-index: 1020;
-        visibility: hidden;
-        transform: translateX(100%);
-        transition: transform 0.3s ease, visibility 0.3s ease;
-        background: #EAECEF;
-    }
+<style scoped>
+.loading-animation {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin: 20px 0;
 }
 
-@media (max-width: 1199.98px) {
- .chat-body.chat-body-visible {
-    visibility: visible;
-    transform: translateX(0);
+.dot {
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+  background-color: #888;
+  border-radius: 50%;
+  animation: bounce 1.2s infinite;
+}
+
+.dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
   }
 }
 
@@ -268,4 +448,4 @@
 .mt-n7 {
   margin-top: -3rem !important;
 }
-  </style>
+</style>

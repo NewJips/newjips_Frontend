@@ -30,7 +30,7 @@ export default {
   ///////////////// 회원 정보 가입 //////////////////////////
   async create(member) {
     const formData = new FormData();
-    formData.append('nuo', member.uno);
+    formData.append('uno', member.uno);
     formData.append('userId', member.userId);
     formData.append('password', member.password);
     formData.append('name', member.name);
@@ -51,16 +51,21 @@ export default {
 
   async update(member) {
     const formData = new FormData();
-    formData.append('id', member.userId);
+    formData.append('uno', member.uno);
+    formData.append('userId', member.userId);
     formData.append('name', member.name);
-    formData.append('password', member.password);
-    formData.append('email', member.email);
+    // formData.append('password', member.password);
+    formData.append('nickname', member.nickname);
+    formData.append('gender', member.gender);
 
     if (member.avatar) {
       formData.append('avatar', member.avatar);
     }
-
-    const { data } = await api.put(`${BASE_URL}/${member.userId}`, formData, headers);
+    // formData의 내용을 출력
+    for (const [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+    const { data } = await api.put(`${BASE_URL}/${userId}`, formData, headers);
     console.log('AUTH PUT: ', data);
     return data;
   },

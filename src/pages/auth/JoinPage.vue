@@ -17,6 +17,7 @@ const member = reactive({
   password2: '1234',
   nickname: '맹구',
   avatar: null,
+  profilePic: '',
   gender: 'M',
 });
 //////////////////////////////////////////////////////////
@@ -49,6 +50,7 @@ const join = async () => {
   // if (avatar.value.files.length > 0) {
   //   member.avatar = avatar.value.files[0];
   // }
+
   console.log('회원가입 정보:', member);
   try {
     //회원가입 정보 전송
