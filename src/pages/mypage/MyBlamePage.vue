@@ -169,26 +169,7 @@ const prevBuddySlide = () => {
   </div>
 </template>
 
-<style>
-.nav-pills .nav-link.active {
-  background-color: #ff8f17;
-  color: white;
-}
-
-.nav-link {
-  text-decoration: none;
-  color: black;
-}
-
-.nav-link:hover {
-  text-decoration: none;
-  color: #ff8f17;
-}
-
-.nav-link.active:hover {
-  color: red;
-}
-
+<style scoped>
 .hover-animate:hover {
   transform: scale(1.05);
   transition: transform 0.3s ease-in-out;

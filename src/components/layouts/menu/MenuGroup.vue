@@ -1,5 +1,6 @@
 <script setup>
 import MenuItem from './MenuItem.vue';
+
 import { useI18n } from 'vue-i18n'; // i18n 사용
 import { computed, ref, onMounted, onBeforeUnmount } from 'vue';
 import router from '@/router';
@@ -18,8 +19,9 @@ const messageOnIconUrl = ref(messageOnIcon);
 // import messageOnIcon from '@/assets/icons/messageon.png';
 
 const props = defineProps({
-  menus: { type: Array, required: true },
+  menus: { Type: Array, required: true },
 });
+
 // i18n 훅 사용
 const { t, locale } = useI18n(); // locale도 가져옵니다.
 const changing = (lan) => {
@@ -87,29 +89,6 @@ onBeforeUnmount(() => {
 
 <template>
   <ul class="navbar-nav">
-    <template v-for="(menu, index) in menus" :key="menu.title">
-      <!-- 채팅 메뉴는 아이콘만 표시 -->
-      <li v-if="index === 3" class="nav-item">
-        <router-link to="/chat">
-          <img class="mt-2" :src="isChatActive ? messageOnIconUrl : messageIconUrl" />
-        </router-link>
-      </li>
-      <MenuItem v-if="menu.title != '채팅'" :menu="menu" />
-
-      <!-- '공지사항' 후에 드롭다운 추가 -->
-      <li v-if="index === 2" class="nav-item dropdown">
-        <button class="btn dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown">
-          {{ displayLanguage }}
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="languageDropdown">
-          <li @click="changing('ko')">
-            <a class="dropdown-item" href="#">한국어</a>
-          </li>
-          <li @click="changing('vn')">
-            <a class="dropdown-item" href="#">vietnamese</a>
-          </li>
-        </ul>
-      </li>
-    </template>
+    <MenuItem v-for="menu in menus" :menu="menu" />
   </ul>
 </template>

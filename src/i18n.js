@@ -3,7 +3,7 @@ import { createI18n } from 'vue-i18n';
 function loadLocaleMessages() {
   const locales = import.meta.glob('./locales/**/[a-z]*.json', { eager: true });
   const messages = {};
-
+  
   for (const path in locales) {
     const matched = path.match(/locales\/([A-Za-z0-9-_]+)\/([A-Za-z0-9-_]+)\.json$/);
     if (matched && matched.length > 2) {
@@ -17,7 +17,7 @@ function loadLocaleMessages() {
       messages[locale][namespace] = locales[path];
     }
   }
-
+  
   return messages;
 }
 
