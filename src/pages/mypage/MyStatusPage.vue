@@ -1,5 +1,47 @@
 <script setup>
 import SideBar from '@/components/layouts/SideBar.vue';
+import { computed, ref, onMounted } from 'vue';
+import { useAuthStore } from '@/stores/auth';
+import blameApi from '@/api/blameApi';
+
+const auth = useAuthStore();
+
+// Auth 상태 관리
+const uno = computed(() => auth.uno);
+const userId = computed(() => auth.userId);
+const nickname = computed(() => auth.nickname);
+const profilePic = computed(() => auth.profilePic);
+const avatar = computed(() => `/api/member/${uno}/avatar`); // auth에서 직접 id를 가져옴
+console.log(auth.uno);
+
+const budizcount = ref(0);
+const estatecount = ref(0);
+
+// 신고한 버디즈 개수를 세는 함수
+async function fetchBlameBudizCount() {
+  try {
+    const data = await blameApi.getblamebudiz(uno.value); // uno를 인자로 전달
+    budizcount.value = data.length; // 신고한 버디즈 개수를 세어서 저장
+    console.log('신고한 버디즈 개수:', budizcount.value);
+  } catch (error) {
+    console.error('버디즈 신고 목록 조회 실패:', error);
+  }
+}
+async function fetchBlameEstateCount() {
+  try {
+    const data = await blameApi.getblameestate(uno.value); // uno를 인자로 전달
+    estatecount.value = data.length; //신고한 매물 개수를 세어서 저장.
+    console.log('신고한 매물 개수:', estatecount.value);
+  } catch (error) {
+    console.error('매물 신고 목록 조회 실패:', error);
+  }
+}
+
+// 컴포넌트가 마운트될 때 신고한 버디즈 개수를 가져오기
+onMounted(() => {
+  fetchBlameBudizCount();
+  fetchBlameEstateCount();
+});
 </script>
 
 <template>
@@ -16,13 +58,13 @@ import SideBar from '@/components/layouts/SideBar.vue';
         <div class="profile-info mb-4">
           <h4 class="mb-3">프로필 정보</h4>
           <div class="profile-content d-flex" style="border: 2px; border-style: solid; border-color: #eaecef; border-radius: 10px">
-            <img class="mx-4 my-4" src="@/assets/images/avatar-1.jpg" style="max-width: 10%; height: auto; border-radius: 50%" alt="Profile Picture" />
+            <img class="mx-4 my-4" :src="profilePic" style="max-width: 10%; height: auto; border-radius: 50%" alt="Profile Picture" />
             <div class="profile-data mt-5">
-              <h4>닉네임</h4>
-              <p style="color: #8f9bb3">이메일</p>
+              <h4>{{ nickname }}</h4>
+              <p style="color: #8f9bb3">{{ userId }}</p>
             </div>
             <div class="edit-btn d-flex" style="margin-left: auto; max-width: 100%; margin-right: 4%">
-              <button class="btn mt-5" style="border: 1px solid #ff8f17; max-height: 27%; background-color: #ff8f17; color: white">수정</button>
+              <router-link class="btn mt-5" style="border: 1px solid #ff8f17; max-height: 27%; background-color: #ff8f17; color: white" to="/mypage/myedit">수정</router-link>
             </div>
           </div>
         </div>
@@ -37,24 +79,29 @@ import SideBar from '@/components/layouts/SideBar.vue';
             <h5 class="flex-fill text-center my-3" style="width: 25%">신고한 버디즈</h5>
           </div>
           <div class="d-flex" style="border: 2px; border-style: solid; border-color: #eaecef; border-radius: 0 0 10px 10px; border-top: none; justify-content: center">
-            <h5 class="flex-fill text-center my-3" style="width: 25%">1</h5>
-            <h5 class="flex-fill text-center my-3" style="width: 25%">5</h5>
-            <h5 class="flex-fill text-center my-3" style="width: 25%">0</h5>
-            <h5 class="flex-fill text-center my-3" style="width: 25%">1</h5>
+            <router-link to="/mypage/wish" class="flex-fill text-center my-3" style="width: 25%; text-decoration: none"><h5 style="color: black">0</h5></router-link>
+            <router-link to="/mypage/wish" class="flex-fill text-center my-3" style="width: 25%; text-decoration: none"><h5 style="color: black">0</h5></router-link>
+            <router-link to="/mypage/blame" class="flex-fill text-center my-3" style="width: 25%; text-decoration: none"
+              ><h5 style="color: black">{{ estatecount }}</h5></router-link
+            >
+            <router-link to="/mypage/blame" class="flex-fill text-center my-3" style="width: 25%; text-decoration: none"
+              ><h5 style="color: black">{{ budizcount }}</h5></router-link
+            >
           </div>
         </div>
         <!-- ---프로필정보창 여기까지--- -->
         <!-- 버디즈 미등록시-->
-        <div class="profile-info mt-5 mb-5 d-flex" style="justify-content: flex-end">
-          <!-- <h4 class="mb-3">버디즈 이력</h4> -->
-          <button
-            class="btn-buddiz"
-            style="border: 1px solid #eaecef; border-radius: 10px; width: 20%; background-color: #eaecef"
-            onmouseover="this.style.backgroundColor='#ff8f17'; this.style.color='white';"
-            onmouseout="this.style.backgroundColor='#eaecef'; this.style.color='#616b79';"
-          >
-            <h5 class="text-center my-2">버디즈 등록하기</h5>
-          </button>
+        <div class="profile-info mt-5 mb-5 d-flex" style="justify-content: flex-end; flex-direction: row; align-items: center">
+          <router-link to="/form" class="text-center my-2" style="text-decoration: none; display: inline-block">
+            <button
+              class="btn-buddiz"
+              style="border: 1px solid #eaecef; border-radius: 10px; width: 100%; background-color: #eaecef; padding: 10px; font-size: 18px"
+              onmouseover="this.style.backgroundColor='#ff8f17'; this.style.color='white';"
+              onmouseout="this.style.backgroundColor='#eaecef'; this.style.color='#616b79';"
+            >
+              <h5 style="margin: 0">버디즈 등록하기</h5>
+            </button>
+          </router-link>
         </div>
         <!-- 버디즈 미등록시 여기까지 -->
         <!-- 버디즈 등록시 -->

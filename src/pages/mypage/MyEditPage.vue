@@ -1,17 +1,61 @@
 <script setup>
-import { ref } from 'vue';
 import SideBar from '@/components/layouts/SideBar.vue';
+import { computed, ref, reactive } from 'vue';
 // import avatar from '../assets/images/myeongsu.jpg';
+import { useAuthStore } from '@/stores/auth';
+import { useRouter } from 'vue-router';
+import authApi from '@/api/authApi';
 
 // const avatar = new URL('@/assets/images/myeongsu.jpg', import.meta.url).href;
 // const avatar = require('@/assets/images/myeongsu.jpg');
 // const avatarUrl = ref(avatar);
+const error = ref('');
+const auth = useAuthStore();
+const router = useRouter();
+const profilePic = computed(() => auth.profilePic);
+const avatar = ref(null);
+console.log('Auth store:', auth); // Auth 객체 확인
+// const avatarUrl = `/api/member/${auth.UserId}/avatar`;
 
-const avatar = new URL('@/assets/images/myeongsu.jpg', import.meta.url).href;
+// 아바타 URL computed
+const avatarUrl = computed(() => `/api/member/${auth.userId}/avatar`);
+
+const member = reactive({
+  uno: auth.uno,
+  userId: auth.userId,
+  name: auth.name,
+  nickname: auth.nickname,
+  gender: auth.gender,
+  password: '',
+  avatar: null,
+});
+console.log(member);
+
+const onSubmit = async () => {
+  // 아바타가 null이 아닐 때만 파일을 가져옵니다.
+  if (avatar.value.files.length > 0) {
+    member.avatar = avatar.value.files[0];
+  }
+
+  if (!confirm('수정하시겠습니까?')) return;
+
+  try {
+    await authApi.update(member);
+    error.value = '';
+    auth.changeProfile(member);
+    alert('정보를 수정하였습니다.');
+    router.go(0);
+  } catch (e) {
+    console.log(e);
+    error.value = e.response?.data || '알 수 없는 오류가 발생했습니다.'; // 기본값 설정
+  }
+};
+// const avatar = new URL('@/assets/images/myeongsu.jpg', import.meta.url).href;
+
+// const avatarUrl = `/api/member/${auth.UserId}/avatar`; //기본 이미지를 avataeUel로 설정
 console.log('Avatar URL:', avatar); // URL 확인
 
-const avatarUrl = ref(avatar);
-
+//파일 변경 시 미리보기 처리
 const onFileChange = (event) => {
   const file = event.target.files[0];
   if (file) {
@@ -22,7 +66,8 @@ const onFileChange = (event) => {
     };
     reader.readAsDataURL(file);
   } else {
-    console.log('No file selected'); // 파일 선택 여부 확인
+    console.log('API 호출 중 오류 발생:', e); // 에러 로그 추가
+    error.value = e.response?.data?.message || '알 수 없는 오류가 발생했습니다.'; // 에러 메시지 개선
   }
 };
 </script>
@@ -42,7 +87,7 @@ const onFileChange = (event) => {
             <h4 class="card-header-title">개인정보</h4>
           </div>
           <div class="card-body">
-            <form class="row g-3">
+            <form class="row g-3" @submit.prevent="onSubmit">
               <div class="col-12">
                 <label class="form-label ms-1" style="color: #bababa">
                   프로필 사진을 업로드하세요.
@@ -52,7 +97,7 @@ const onFileChange = (event) => {
                   <label class="mt-3 ms-5" for="uploadfile" title="Replace this pic" style="cursor: pointer; display: flex; align-items: center; justify-content: center">
                     <!-- Avatar place holder -->
                     <div style="position: relative; display: inline-block">
-                      <img class="avatar-img" :src="avatarUrl" style="width: 100px; height: 100px; object-fit: contain; border-radius: 50%" />
+                      <img class="avatar-img" :src="profilePic" style="width: 100px; height: 100px; object-fit: contain; border-radius: 50%" />
                       <div
                         style="
                           position: absolute;
@@ -82,17 +127,31 @@ const onFileChange = (event) => {
                   닉네임
                   <span class="text-danger">*</span> </label
                 ><br />
-                <input class="text-nicname w-100" value="" type="text" placeholder="닉네임을 입력하세요." style="border: 2px solid #eaecef; border-radius: 3px; padding: 2%" />
+                <input
+                  class="text-nicname w-100"
+                  value=""
+                  type="text"
+                  placeholder="닉네임을 입력하세요."
+                  v-model="member.nickname"
+                  style="border: 2px solid #eaecef; border-radius: 3px; padding: 2%"
+                />
               </div>
               <!-- 이메일 -->
-              <div class="col-md-6">
-                <!-- label과 input의 간격 조정(mb-2) -->
-                <label class="Email mb-2">
+              <!-- <div class="col-md-6"> -->
+              <!-- label과 input의 간격 조정(mb-2) -->
+              <!-- <label class="Email mb-2">
                   이메일
                   <span class="text-danger">*</span> </label
                 ><br />
-                <input class="text-email w-100" value="" type="email" placeholder="이메일 주소를 입력하세요." style="border: 2px solid #eaecef; border-radius: 3px; padding: 2%" />
-              </div>
+                <input
+                  class="text-email w-100"
+                  value=""
+                  type="email"
+                  placeholder="이메일 주소를 입력하세요."
+                  v-model="member.email"
+                  style="border: 2px solid #eaecef; border-radius: 3px; padding: 2%"
+                />
+              </div> -->
               <!-- 이름 -->
               <div class="col-md-6">
                 <!-- label과 input의 간격 조정(mb-2) -->
@@ -100,7 +159,14 @@ const onFileChange = (event) => {
                   이름
                   <span class="text-danger">*</span> </label
                 ><br />
-                <input class="text-name w-100" value="" type="text" placeholder="이름을 입력하세요." style="border: 2px solid #eaecef; border-radius: 3px; padding: 2%" />
+                <input
+                  class="text-name w-100"
+                  value=""
+                  type="text"
+                  placeholder="이름을 입력하세요."
+                  v-model="member.name"
+                  style="border: 2px solid #eaecef; border-radius: 3px; padding: 2%"
+                />
               </div>
               <!-- 성별 -->
               <div class="col-md-6">
@@ -111,26 +177,15 @@ const onFileChange = (event) => {
                 ><br />
                 <div class="d-flex gap-4">
                   <div class="check-gender radio-bg-light">
-                    <input class="check-manbox" type="radio" name="gender" id="man" checked />
+                    <input class="check-manbox" type="radio" name="gender" id="man" value="남자" v-model="member.gender" />
                     <label class="check-manlabel" for="man">남자</label>
                   </div>
                   <div class="check-gender radio-bg-light">
-                    <input class="check-womanbox" type="radio" name="gender" id="woman" />
+                    <input class="check-womanbox" type="radio" name="gender" id="woman" value="여자" v-model="member.gender" />
                     <label class="check-womanlabel" for="woman">여자</label>
                   </div>
                 </div>
               </div>
-              <!-- 상태 메시지 -->
-              <!-- <div class="col-12">
-                <label class="message mb-2">상태 메시지</label><br />
-                <textarea
-                  class="text-message w-100"
-                  rows="5"
-                  spellcheck="false"
-                  placeholder="메시지를 입력하세요."
-                  style="border: 2px solid #eaecef; border-radius: 3px"
-                ></textarea>
-              </div> -->
               <!-- 수정하기 버튼 -->
               <div class="col-12 text-end">
                 <button class="btn mb-1 me-3" style="border: 1px solid #ff8f17; max-height: 100%; background-color: #ff8f17; color: white">수정</button>

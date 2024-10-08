@@ -11,12 +11,13 @@ const authStore = useAuthStore; //pinia store 사용을 위한 초기화
 //////////////////////////////////////////////////////////
 const member = reactive({
   uno: '',
-  name: '박정빈',
-  userId: 'areoin@naver.com',
+  name: '닉네임기본값설정',
+  userId: '1234',
   password: '1234',
   password2: '1234',
-  nickname: '맹구',
+  nickname: '',
   avatar: null,
+  profilePic: '',
   gender: 'M',
 });
 //////////////////////////////////////////////////////////
@@ -49,6 +50,7 @@ const join = async () => {
   // if (avatar.value.files.length > 0) {
   //   member.avatar = avatar.value.files[0];
   // }
+
   console.log('회원가입 정보:', member);
   try {
     //회원가입 정보 전송

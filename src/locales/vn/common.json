@@ -1,31 +1,32 @@
 {
-    "notice" : "thông báo",
-    "buddiz" : "buddiz",
-    "exchange" : "tỷ giá hối đoái",
-    "map" : "bản đồ",
-    "chat" : "trò chuyện",
-    "login" : "đăng nhập",
-    "mypage" : "Trang của tôi",
+  "notice": "thông báo",
+  "buddiz": "buddiz",
+  "exchange": "tỷ giá hối đoái",
+  "map": "bản đồ",
+  "chat": "trò chuyện",
+  "login": "đăng nhập",
+  "mypage": "Trang của tôi",
 
-    "footer" : {
-        "question" : "câu hỏi",
-        "copyright" : "bản quyền"
-    },
+  "footer": {
+    "question": "câu hỏi",
+    "copyright": "bản quyền"
+  },
 
-    "home" : {
-        "banner1" : "Tìm phòng ở Hàn Quốc,",
-        "banner2" : "Bạn đang lo lắng và lo lắng?",
-        "banner3" : "Tôi sẽ là người bạn, người đồng hành và người hỗ trợ mạnh mẽ của bạn!",
-        "banner4" : "Tìm phòng bạn muốn tại NewZips và ghé thăm phòng đó cùng Bạn bè!",
-        "find_buddiz" : "Tìm Buddiz",
-        "find_room" : "Tìm phòng"
-    },
+  "home": {
+    "banner1": "Tìm phòng ở Hàn Quốc,",
+    "banner2": "Bạn đang lo lắng và lo lắng?",
+    "banner3": "Tôi sẽ là người bạn, người đồng hành và người hỗ trợ mạnh mẽ của bạn!",
+    "banner4": "Tìm phòng bạn muốn tại NewZips và ghé thăm phòng đó cùng Bạn bè!",
+    "find_buddiz": "Tìm Buddiz",
+    "find_room": "Tìm phòng"
+  },
 
-    "chatting" : {
-        "torry" : "NewJips Torry",
-        "placeholder" : "Vui lòng nhập tin nhắn của bạn",
-        "special_terms" : "điều khoản đặc biệt?",
-        "insurance" : "vay tiền thuê nhà?",
-        "aiIntro" : "Rất vui được gặp bạn, <br/>đây là Tori, chatbot của New Zip. <br/>Hãy hỏi bất kỳ câu hỏi nào của bạn về các điều<br/>khoản đặc biệt và bảo hiểm bảo hành! <br/><br/>MẸO khi đặt câu hỏi! <br/>Xin vui lòng đặt một câu hỏi đơn giản sử dụng các<br/>từ khóa liên quan đến bảo hiểm! <br/>(Ví dụ) Hợp đồng đặc biệt, loại bảo hiểm bảo hành <br/>"
-    }
+  "chatting": {
+    "torry": "NewJips Torry",
+    "placeholder": "Vui lòng nhập tin nhắn của bạn",
+    "special_terms": "điều khoản đặc biệt?",
+    "insurance": "vay tiền thuê nhà?",
+    "aiIntro": "Rất vui được gặp bạn, <br/>đây là Tori, chatbot của New Zip. <br/>Hãy hỏi bất kỳ câu hỏi nào của bạn về các điều<br/>khoản đặc biệt và bảo hiểm bảo hành! <br/><br/>MẸO khi đặt câu hỏi! <br/>Xin vui lòng đặt một câu hỏi đơn giản sử dụng các<br/>từ khóa liên quan đến bảo hiểm! <br/>(Ví dụ) Hợp đồng đặc biệt, loại bảo hiểm bảo hành <br/>"
+  },
+  "map": {}
 }
