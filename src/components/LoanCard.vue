@@ -1,54 +1,62 @@
+<!-- LoanCard.vue -->
 <template>
-    <div class="loan-card" @click="$emit('click')">
-      <h3>{{ loan.name }}</h3>
-      <p>{{ loan.subtitle }}</p>
-      <p class="rate">{{ loan.rate }}</p>
-    </div>
-  </template>
-  
-  <script setup>
-  const props = defineProps({
+  <div class="loan-card" @click="handleClick">
+    <h3>{{ loan.title }}</h3>
+    <p>{{ loan.subtitle }}</p>
+    <p class="loan-limit">{{ loan.loanLimit }}</p>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
     loan: {
       type: Object,
       required: true
     }
-  });
-  </script>
-  
-  <style scoped>
-  .loan-card {
-    background-color: #446688;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    cursor: pointer;
-    text-align: center;
-    height: 200px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  },
+  methods: {
+    handleClick() {
+      this.$emit('click', this.loan);
+    }
   }
-  
-  .loan-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-  }
-  
-  .loan-card h3 {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-    color: white;
-  }
-  
-  .loan-card p {
-    font-size: 0.9rem;
-    color: white;
-  }
-  
-  .loan-card .rate {
-    font-size: 1rem;
-    color: white;  
-  }
-  </style>
-  
+};
+</script>
+
+<style scoped>
+.loan-card {
+  background-color: #446688;
+  padding: 20px;
+  border-radius: 12px;
+  color: white !important;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.loan-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.loan-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.loan-card p {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.loan-limit {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #f1f1f1;
+}
+</style>
