@@ -4,6 +4,8 @@ import { useAuthStore } from '@/stores/auth';
 import router from '@/router';
 import qs from 'qs';
 
+// Set the base URL to your Spring backend
+axios.defaults.baseURL = 'http://localhost:8080'; // Update if needed
 axios.defaults.paramsSerializer = (params) => {
   return qs.stringify(params);
 };

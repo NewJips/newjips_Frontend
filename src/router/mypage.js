@@ -20,4 +20,9 @@ export default [
     name: 'mywish',
     component: () => import('../pages/mypage/MyWishPage.vue'),
   },
+  {
+    path: '/mypage/buddizform',
+    name: 'buddizform',
+    component: () => import('../pages/buddiz/buddizForm.vue'), // Correct path to the BuddizForm.vue
+  }
 ];
