@@ -8,7 +8,6 @@ const auth = useAuthStore();
 const userId = computed(() => auth.userId);
 const nickname = computed(() => auth.nickname);
 const profilePic = computed(() => auth.profilePic);
-const avatar = computed(() => `/api/member/${auth.userId}/avatar`); // auth에서 직접 id를 가져옴
 console.log(auth.userId);
 </script>
 

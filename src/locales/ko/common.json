@@ -27,5 +27,20 @@
         "special_terms" : "특약이란?",
         "insurance" : "보증보험이란?",
         "aiIntro" : "반가워요, 뉴집스챗봇 토리입니다.<br/>특약사항, 보증보험 관련된 궁금한 내용을 물어보세요! <br/><br/>질문하기 TIP! <br/>보험 관련 핵심단어로 간단하게 질문해 주세요! <br/>(예시) 특약, 보증보험 종류 <br/>"
+    },
+
+    "edit" : {
+        "edit" : "수정",
+        "upload_img" : "프로필 사진을 업로드하세요.",
+        "personal" : "개인정보",
+        "nickname" : "닉네임",
+        "nicknameHolder" : "닉네임을 입력하세요.",
+        "changePw" : "비밀번호 변경",
+        "newPw" : "새로운 비밀번호",
+        "checkPw" : "비밀번호 확인",
+        "newPwHolder" : "새로운 비밀번호를 입력하세요.",
+        "checkPwHolder" : "새로운 비밀번호 확인",
+        "oldPw" : "기존 비밀번호",
+        "oldPwHolder" : "비밀번호를 입력하세요."
     }
 }

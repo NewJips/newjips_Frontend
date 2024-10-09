@@ -85,11 +85,8 @@ export const useAuthStore = defineStore('auth', () => {
   const getToken = () => state.value.token;
 
   const changeProfile = (member) => {
-    state.value.name = member.name;
-    state.value.userId = member.userId;
     state.value.nickname = member.nickname;
-    state.value.gender = member.gender;
-
+    state.value.profilePic = member.profilePic;
     localStorage.setItem('auth', JSON.stringify(state.value));
   };
 
