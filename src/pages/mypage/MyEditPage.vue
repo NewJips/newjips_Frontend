@@ -13,7 +13,6 @@ const router = useRouter();
 const profilePic = ref('');
 const avatar = ref(null);
 const maxFileSize = 5 * 1024 * 1024;
-console.log('Auth store:', auth); // Auth 객체 확인
 
 const member = reactive({
   uno: auth.uno,
