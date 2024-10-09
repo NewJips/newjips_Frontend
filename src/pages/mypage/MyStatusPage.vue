@@ -11,6 +11,7 @@ const uno = computed(() => auth.uno);
 const userId = computed(() => auth.userId);
 const nickname = computed(() => auth.nickname);
 const profilePic = computed(() => auth.profilePic);
+
 const avatar = computed(() => `/api/member/${uno}/avatar`); // auth에서 직접 id를 가져옴
 console.log(auth.uno);
 
@@ -22,7 +23,6 @@ async function fetchBlameBudizCount() {
   try {
     const data = await blameApi.getblamebudiz(uno.value); // uno를 인자로 전달
     budizcount.value = data.length; // 신고한 버디즈 개수를 세어서 저장
-    console.log('신고한 버디즈 개수:', budizcount.value);
   } catch (error) {
     console.error('버디즈 신고 목록 조회 실패:', error);
   }
@@ -31,7 +31,6 @@ async function fetchBlameEstateCount() {
   try {
     const data = await blameApi.getblameestate(uno.value); // uno를 인자로 전달
     estatecount.value = data.length; //신고한 매물 개수를 세어서 저장.
-    console.log('신고한 매물 개수:', estatecount.value);
   } catch (error) {
     console.error('매물 신고 목록 조회 실패:', error);
   }
@@ -42,6 +41,7 @@ onMounted(() => {
   fetchBlameBudizCount();
   fetchBlameEstateCount();
 });
+
 </script>
 
 <template>
