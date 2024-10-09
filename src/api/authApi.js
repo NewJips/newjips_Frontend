@@ -30,15 +30,15 @@ export default {
   ///////////////// 회원 정보 가입 //////////////////////////
   async create(member) {
     const formData = new FormData();
-    formData.append('uno', member.uno);
+    // formData.append('uno', member.uno);
     formData.append('userId', member.userId);
     formData.append('password', member.password);
     formData.append('name', member.name);
     formData.append('nickname', member.nickname);
     formData.append('gender', member.gender);
-    if (member.avatar) {
-      formData.append('avatar', member.avatar);
-    }
+    // if (member.avatar) {
+    //   formData.append('avatar', member.avatar);
+    // }
 
     // --------> 회원 정보 post방식 전송  //////////////////////////
     const { data } = await api.post(BASE_URL, formData, headers);

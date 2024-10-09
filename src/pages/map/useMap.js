@@ -1,17 +1,42 @@
 import { ref } from 'vue';
-import { MARKER_SPRITE_POSITION, FIXED_MARKER_DATA } from './markerSprite';
+
+import estateApi from '@/api/estateApi';
+import hotplaceApi from '@/api/hotplaceApi';
 
 export function useMap(HOME_PATH) {
   const visibleMarkerCount = 0;
   const markers = ref([]);
   const selectedMarker = ref(null);
-  const estateMarker = (title, price) => {
+
+  // 전세가 포맷
+  const formatPrice = (price, tradetype) => {
+    if (tradetype === 'monthly') {
+      return `${price}`; // 월세는 그대로 숫자 사용
+    } else if (tradetype === 'charter') {
+      const won = price; // 가격을 만 단위로 변환하지 않음
+      const billion = Math.floor(won / 10000); // 억 단위 계산
+      const thousand = Math.floor((won % 10000) / 1000); // 천 단위 계산
+
+      let result = '';
+      if (billion > 0) {
+        result += `${billion}억`;
+      }
+      if (thousand > 0) {
+        result += ` ${thousand}천`;
+      }
+      return result.trim(); // 앞뒤 공백 제거 후 반환
+    }
+    return price; // 기본값 (예외 처리)
+  };
+  const estateMarker = (tradetype, price) => {
+    const displayTradeType = tradetype === 'monthly' ? '월세' : '전세'; // 'charter'를 '전세'로 가정
+    const formattedPrice = formatPrice(price, tradetype); // 가격 포맷
+
     return `
       <div style="display: flex; align-items: center; justify-content: center; width: 4rem; height: 4rem; background-image: url('../src/assets/icons/estate_marker.svg'); background-size: contain; background-repeat: no-repeat; background-position: center; cursor: pointer;">
         <span style="color: white; font-size: 1rem; font-weight: 600; text-align: center;">
-          <p style="margin:0; font-size:12px; font-weight:400;">${title}</p>
-          <p style="margin:0; font-size:16px; line-height:1.5;">${price}</p>
-        </span>
+          <p style="margin:0; font-size:12px; font-weight:400;">${displayTradeType}</p>
+          <p style="margin:0; font-size:16px; line-height:1.5;">${formattedPrice}</p>
         </span>
       </div>
     `;
@@ -20,8 +45,8 @@ export function useMap(HOME_PATH) {
  <div
     style="
       display: flex;
-    padding: 0 8px;
-    height: 35px;
+    padding: 0 10px;
+    height: 40px;
       background-color: #3f54e3;
       border-radius: 50px;
       align-items: center;
@@ -37,12 +62,13 @@ export function useMap(HOME_PATH) {
     </p>
   </div>
 `;
-  const hotPlaceMapMarker = `
+  const hotplaceMarker = (hpName) => {
+    return `
  <div
     style="
       display: flex;
-      padding: 0 8px;
-      height: 35px;
+      padding: 0 10px;
+      height: 40px;
       background-color: #ff8f17;
       border-radius: 50px;
       align-items: center;
@@ -54,9 +80,10 @@ export function useMap(HOME_PATH) {
       src="../src/assets/icons/hot_place_icon.svg"
       style="width: 24px; height: 24px; margin-right: 10px"
     />
-    <p style="color: white; font-weight: bold; margin: 0">정빈이네집</p>
+    <p style="color: white; font-weight: bold; margin: 0">${hpName}</p>
   </div>
 `;
+  };
 
   const initializeMap = (mapElement) => {
     const map = new naver.maps.Map(mapElement, {
@@ -122,66 +149,91 @@ export function useMap(HOME_PATH) {
         anchor: new naver.maps.Point(11, 35),
       },
     });
-    // hotpalce 고정 마커찍기
-    const hotPlaceMarker = new naver.maps.Marker({
-      map: map,
+    // hotpalce 마커찍기
+    hotplaceApi
+      .getHotplaceList()
+      .then((response) => {
+        const hotplaces = response.data;
 
-      position: { lat: 38.3595704, lng: 127.105399 },
+        // 다국어처리 해야해!!
+        const krHotplaces = hotplaces.filter(
+          (hotplace) => hotplace.lan === 'KR'
+        );
+        krHotplaces.forEach((hotplace) => {
+          const position = new naver.maps.LatLng(
+            hotplace.longitude,
+            hotplace.latitude
+          );
 
-      icon: {
-        content: hotPlaceMapMarker,
-        size: new naver.maps.Size(22, 35),
-        origin: new naver.maps.Point(0, 0),
-        anchor: new naver.maps.Point(11, 35),
-      },
-    });
+          const marker = new naver.maps.Marker({
+            map: map,
+            position: position,
+            title: hotplace.hpName,
+            animation: naver.maps.Animation.DROP,
+            icon: {
+              content: hotplaceMarker(hotplace.hpName),
+              size: new naver.maps.Size(24, 37),
+              anchor: new naver.maps.Point(12, 37),
+              origin: new naver.maps.Point(0, 0),
+            },
+            zIndex: 100,
+          });
 
-    markers.value.push(hotPlaceMarker);
-    // 랜덤 마커찍기(CustomMarker)
-    const bounds = map.getBounds();
-    const southWest = bounds.getSW();
-    const northEast = bounds.getNE();
-    const lngSpan = northEast.lng() - southWest.lng();
-    const latSpan = northEast.lat() - southWest.lat();
+          naver.maps.Event.addListener(marker, 'click', () => {
+            console.log('Hotplace clicked:', hotplace);
+            // 핫플레이스 관련 작업 수행
+          });
 
-    for (const key in MARKER_SPRITE_POSITION) {
-      const position = new naver.maps.LatLng(
-        southWest.lat() + latSpan * Math.random(),
-        southWest.lng() + lngSpan * Math.random()
-        // { lat: 37.3595704, lng: 127.105399 },
-        // { lat: 37.3595904, lng: 127.105629 },
-        // { lat: 37.3596104, lng: 127.105649 }
-      );
-
-      const marker = new naver.maps.Marker({
-        map: map,
-        position: position,
-        title: key, // 마커의 title을 필터 구분자로 사용
-        animation: naver.maps.Animation.DROP,
-        icon: {
-          content: estateMarker(key, MARKER_SPRITE_POSITION[key].price),
-
-          size: new naver.maps.Size(24, 37),
-          anchor: new naver.maps.Point(12, 37),
-          origin: new naver.maps.Point(
-            MARKER_SPRITE_POSITION[key].position[0],
-            MARKER_SPRITE_POSITION[key].position[1]
-          ),
-        },
-        zIndex: 100,
+          markers.value.push(marker);
+        });
+      })
+      .catch((error) => {
+        console.error('Error fetching hotplace data:', error);
       });
 
-      naver.maps.Event.addListener(marker, 'click', () => {
-        console.log('penguin random marker click log');
-        selectedMarker.value = {
-          latitude: marker.getPosition().lat(),
-          longitude: marker.getPosition().lng(),
-          title: key,
-        };
-      });
+    // Estate 마커찍기
+    estateApi
+      .getEstateList()
+      .then((response) => {
+        const estates = response.data;
 
-      markers.value.push(marker);
-    }
+        estates.forEach((estate) => {
+          const position = new naver.maps.LatLng(
+            estate.latitude,
+            estate.longitude
+          );
+          const price =
+            estate.tradetype === 'monthly' ? estate.monthlyPee : estate.deposit;
+
+          const marker = new naver.maps.Marker({
+            map: map,
+            position: position,
+            title: estate.title,
+            animation: naver.maps.Animation.DROP,
+            icon: {
+              content: estateMarker(estate.tradetype, price),
+              size: new naver.maps.Size(24, 37),
+              anchor: new naver.maps.Point(12, 37),
+              origin: new naver.maps.Point(0, 0),
+            },
+            zIndex: 100,
+          });
+
+          naver.maps.Event.addListener(marker, 'click', () => {
+            console.log('Marker clicked:', estate);
+            selectedMarker.value = {
+              latitude: estate.latitude,
+              longitude: estate.longitude,
+              title: estate.title,
+            };
+          });
+
+          markers.value.push(marker);
+        });
+      })
+      .catch((error) => {
+        console.error('Error fetching estate data:', error);
+      });
 
     naver.maps.Event.addListener(map, 'idle', () => {
       updateMarkers(map, markers.value);
