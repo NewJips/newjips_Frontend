@@ -1,25 +1,25 @@
 {
-    "notice" : "공지사항",
-    "buddiz" : "버디즈",
-    "exchange" : "환율",
-    "map" : "지도",
-    "chat" : "채팅",
-    "login" : "로그인",
-    "mypage" : "마이페이지",
+  "notice": "공지사항",
+  "buddiz": "버디즈",
+  "exchange": "환율",
+  "map": "지도",
+  "chat": "채팅",
+  "login": "로그인",
+  "mypage": "마이페이지",
 
-    "footer" : {
-        "question" : "자주묻는 질문",
-        "copyright" : "저작권"
-    },
+  "footer": {
+    "question": "자주묻는 질문",
+    "copyright": "저작권"
+  },
 
-    "home" : {
-        "banner1" : "한국에서 방 구하기,",
-        "banner2" : "고민되고 걱정 되시나요?",
-        "banner3" : "가 친구, 동행자, 든든한 지원군이 되어줄게요!",
-        "banner4" : "뉴집스에서 원하는 방을 찾고 버디즈와 함께 방문해보세요!",
-        "find_buddiz" : "버디즈 찾기",
-        "find_room" : "방 찾기"
-    },
+  "home": {
+    "banner1": "한국에서 방 구하기,",
+    "banner2": "고민되고 걱정 되시나요?",
+    "banner3": "가 친구, 동행자, 든든한 지원군이 되어줄게요!",
+    "banner4": "뉴집스에서 원하는 방을 찾고 버디즈와 함께 방문해보세요!",
+    "find_buddiz": "버디즈 찾기",
+    "find_room": "방 찾기"
+  },
 
     "chatting" : {
         "torry" : "뉴집스 토리",
@@ -27,5 +27,21 @@
         "special_terms" : "특약이란?",
         "insurance" : "보증보험이란?",
         "aiIntro" : "반가워요, 뉴집스챗봇 토리입니다.<br/>특약사항, 보증보험 관련된 궁금한 내용을 물어보세요! <br/><br/>질문하기 TIP! <br/>보험 관련 핵심단어로 간단하게 질문해 주세요! <br/>(예시) 특약, 보증보험 종류 <br/>"
-    }
+    },
+
+    "edit" : {
+        "edit" : "수정",
+        "upload_img" : "프로필 사진을 업로드하세요.",
+        "personal" : "개인정보",
+        "nickname" : "닉네임",
+        "nicknameHolder" : "닉네임을 입력하세요.",
+        "changePw" : "비밀번호 변경",
+        "newPw" : "새로운 비밀번호",
+        "checkPw" : "비밀번호 확인",
+        "newPwHolder" : "새로운 비밀번호를 입력하세요.",
+        "checkPwHolder" : "새로운 비밀번호 확인",
+        "oldPw" : "기존 비밀번호",
+        "oldPwHolder" : "비밀번호를 입력하세요."
+    },
+  "map": {}
 }

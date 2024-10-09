@@ -196,7 +196,6 @@ const prevBuddySlide = () => {
 
 .container-fluid {
   padding-right: 20px; /* 전체적인 오른쪽 여백 추가 */
-
 }
 
 /* 메인 콘텐츠를 오른쪽으로 이동시키기 위한 여백 */
@@ -277,5 +276,4 @@ const prevBuddySlide = () => {
   margin-left: 20px; /* 메인 콘텐츠를 오른쪽으로 이동 */
   width: 79%; /* 전체 콘텐츠 너비를 줄임 */
 }
-
 </style>
