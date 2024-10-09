@@ -11,6 +11,7 @@ const uno = computed(() => auth.uno);
 const userId = computed(() => auth.userId);
 const nickname = computed(() => auth.nickname);
 const profilePic = computed(() => auth.profilePic);
+
 const avatar = computed(() => `/api/member/${uno}/avatar`); // auth에서 직접 id를 가져옴
 console.log(auth.uno);
 
@@ -42,6 +43,7 @@ onMounted(() => {
   fetchBlameBudizCount();
   fetchBlameEstateCount();
 });
+
 </script>
 
 <template>
