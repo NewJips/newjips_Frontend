@@ -46,6 +46,21 @@
       "oldPw" : "mật khẩu hiện có",
       "oldPwHolder" : "Vui lòng nhập mật khẩu của bạn."
   },
+
+  "tradetype": {
+    "monthly": "Monthly",
+    "charter": "Charter"
+  },
+  "housetype": {
+    "villa": "Villa",
+    "officeTel": "OfficeTel",
+    "apartment": "Apartment",
+    "etc": "etc",
+    "oneRoom": "One room",
+    "twoRoom": "Two room"
+  }
+}
+
   
   "map": {},
 
@@ -82,3 +97,4 @@
         "address" : "vị trí bất động sản"
     }
 }
+

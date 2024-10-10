@@ -24,6 +24,20 @@
     "find_room": "방 찾기"
   },
 
+
+  "tradetype": {
+    "monthly": "월세",
+    "charter": "전세"
+  },
+  "housetype": {
+    "villa": "빌라",
+    "officeTel": "오피스텔",
+    "apartment": "아파트",
+    "etc": "기타",
+    "oneRoom": "원룸",
+    "twoRoom": "투룸"
+  }
+}
     "chatting" : {
         "torry" : "뉴집스 토리",
         "placeholder" : "메시지를 입력해주세요",
@@ -82,3 +96,4 @@
         "address" : "매물 소재지"
     }
 }
+
