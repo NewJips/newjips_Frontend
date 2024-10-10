@@ -19,7 +19,7 @@ const initState = {
 export const useAuthStore = defineStore('auth', () => {
   const state = ref({ ...initState });
 
-  const isLogin = computed(() => !!state.value.userId); //로그인 상태를 나타내는 computed
+  const isLogin = computed(() => !!state.value.userId);
 
   // state.value.user.id 존재하면 그 값은 truthy이므로,
   // ---> !!state.value.user.id true를 반환
@@ -52,7 +52,6 @@ export const useAuthStore = defineStore('auth', () => {
 
   const login = async (member) => {
     console.log(member);
-
     // state.value.token = 'test token';
     // state.value.user = { : member.id, email: member.id + '@test.com' }   ;
 
@@ -63,7 +62,7 @@ export const useAuthStore = defineStore('auth', () => {
 
     localStorage.setItem('auth', JSON.stringify(state.value));
 
-    console.log('로그인 상태:', isLogin.value);
+    //console.log('로그인 상태:', isLogin.value);
     return data; //추가 : 로그인 결과 반환
   };
 
@@ -76,7 +75,6 @@ export const useAuthStore = defineStore('auth', () => {
   const logout = () => {
     localStorage.clear();
     state.value = { ...initState };
-    console.log('로그인 상태:', isLogin.value);
   };
 
   //로그아웃 시 저장된 데이터를 지우고, 상태를 초기화하는 역할
@@ -85,11 +83,11 @@ export const useAuthStore = defineStore('auth', () => {
 
   const getToken = () => state.value.token;
 
-  const changeProfile = (member) => {
-    state.value.nickname = member.nickname;
-    state.value.profilePic = member.profilePic;
-    localStorage.setItem('auth', JSON.stringify(state.value));
-  };
+    const changeProfile = (member) => {
+        state.value.nickname = member.nickname;
+        state.value.profilePic = member.profilePic;
+        localStorage.setItem('auth', JSON.stringify(state.value));
+    };
 
   load();
 

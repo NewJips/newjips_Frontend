@@ -1,18 +1,20 @@
-import { Dropdown } from 'bootstrap';
-
 export default {
   menus: [
     {
-      title: '지도',
-      url: '/map',
+      title: '공지사항',
+      url: '/board/list',
     },
     {
       title: '버디즈',
       url: '/buddiz',
     },
     {
-      title: '공지사항',
-      url: '/board/list',
+      title: '환율',
+      url: '/exchange',
+    },
+    {
+      title: '지도',
+      url: '/map',
     },
     {
       title: '채팅',
@@ -23,7 +25,13 @@ export default {
   accoutMenus: {
     login: {
       url: '/auth/login',
-      title: '로그인',
+      title: 'Login',
+    },
+
+    join: {
+      url: '/auth/join',
+      title: '마이페이지',
+      icon: 'fa-solid fa-user-plus',
     },
   },
 };

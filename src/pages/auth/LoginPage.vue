@@ -14,7 +14,10 @@ const member = reactive({
 
 const error = ref('');
 
+const disableSubmit = computed(() => !(member.userId && member.password));
+
 const login = async () => {
+  console.log(member);
   try {
     await auth.login(member);
 
@@ -23,14 +26,7 @@ const login = async () => {
   } catch (e) {
     // 로그인 에러
     console.log('에러=======', e);
-    if (e.response && e.response.status === 401) {
-      //인증 실패
-      error.value = '아이디 또는 비밀번호가 틀렸습니다.';
-      alert('아이디 또는 비밀번호가 틀렸습니다.');
-    } else {
-      alert('아이디 또는 비밀번호가 비어 있습니다.');
-      // error.value = e.response && e.response.data ? e.response.data : '로그인 중 에러 발생';
-    }
+    error.value = e.response && e.response.data ? e.response.data : '로그인 중 에러 발생';
   }
 };
 </script>
@@ -72,7 +68,7 @@ const login = async () => {
                     <input class="form-control" type="password" id="signin-password" v-model="member.password" placeholder="비밀번호를 입력하세요" required />
                   </div>
                 </div>
-                <button class="btn-orange btn-lg w-100 mt-4 mb-4" type="submit">로그인</button>
+                <button class="btn-orange btn-lg w-100 mt-4 mb-4" type="submit" :disabled="disableSubmit">로그인</button>
               </form>
               <div class="mt-4 mt-sm-5">
                 계정이 없으신가요??
