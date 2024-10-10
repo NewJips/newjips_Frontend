@@ -4,6 +4,7 @@ import LoanCard from '@/components/LoanCard.vue';
 import FloatingAi from '@/components/FloatingAi.vue';
 import GuideCard from '@/components/GuideCard.vue';
 import { useI18n } from 'vue-i18n';
+
 const { t, locale } = useI18n();
 // locale.value = 'ko'
 
