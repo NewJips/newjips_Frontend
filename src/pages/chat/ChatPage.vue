@@ -3,12 +3,14 @@ import { ref, reactive, computed, watch, nextTick, onMounted, onBeforeUnmount } 
 import { useRoute, useRouter } from 'vue-router';
 import chatApi from '@/api/chatApi';
 import { useChatStore } from '@/stores/chat';
+import { useAuthStore } from '@/stores/auth';
 import { useI18n } from 'vue-i18n';
 
 const { t, locale } = useI18n();
 const router = useRouter();
-const chatStore = useChatStore;
-const uno = '97';
+const chatStore = useChatStore();
+const auth = useAuthStore();
+const uno = computed(() => auth.uno);
 
 //////////////////////// 데이터 ///////////////////////////
 const chatMsg = ref([]);
@@ -22,7 +24,7 @@ const pollingInterval = ref(null);
 ////////////////////////////////////////////////////////
 
 const requestChatRoomSetting = async () => {
-  chatRooms.value = await chatApi.getRoomList(uno);
+  chatRooms.value = await chatApi.getRoomList(uno.value);
 
   if (chatRooms.value.length > 0) {
     requestChatMsg(chatRooms.value[0]);
@@ -41,14 +43,14 @@ const requestChatRoomSetting = async () => {
 // 폴링할 요청
 const requestChatRoom = async () => {
   try {
-    chatRooms.value = await chatApi.getRoomList(uno);
+    chatRooms.value = await chatApi.getRoomList(uno.value);
   } catch (error) {
     console.error('폴링 중 오류 발생: ', error);
   }
 };
 
 const requestChatMsg = async (room) => {
-  chatMsg.value = await chatApi.getChatMsgList(room.cno, uno);
+  chatMsg.value = await chatApi.getChatMsgList(room.cno, uno.value);
   chatRoomid.value = room.cno;
   if (room.requesterFrom) {
     chatName.value = room.toName;
@@ -82,7 +84,7 @@ const requestSendMsg = async () => {
     const result = await chatApi.sendMsg(data);
     if (result != null) {
       msgContent.value = '';
-      requestChatMsgAfterSend(chatRoomid.value, uno);
+      requestChatMsgAfterSend(chatRoomid.value, uno.value);
       requestChatRoom();
     }
   } catch (error) {

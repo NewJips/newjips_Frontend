@@ -66,9 +66,7 @@ export default {
   /////////////// 회원 암호 수정 ///////////////////////////////
 
   async changePassword(formData) {
-    console.log('formData : ', formData);
-    const { data } = await api.put(`${BASE_URL}/${formData.userId}/changepassword`, formData);
-    console.log('AUTH PUT: ', data);
+    const { data } = await api.put(`${BASE_URL}/changepassword`, formData);
     return data;
   },
 };
