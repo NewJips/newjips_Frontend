@@ -9,4 +9,9 @@ export default [
         name: 'blame/buddiz',
         component: () => import('../pages/blame/BlameBuddiz.vue'),
       },
+      {
+        path: '/blame/success',
+        name: 'blame/success',
+        component: () => import('../pages/blame/BlameSuccess.vue'),
+      },
   ];
