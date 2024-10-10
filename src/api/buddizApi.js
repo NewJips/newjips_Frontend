@@ -22,7 +22,7 @@ export default{
     console.log('REVIEW GET', data);
     return data;
   },
-  async create(article) {
+  async create(article, uno) {
     const formData = new FormData();
   
     // formData.append('writer', article.writer);
@@ -33,6 +33,10 @@ export default{
     console.log('BOARD POST: ', data);
     return data;
   },
-
+  async reviewWish(uno){
+    formData.append('uno',uno);
+    const{data}=await api.post(`${BASE_URL}/reviewWish/${uno}`, formData, { headers });
+    return data;
+  },
   
 }
