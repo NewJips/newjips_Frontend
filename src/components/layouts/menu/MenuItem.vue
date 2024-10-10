@@ -1,6 +1,6 @@
 <script setup>
 const props = defineProps({
-  menu: { Type: Object, required: true },
+  menu: { type: Object, required: true },
 });
 </script>
 <template>

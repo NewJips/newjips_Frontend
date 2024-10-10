@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
+import LogoutMenuItem from '../layouts/menu/LogoutMenuItem.vue';
 
 const route = useRoute(); // 전체 route 객체 사용
 const validPaths = ['/mypage/mystatus', '/mypage/myedit', '/mypage/wish', '/mypage/blame'];
@@ -24,7 +25,7 @@ const active = (path) => {
         <router-link :class="active('/mypage/myedit')" to="/mypage/myedit"> 개인 정보 수정 </router-link>
         <router-link :class="active('/mypage/wish')" to="/mypage/wish"> 위시리스트 </router-link>
         <router-link :class="active('/mypage/blame')" to="/mypage/blame"> 신고목록 </router-link>
-        <router-link :class="active('/')" to="/"> 로그아웃 </router-link>
+        <LogoutMenuItem />
       </nav>
     </div>
   </div>

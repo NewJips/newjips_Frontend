@@ -31,14 +31,14 @@ const formattedVietnamMoney = computed(() => {
 });
 
 const loans = [
-{
+  {
     id: 1,
     name: 'KB WELCOME PLUS',
     subtitle: '임차보증금 80% 이내, 최대 2억까지',
     maxAmount: '최고 1.5%',
     rate: '연 3.5 ~ 5.5%',
     duration: '3개월에서 2년',
-    repayment: '일시 상환, 원리금 균등 상환 또는 혼합 상환 방식 가능', 
+    repayment: '일시 상환, 원리금 균등 상환 또는 혼합 상환 방식 가능',
     interest: '변동 금리, 연 3.74% 이내',
     usageInfo: '모든 조건을 충족해야 하며, 조건에 따라 우대 금리가 적용될 수 있습니다.',
     link: 'https://obank.kbstar.com',
@@ -66,16 +66,16 @@ const loans = [
     interest: '연 3.5%',
     usageInfo: '조건에 따라 이용 가능',
     link: 'https://obank.kbstar.com',
-  }];
+  },
+];
 
-  const guides = ref([
+const guides = ref([
   {
     imageSrc: '../src/assets/images/guide1.jpeg',
     category: 'Living',
     title: '원룸? 1.5룸? 이란',
     date: 'September 1, 2023',
-    description:
-      'Learn the differences between one-room and 1.5-room apartments.',
+    description: 'Learn the differences between one-room and 1.5-room apartments.',
     link: 'https://spacediver.tistory.com/2',
   },
   {
@@ -101,13 +101,13 @@ const loans = [
     date: 'September 4, 2023',
     description: 'How to avoid fraudulent listings when searching for a house.',
     link: 'https://spacediver.tistory.com/5',
-  }
+  },
 ]);
 
-  const goToLoanDetail = (loan) => {
-    // url 요청 보내는 방식으로 변경
-    // Fix Loan url type
-  };
+const goToLoanDetail = (loan) => {
+  // url 요청 보내는 방식으로 변경
+  // Fix Loan url type
+};
 </script>
 
 <template>
@@ -115,36 +115,32 @@ const loans = [
     <FloatingAi></FloatingAi>
     <!-- 메인 검색탭 -->
     <section class="mb-5">
-      <div class="container-fluid banner-container overflow-hidden " 
-          style="background-color: #354962; min-height: 55vh; ">
-          <div class="row align-items-center px-4">
-            <!-- 텍스트 및 버튼 -->
-            <div class="col-md-5 ps-5" style="margin-left: 17vh;">
-              <h1 class="banner-text">{{ t('common.home.banner1') }}<br/>{{ t('common.home.banner2') }}</h1>
-              <p class="sub-text">
-                  <span style="color: #FF8F17; font-weight: bold;">{{ t('common.buddiz') }}</span>{{ t('common.home.banner3') }}<br>
-                  {{ t('common.home.banner4') }}
-              </p>
+      <div class="container-fluid banner-container overflow-hidden" style="background-color: #354962; min-height: 55vh">
+        <div class="row align-items-center px-4">
+          <!-- 텍스트 및 버튼 -->
+          <div class="col-md-5 ps-5" style="margin-left: 17vh">
+            <h1 class="banner-text">{{ t('common.home.banner1') }}<br />{{ t('common.home.banner2') }}</h1>
+            <p class="sub-text">
+              <span style="color: #ff8f17; font-weight: bold">{{ t('common.buddiz') }}</span
+              >{{ t('common.home.banner3') }}<br />
+              {{ t('common.home.banner4') }}
+            </p>
 
-              <div class="btn-container">
-                <router-link to="/buddiz" class="text-muted">
-                  <button class="banner-btn btn btn-outline-light me-4 px-4 py-2">
-                    <i class="fas fa-user-friends me-2"></i>{{ t('common.home.find_buddiz') }}
-                  </button>
-                </router-link>
-                 
-                <router-link to="/map" class="text-muted">
-                  <button class="banner-btn btn btn-outline-light px-4 py-2">
-                    <i class="fas fa-home me-2"></i>{{ t('common.home.find_room') }}
-                  </button>
-                </router-link>
-              </div>
-            </div>
+            <div class="btn-container">
+              <router-link to="/buddiz" class="text-muted">
+                <button class="banner-btn btn btn-outline-light me-4 px-4 py-2"><i class="fas fa-user-friends me-2"></i>{{ t('common.home.find_buddiz') }}</button>
+              </router-link>
 
-            <!-- 이미지 -->
-            <div class="col-md-5 ms-4">
-              <img src="@/assets/images/banner_people.png" style="height: 45vh; ">
+              <router-link to="/map" class="text-muted">
+                <button class="banner-btn btn btn-outline-light px-4 py-2"><i class="fas fa-home me-2"></i>{{ t('common.home.find_room') }}</button>
+              </router-link>
             </div>
+          </div>
+
+          <!-- 이미지 -->
+          <div class="col-md-5 ms-4">
+            <img src="@/assets/images/banner_people.png" style="height: 45vh" />
+          </div>
         </div>
       </div>
     </section>
@@ -155,9 +151,9 @@ const loans = [
         <!-- 인기 버디즈 -->
         <div class="col-md-8 pe-5">
           <h4 class="head-title">인기 버디즈</h4>
-            <div class="d-flex mb-4">
-              <span class="subtitle ">가장 많은 별점을 받은 버디즈입니다.</span>
-            </div>
+          <div class="d-flex mb-4">
+            <span class="subtitle">가장 많은 별점을 받은 버디즈입니다.</span>
+          </div>
 
           <div class="row ps-2">
             <div class="col d-flex" v-if="popularBuddiz.length >= 1">
@@ -397,8 +393,8 @@ const loans = [
         <!-- 건대 -->
         <div class="col">
           <a class="card shadow-sm border-0" href="">
-            <div class="card-img-top card-img-hover" style="height: 27vh;">
-              <img src="https://cdn.news.unn.net/news/photo/202111/518970_321294_1325.jpg" alt="">
+            <div class="card-img-top card-img-hover" style="height: 27vh">
+              <img src="https://cdn.news.unn.net/news/photo/202111/518970_321294_1325.jpg" alt="" />
             </div>
             <div class="card-body text-center">
               <h3 class="mb-0 fs-base text-nav">건대</h3>
@@ -412,9 +408,9 @@ const loans = [
     <div class="ms-5 me-5 mb-5">
       <h4 class="head-title">전세 대출 추천</h4>
       <div class="d-flex mb-4">
-        <span class="subtitle ">외국인을 위한 전세 대출을 추천합니다.</span>
-        <span class="position-absolute end-0 me-5" to="/">
-          <router-link class="btn-more text-muted" >더보기</router-link>
+        <span class="subtitle">외국인을 위한 전세 대출을 추천합니다.</span>
+        <span class="position-absolute end-0 me-5">
+          <router-link class="btn-more text-muted" to="/">더보기</router-link>
         </span>
       </div>
 
@@ -461,49 +457,49 @@ export default {
 }
 .ranking-num {
   font-size: 18px;
-  width: 5vh; 
-  height: 5vh; 
-  text-align: center; 
-  align-content: center; 
+  width: 5vh;
+  height: 5vh;
+  text-align: center;
+  align-content: center;
   font-weight: bold;
 }
 
 .ranking-img {
-  width: 18vh; 
-  height: 18vh; 
+  width: 18vh;
+  height: 18vh;
   object-fit: cover;
 }
 
-  .banner-container {
-      color: white;
-      padding: 40px 0;
-  }
-  .banner-text {
-      font-size: 35px;
-      margin-bottom: 20px;
-      line-height: 1.5;
-      letter-spacing: 2.5px;
-  }
-  .sub-text {
-      font-size: 18px;
-      margin-bottom: 40px;
-      line-height: 1.8;
-      letter-spacing: 1.8px;
-      font-weight: 300;
-  }
-  .banner-btn {
-    background-color: white;
-    text-decoration: none; 
-    color: #354962;
-  }
-  .banner-btn:hover {
-    text-decoration: none; 
-    color : #FF8F17;
-  }
+.banner-container {
+  color: white;
+  padding: 40px 0;
+}
+.banner-text {
+  font-size: 35px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+  letter-spacing: 2.5px;
+}
+.sub-text {
+  font-size: 18px;
+  margin-bottom: 40px;
+  line-height: 1.8;
+  letter-spacing: 1.8px;
+  font-weight: 300;
+}
+.banner-btn {
+  background-color: white;
+  text-decoration: none;
+  color: #354962;
+}
+.banner-btn:hover {
+  text-decoration: none;
+  color: #ff8f17;
+}
 
-  .ps-sm-3 {
-    padding-left: 1rem !important;
-  }
+.ps-sm-3 {
+  padding-left: 1rem !important;
+}
 
 .fs-xs {
   font-size: 0.85rem !important;
@@ -557,7 +553,8 @@ export default {
   transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out !important;
 }
 
-.card-hover:hover, .card-hover.show {
+.card-hover:hover,
+.card-hover.show {
   box-shadow: 0 0.125rem 0.125rem -0.125rem rgba(31, 27, 45, 0.08), 0 0.25rem 0.75rem rgba(31, 27, 45, 0.08);
 }
 
@@ -575,39 +572,39 @@ export default {
   color: #454056 !important;
 }
 
-  .border-end-sm {
-    border-right: 1px solid #efecf3 !important;
-  }
-  
-  .w-sm-50 {
-    width: 50% !important;
-  }
+.border-end-sm {
+  border-right: 1px solid #efecf3 !important;
+}
+
+.w-sm-50 {
+  width: 50% !important;
+}
 
 .col-md-10 {
-    flex: 0 0 auto;
-    width: 83.33333333%;
-  }
+  flex: 0 0 auto;
+  width: 83.33333333%;
+}
 
-  .d-sm-flex {
-    display: flex !important;
-  }
+.d-sm-flex {
+  display: flex !important;
+}
 
 .my-2 {
   margin-top: 0.5rem !important;
   margin-bottom: 0.5rem !important;
 }
 
-  .d-sm-none {
-    display: none !important;
-  }
+.d-sm-none {
+  display: none !important;
+}
 
-  .pb-md-3 {
-    padding-bottom: 1rem !important;
-  }
-  .px-md-3 {
-    padding-right: 1rem !important;
-    padding-left: 1rem !important;
-  }
+.pb-md-3 {
+  padding-bottom: 1rem !important;
+}
+.px-md-3 {
+  padding-right: 1rem !important;
+  padding-left: 1rem !important;
+}
 
 h1 {
   line-height: 1.2;
@@ -617,7 +614,6 @@ h1 {
 h3 {
   line-height: 1.3;
 }
-
 
 @media (min-width: 1200px) {
   .display-5 {
@@ -644,16 +640,19 @@ h3 {
   background-color: transparent;
   border: 0;
 }
-.dropdown-item:hover, .dropdown-item:focus {
+.dropdown-item:hover,
+.dropdown-item:focus {
   color: #fd5631;
   background-color: transparent;
 }
-.dropdown-item.active, .dropdown-item:active {
+.dropdown-item.active,
+.dropdown-item:active {
   color: #fd5631;
   text-decoration: none;
   background-color: transparent;
 }
-.dropdown-item.disabled, .dropdown-item:disabled {
+.dropdown-item.disabled,
+.dropdown-item:disabled {
   color: #9691a4;
   pointer-events: none;
   background-color: transparent;
@@ -685,7 +684,8 @@ h3 {
   margin-top: -0.125rem;
   transition: opacity 0.25s ease-in-out;
 }
-.dropdown-item:hover > i, .dropdown-item.active > i {
+.dropdown-item:hover > i,
+.dropdown-item.active > i {
   opacity: 1 !important;
 }
 
@@ -706,7 +706,7 @@ h3 {
   position: relative;
   z-index: 0;
 }
- 
+
 .loan-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -719,40 +719,42 @@ h3 {
   gap: 20px;
 }
 
-.head-title, .btn-more, .guide-card-title {
+.head-title,
+.btn-more,
+.guide-card-title {
   color: #111111;
-  text-decoration: none; 
+  text-decoration: none;
 }
 
 .subtitle {
   font-size: large;
-  color: #3E444E;
+  color: #3e444e;
   font-weight: 500;
 }
 
-.card-img-top img, .img-overlay {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; 
-  }
-  
+.card-img-top img,
+.img-overlay {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .card-img-top img {
   border-top-left-radius: calc(0.75rem - 1px);
   border-top-right-radius: calc(0.75rem - 1px);
 }
 
+.icon-box {
+  display: inline-block;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 4rem;
+  background-color: #f8e3ed;
+}
 
-  .icon-box {
-    display: inline-block;
-    width: 4rem;
-    height: 4rem;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 4rem;
-    background-color: #F8E3ED;
-  }
-
-  .img-overlay {
+.img-overlay {
   position: absolute;
   display: block;
   top: 0;
@@ -794,14 +796,16 @@ h3 {
   color: #9691a4;
 }
 
-.dropdown-toggle.btn-link:hover, .form-group .dropdown-toggle.btn-link.show {
+.dropdown-toggle.btn-link:hover,
+.form-group .dropdown-toggle.btn-link.show {
   color: #454056;
 }
 
 .form-group-light .dropdown-toggle.btn-link {
   color: rgba(255, 255, 255, 0.5);
 }
-.form-group-light .dropdown-toggle.btn-link:hover, .form-group-light .dropdown-toggle.btn-link.show {
+.form-group-light .dropdown-toggle.btn-link:hover,
+.form-group-light .dropdown-toggle.btn-link.show {
   color: #fff;
 }
 
@@ -838,14 +842,14 @@ h3 {
 }
 
 .dropdown-toggle::after {
-   display: block;
-    position: absolute;
-    top: 50%;
-    right: 1rem;
-    margin-top: -0.3rem;
-  }
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  margin-top: -0.3rem;
+}
 
-  .dropdown-menu {
+.dropdown-menu {
   margin-bottom: 0.75rem;
   padding-top: 0;
   padding-bottom: 0;
