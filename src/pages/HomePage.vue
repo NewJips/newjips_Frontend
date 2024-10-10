@@ -156,69 +156,69 @@ const goToLoanDetail = (loan) => {
           </div>
 
           <div class="row ps-2">
-            <div class="col d-flex">
-              <div class="rounded-circle ranking-num mt-2" style="background-color: #ffec82">1</div>
+            <div class="col d-flex" v-if="popularBuddiz.length >= 1">
+              <div class="rounded-circle ranking-num mt-2" style="background-color: #FFEC82;">1</div>
               <div class="ms-4 d-flex flex-column align-items-center">
-                <img src="@/assets/images/face6.jpg" class="avatar ranking-img mb-3" />
-                <h5>제이미</h5>
+                <img :src="popularBuddiz[0].imgFile" class="avatar ranking-img mb-3">
+                <h5>{{ popularBuddiz[0].nickname }}</h5>
                 <div>
-                  <i class="fa fa-star" style="color: #ffc973"></i>
-                  <span class="ms-1">4.8</span>
+                  <i class="fa fa-star" style="color: #FFC973;"></i>
+                  <span class="ms-1">{{ popularBuddiz[0].averageRating }}</span>
                 </div>
               </div>
             </div>
 
-            <div class="col d-flex">
-              <div class="rounded-circle ranking-num" style="background-color: #d5e1f4">2</div>
+            <div class="col d-flex" v-if="popularBuddiz.length >= 2">
+              <div class="rounded-circle ranking-num" style="background-color: #D5E1F4;">2</div>
               <div class="ms-4 d-flex flex-column align-items-center">
-                <img src="@/assets/images/avatar-4.jpg" class="avatar ranking-img mb-3" />
-                <h5>제이크</h5>
+                <img :src="popularBuddiz[1].imgFile" class="avatar ranking-img mb-3">
+                <h5>{{ popularBuddiz[1].nickname }}</h5>
                 <div>
-                  <i class="fa fa-star" style="color: #ffc973"></i>
-                  <span class="ms-1">4.7</span>
+                  <i class="fa fa-star" style="color: #FFC973;"></i>
+                  <span class="ms-1">{{ popularBuddiz[1].averageRating }}</span>
                 </div>
               </div>
             </div>
 
-            <div class="col d-flex">
-              <div class="rounded-circle ranking-num" style="background-color: #ceb796">3</div>
+            <div class="col d-flex" v-if="popularBuddiz.length >= 3">
+              <div class="rounded-circle ranking-num" style="background-color: #CEB796;">3</div>
               <div class="ms-4 d-flex flex-column align-items-center">
-                <img src="@/assets/images/avatar-7.jpg" class="avatar ranking-img mb-3" />
-                <h5>드레이크</h5>
+                <img :src="popularBuddiz[2].imgFile" class="avatar ranking-img mb-3">
+                <h5>{{ popularBuddiz[2].nickname }}</h5>
                 <div>
-                  <i class="fa fa-star" style="color: #ffc973"></i>
-                  <span class="ms-1">4.5</span>
+                  <i class="fa fa-star" style="color: #FFC973;"></i>
+                  <span class="ms-1">{{ popularBuddiz[2].averageRating }}</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
+      
         <!-- 환율 -->
         <div class="col-md-4">
           <h4 class="head-title">환율</h4>
           <div class="d-flex mb-4">
-            <span class="subtitle">한국 - 베트남 환율 정보입니다.</span>
+            <span class="subtitle ">한국 - 베트남 환율 정보입니다.</span>
           </div>
 
           <div class="flex ps-3 pt-3 align-items-center">
             <!-- 한국 -->
             <div class="mb-3 d-flex align-items-center">
-              <img src="@/assets/images/korea.png" class="avatar border me-3" style="width: 8vh; height: 8vh; object-fit: cover" />
-              <div class="rounded-3 d-flex justify-content-end align-items-center px-3" style="background-color: #eaecef; height: 6vh">
-                <input :value="formattedKoreaMoney" @input="updateKoreaMoney" style="all: unset; text-align: right; font-size: large; width: 18vh" class="me-3" />
-                <p style="all: unset; text-align: right; font-weight: bold">KRW</p>
+              <img src="@/assets/images/korea.png" class="avatar border me-3" style="width: 8vh; height: 8vh; object-fit: cover;">
+              <div class="rounded-3 d-flex justify-content-end align-items-center px-3" style="background-color: #EAECEF; height: 6vh;">
+                <input :value="formattedKoreaMoney" @input="updateKoreaMoney" style="all: unset; text-align: right; font-size: large; width: 18vh;" class="me-3">
+                <p style="all: unset; text-align: right; font-weight: bold;">KRW</p>
               </div>
             </div>
 
-            <i class="fas fa-arrow-down mb-3 ms-8 ps-5" style="padding-left: 20vh"></i>
+            <i class="fas fa-arrow-down mb-3 ms-8 ps-5" style="padding-left: 20vh;"></i>
 
             <!-- 베트남 -->
             <div class="mb-3 d-flex align-items-center">
-              <img src="@/assets/images/vietnam.png" class="avatar border me-3" style="width: 8vh; height: 8vh; object-fit: cover" />
-              <div class="rounded-3 d-flex justify-content-end align-items-center px-3" style="background-color: #eaecef; height: 6vh">
-                <input :value="formattedVietnamMoney" @input="updateKoreaMoney" style="all: unset; text-align: right; font-size: large; width: 18vh" class="me-3" />
-                <p style="all: unset; text-align: right; font-weight: bold">VND</p>
+              <img src="@/assets/images/vietnam.png" class="avatar border me-3" style="width: 8vh; height: 8vh; object-fit: cover;">
+              <div class="rounded-3 d-flex justify-content-end align-items-center px-3" style="background-color: #EAECEF; height: 6vh;">
+                <input :value="formattedVietnamMoney" @input="updateKoreaMoney" style="all: unset; text-align: right; font-size: large; width: 18vh;" class="me-3">
+                <p style="all: unset; text-align: right; font-weight: bold;">VND</p>
               </div>
             </div>
           </div>
@@ -230,98 +230,38 @@ const goToLoanDetail = (loan) => {
     <div class="ms-5 me-5 mb-5">
       <h4 class="head-title">인기 매물</h4>
       <div class="d-flex mb-4">
-        <span class="subtitle">찜을 가장 많이 받은 방입니다.</span>
+        <span class="subtitle ">찜을 가장 많이 받은 방입니다.</span>
         <span class="position-absolute end-0 me-5">
           <router-link class="btn-more text-muted" to="/map">더보기</router-link>
         </span>
       </div>
 
       <div>
-        <div class="row gx-4 mx-0 pb-3" data-carousel-options='{"items": 4, "responsive": {"0":{"items":1},"500":{"items":2},"768":{"items":3},"992":{"items":4}}}'>
-          <!-- Item-->
-          <div class="col">
+        <div class="row gx-4 mx-0 pb-3" v-if="popularEstates.length">
+          <!-- 부동산 항목 렌더링 -->
+          <div v-for="(estate, index) in popularEstates" :key="index" class="col">
             <div class="card shadow-sm card-hover border-0 h-100">
               <div class="card-img-top card-img-hover">
                 <a class="img-overlay" href="real-estate-single-v1.html"></a>
-                <div class="position-absolute start-0 top-0 pt-3 ps-3"><span class="d-table badge bg-info">New</span></div>
+                <div class="position-absolute start-0 top-0 pt-3 ps-3">
+                  <span class="d-table badge bg-info">New</span>
+                </div>
                 <div class="content-overlay end-0 top-0 pt-3 pe-3">
                   <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to Wishlist">
                     <i class="fi-heart"></i>
                   </button>
                 </div>
-                <img src="@/assets/images/03.jpg" alt="Image" />
+                <img :src="estate.img" alt="Image" />
               </div>
               <div class="card-body position-relative pb-3">
-                <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">월세</h4>
-                <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link" href="real-estate-single-v1.html">광진안틸리아 | 17.49㎡</a></h3>
-                <p class="mb-2 fs-sm text-muted">서울 광진구 화양로34</p>
-                <div class="fw-bold"><i class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>1,000 / 40</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Item-->
-          <div class="col">
-            <div class="card shadow-sm card-hover border-0 h-100">
-              <div class="card-img-top card-img-hover">
-                <a class="img-overlay" href="real-estate-single-v1.html"></a>
-                <div class="position-absolute start-0 top-0 pt-3 ps-3"><span class="d-table badge bg-info">New</span></div>
-                <div class="content-overlay end-0 top-0 pt-3 pe-3">
-                  <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to Wishlist">
-                    <i class="fi-heart"></i>
-                  </button>
+                <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">{{ estate.tradetype }}</h4>
+                <h3 class="h6 mb-2 fs-base">
+                  <a class="nav-link stretched-link" href="real-estate-single-v1.html">{{ estate.address }} | {{ estate.roomSize }}㎡</a>
+                </h3>
+                <p class="mb-2 fs-sm text-muted">{{ estate.address }}</p>
+                <div class="fw-bold">
+                  <i class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>{{ estate.deposit }} / {{ estate.monthlyPee }}
                 </div>
-                <img src="@/assets/images/03.jpg" alt="Image" />
-              </div>
-              <div class="card-body position-relative pb-3">
-                <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">전세</h4>
-                <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link" href="real-estate-single-v1.html">하이뷰오피스텔 | 17.49㎡</a></h3>
-                <p class="mb-2 fs-sm text-muted">서울 광진구 화양로34</p>
-                <div class="fw-bold"><i class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>25,000</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Item-->
-          <div class="col">
-            <div class="card shadow-sm card-hover border-0 h-100">
-              <div class="card-img-top card-img-hover">
-                <a class="img-overlay" href="real-estate-single-v1.html"></a>
-                <div class="position-absolute start-0 top-0 pt-3 ps-3"><span class="d-table badge bg-info">New</span></div>
-                <div class="content-overlay end-0 top-0 pt-3 pe-3">
-                  <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to Wishlist">
-                    <i class="fi-heart"></i>
-                  </button>
-                </div>
-                <img src="@/assets/images/03.jpg" alt="Image" />
-              </div>
-              <div class="card-body position-relative pb-3">
-                <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">월세</h4>
-                <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link" href="real-estate-single-v1.html">광진안틸리아 | 17.49㎡</a></h3>
-                <p class="mb-2 fs-sm text-muted">서울 광진구 화양로34</p>
-                <div class="fw-bold"><i class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>1,000 / 40</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Item-->
-          <div class="col">
-            <div class="card shadow-sm card-hover border-0 h-100">
-              <div class="card-img-top card-img-hover">
-                <a class="img-overlay" href="real-estate-single-v1.html"></a>
-                <div class="position-absolute start-0 top-0 pt-3 ps-3"><span class="d-table badge bg-info">New</span></div>
-                <div class="content-overlay end-0 top-0 pt-3 pe-3">
-                  <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to Wishlist">
-                    <i class="fi-heart"></i>
-                  </button>
-                </div>
-                <img src="@/assets/images/03.jpg" alt="Image" />
-              </div>
-              <div class="card-body position-relative pb-3">
-                <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">전세</h4>
-                <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link" href="real-estate-single-v1.html">하이뷰오피스텔 | 17.49㎡</a></h3>
-                <p class="mb-2 fs-sm text-muted">서울 광진구 화양로34</p>
-                <div class="fw-bold"><i class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>25,000</div>
               </div>
             </div>
           </div>
@@ -331,23 +271,24 @@ const goToLoanDetail = (loan) => {
 
     <!-- 가이드 -->
     <div class="mb-5">
-      <div class="container-fluid banner-container overflow-hidden ps-5" style="background-color: #eaecef">
+      <div class="container-fluid banner-container overflow-hidden ps-5" style="background-color: #EAECEF;">
         <h4 class="head-title">한국 부동산 가이드</h4>
         <div class="d-flex mb-4">
-          <span class="subtitle">NewJips가 알려주는 쉽고 간단한 부동산 가이드</span>
+          <span class="subtitle ">NewJips가 알려주는 쉽고 간단한 부동산 가이드</span>
           <span class="position-absolute end-0 me-5">
             <router-link class="btn-more text-muted" to="/guide">더보기</router-link>
           </span>
         </div>
 
+
         <div class="row me-5 h-100">
           <!-- 첫 번째 col -->
           <div class="flex col-6 h-100 pe-3">
-            <a href="https://spacediver.tistory.com/2" class="text-muted" style="text-decoration: none">
+            <a href="https://spacediver.tistory.com/2" class="text-muted" style="text-decoration: none; ">
               <div class="card shadow hover-animate h-100">
                 <div class="card-body d-flex flex-column justify-content-between">
                   <div class="icon-box mb-3">
-                    <img src="@/assets/icons/bank-note.svg" style="height: 5vh" />
+                    <img src="@/assets/icons/bank-note.svg" style="height: 5vh;">
                   </div>
                   <h5 class="guide-card-title">[뉴집스 꿀팁] 허위매물 예방 5계명</h5>
                   <p>전체 매물 데이터를 분석하여 소비자를 현혹시키는 허위매물의 유형과 정보</p>
@@ -359,7 +300,7 @@ const goToLoanDetail = (loan) => {
           <!-- 두 번째 col -->
           <div class="col-3">
             <div class="row mb-3">
-              <a href="https://spacediver.tistory.com/10" class="text-muted" style="text-decoration: none">
+              <a href="https://spacediver.tistory.com/10" class="text-muted" style="text-decoration: none; ">
                 <div class="card shadow hover-animate">
                   <div class="card-body">
                     <h6 class="guide-card-title">[뉴집스 꿀팁] 집 계약 후 필수 신고 및 등기 신청 종류 총정리</h6>
@@ -368,7 +309,7 @@ const goToLoanDetail = (loan) => {
               </a>
             </div>
             <div class="row">
-              <a href="https://spacediver.tistory.com/6" class="text-muted" style="text-decoration: none">
+              <a href="https://spacediver.tistory.com/6" class="text-muted" style="text-decoration: none; ">
                 <div class="card shadow hover-animate">
                   <div class="card-body">
                     <h6 class="guide-card-title">[뉴집스 꿀팁] 계약하고 싶은 집 찾을 때 ‘이것’ 꼭 확인해요!</h6>
@@ -381,7 +322,7 @@ const goToLoanDetail = (loan) => {
           <!-- 세 번째 col -->
           <div class="col-3">
             <div class="row mb-3">
-              <a href="https://spacediver.tistory.com/5" class="text-muted" style="text-decoration: none">
+              <a href="https://spacediver.tistory.com/5" class="text-muted" style="text-decoration: none; ">
                 <div class="card shadow hover-animate">
                   <div class="card-body">
                     <h6 class="guide-card-title">[뉴집스꿀팁] 집 구할 때 꼭! 참고해야 할 '매물 체크리스트'</h6>
@@ -391,7 +332,7 @@ const goToLoanDetail = (loan) => {
             </div>
 
             <div class="row">
-              <a href="https://spacediver.tistory.com/3" class="text-muted" style="text-decoration: none">
+              <a href="https://spacediver.tistory.com/3" class="text-muted" style="text-decoration: none; ">
                 <div class="card shadow hover-animate">
                   <div class="card-body">
                     <h6 class="guide-card-title">[뉴집스꿀팁] 주택임대차계약서 작성 시 알아두면 좋은 법률 상식~!</h6>
@@ -400,6 +341,7 @@ const goToLoanDetail = (loan) => {
               </a>
             </div>
           </div>
+
         </div>
       </div>
     </div>
@@ -408,15 +350,15 @@ const goToLoanDetail = (loan) => {
     <div class="ms-5 me-5 mb-5">
       <h4 class="head-title">핫플 지역</h4>
       <div class="d-flex mb-4">
-        <span class="subtitle">한국의 최근 인기 지역을 추천합니다.</span>
+        <span class="subtitle ">한국의 최근 인기 지역을 추천합니다.</span>
       </div>
 
       <div class="hotPlace-grid pb-3">
         <!-- 홍대 -->
         <div class="col">
           <a class="card shadow-sm border-0" href="">
-            <div class="card-img-top card-img-hover" style="height: 27vh">
-              <img src="https://i.pinimg.com/564x/66/a2/ab/66a2ab3dc8ed82cd11376c277c74d47c.jpg" alt="" />
+            <div class="card-img-top card-img-hover" style="height: 27vh;">
+              <img src="https://i.pinimg.com/564x/66/a2/ab/66a2ab3dc8ed82cd11376c277c74d47c.jpg" alt="">
             </div>
             <div class="card-body text-center">
               <h3 class="mb-0 fs-base text-nav">홍대</h3>
@@ -427,20 +369,20 @@ const goToLoanDetail = (loan) => {
         <!-- 성수 -->
         <div class="col">
           <a class="card shadow-sm border-0" href="">
-            <div class="card-img-top card-img-hover" style="height: 27vh">
-              <img src="https://mediahub.seoul.go.kr/uploads/mediahub/2023/07/wHQEGwBLgYQBpvjKWCwKdRHPEmBMwLFy.png" alt="" />
+            <div class="card-img-top card-img-hover" style="height: 27vh;">
+              <img src="https://mediahub.seoul.go.kr/uploads/mediahub/2023/07/wHQEGwBLgYQBpvjKWCwKdRHPEmBMwLFy.png" alt="">
             </div>
             <div class="card-body text-center">
               <h3 class="mb-0 fs-base text-nav">성수</h3>
             </div>
           </a>
         </div>
-
+          
         <!-- 강남 -->
         <div class="col">
           <a class="card shadow-sm border-0" href="">
-            <div class="card-img-top card-img-hover" style="height: 27vh">
-              <img src="https://i.pinimg.com/564x/b3/e6/58/b3e658c5d2947f52b0b23bd96e0bf5a6.jpg" alt="" />
+            <div class="card-img-top card-img-hover" style="height: 27vh;">
+              <img src="https://i.pinimg.com/564x/b3/e6/58/b3e658c5d2947f52b0b23bd96e0bf5a6.jpg" alt="">
             </div>
             <div class="card-body text-center">
               <h3 class="mb-0 fs-base text-nav">강남</h3>
@@ -460,7 +402,7 @@ const goToLoanDetail = (loan) => {
           </a>
         </div>
       </div>
-    </div>
+    </div>    
 
     <!-- 전세 대출 추천 -->
     <div class="ms-5 me-5 mb-5">
@@ -473,15 +415,45 @@ const goToLoanDetail = (loan) => {
       </div>
 
       <div class="loan-grid pb-3">
-        <LoanCard v-for="(loan, index) in loans" :key="index" :loan="loan" @click="goToLoanDetail(loan)" />
+        <LoanCard
+          v-for="(loan, index) in loans"
+          :key="index"
+          :loan="loan"
+          @click="goToLoanDetail(loan)" />
       </div>
     </div>
-  </div>
+</div>
 </template>
 
+
+<script>
+import popularBuddizApi from '@/api/homeApi.js';  // API 파일 불러오기
+import popularEstatesApi from '@/api/homeApi.js';
+export default {
+  data() {
+    return {
+      popularBuddiz: [],  // 인기 버디즈 데이터를 저장할 배열
+      popularEstates: [], // 부동산 데이터 저장
+    };
+  },
+  async mounted() {
+    try {
+      // API 호출 후 인기 버디즈 데이터를 받아옴
+      this.popularBuddiz = await popularBuddizApi.getPopularBuddiz();
+      this.popularEstates = await popularEstatesApi.getPopularEstate();
+    } catch (error) {
+      console.error('Error fetching popular buddies & popular estates:', error);
+    }
+  },
+};
+
+</script>
+
+
 <style scoped>
-.ms-8 {
-  margin-left: 8rem !important;
+
+.ms-8{
+  margin-left:8rem !important
 }
 .ranking-num {
   font-size: 18px;

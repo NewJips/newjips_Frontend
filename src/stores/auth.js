@@ -33,6 +33,7 @@ export const useAuthStore = defineStore('auth', () => {
   const nickname = computed(() => state.value.nickname);
   const name = computed(() => state.value.name);
   const gender = computed(() => state.value.gender);
+  const avatar = computed(() => state.value.avatar);
   const profilePic = computed(() => state.value.profilePic);
 
   const load = () => {
@@ -51,7 +52,6 @@ export const useAuthStore = defineStore('auth', () => {
 
   const login = async (member) => {
     console.log(member);
-
     // state.value.token = 'test token';
     // state.value.user = { : member.id, email: member.id + '@test.com' }   ;
 
@@ -62,7 +62,7 @@ export const useAuthStore = defineStore('auth', () => {
 
     localStorage.setItem('auth', JSON.stringify(state.value));
 
-    console.log('로그인 상태:', isLogin.value);
+    //console.log('로그인 상태:', isLogin.value);
     return data; //추가 : 로그인 결과 반환
   };
 
@@ -75,7 +75,6 @@ export const useAuthStore = defineStore('auth', () => {
   const logout = () => {
     localStorage.clear();
     state.value = { ...initState };
-    console.log('로그인 상태:', isLogin.value);
   };
 
   //로그아웃 시 저장된 데이터를 지우고, 상태를 초기화하는 역할
@@ -85,11 +84,8 @@ export const useAuthStore = defineStore('auth', () => {
   const getToken = () => state.value.token;
 
   const changeProfile = (member) => {
-    state.value.name = member.name;
-    state.value.userId = member.userId;
     state.value.nickname = member.nickname;
-    state.value.gender = member.gender;
-
+    state.value.profilePic = member.profilePic;
     localStorage.setItem('auth', JSON.stringify(state.value));
   };
 
@@ -100,5 +96,5 @@ export const useAuthStore = defineStore('auth', () => {
   // changeProfile(member): 사용자의 이메일을 주어진 member.email로 변경하고, 변경된 상태를 localStorage에 저장합니다.
   // load(): 페이지가 로드될 때 localStorage에서 저장된 인증 정보를 불러와 state에 설정
 
-  return { uno, state, userId, name, nickname, gender, profilePic, isLogin, changeProfile, login, logout, getToken };
+  return { uno, state, userId, name, nickname, profilePic, gender, avatar, isLogin, changeProfile, login, logout, getToken };
 });

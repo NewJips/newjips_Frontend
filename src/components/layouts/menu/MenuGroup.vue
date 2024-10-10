@@ -40,49 +40,46 @@ const uno = '97';
 const pollingInterval = ref(null);
 
 const requestChatRoom = async () => {
-    try {
-      const chatRooms = await chatApi.getRoomList(uno);
-      const cnt = ref(0);
-      chatRooms.forEach(room => {
-        if ((room.requesterFrom && room.senderUnreadCount > 0) || (!room.requesterFrom && room.receiverUnreadCount > 0)) {
-          cnt.value++;
-        }
+  try {
+    const chatRooms = await chatApi.getRoomList(uno);
+    const cnt = ref(0);
+    chatRooms.forEach((room) => {
+      if ((room.requesterFrom && room.senderUnreadCount > 0) || (!room.requesterFrom && room.receiverUnreadCount > 0)) {
+        cnt.value++;
+      }
 
-        if (cnt.value > 0)
-          isChatActive.value = true;
-        else
-          isChatActive.value = false;
-      });
-    } catch(error) {
-        console.error('폴링 중 오류 발생: ', error);
-    }
+      if (cnt.value > 0) isChatActive.value = true;
+      else isChatActive.value = false;
+    });
+  } catch (error) {
+    // console.error('폴링 중 오류 발생: ', error);
+  }
 };
 
 // 폴링을 시작하는 함수
 const startPolling = () => {
-    pollingInterval.value = setInterval(() => {
-        requestChatRoom(); // 일정 간격으로 메시지를 가져옴
-    }, 1000); // 5000ms (5초) 간격으로 폴링
+  pollingInterval.value = setInterval(() => {
+    requestChatRoom(); // 일정 간격으로 메시지를 가져옴
+  }, 1000); // 5000ms (5초) 간격으로 폴링
 };
 
 // 폴링을 중단하는 함수
 const stopPolling = () => {
-    if (pollingInterval.value) {
-        clearInterval(pollingInterval.value);
-        pollingInterval.value = null;
-    }
+  if (pollingInterval.value) {
+    clearInterval(pollingInterval.value);
+    pollingInterval.value = null;
+  }
 };
 
 // 컴포넌트가 마운트되면 폴링을 시작
 onMounted(() => {
-    startPolling();
+  startPolling();
 });
 
 // 컴포넌트가 언마운트될 때 폴링을 중단
 onBeforeUnmount(() => {
-    stopPolling();
+  stopPolling();
 });
-
 </script>
 
 <template>

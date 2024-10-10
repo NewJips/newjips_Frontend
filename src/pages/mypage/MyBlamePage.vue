@@ -1,50 +1,58 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import SideBar from '@/components/layouts/SideBar.vue';
+import { useAuthStore } from '@/stores/auth';
+import blameApi from '@/api/blameApi';
 
-import buildings1 from '@/assets/images/building1.jpg';
-import buildings2 from '@/assets/images/building2.jpg';
-import buildings3 from '@/assets/images/building3.jpg';
-import buildings4 from '@/assets/images/building4.jpg';
-import buildings5 from '@/assets/images/building5.jpg';
-import buildings6 from '@/assets/images/building6.jpg';
-import faceImage1 from '@/assets/images/face2.jpg';
-import faceImage2 from '@/assets/images/face3.jpg';
-import faceImage3 from '@/assets/images/face8.jpg';
-import faceImage4 from '@/assets/images/face9.jpg';
-import faceImage5 from '@/assets/images/face10.jpg';
-import faceImage6 from '@/assets/images/face7.jpg';
+const auth = useAuthStore();
+const uno = computed(() => auth.uno);
+console.log(auth.uno);
 
 // 매물 데이터를 슬라이드로 표시하기 위한 상태 관리
 const currentSlide = ref(0);
 const currentBuddySlide = ref(0);
 
-const blame_buildings = [
-  { title: '매물 1', description: '도심에 위치한 넓고 현대적인 방입니다.', imageUrl: buildings1 },
-  { title: '매물 2', description: '교통이 편리한 위치에 있는 아파트입니다.', imageUrl: buildings2 },
-  { title: '매물 3', description: '바다가 보이는 멋진 스튜디오입니다.', imageUrl: buildings3 },
-  { title: '매물 4', description: '조용하고 평화로운 시골 주택입니다.', imageUrl: buildings4 },
-  { title: '매물 5', description: '럭셔리 스타일의 고급 주택입니다.', imageUrl: buildings5 },
-  { title: '매물 6', description: '현대적인 디자인의 도심형 아파트입니다.', imageUrl: buildings6 },
-];
-const blame_buddiz = [
-  { title: '버디 1', description: '활기찬 성격을 가진 친구입니다.', imageUrl: faceImage1 },
-  { title: '버디 2', description: '재미있는 이야기로 항상 즐거운 친구입니다.', imageUrl: faceImage2 },
-  { title: '버디 3', description: '모험을 좋아하는 친구입니다.', imageUrl: faceImage3 },
-  { title: '버디 4', description: '조용하고 사려 깊은 친구입니다.', imageUrl: faceImage4 },
-  { title: '버디 5', description: '유머감각이 뛰어난 친구입니다.', imageUrl: faceImage5 },
-  { title: '버디 6', description: '운동을 사랑하는 친구입니다.', imageUrl: faceImage6 },
-];
+const blame_buddiz = ref([]);
+// 버디즈 데이터 가져오기
+async function fetchBlameBuddiz() {
+  try {
+    const data = await blameApi.getblamebudiz(uno.value); // API 호출하여 버디즈 데이터 가져오기
+    console.log(uno.value);
+    blame_buddiz.value = data; // 가져온 데이터 할당
+    console.log('가져온 버디즈 데이터: ', blame_buddiz.value);
+  } catch (e) {
+    console.error('버디즈 데이터를 가져오지 못했습니다.', e);
+  }
+}
+
+const blame_buildings = ref([]);
+// 매물 데이터 가져오기
+async function fetchBlameBuildings() {
+  try {
+    const data = await blameApi.getblameestate(uno.value); // API 호출하여 신고 데이터 가져오기
+    console.log(uno.value);
+    blame_buildings.value = data; // 가져온 데이터 할당
+    console.log('가져온 매물 데이터: ', blame_buildings.value);
+  } catch (e) {
+    console.error('매물 데이터를 가져오지 못했습니다.', e);
+  }
+}
+
+// 컴포넌트 마운트 시 데이터 가져오기
+onMounted(() => {
+  fetchBlameBuddiz();
+  fetchBlameBuildings();
+});
 
 // 슬라이드에 표시될 매물 계산
 const displayedGuides = computed(() => {
   // 슬라이드에서 시작 인덱스(currentSlide)에서 4개의 매물을 보여줌
-  return blame_buildings.slice(currentSlide.value, currentSlide.value + 4);
+  return blame_buildings.value.slice(currentSlide.value, currentSlide.value + 4);
 });
 
 // 다음 슬라이드로 이동 (총 매물 개수에 맞춰 순환)
 const nextSlide = () => {
-  if (currentSlide.value + 4 >= blame_buildings.length) {
+  if (currentSlide.value + 4 >= blame_buildings.value.length) {
     currentSlide.value = 0;
   } else {
     currentSlide.value += 1;
@@ -54,7 +62,7 @@ const nextSlide = () => {
 // 이전 슬라이드로 이동 (총 매물 개수에 맞춰 순환)
 const prevSlide = () => {
   if (currentSlide.value === 0) {
-    currentSlide.value = blame_buildings.length - 4;
+    currentSlide.value = blame_buildings.value.length - 4;
   } else {
     currentSlide.value -= 1;
   }
@@ -62,12 +70,12 @@ const prevSlide = () => {
 
 // 슬라이드에 표시될 버디 계산
 const displayedBuddiz = computed(() => {
-  return blame_buddiz.slice(currentBuddySlide.value, currentBuddySlide.value + 4);
+  return blame_buddiz.value.slice(currentBuddySlide.value, currentBuddySlide.value + 4);
 });
 
 // 다음 슬라이드로 이동 (총 버디 개수에 맞춰 순환)
 const nextBuddySlide = () => {
-  if (currentBuddySlide.value + 4 >= blame_buddiz.length) {
+  if (currentBuddySlide.value + 4 >= blame_buddiz.value.length) {
     currentBuddySlide.value = 0;
   } else {
     currentBuddySlide.value += 1;
@@ -77,7 +85,7 @@ const nextBuddySlide = () => {
 // 이전 슬라이드로 이동 (총 버디 개수에 맞춰 순환)
 const prevBuddySlide = () => {
   if (currentBuddySlide.value === 0) {
-    currentBuddySlide.value = blame_buddiz.length - 4;
+    currentBuddySlide.value = blame_buddiz.value.length - 4;
   } else {
     currentBuddySlide.value -= 1;
   }
@@ -106,11 +114,11 @@ const prevBuddySlide = () => {
               <div class="col-lg-3 col-md-4 mb-4" v-for="(buildings, index) in displayedGuides" :key="index">
                 <div class="card hover-animate h-100 border-0 shadow card-custom">
                   <div class="card-img-top overflow-hidden img-container">
-                    <img :src="buildings.imageUrl" class="img-fluid img-custom" :alt="blame_buildings.title" />
+                    <img :src="buildings.img" class="img-fluid img-custom" :alt="blame_buildings.title" />
                   </div>
                   <div class="card-body">
-                    <h5 class="card-title">{{ buildings.title }}</h5>
-                    <p class="card-text">{{ buildings.description }}</p>
+                    <h5 class="card-title">매물{{ currentSlide + index + 1 }}</h5>
+                    <p class="card-text">{{ buildings.content }}</p>
                   </div>
                 </div>
               </div>
@@ -128,10 +136,10 @@ const prevBuddySlide = () => {
             </div>
           </div>
         </div>
-
+        <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
         <h2 class="mt-4" style="margin-left: 20px; margin-right: 0; margin-bottom: 20px">신고한 버디즈</h2>
         <div class="position-relative">
-          <div v-if="blame_buildings.length > 0">
+          <div v-if="blame_buddiz.length > 0">
             <!-- 왼쪽 화살표 -->
             <button @click="prevBuddySlide" class="arrow-left">
               <img src="@/assets/icons/arrow_left.png" alt="Left Arrow" />
@@ -139,14 +147,16 @@ const prevBuddySlide = () => {
 
             <div class="row">
               <!-- 버디즈 카드 슬라이드 -->
-              <div class="col-lg-3 col-md-4 mb-4" v-for="(buddy, index) in displayedBuddiz" :key="index">
+              <div class="col-lg-3 col-md-4 mb-4" v-for="(buddiz, index) in displayedBuddiz" :key="index">
                 <div class="card hover-animate h-100 border-0 shadow card-custom">
                   <div class="card-img-top overflow-hidden img-container">
-                    <img :src="buddy.imageUrl" class="img-fluid img-custom" :alt="buddy.title" />
+                    <img :src="buddiz.blamedProfilePic" class="img-fluid img-custom" :alt="blame_buddiz.title" />
                   </div>
                   <div class="card-body">
-                    <h5 class="card-title">{{ buddy.title }}</h5>
-                    <p class="card-text">{{ buddy.description }}</p>
+                    <h5 class="card-title">{{ buddiz.blamedNickName }}</h5>
+                    <!-- nickname -->
+                    <p class="card-text">{{ buddiz.content }}</p>
+                    <!-- content-->
                   </div>
                 </div>
               </div>
@@ -196,7 +206,6 @@ const prevBuddySlide = () => {
 
 .container-fluid {
   padding-right: 20px; /* 전체적인 오른쪽 여백 추가 */
-
 }
 
 /* 메인 콘텐츠를 오른쪽으로 이동시키기 위한 여백 */
@@ -277,5 +286,4 @@ const prevBuddySlide = () => {
   margin-left: 20px; /* 메인 콘텐츠를 오른쪽으로 이동 */
   width: 79%; /* 전체 콘텐츠 너비를 줄임 */
 }
-
 </style>

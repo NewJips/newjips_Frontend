@@ -1,47 +1,50 @@
 <script setup>
 import SideBar from '@/components/layouts/SideBar.vue';
 import { computed, ref, reactive } from 'vue';
-// import avatar from '../assets/images/myeongsu.jpg';
 import { useAuthStore } from '@/stores/auth';
 import { useRouter } from 'vue-router';
 import authApi from '@/api/authApi';
+import { useI18n } from 'vue-i18n';
 
-// const avatar = new URL('@/assets/images/myeongsu.jpg', import.meta.url).href;
-// const avatar = require('@/assets/images/myeongsu.jpg');
-// const avatarUrl = ref(avatar);
+const { t, locale } = useI18n();
 const error = ref('');
 const auth = useAuthStore();
 const router = useRouter();
-const profilePic = computed(() => auth.profilePic);
+const profilePic = ref('');
 const avatar = ref(null);
-console.log('Auth store:', auth); // Auth 객체 확인
-// const avatarUrl = `/api/member/${auth.UserId}/avatar`;
+const maxFileSize = 5 * 1024 * 1024;
 
-// 아바타 URL computed
-const avatarUrl = computed(() => `/api/member/${auth.userId}/avatar`);
+const oldPw = ref('');
+const newPw1 = ref('');
+const newPw2 = ref('');
+const warn = ref('비밀번호가 일치하지 않습니다.');
 
 const member = reactive({
   uno: auth.uno,
-  userId: auth.userId,
-  name: auth.name,
   nickname: auth.nickname,
-  gender: auth.gender,
   password: '',
   avatar: null,
 });
-console.log(member);
+profilePic.value = auth.profilePic;
 
 const onSubmit = async () => {
   // 아바타가 null이 아닐 때만 파일을 가져옵니다.
-  if (avatar.value.files.length > 0) {
-    member.avatar = avatar.value.files[0];
+  if (avatar.value) {
+    member.avatar = avatar.value;
   }
 
   if (!confirm('수정하시겠습니까?')) return;
 
   try {
-    await authApi.update(member);
+    const formData = new FormData();
+    formData.append('avatar', member.avatar);
+    formData.append('nickname', member.nickname);
+    formData.append('uno', member.uno);
+
+    let result = await authApi.update(formData);
     error.value = '';
+    member.nickname = result.nickname;
+    member.profilePic = result.profilePic;
     auth.changeProfile(member);
     alert('정보를 수정하였습니다.');
     router.go(0);
@@ -50,21 +53,50 @@ const onSubmit = async () => {
     error.value = e.response?.data || '알 수 없는 오류가 발생했습니다.'; // 기본값 설정
   }
 };
-// const avatar = new URL('@/assets/images/myeongsu.jpg', import.meta.url).href;
 
-// const avatarUrl = `/api/member/${auth.UserId}/avatar`; //기본 이미지를 avataeUel로 설정
-console.log('Avatar URL:', avatar); // URL 확인
+// 비밀번호 바꾸기
+const onChangePw = async () => {
+
+    try {
+      const formData = new FormData();
+      formData.append('newPassword', newPw1.value);
+      formData.append('oldPassword', oldPw.value);
+      formData.append('uno', member.uno);
+
+      await authApi.changePassword(formData);
+      alert('정보를 수정하였습니다.');
+      oldPw.value = '';
+      newPw1.value = '';
+      newPw2.value = '';
+    } catch (error) {
+      alert(error.message);
+    }
+  
+};
+
+const newPwMatch = () => {
+  if (newPw1.value === newPw2.value) {
+    warn.value = '';
+  } else {
+    warn.value = '비밀번호가 일치하지 않습니다.';
+  }
+};
 
 //파일 변경 시 미리보기 처리
 const onFileChange = (event) => {
   const file = event.target.files[0];
   if (file) {
+    if (file.size > maxFileSize) {
+      alert("파일 크기는 5MB 이하이어야 합니다.");
+      return;
+    }
+
     const reader = new FileReader();
     reader.onload = (e) => {
-      avatarUrl.value = e.target.result; // 미리보기 이미지 업데이트
-      console.log('file loaded', e.target.result); //결과 확인
+      profilePic.value = e.target.result;
     };
     reader.readAsDataURL(file);
+    avatar.value = file;
   } else {
     console.log('API 호출 중 오류 발생:', e); // 에러 로그 추가
     error.value = e.response?.data?.message || '알 수 없는 오류가 발생했습니다.'; // 에러 메시지 개선
@@ -84,20 +116,20 @@ const onFileChange = (event) => {
         <!-- 개인정보시작 -->
         <div class="card border mb-5">
           <div class="card-header border-bottom">
-            <h4 class="card-header-title">개인정보</h4>
+            <h4 class="card-header-title">{{ t('common.edit.personal') }}</h4>
           </div>
           <div class="card-body">
             <form class="row g-3" @submit.prevent="onSubmit">
               <div class="col-12">
                 <label class="form-label ms-1" style="color: #bababa">
-                  프로필 사진을 업로드하세요.
+                  {{ t('common.edit.upload_img') }}
                   <span class="text-danger">*</span>
                 </label>
                 <div class="d-flex align-items-start mb-3">
                   <label class="mt-3 ms-5" for="uploadfile" title="Replace this pic" style="cursor: pointer; display: flex; align-items: center; justify-content: center">
                     <!-- Avatar place holder -->
                     <div style="position: relative; display: inline-block">
-                      <img class="avatar-img" :src="profilePic" style="width: 100px; height: 100px; object-fit: contain; border-radius: 50%" />
+                      <img class="avatar-img" :src="profilePic" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%" />
                       <div
                         style="
                           position: absolute;
@@ -120,75 +152,29 @@ const onFileChange = (event) => {
                   <input type="file" id="uploadfile" style="display: none" accept="image/*" @change="onFileChange" />
                 </div>
               </div>
+
               <!-- 닉네임 -->
               <div class="col-md-6">
                 <!-- label과 input의 간격 조정(mb-2) -->
                 <label class="nicname mb-2">
-                  닉네임
+                  {{ t('common.edit.nickname') }}
                   <span class="text-danger">*</span> </label
                 ><br />
                 <input
                   class="text-nicname w-100"
                   value=""
                   type="text"
-                  placeholder="닉네임을 입력하세요."
+                  :placeholder="t('common.edit.nicknameHolder')"
                   v-model="member.nickname"
                   style="border: 2px solid #eaecef; border-radius: 3px; padding: 2%"
                 />
               </div>
-              <!-- 이메일 -->
-              <!-- <div class="col-md-6"> -->
-              <!-- label과 input의 간격 조정(mb-2) -->
-              <!-- <label class="Email mb-2">
-                  이메일
-                  <span class="text-danger">*</span> </label
-                ><br />
-                <input
-                  class="text-email w-100"
-                  value=""
-                  type="email"
-                  placeholder="이메일 주소를 입력하세요."
-                  v-model="member.email"
-                  style="border: 2px solid #eaecef; border-radius: 3px; padding: 2%"
-                />
-              </div> -->
-              <!-- 이름 -->
-              <div class="col-md-6">
-                <!-- label과 input의 간격 조정(mb-2) -->
-                <label class="name mb-2">
-                  이름
-                  <span class="text-danger">*</span> </label
-                ><br />
-                <input
-                  class="text-name w-100"
-                  value=""
-                  type="text"
-                  placeholder="이름을 입력하세요."
-                  v-model="member.name"
-                  style="border: 2px solid #eaecef; border-radius: 3px; padding: 2%"
-                />
-              </div>
-              <!-- 성별 -->
-              <div class="col-md-6">
-                <!-- label과 input의 간격 조정(mb-2) -->
-                <label class="gender mb-3">
-                  성별
-                  <span class="text-danger">*</span> </label
-                ><br />
-                <div class="d-flex gap-4">
-                  <div class="check-gender radio-bg-light">
-                    <input class="check-manbox" type="radio" name="gender" id="man" value="남자" v-model="member.gender" />
-                    <label class="check-manlabel" for="man">남자</label>
-                  </div>
-                  <div class="check-gender radio-bg-light">
-                    <input class="check-womanbox" type="radio" name="gender" id="woman" value="여자" v-model="member.gender" />
-                    <label class="check-womanlabel" for="woman">여자</label>
-                  </div>
-                </div>
-              </div>
+
               <!-- 수정하기 버튼 -->
               <div class="col-12 text-end">
-                <button class="btn mb-1 me-3" style="border: 1px solid #ff8f17; max-height: 100%; background-color: #ff8f17; color: white">수정</button>
+                <button class="btn mb-1 me-3" style="border: 1px solid #ff8f17; max-height: 100%; background-color: #ff8f17; color: white">
+                  {{ t('common.edit.edit') }}
+                </button>
               </div>
               <!-- 끝 -->
             </form>
@@ -196,28 +182,33 @@ const onFileChange = (event) => {
           <!-- card-body End -->
         </div>
         <!-- card-border End -->
+
+
         <!-- 비밀번호 변경 -->
         <div class="card border mb-5">
           <div class="card-header card-bottom">
-            <h4 class="card-header-title">비밀번호 변경</h4>
+            <h4 class="card-header-title">{{ t('common.edit.changePw') }}</h4>
           </div>
-          <form class="card-body">
+          <div class="card-body">
             <div class="mb-3">
-              <label class="form-label">비밀번호</label>
-              <input class="form-control" type="password" placeholder="비밀번호를 입력하세요." />
+              <label class="form-label">{{ t('common.edit.oldPw') }}</label>
+              <input class="form-control" v-model="oldPw" type="password" :placeholder="t('common.edit.oldPwHolder')"/>
             </div>
             <div class="mb-3">
-              <label class="form-label">새로운 비밀번호</label>
-              <input class="form-control" type="password" placeholder="새로운 비밀번호를 입력하세요." />
+              <label class="form-label">{{ t('common.edit.newPw') }}</label>
+              <input class="form-control" v-model="newPw1" type="password" :placeholder="t('common.edit.newPwHolder')" @change="newPwMatch()" />
             </div>
             <div class="mb-3">
-              <label class="form-label">비밀번호 확인</label>
-              <input class="form-control" type="password" placeholder="새로운 비밀번호 확인" />
+              <label class="form-label">{{ t('common.edit.checkPw') }}</label>
+              <input class="form-control" v-model="newPw2" type="password" :placeholder="t('common.edit.checkPwHolder')" @change="newPwMatch()" />
+              <span class="ms-2" style="color: red;">{{ warn }}</span>
             </div>
             <div class="col-12 text-end">
-              <button class="btn mb-1 me-3" style="border: 1px solid #ff8f17; max-height: 100%; background-color: #ff8f17; color: white">수정</button>
+              <button @click="onChangePw()" class="btn mb-1 me-3" style="border: 1px solid #ff8f17; max-height: 100%; background-color: #ff8f17; color: white">
+                {{ t('common.edit.edit') }}
+              </button>
             </div>
-          </form>
+          </div>
           <!-- card-body End -->
         </div>
         <!-- caed-border End -->

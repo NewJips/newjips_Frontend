@@ -1,102 +1,121 @@
 <script setup>
 import { ref, reactive, computed, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/stores/auth';
+import { useBlameStore } from '@/stores/blame';
+import { useI18n } from 'vue-i18n';
+import blameApi from '@/api/blameApi';
 
+const { t, locale } = useI18n();
+const auth = useAuthStore();
+const blame = useBlameStore();
+const router = useRouter();
+const reasondetail = ref('');
+const blameType = ref('');
 
+const blameDTO = reactive({
+  uno: auth.uno,
+  blamedId : blame.blamedId,
+  content : '',
+  targetType : 'E'
+});
+
+const blameOptions = computed(() => [
+    { value: 1, label: t('common.blame.e1') },
+    { value: 2, label: t('common.blame.e2') },
+    { value: 3, label: t('common.blame.e3') },
+    { value: 4, label: t('common.blame.e4') },
+    { value: 5, label: t('common.blame.e5') },
+]);
+
+const updateContent = (label) => {
+    blameType.value = label;  // 선택된 레이블 텍스트를 저장
+};
+
+const goBack = () => {
+  router.go(-1); 
+};
+
+// 확인버튼 - 신고하기
+const requestBlame = async () => {
+    blameDTO.content = blameType.value + '. ' + reasondetail.value;
+
+    try {
+        await blameApi.insertblame(blameDTO);
+        router.push('/blame/success');
+    } catch (error) {
+        return alert('fail to Blame');
+    }
+};
 </script>
 
 <template>
     <div class="container-fluid px-0">
         <!-- header -->
         <div class="type-header">
-            <h2>신고하기</h2>
-            <div style="font-size: 17pt; margin-top: 8pt;">매물, 부동산, 버디즈 등 문제 상황을 신고하세요 !</div>
+            <h2>{{ t('common.blame.blame') }}</h2>
+            <div style="font-size: 17pt; margin-top: 8pt;">{{ t('common.blame.des') }}</div>
         </div>
 
-        <form>
-            <div class="box">
-                <h4 class="mb-4">신고 매물 정보</h4>
-                <table class="table table-bordered ms-3">
-                    <tbody>
-                        <tr>
-                            <th>중개업소</th>
-                            <td>대공원 중개업소</td>
-                        </tr>
-                        <tr>
-                            <th>전화번호</th>
-                            <td>010 - 5495 - 7754</td>
-                        </tr>
-                        <tr>
-                            <th>매물 번호</th>
-                            <td>23</td>
-                        </tr>
-                        <tr>
-                            <th>매물 소재지</th>
-                            <td>서울 광진구 능동로44길 56</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
 
-            <div class="box">
-                <h4 class="mb-4">신고 사유</h4>
-                <table class="table table-bordered ms-3">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <label for="blameOption" class="d-flex align-items-center" style="margin-top: 6px; margin-bottom: 6px;">
-                                    <input class="form-check-input mt-0" type="checkbox" value="1" aria-label="Checkbox for following text input">
-                                    <span class="ms-3">허위 / 과장된 가격정보를 가진 매물</span>
-                                </label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label for="blameOption" class="d-flex align-items-center" style="margin-top: 6px; margin-bottom: 6px;">
-                                    <input class="form-check-input mt-0" type="checkbox" value="2" aria-label="Checkbox for following text input">
-                                    <span class="ms-3">거래 완료 혹은 철회에도 온라인상에 노출 중인 매물</span>
-                                </label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label for="blameOption" class="d-flex align-items-center" style="margin-top: 6px; margin-bottom: 6px;">
-                                    <input class="form-check-input mt-0" type="checkbox" value="3" aria-label="Checkbox for following text input">
-                                    <span class="ms-3">경매 의심 매물</span>
-                                </label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label for="blameOption" class="d-flex align-items-center" style="margin-top: 6px; margin-bottom: 6px;">
-                                    <input class="form-check-input mt-0" type="checkbox" value="4" aria-label="Checkbox for following text input">
-                                    <span class="ms-3">매도자 사칭 매물</span>
-                                </label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label for="blameOption" class="d-flex align-items-center" style="margin-top: 6px; margin-bottom: 6px;">
-                                    <input class="form-check-input mt-0" type="checkbox" value="5" aria-label="Checkbox for following text input">
-                                    <span class="ms-3">기타 사유로 정보가 부정확한 매물</span>
-                                </label>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="box">
+            <h4 class="mb-4">{{ t('common.blame.einfo') }}</h4>
+            <table class="table table-bordered ms-3">
+                <tbody>
+                    <tr>
+                        <th>{{ t('common.blame.agentNm') }}</th>
+                        <td>{{ blame.agentNm }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ t('common.blame.agentphone') }}</th>
+                        <td>{{ blame.agentPhone }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ t('common.blame.estatenum') }}</th>
+                        <td>{{ blame.eno }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ t('common.blame.address') }}</th>
+                        <td>{{ blame.estateAddress }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-            </div>
+        <div class="box">
+            <h4 class="mb-4">{{ t('common.blame.reason') }}</h4>
+            <table class="table table-bordered ms-3">
+                <tbody>
+                    <tr v-for="(option, index) in blameOptions" :key="index">
+                    <td>
+                        <label class="d-flex align-items-center" style="margin-top: 6px; margin-bottom: 6px;">
+                            <input
+                                class="form-check-input mt-0"
+                                type="radio"
+                                name="blameOption"
+                                :value="option.value"
+                                v-model="selectedOption"
+                                aria-label="Radio button for following text input"
+                                @change="updateContent(option.label)"
+                                />
+                        <span class="ms-3">{{ option.label }}</span>
+                        </label>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
 
-            <div class="box">
-                <h4 class="mb-4">신고 내용</h4>
-                <textarea class="form-control ms-3" id="content" rows="5" placeholder="신고 내용을 입력해주세요."></textarea>
-            </div>
+        </div>
 
-            <div class="container-fluid d-flex justify-content-center mb-5 box mt-4" style="gap: 15px;">
-                <button class="button-box me-4" style="background-color: #F5F6F7;">취소</button>
-                <button class="button-box ms-4" style="background-color: #344356; color: #FFFFFF;">확인</button>
-            </div>
-        </form>
+        <div class="box">
+            <h4 class="mb-4">{{ t('common.blame.content') }}</h4>
+            <textarea class="form-control ms-3" v-model="reasondetail" id="content" rows="5" :placeholder="t('common.blame.holder')"></textarea>
+        </div>
+
+        <div class="container-fluid d-flex justify-content-center mb-5 box mt-4" style="gap: 15px;">
+            <button class="button-box me-4" style="background-color: #F5F6F7;" @click="goBack">{{ t('common.cancle') }}</button>
+            <button class="button-box ms-4" style="background-color: #344356; color: #FFFFFF;" @click="requestBlame()">{{ t('common.yes') }}</button>
+        </div>
     </div>
 </template>
 

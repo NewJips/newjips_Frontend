@@ -1,13 +1,13 @@
 export default [
     {
       path: '/buddiz',
-      name: 'buddizSearch',
+      name: 'BuddizSearch',
       component: () => import('../pages/buddiz/buddizSearchPage.vue'),
     },
     {
-      path: '/buddiz/userDetail/:id',
+      path: '/buddiz/userDetail/:uno',
       name: 'buddizDetail',
       component:()=>import('../pages/buddiz/buddizDetailPage.vue')
-    }
+    },
   ];
   

@@ -30,15 +30,15 @@ export default {
   ///////////////// 회원 정보 가입 //////////////////////////
   async create(member) {
     const formData = new FormData();
-    formData.append('uno', member.uno);
+    // formData.append('uno', member.uno);
     formData.append('userId', member.userId);
     formData.append('password', member.password);
     formData.append('name', member.name);
     formData.append('nickname', member.nickname);
     formData.append('gender', member.gender);
-    if (member.avatar) {
-      formData.append('avatar', member.avatar);
-    }
+    // if (member.avatar) {
+    //   formData.append('avatar', member.avatar);
+    // }
 
     // --------> 회원 정보 post방식 전송  //////////////////////////
     const { data } = await api.post(BASE_URL, formData, headers);
@@ -49,24 +49,9 @@ export default {
   },
   /////////////// 회원 정보 수정 ///////////////////////////////
 
-  async update(member) {
-    const formData = new FormData();
-    formData.append('uno', member.uno);
-    formData.append('userId', member.userId);
-    formData.append('name', member.name);
-    // formData.append('password', member.password);
-    formData.append('nickname', member.nickname);
-    formData.append('gender', member.gender);
-
-    if (member.avatar) {
-      formData.append('avatar', member.avatar);
-    }
-    // formData의 내용을 출력
-    for (const [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
-    const { data } = await api.put(`${BASE_URL}/${userId}`, formData, headers);
-    console.log('AUTH PUT: ', data);
+  async update(formdata) {
+    console.log('update : ', formdata);
+    const { data } = await api.put(BASE_URL, formdata, headers);
     return data;
   },
 
@@ -81,9 +66,7 @@ export default {
   /////////////// 회원 암호 수정 ///////////////////////////////
 
   async changePassword(formData) {
-    console.log('formData : ', formData);
-    const { data } = await api.put(`${BASE_URL}/${formData.userId}/changepassword`, formData);
-    console.log('AUTH PUT: ', data);
+    const { data } = await api.put(`${BASE_URL}/changepassword`, formData);
     return data;
   },
 };

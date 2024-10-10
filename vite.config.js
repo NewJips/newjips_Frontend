@@ -21,12 +21,14 @@ export default ({ mode }) => {
       proxy: {
         '/api': {
           target: 'http://localhost:8080',
-          // changeOrigin: true,
+          changeOrigin: true,
+          // rewrite: (path) => path.replace(/^\/api/, ''),
         },
       },
     },
+    
     build: {
-      outDir: '../Board_Backend/src/main/webapp/resources',
+      outDir: '../newjips_Backend/src/main/webapp/resources',
     },
     // process.env에 환경 변수를 추가합니다.
     define: {
