@@ -1,9 +1,13 @@
-<!-- FormComponent.vue -->
+<!-- buddizForm.vue -->
 <script setup>
 import { ref } from 'vue';
 import { useAuthStore } from '@/stores/auth'; // Adjust the path as needed
 import buddizIntroApi from '@/api/buddizIntroApi';
+import { useI18n } from 'vue-i18n';
 
+
+const { locale } = useI18n(); // Destructure the locale properly
+console.log(locale.value); // You should see the current locale
 const nickname = ref('');
 const residence = ref('');
 const koreaExperience = ref('');
@@ -12,37 +16,15 @@ const transactionCount = ref('');
 const description = ref('');
 const price = ref(0);
 const currencyUnit = ref('$'); // Default currency unit
-const photos = ref([]);
 const selectedCharacteristics = ref([]);
 const selectedLanguages = ref([]);
 
 // Example lists for checkboxes
 const characteristics = ['Friendly', 'Emotional', 'Calm', 'Energetic', 'Silent', 'Organized', 'Sociable'];
-const languages = ['English', 'Vietnamese', 'Korean', 'Chinese'];
+const languages = ['Vietnamese', 'Korean'];
 
 // Regions dropdown options
 const regions = ['서울', '부산', '대구', '인천', '광주'];
-
-const handleFileUpload = (event) => {
-  const files = event.target.files || event.dataTransfer.files;
-  for (let i = 0; i < files.length; i++) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      photos.value.push(e.target.result);
-    };
-    reader.readAsDataURL(files[i]);
-  }
-};
-
-const handleDragOver = (event) => {
-  event.preventDefault(); // Necessary to allow drop
-  event.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy
-};
-
-const handleDrop = (event) => {
-  event.preventDefault();
-  handleFileUpload(event); // Use the same handler for both input and drop
-};
 
 const submitForm = async () => {
   const authStore = useAuthStore(); // Initialize the store
@@ -54,17 +36,19 @@ const submitForm = async () => {
   }
 
   const formData = {
-    uno: userUno,  // logged-in user's `uno`
-    liveInKr: koreaExperience.value,  // Experience in Korea (maps to `liveInKr`)
-    personality: selectedCharacteristics.value.join(','),  // Personality (maps to `personality`)
-    cost: price.value,  // Price (maps to `cost`)
-    hiredTimes: transactionCount.value,  // Transaction count (maps to `hiredTimes`)
-    rating: 5.0,  // Placeholder for rating (since it's not in the form, you can adjust this)
-    selfInfo: description.value,  // Description (maps to `selfInfo`)
-    lan: selectedLanguages.value.length > 0 ? selectedLanguages.value[0] : 'KR',  // Primary language (maps to `lan`)
-    location: residence.value,  // Residence (maps to `location`)
-    useLan: selectedLanguages.value.join(','),  // Languages spoken (maps to `useLan`)
-  };
+  uno: userUno,  
+  liveInKr: koreaExperience.value || 0,  // Ensure numeric value
+  personality: selectedCharacteristics.value.join(',') || 'Unknown',  // Default if empty
+  cost: price.value || 0,  // Ensure numeric value
+  hiredTimes: transactionCount.value || 0,  // Ensure numeric value
+  rating: 5.0,  // Placeholder for rating
+  selfInfo: description.value || 'No description provided',  // Default if empty
+  lan: locale.value === 'ko' ? 'KR' : 'VN',  // Default to 'KR' or 'VN'
+  location: residence.value || 'Unknown',  // Default if empty
+  useLan: selectedLanguages.value.join(',') || 'Unknown',  // Default if empty
+};
+
+console.log('Submitting form data:', formData);  // For debugging
 
   try {
     const response = await buddizIntroApi.saveOrUpdateBuddizIntro(formData);
@@ -174,29 +158,6 @@ const submitForm = async () => {
         </div>
       </section>
 
-      <!-- Photos Section with Simplified Design and Drag-and-Drop -->
-      <section class="section-card">
-        <h2 class="section-title"><i class="section-icon"></i> Photos</h2>
-        <div class="info-box">
-          <p>The maximum photo size is 8 MB. Formats: jpeg, jpg, png. Put the main picture first. The maximum video size
-            is 10 MB. Formats: mp4, mov.</p>
-        </div>
-        <div class="drag-and-drop-box" @dragover.prevent="handleDragOver" @drop.prevent="handleDrop">
-          <label class="upload-btn">
-            <input type="file" @change="handleFileUpload" multiple aria-label="Upload photos" />
-            <span>Upload photos</span>
-          </label>
-          <p>or drag them in</p>
-        </div>
-
-        <!-- Show photo previews if photos are uploaded -->
-        <div v-if="photos.length">
-          <div v-for="(photo, index) in photos" :key="index" class="photo-preview">
-            <img :src="photo" />
-          </div>
-        </div>
-      </section>
-
       <!-- Submit Button -->
       <button class="submit-btn" @click="submitForm">Save and continue</button>
     </div>
@@ -291,41 +252,19 @@ textarea {
   resize: vertical;
 }
 
-.photo-preview {
-  margin-top: 1rem;
-}
-
-img {
-  max-width: 100px;
-  border-radius: 8px;
-  margin-right: 1rem;
-}
-
-.info-box {
-  background-color: #e0f7ff;
-  padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  font-size: 0.9rem;
-  color: #333;
-}
-
 .price-group-inline {
   display: flex;
   flex-direction: row;
-  /* Keeps the input and dropdown in a row */
   gap: 1rem;
   align-items: center;
 }
 
 .price-group-inline input {
   width: 150px;
-  /* Smaller input box for price */
 }
 
 .price-group-inline select {
   width: 80px;
-  /* Smaller dropdown for the currency */
 }
 
 .small-input {
@@ -356,48 +295,5 @@ input::placeholder {
 
 .submit-btn:hover {
   background-color: #ff8c00;
-}
-
-.drag-and-drop-box {
-  padding: 1.5rem;
-  border: 2px dashed #ddd;
-  border-radius: 8px;
-  text-align: center;
-  background-color: #f8f8f8;
-  margin-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.upload-btn {
-  background-color: #ff8c00;
-  color: #fff;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  cursor: pointer;
-  display: inline-block;
-  margin-bottom: 0.5rem;
-  font-size: 1rem;
-}
-
-.upload-btn input {
-  display: none;
-}
-
-p {
-  margin-top: 0.5rem;
-  color: #777;
-}
-
-.required-asterisk {
-  color: red;
-  margin-left: 0.2rem;
-}
-
-.checkbox-group h4 {
-  margin-bottom: 0.5rem;
-  font-weight: bold;
 }
 </style>
