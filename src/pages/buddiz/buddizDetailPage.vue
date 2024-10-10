@@ -24,8 +24,9 @@
               <div class="test">
                 <div class="icon-rounded icon-rounded-sm bg-primary-light flex-shrink-0 me-2" style="width: 150px;">
                   <img src="/src/assets/icons/roundstar.png" alt="star" style="width: 35px; height: 35px;">
-                  <span style="margin-left: 10px; margin-top: 15px; display: inline; white-space: nowrap;">
-                    {{ buddiz.rating }}
+                  <span style="margin-left: 13px; margin-top: 15px; display: inline; white-space: nowrap;">
+                    <span style="margin-right: 5px;">{{ buddiz.rating }}</span>
+                    <span>({{ totalCount }})</span>
                   </span>
                 </div>
               </div>
@@ -83,11 +84,12 @@
           <!-- 리뷰 목록 -->
           <h5 class="mb-4">후기</h5>
           <div v-if="reviewList.length > 0">
-            <div v-for="review in reviewList" :key="review.id" class="d-flex d-block d-sm-flex review">
+            <div v-for="review in reviewList.slice(0, 4)" :key="review.id" class="d-flex d-block d-sm-flex review">
               <div class="text-md-center flex-shrink-0 me-4 me-xl-5">
                 <img src="" alt="reviewer image" class="d-block avatar avatar-xxl p-2 mb-2"
                   style="width: 100px; height: 100px;">
-                <span class="text-uppercase text-muted text-sm">{{ new Date(review.createdAt).toLocaleDateString() }}</span>
+                <span class="text-uppercase text-muted text-sm">{{ new Date(review.createdAt).toLocaleDateString()
+                  }}</span>
               </div>
               <div>
                 <h6 class="mt-2 mb-1">{{ review.reviewer }}</h6>
@@ -99,32 +101,60 @@
               </div>
             </div>
           </div>
-          
+
           <!-- 리뷰 입력란 -->
-          <!-- <div class="py-5">
-              <button class="btn btn-outline-primary" type="button" @click="toggleReview">리뷰 남기기</button>
-              <div v-show="isReviewVisible" class="mt-4">
-                <h5 class="mb-4">리뷰 작성</h5>
-                <form @submit.prevent="submitReview" class="form" id="contact-form">
-                  <div class="mb-4">
-                    <label class="form-label" for="rating">평점 *</label>
-                    <select class="form-select focus-shadow-0" v-model="review.rating" id="rating" required>
-                      <option value="5">★★★★★ (5/5)</option>
-                      <option value="4">★★★★☆ (4/5)</option>
-                      <option value="3">★★★☆☆ (3/5)</option>
-                      <option value="2">★★☆☆☆ (2/5)</option>
-                      <option value="1">★☆☆☆☆ (1/5)</option>
-                    </select>
-                  </div>
-                  <div class="mb-4">
-                    <label class="form-label" for="review">리뷰 내용 *</label>
-                    <textarea class="form-control" v-model="review.content" rows="4" id="review" placeholder="리뷰를 입력하세요"
-                      required></textarea>
-                  </div>
-                  <button class="btn btn-primary" type="submit">리뷰 등록</button>
-                </form>
+          <div class="py-5">
+            <button class="btn btn-outline-primary" type="button" @click="toggleReview">리뷰 남기기</button>
+            <div v-show="isReviewVisible" class="mt-4">
+              <h5 class="mb-4">리뷰 작성</h5>
+              <form @submit.prevent="submit" class="form" id="contact-form">
+                <div class="mb-4">
+                  <label class="form-label" for="rating">평점</label>
+                  <select class="form-select focus-shadow-0" v-model="article.rating" id="rating" required>
+                    <option value="5">★★★★★ (5/5)</option>
+                    <option value="4">★★★★☆ (4/5)</option>
+                    <option value="3">★★★☆☆ (3/5)</option>
+                    <option value="2">★★☆☆☆ (2/5)</option>
+                    <option value="1">★☆☆☆☆ (1/5)</option>
+                  </select>
+                </div>
+                <div class="mb-4">
+                  <label class="form-label" for="article">리뷰 내용</label>
+                  <textarea class="form-control" v-model="article.reviewContent" rows="4" id="article"
+                    placeholder="리뷰를 입력하세요" required></textarea>
+                </div>
+                <button class="btn btn-primary" type="submit" :disabled="disableSubmit">리뷰 등록</button>
+              </form>
+            </div>
+          </div>
+
+
+          <!-- <form @submit.prevent="submit">
+
+            <div class="mb-3 mt-3 row">
+              <div class="col-8">
+                <label for="title" class="form-label"> 제목 </label>
+                <input type="text" class="form-control" placeholder="제목" id="title" v-model="article.title" />
               </div>
-            </div> -->
+            </div>
+
+            <div class="mb-3 mt-3">
+              <label for="content" class="form-label"> 내용 </label>
+              <textarea class="form-control" placeholder="내용" id="content" v-model="article.content" rows="10"></textarea>
+            </div>
+
+            <div class="my-5 text-center">
+              <button type="submit" class="btn btn-primary me-3" :disabled="disableSubmit">
+                <i class="fa-solid fa-check"></i>
+                확인
+              </button>
+
+            </div>
+            
+          </form> -->
+
+
+
         </div>
         <!-- 오른쪽 배너 끝 -->
       </div>
@@ -135,10 +165,11 @@
 <script setup>
 import { useRoute, useRouter } from 'vue-router';
 import api from '@/api/buddizApi';
-import { ref } from 'vue';
-import { useAuthStore } from '@/stores/auth';
+import { computed, reactive, ref } from 'vue';
+import buddizApi from '@/api/buddizApi';
+// import { useAuthStore } from '@/stores/auth';
 
-const auth = useAuthStore();
+// const auth = useAuthStore();
 const route = useRoute();
 const router = useRouter();
 
@@ -146,16 +177,20 @@ const uno = route.params.uno;
 const buddiz = ref({});
 
 const reviewList = ref([]);
+const totalCount = ref(0);
+
+const article = reactive({
+  // writer: auth.id,
+  rating: '',
+  reviewContent: '',
+});
+
+const disableSubmit = computed(() => !article.rating || !article.reviewContent);
 
 const submit = async () => {
   if (!confirm('등록할까요?')) return;
 
-  if (files.value.files.length > 0) {
-    article.files = files.value.files;
-  }
-
-  await boardApi.create(article);
-  router.push('/board/list');
+  await buddizApi.create(article);
 };
 
 
@@ -172,7 +207,11 @@ const submit = async () => {
 const load = async () => {
   try {
     buddiz.value = await api.get(uno);
-    reviewList.value = await api.getReview(uno).then(response => response.reviewList || []);
+    // reviewList.value = await api.getReview(uno).then(response => response.reviewList || []);
+    // totalCount.value = await api.getReview(uno).totalCount;
+    const response = await api.getReview(uno);  // API 호출
+    reviewList.value = response.reviewList || [];  // 리뷰 리스트 저장
+    totalCount.value = response.totalCount;  // totalCount 저장
     console.log('DETAIL', buddiz.value);
     console.log('REVIEWS', reviewList.value);
   } catch (error) {
@@ -180,8 +219,14 @@ const load = async () => {
   }
 };
 
-load();
+// 리뷰 보이기 상태 관리
+const isReviewVisible = ref(false);  // 초기 상태
 
+const toggleReview = () => {
+  isReviewVisible.value = !isReviewVisible.value;  // 상태 토글
+};
+
+load();
 
 </script>
 

@@ -8,6 +8,6 @@ export default [
       path: '/buddiz/userDetail/:uno',
       name: 'buddizDetail',
       component:()=>import('../pages/buddiz/BuddizDetailPage.vue')
-    }
+    },
   ];
   
