@@ -155,7 +155,7 @@
               style="padding: 15px 0 15px 0; border-bottom: 1.5px solid #ddd;">
               <div class="flex align-items-center text-md-center flex-shrink-0 me-2 ms-2 ms-xl-4 me-xl-4">
                 <div class="text-md-center flex-shrink-0 me-4 me-xl-5">
-                  <img src="" alt="reviewer image" class="d-block avatar avatar-xxl p-2 mb-2"
+                  <img :src="review.profilePic" alt="reviewer image" class="d-block avatar avatar-xxl p-2 mb-2"
                     style="width: 100px; height: 100px;">
                   <span class="text-uppercase text-muted text-sm">{{ new
                     Date(review.createdAt).toLocaleDateString()}}</span>
