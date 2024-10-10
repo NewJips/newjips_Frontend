@@ -6,15 +6,14 @@
   "chat": "trò chuyện",
   "login": "đăng nhập",
   "mypage": "Trang của tôi",
-  "yes" : "kiểm tra",
-  "cancle" : "hủy bỏ",
-
-
+  "yes": "kiểm tra",
+  "cancle": "hủy bỏ",
+  
   "footer": {
     "question": "câu hỏi",
     "copyright": "bản quyền"
   },
-
+  
   "home": {
     "banner1": "Tìm phòng ở Hàn Quốc,",
     "banner2": "Bạn đang lo lắng và lo lắng?",
@@ -23,34 +22,35 @@
     "find_buddiz": "Tìm Buddiz",
     "find_room": "Tìm phòng"
   },
-
-  "chatting" : {
-      "torry" : "NewJips Torry",
-      "placeholder" : "Vui lòng nhập tin nhắn của bạn",
-      "special_terms" : "điều khoản đặc biệt?",
-      "insurance" : "vay tiền thuê nhà?",
-      "aiIntro" : "Rất vui được gặp bạn, <br/>đây là Tori, chatbot của New Zip. <br/>Hãy hỏi bất kỳ câu hỏi nào của bạn về các điều<br/>khoản đặc biệt và bảo hiểm bảo hành! <br/><br/>MẸO khi đặt câu hỏi! <br/>Xin vui lòng đặt một câu hỏi đơn giản sử dụng các<br/>từ khóa liên quan đến bảo hiểm! <br/>(Ví dụ) Hợp đồng đặc biệt, loại bảo hiểm bảo hành <br/>"
+  
+  "chatting": {
+    "torry": "NewJips Torry",
+    "placeholder": "Vui lòng nhập tin nhắn của bạn",
+    "special_terms": "điều khoản đặc biệt?",
+    "insurance": "vay tiền thuê nhà?",
+    "aiIntro": "Rất vui được gặp bạn, <br/>đây là Tori, chatbot của New Zip. <br/>Hãy hỏi bất kỳ câu hỏi nào của bạn về các điều<br/>khoản đặc biệt và bảo hiểm bảo hành! <br/><br/>MẸO khi đặt câu hỏi! <br/>Xin vui lòng đặt một câu hỏi đơn giản sử dụng các<br/>từ khóa liên quan đến bảo hiểm! <br/>(Ví dụ) Hợp đồng đặc biệt, loại bảo hiểm bảo hành <br/>"
   },
-
-  "edit" : {
-      "edit" : "Sửa chữa",
-      "upload_img" : "Tải lên ảnh hồ sơ của bạn.",
-      "personal" : "Thông tin cá nhân",
-      "nickname" : "nickname",
-      "nicknameHolder" : "Vui lòng nhập biệt hiệu của bạn.",
-      "changePw" : "Thay đổi mật khẩu",
-      "newPw" : "mật khẩu mới",
-      "checkPw" : "xác minh mật khẩu",
-      "newPwHolder" : "Vui lòng nhập mật khẩu mới.",
-      "checkPwHolder" : "Xác nhận mật khẩu mới",
-      "oldPw" : "mật khẩu hiện có",
-      "oldPwHolder" : "Vui lòng nhập mật khẩu của bạn."
+  
+  "edit": {
+    "edit": "Sửa chữa",
+    "upload_img": "Tải lên ảnh hồ sơ của bạn.",
+    "personal": "Thông tin cá nhân",
+    "nickname": "nickname",
+    "nicknameHolder": "Vui lòng nhập biệt hiệu của bạn.",
+    "changePw": "Thay đổi mật khẩu",
+    "newPw": "mật khẩu mới",
+    "checkPw": "xác minh mật khẩu",
+    "newPwHolder": "Vui lòng nhập mật khẩu mới.",
+    "checkPwHolder": "Xác nhận mật khẩu mới",
+    "oldPw": "mật khẩu hiện có",
+    "oldPwHolder": "Vui lòng nhập mật khẩu của bạn."
   },
-
+  
   "tradetype": {
     "monthly": "Monthly",
     "charter": "Charter"
   },
+  
   "housetype": {
     "villa": "Villa",
     "officeTel": "OfficeTel",
@@ -58,43 +58,38 @@
     "etc": "etc",
     "oneRoom": "One room",
     "twoRoom": "Two room"
+  },
+  
+  "blame": {
+    "blame": "Báo cáo",
+    "des": "Báo cáo vấn đề với các mặt hàng để bán, bất động sản, cặp đồng bộ, v.v.!",
+    "binfo": "Báo cáo thông tin Buddiz",
+    "id": "nhận dạng",
+    "reason": "Lý do báo cáo",
+    "content": "Chi tiết báo cáo",
+    "holder": "Vui lòng nhập chi tiết báo cáo của bạn.",
+    
+    "b1": "sự sai trái",
+    "b2": "hành vi phân biệt chủng tộc",
+    "b3": "chửi bới, hành hung",
+    "b4": "Lặn sau khi được phê duyệt kèm theo",
+    "b5": "Buddiz không phù hợp khác",
+    
+    "e1": "Danh sách có thông tin giá sai/phóng đại",
+    "e2": "Các mặt hàng được rao bán được hiển thị trực tuyến ngay cả sau khi giao dịch đã hoàn tất hoặc đã rút",
+    "e3": "Vật phẩm đấu giá đáng ngờ",
+    "e4": "Tài sản mạo danh người bán",
+    "e5": "Danh sách có thông tin không chính xác vì lý do khác",
+    
+    "successT": "Báo cáo đã hoàn tất!",
+    "successD": "Chúng tôi xin lỗi vì trải nghiệm bất tiện này.<br/>Nó đã giúp nhiều người dùng có được các hoạt động an toàn.<br/>NewJips sẽ nỗ lực hết mình để chỉ cung cấp những trải nghiệm tốt trong tương lai.<br/>",
+    "goBlameList": "Để báo cáo danh sách",
+    "goBack": "Quay lại",
+    
+    "einfo": "Thông tin tài sản được báo cáo",
+    "agentNm": "Môi giới",
+    "agentphone": "số điện thoại",
+    "estatenum": "số niêm yết",
+    "address": "vị trí bất động sản"
   }
 }
-
-  
-  "map": {},
-
-    "blame" : {
-        "blame" : "Báo cáo",
-        "des" : "Báo cáo vấn đề với các mặt hàng để bán, bất động sản, cặp đồng bộ, v.v.!",
-        "binfo" : "Báo cáo thông tin Buddiz",
-        "id" : "nhận dạng",
-        "reason" : "Lý do báo cáo",
-        "content" : "Chi tiết báo cáo",
-        "holder" : "Vui lòng nhập chi tiết báo cáo của bạn.",
-
-        "b1" : "sự sai trái",
-        "b2" : "hành vi phân biệt chủng tộc",
-        "b3" : "chửi bới, hành hung",
-        "b4" : "Lặn sau khi được phê duyệt kèm theo",
-        "b5" : "Buddiz không phù hợp khác",
-
-        "e1" : "Danh sách có thông tin giá sai/phóng đại",
-        "e2" : "Các mặt hàng được rao bán được hiển thị trực tuyến ngay cả sau khi giao dịch đã hoàn tất hoặc đã rút",
-        "e3" : "Vật phẩm đấu giá đáng ngờ",
-        "e4" : "Tài sản mạo danh người bán",
-        "e5" : "Danh sách có thông tin không chính xác vì lý do khác",
-
-        "successT" : "Báo cáo đã hoàn tất!",
-        "successD" : "Chúng tôi xin lỗi vì trải nghiệm bất tiện này.<br/>Nó đã giúp nhiều người dùng có được các hoạt động an toàn.<br/>NewJips sẽ nỗ lực hết mình để chỉ cung cấp những trải nghiệm tốt trong tương lai.<br/>",
-        "goBlameList" : "Để báo cáo danh sách",
-        "goBack" : "Quay lại",
-
-        "einfo" : "Thông tin tài sản được báo cáo",
-        "agentNm" : "Môi giới",
-        "agentphone" : "số điện thoại",
-        "estatenum" : "số niêm yết",
-        "address" : "vị trí bất động sản"
-    }
-}
-

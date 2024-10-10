@@ -237,7 +237,12 @@ const disableSubmit = computed(() => !article.rating || !article.reviewContent);
 const submit = async () => {
   if (!confirm('등록할까요?')) return;
 
+  console.log('Route params uno:', route.params.uno);
+  console.log(article.reviewContent);
+  console.log(article.rating);
   await buddizApi.create(article, uno);
+  alert('리뷰가 등록되었습니다!');
+  load();
 };
 
 const wishSubmit=async()=>{

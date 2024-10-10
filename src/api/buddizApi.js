@@ -26,14 +26,16 @@ export default{
     const formData = new FormData();
   
     // formData.append('writer', article.writer);
-    formData.append('type', article.rating);
-    formData.append('content', article.reviewContent);
+    formData.append('rating', article.rating);
+    formData.append('reviewContent', article.reviewContent);
+    console.log('api에서의 content',article.reviewContent);
 
     const { data } = await api.post(`${BASE_URL}/reviewAdd/${uno}`, formData, { headers });
     console.log('BOARD POST: ', data);
     return data;
   },
   async reviewWish(uno){
+    const formData = new FormData();
     formData.append('uno',uno);
     const{data}=await api.post(`${BASE_URL}/reviewWish/${uno}`, formData, { headers });
     return data;
