@@ -285,9 +285,19 @@ export function useMap(HOME_PATH) {
           naver.maps.Event.addListener(marker, 'click', () => {
             console.log('Marker clicked:', estate);
             selectedMarker.value = {
+              eno: estate.eno,
               latitude: estate.latitude,
               longitude: estate.longitude,
               title: estate.title,
+              tradetype: estate.tradetype,
+              deposit: estate.deposit,
+              monthlyPee: estate.monthlyPee,
+              housetype: estate.housetype,
+              floor: estate.floor,
+              roomSize: estate.roomSize,
+              distToSub: estate.distToSub,
+              img: estate.img,
+              lan: estate.lan,
             };
           });
 

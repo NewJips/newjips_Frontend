@@ -29,18 +29,22 @@
 
   <div class="container">
     <div class="detail-container scrollbar">
-      <h2>경도: {{ selectedMarker?.latitude }}</h2>
-      <h2>위도: {{ selectedMarker?.longitude }}</h2>
+      <BriefDetailEstate
+        v-if="selectedMarker"
+        :estateId="selectedMarker.eno"
+        :estateData="selectedMarker"
+      />
+      <!-- <h2 v-if="estateDetail">매물 정보</h2>
+      <h3 v-if="estateDetail">ID: {{ selectedMarker.eno }}</h3>
+      <h3 v-if="estateDetail">주소: {{ estateDetail.address }}</h3>
+      <h3 v-if="estateDetail">가격: {{ estateDetail.price }}</h3>
+      <h3 v-if="estateDetail">면적: {{ estateDetail.roomSize }}</h3>
 
-      <!-- <div v-for="(marker, index) in visibleMarkers" :key="index">
-          <BriefDetailEstate :marker="marker" />
-        </div> -->
-      <BriefDetailEstate :estateId="1" />
-      <BriefDetailEstate :estateId="2" />
-      <BriefDetailEstate :estateId="3" />
-      <BriefDetailEstate :estateId="3" />
-      <BriefDetailEstate :estateId="3" />
-      <BriefDetailEstate :estateId="3" />
+      <BriefDetailEstate
+        v-for="(marker, index) in visibleMarkers"
+        :key="index"
+        :estateId="marker.eno"
+      /> -->
     </div>
 
     <div id="map" ref="mapElement" class="map-container"></div>
@@ -53,6 +57,7 @@ import DropDownFilter from '@/components/map/DropDownFilter.vue';
 import BriefDetailEstate from '@/components/map/BriefDetailEstate.vue';
 import { useMap } from './useMap';
 import { onMounted, ref } from 'vue';
+import estateApi from '@/api/estateApi';
 
 const filterStore = useFilterStore();
 

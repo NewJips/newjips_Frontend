@@ -28,5 +28,17 @@
     "insurance": "보증보험이란?",
     "aiIntro": "반가워요, 뉴집스챗봇 토리입니다.<br/>특약사항, 보증보험 관련된 궁금한 내용을 물어보세요! <br/><br/>질문하기 TIP! <br/>보험 관련 핵심단어로 간단하게 질문해 주세요! <br/>(예시) 특약, 보증보험 종류 <br/>"
   },
-  "map": {}
+
+  "tradetype": {
+    "monthly": "월세",
+    "charter": "전세"
+  },
+  "housetype": {
+    "villa": "빌라",
+    "officeTel": "오피스텔",
+    "apartment": "아파트",
+    "etc": "기타",
+    "oneRoom": "원룸",
+    "twoRoom": "투룸"
+  }
 }
