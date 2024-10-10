@@ -1,8 +1,8 @@
 <template>
   <div class="fluid-container">
     <div class="type-header">
-        <h2>버디즈</h2>
-        <div style="font-size: 17pt; margin-top: 8pt;">나에게 꼭 맞는 버디를 찾아보세요!</div>
+      <h2>버디즈</h2>
+      <div style="font-size: 17pt; margin-top: 8pt;">나에게 꼭 맞는 버디를 찾아보세요!</div>
     </div>
 
     <div class="buddiz-search">
@@ -11,276 +11,186 @@
         <div class="filter-section">
           <p>닉네임으로 검색</p>
           <div class="search-bar">
-            <input v-model="searchQuery" type="text" placeholder="검색어입력" class="search-input" />
-            <button class="search-button"><i class="fa fa-search"></i></button>
+            <input v-model="pageRequest.searchValue" v-on:keyup.enter="load(pageRequest)" type="text"
+              class="search-input" placeholder="검색어입력">
+            <button @click="load(pageRequest)" class="search-button"><i class="fa fa-search"></i></button>
+            <!-- 검색 버튼 -->
           </div>
           <hr style="width:240px; border-bottom: 1.5px solid #ddd;">
 
           <div class="filter-options">
             <p>필터로 검색</p>
             <div class="filter-buttons">
-              <button :class="{ 'active': selectedPersonality === '조용해요' }" @click="selectedPersonality = '조용해요'"
-                class="filter-select">조용해요</button>
-              <button :class="{ 'active': selectedPersonality === '친구해요' }" @click="selectedPersonality = '친구해요'"
-                class="filter-select">친구해요</button>
-            </div>
-
-            <div class="filter-buttons ">
-              <button :class="{ 'active': selectedGender === '여성' }" @click="selectedGender = '여성'"
-                class="filter-select">여성</button>
-              <button :class="{ 'active': selectedGender === '남성' }" @click="selectedGender = '남성'"
-                class="filter-select">남성</button>
+              <button :class="{ 'active': pageRequest.searchType === 'F' }" @click="toggleSearchType('F')"
+                class="filter-select">
+                여성
+              </button>
+              <button :class="{ 'active': pageRequest.searchType === 'M' }" @click="toggleSearchType('M')"
+                class="filter-select">
+                남성
+              </button>
             </div>
           </div>
+
           <hr style="width:240px; border-bottom: 1.5px solid #ddd;">
+
 
           <div class="sort-options">
             <p>정렬</p>
-            <div class="filter-buttons">
-              <button :class="{ 'active': selectedSort === '별점순' }" @click="selectedSort = '별점순'"
-                class="filter-select">별점순</button>
-              <button :class="{ 'active': selectedSort === '가격순' }" @click="selectedSort = '가격순'"
-                class="filter-select">가격순</button>
-            </div>
-            <div class="filter-buttons">
-              <button :class="{ 'active': selectedSort === '리뷰 많은 순' }" @click="selectedSort = '리뷰 많은 순'"
-                style="width: 235px;" class="filter-select">리뷰 많은 순</button>
-            </div>
+            <button :class="{ 'active': pageRequest.sort === 'rating' }" @click="changeSort('별점순')"
+              class="filter-select">별점순</button>
+            <button :class="{ 'active': pageRequest.sort === 'cost' }" @click="changeSort('가격순')"
+              class="filter-select">가격순</button>
+          </div>
+          <div class="filter-buttons">
+            <button :class="{ 'active': pageRequest.sort === 'reviewcnt' }" @click="changeSort('리뷰 많은 순')"
+              class="filter-select" style="width: 235px;">리뷰 많은 순</button>
           </div>
         </div>
 
-        <!-- 버디즈 목록 -->
-        <div class="buddiz-list">
-          <div v-for="buddiz in filteredBuddizs" :key="buddiz.id" class="buddiz-item under-line">
-            <router-link :to="{name: 'buddizDetail', params:{id:buddiz.id}}" class="user-link" 
-            exact-active-class="active-link">
-              <img :src="buddiz.profileImage" alt="buddiz image" class="buddiz-image" />
-              <div style="margin-top: 10px;">
-                <h3 style="font-size: 25px; font-weight: bold; margin-bottom: 5px;">{{ buddiz.name }}</h3>
-                <div style="font-size: 1em; margin: 5px;">
-                  <p style="margin-bottom: 5px;"><img src="/src/assets/icons/starIcon.png" alt="star"
-                      style="height: 18px; width: 18px;"> {{ buddiz.rating }}</p>
-                  <p style="margin-bottom: 5px;">{{ buddiz.description }}</p>
-                  <p style="margin-bottom: 5px;">{{ buddiz.career }}</p>
-                </div>
-              </div>
-            </router-link>
-          </div>
 
-          <!-- 페이지네이션 -->
-          <div class="my-5 d-flex justify-content-center">
-            <vue-awesome-paginate
-              :total-items="totalCount"
-              :items-per-page="pageRequest.amount"
-              :max-pages-shown="5"
-              :show-ending-buttons="true"
-              v-model="pageRequest.page"
-              @click="handlePageChange"
-            >
-              <template #first-page-button><i class="fa-solid fa-backward-fast"></i></template>
-              <template #prev-button><i class="fa-solid fa-caret-left"></i></template>
-              <template #next-button><i class="fa-solid fa-caret-right"></i></template>
-              <template #last-page-button><i class="fa-solid fa-forward-fast"></i></template>
-            </vue-awesome-paginate>
-          </div>
+
+      <!-- 버디즈 목록 -->
+      <div class="buddiz-list">
+        <div v-for="buddiz in Buddizs" :key="buddiz.uno" class="buddiz-item under-line">
+          <router-link :to="`/buddiz/userDetail/${buddiz.uno}`"
+            class="user-link">
+            <img :src="buddiz.profileImage" alt="buddiz image" class="buddiz-image" />
+            <div style="margin-top: 10px;">
+              <h3 style="font-size: 25px; font-weight: bold; margin-bottom: 5px;">{{ buddiz.name }}</h3>
+              <div style="font-size: 1em; margin: 5px;">
+                <p style="margin-bottom: 5px;"><img src="/src/assets/icons/starIcon.png" alt="star"
+                    style="height: 18px; width: 18px;"> {{ buddiz.rating }}</p>
+                    <p style="margin-bottom: 5px;">한국 자취 {{ buddiz.liveInKr }}년차</p>
+                <p style="margin-bottom: 5px;">{{ buddiz.personality }}</p>
+              </div>
+            </div>
+          </router-link>
+        </div>
+      </div>
+
+    </div>
+
+
+        <!-- 페이지네이션 -->
+        <div class="my-5 d-flex justify-content-center">
+          <!-- 페이지 네이션 -->
+          <vue-awesome-paginate :total-items="page.totalCount" :items-per-page="pageRequest.amount" :max-pages-shown="5"
+            :show-ending-buttons="true" v-model="pageRequest.page" @click="handlePageChange">
+            <template #first-page-button><i class="fa-solid fa-backward-fast"></i></template>
+            <template #prev-button><i class="fa-solid fa-caret-left"></i></template>
+            <template #next-button><i class="fa-solid fa-caret-right"></i></template>
+            <template #last-page-button><i class="fa-solid fa-forward-fast"></i></template>
+          </vue-awesome-paginate>
         </div>
       </div>
     </div>
-  </div>
+
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      pageRequest: {
-        page: 1, // 초기 페이지
-        amount: 6,
-        searchType: '',
-        searchValue: '',
-        types: [],
-      },
-      totalCount: 18,
-      searchQuery: '',
-      selectedPersonality: null,  // 변경된 부분: 초기값을 null로 설정 (버튼 해제를 위해 사용)
-      selectedGender: null,       // 변경된 부분: 초기값을 null로 설정 (버튼 해제를 위해 사용)
-      selectedSort: '별점순',      // 초기 정렬은 '별점순'
-      currentPage: 1,
-      buddizs: [
-        {
-          id: 1,
-          name: '하니',
-          profileImage: 'src/assets/images/face1.jpg',
-          rating: 4.8,
-          career: '한국 자취 3년차',
-          description: '유쾌함, ENFP, 조용해요...',
-        },
-        {
-          id: 2,
-          name: '레이',
-          profileImage: 'src/assets/images/face2.jpg',
-          rating: 4.8,
-          career: '한국 자취 3년차',
-          description: '유쾌함, ENFP, 조용해요...',
-        },
-        {
-          id: 3,
-          name: '카리나',
-          profileImage: '/src/assets/images/face3.jpg',
-          rating: 4.8,
-          career: '한국 자취 2년차',
-          description: '유쾌함, ENFP, 친구해요',
-        },
-        {
-          id: 4,
-          name: '호날두',
-          profileImage: 'src/assets/images/face4.jpg',
-          rating: 4.8,
-          career: '한국 자취 3년차',
-          description: '유쾌함, ENFP, 조용해요...',
-        },
-        {
-          id: 5,
-          name: '린가드',
-          profileImage: 'src/assets/images/face5.jpg',
-          rating: 4.8,
-          career: '한국 자취 3년차',
-          description: '유쾌함, ENFP, 조용해요...',
-        },
-        {
-          id: 6,
-          name: '케빈',
-          profileImage: 'src/assets/images/face6.jpg',
-          rating: 4.8,
-          career: '한국 자취 3년차',
-          description: '유쾌함, ENFP, 조용해요...',
-        },
-        {
-          id: 7,
-          name: '아이묭',
-          profileImage: 'src/assets/images/face7.jpg',
-          rating: 4.8,
-          career: '한국 자취 3년차',
-          description: '유쾌함, ENFP, 조용해요...',
-        },
-        {
-          id: 8,
-          name: '진',
-          profileImage: 'src/assets/images/face8.jpg',
-          rating: 4.8,
-          career: '한국 자취 3년차',
-          description: '유쾌함, ENFP, 조용해요...',
-        },
-        {
-          id: 9,
-          name: '다니엘',
-          profileImage: 'src/assets/images/face9.jpg',
-          rating: 4.8,
-          career: '한국 자취 3년차',
-          description: '유쾌함, ENFP, 조용해요...',
-        },
-        {
-          id: 10,
-          name: '마이콜',
-          profileImage: 'src/assets/images/face10.jpg',
-          rating: 4.8,
-          career: '한국 자취 3년차',
-          description: '유쾌함, ENFP, 조용해요...',
-        },
-      ],
-    };
-  },
-  computed: {
-    filteredBuddizs() {
+<script setup>
+import api from '@/api/buddizApi';
+import { ref, reactive, computed, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
-      let result = this.buddizs;
+const route = useRoute();
+const router = useRouter();
+const Buddizs = ref([]);
 
-      // 닉네임 검색 필터
-      if (this.searchQuery) {
-        result = result.filter((buddiz) =>
-          buddiz.name.includes(this.searchQuery)
-        );
-      }
+const page = ref({});
+// const types = ref([]);
 
+const articles = computed(() => page.value.buddizList);
 
-      // 성격 필터
-      if (this.selectedPersonality) {
-        result = result.filter(
-          (buddiz) => buddiz.personality === this.selectedPersonality
-        );
-      }
+const pageRequest = reactive({
+  page: parseInt(route.query.page) || 1,
+  amount: parseInt(route.query.amount) || 10,
+  searchType: '',
+  searchValue: '',
+  sort: 'rating',  // 기본 정렬을 별점 내림차순으로 설정
+});
 
-      // 성별 필터
-      if (this.selectedGender) {
-        result = result.filter((buddiz) => buddiz.gender === this.selectedGender);
-      }
+const changeSort = (sortOption) => {
+  pageRequest.sort = sortOption;
+  handlePageChange(1); // 정렬 변경 후 1페이지로 이동
+};
 
-      // 정렬 방식
-      if (this.selectedSort === '별점순') {
-        result.sort((a, b) => b.rating - a.rating);
-      } else if (this.selectedSort === '가격순') {
-        result.sort((a, b) => a.price - b.price);
-      } else if (this.selectedSort === '리뷰 많은 순') {
-        result.sort((a, b) => b.reviews - a.reviews);
-      }
+// console.log('QUERY', cr.query);
+// console.log('PAGE REQUEST', pageRequest);
 
-      return result;
+// 페이지네이션 페이지 변경
+const handlePageChange = async (pageNum) => {
+  console.log('CLICK,,,,');
+  // url 변경 --> query 파트만 변경되므로 컴포넌트가 다시 마운트되지 않음
+  // watch를 통해 cr이 변경됨을 감지하여 페이지 로드해야 함
+  router.push({
+    query: {
+      page: pageNum,
+      amount: pageRequest.amount,
+      searchType: pageRequest.searchType,
+      sort: pageRequest.sort,  // 쿼리에 정렬 상태 반영
+      searchValue: pageRequest.searchValue,
     },
-    totalPages() {
-      return Math.ceil(this.buddizs.length / 10);
-    },
-  },
-  methods: {
-    // 변경된 부분: 성격 필터를 토글하는 메서드
-    togglePersonalityFilter(personality) {
-      // 현재 선택된 필터를 다시 클릭하면 해제 (null로 설정)
-      this.selectedPersonality = this.selectedPersonality === personality ? null : personality;
-    },
+  });
+};
 
-    // 변경된 부분: 성별 필터를 토글하는 메서드
-    toggleGenderFilter(gender) {
-      // 현재 선택된 필터를 다시 클릭하면 해제 (null로 설정)
-      this.selectedGender = this.selectedGender === gender ? null : gender;
-    },
+// pageRequest의 값 변경된 경우 호출
+watch(route, async (newValue) => {
+  console.log('WATCH', route.query.page);
+  pageRequest.page = parseInt(route.query.page);
+  pageRequest.searchType = route.query.searchType;
+  pageRequest.searchValue = route.query.searchValue;
+  pageRequest.amount = parseInt(route.query.amount);
+  await load(pageRequest);
+});
 
-    // 변경된 부분: 정렬 필터를 토글하는 메서드
-    toggleSortFilter(sort) {
-      // 현재 선택된 정렬 필터를 다시 클릭하면 해제 (null로 설정)
-      this.selectedSort = this.selectedSort === sort ? null : sort;
-    },
+const load = async (query) => {
+  try {
+    const data = await api.getList(query);
 
-    changePage(page) {
-      this.currentPage = page;
-    },
-  },
-  async handlePageChange(pageNum) {
-      const router = useRouter(); // Vue Router의 useRouter() 호출
-      await router.push({
-        query: {
-          page: pageNum,
-          amount: this.pageRequest.amount,
-          searchType: this.pageRequest.searchType,
-          searchValue: this.pageRequest.searchValue,
-          types: this.pageRequest.types,
-        },
-      });
-    },
-    getArticles() {
-      const route = useRoute(); // 현재 라우트 정보를 가져옵니다.
-      this.pageRequest.page = parseInt(route.query.page) || 1; // 쿼리에서 페이지 번호를 가져옵니다.
-      const start = (this.pageRequest.page - 1) * this.pageRequest.amount;
-      const end = start + this.pageRequest.amount;
-      return this.$store.state.boardList.slice(start, end); // boardList는 Vuex 스토어에서 가져오는 예시입니다.
-    },
-  };
+    Buddizs.value = data.buddizList;
+
+    console.log("vue-buddiz", Buddizs.value);
+    if (Buddizs.value.length === 0) {
+      console.warn("No results found for query:", query);
+    }
+  } catch (error) {
+    console.error("Error loading Buddizs:", error);
+  }
+};
+
+load(pageRequest);
+
+
+const typeChange = (evant) => {
+  alert(evant.target.checked)
+}
+
+// 성별 필터 토글 함수
+const toggleSearchType = (type) => {
+  // 선택된 값과 클릭된 버튼의 값이 같으면, 이미 선택된 상태이므로 해제
+  if (pageRequest.searchType === type) {
+    pageRequest.searchType = '';
+  } else {
+    // 선택되지 않은 값을 클릭하면 해당 값을 설정
+    pageRequest.searchType = type;
+  }
+
+  // 필터 변경 후 페이지 다시 로드, 항상 1페이지부터 시작
+  handlePageChange(1);
+};
+
+
 </script>
+
+
 
 <style scoped>
 .type-header {
-    background-color: #F5F6F7;
-    padding-top: 4vh;
-    padding-bottom: 4vh;
-    padding-left: 6vh;
+  background-color: #F5F6F7;
+  padding-top: 4vh;
+  padding-bottom: 4vh;
+  padding-left: 6vh;
 }
 
 .buddiz-search {
@@ -299,8 +209,8 @@ export default {
 
 .filter-select {
   margin: 5px;
- border-radius: 10px;
- background-color: #F5F6F7;
+  border-radius: 10px;
+  background-color: #F5F6F7;
 
 }
 
@@ -329,7 +239,7 @@ export default {
 .buddiz-image {
   width: 140px;
   height: 140px;
-  border-radius: 5px; 
+  border-radius: 5px;
   object-fit: cover;
 }
 
@@ -406,10 +316,14 @@ button:hover {
 }
 
 .user-link {
-  text-decoration: none; /* 링크 밑줄 제거 */
-  color: #000; /* 기본 글자색 */
-  display: block; /* 링크 영역을 블록으로 만들어 전체 클릭 가능하게 */
-  transition: color 0.3s; /* 색상 전환 효과 */
+  text-decoration: none;
+  /* 링크 밑줄 제거 */
+  color: #000;
+  /* 기본 글자색 */
+  display: block;
+  /* 링크 영역을 블록으로 만들어 전체 클릭 가능하게 */
+  transition: color 0.3s;
+  /* 색상 전환 효과 */
   display: flex;
   align-items: center;
   gap: 10px;
@@ -418,15 +332,16 @@ button:hover {
 }
 
 .user-link:hover {
-  color: #007bff; /* 호버 시 링크 색상 변경 */
+  color: #007bff;
+  /* 호버 시 링크 색상 변경 */
 }
 
 .active-link {
-  font-weight: bold; /* 현재 활성 링크 강조 */
+  font-weight: bold;
+  /* 현재 활성 링크 강조 */
 }
 
-.filter-buttons{
+.filter-buttons {
   color: #F5F6F7;
 }
-
 </style>

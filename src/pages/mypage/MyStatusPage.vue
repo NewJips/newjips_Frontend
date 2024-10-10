@@ -1,15 +1,47 @@
 <script setup>
 import SideBar from '@/components/layouts/SideBar.vue';
-import { computed, ref } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import { useAuthStore } from '@/stores/auth';
+import blameApi from '@/api/blameApi';
 
 const auth = useAuthStore();
 
+// Auth 상태 관리
+const uno = computed(() => auth.uno);
 const userId = computed(() => auth.userId);
 const nickname = computed(() => auth.nickname);
 const profilePic = computed(() => auth.profilePic);
-const avatar = computed(() => `/api/member/${auth.userId}/avatar`); // auth에서 직접 id를 가져옴
-console.log(auth.userId);
+
+const avatar = computed(() => `/api/member/${uno}/avatar`); // auth에서 직접 id를 가져옴
+console.log(auth.uno);
+
+const budizcount = ref(0);
+const estatecount = ref(0);
+
+// 신고한 버디즈 개수를 세는 함수
+async function fetchBlameBudizCount() {
+  try {
+    const data = await blameApi.getblamebudiz(uno.value); // uno를 인자로 전달
+    budizcount.value = data.length; // 신고한 버디즈 개수를 세어서 저장
+  } catch (error) {
+    console.error('버디즈 신고 목록 조회 실패:', error);
+  }
+}
+async function fetchBlameEstateCount() {
+  try {
+    const data = await blameApi.getblameestate(uno.value); // uno를 인자로 전달
+    estatecount.value = data.length; //신고한 매물 개수를 세어서 저장.
+  } catch (error) {
+    console.error('매물 신고 목록 조회 실패:', error);
+  }
+}
+
+// 컴포넌트가 마운트될 때 신고한 버디즈 개수를 가져오기
+onMounted(() => {
+  fetchBlameBudizCount();
+  fetchBlameEstateCount();
+});
+
 </script>
 
 <template>
@@ -47,10 +79,14 @@ console.log(auth.userId);
             <h5 class="flex-fill text-center my-3" style="width: 25%">신고한 버디즈</h5>
           </div>
           <div class="d-flex" style="border: 2px; border-style: solid; border-color: #eaecef; border-radius: 0 0 10px 10px; border-top: none; justify-content: center">
-            <router-link to="/mypage/wish" class="flex-fill text-center my-3" style="width: 25%; text-decoration: none"><h5 style="color: black">1</h5></router-link>
-            <router-link to="/mypage/wish" class="flex-fill text-center my-3" style="width: 25%; text-decoration: none"><h5 style="color: black">3</h5></router-link>
-            <router-link to="/mypage/blame" class="flex-fill text-center my-3" style="width: 25%; text-decoration: none"><h5 style="color: black">5</h5></router-link>
-            <router-link to="/mypage/blame" class="flex-fill text-center my-3" style="width: 25%; text-decoration: none"><h5 style="color: black">1</h5></router-link>
+            <router-link to="/mypage/wish" class="flex-fill text-center my-3" style="width: 25%; text-decoration: none"><h5 style="color: black">0</h5></router-link>
+            <router-link to="/mypage/wish" class="flex-fill text-center my-3" style="width: 25%; text-decoration: none"><h5 style="color: black">0</h5></router-link>
+            <router-link to="/mypage/blame" class="flex-fill text-center my-3" style="width: 25%; text-decoration: none"
+              ><h5 style="color: black">{{ estatecount }}</h5></router-link
+            >
+            <router-link to="/mypage/blame" class="flex-fill text-center my-3" style="width: 25%; text-decoration: none"
+              ><h5 style="color: black">{{ budizcount }}</h5></router-link
+            >
           </div>
         </div>
         <!-- ---프로필정보창 여기까지--- -->

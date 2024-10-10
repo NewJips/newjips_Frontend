@@ -4,7 +4,6 @@ import LoanCard from '@/components/LoanCard.vue';
 import FloatingAi from '@/components/FloatingAi.vue';
 import GuideCard from '@/components/GuideCard.vue';
 import { useI18n } from 'vue-i18n';
-
 const { t, locale } = useI18n();
 // locale.value = 'ko'
 
@@ -159,43 +158,43 @@ const loans = [
               <span class="subtitle ">가장 많은 별점을 받은 버디즈입니다.</span>
             </div>
 
-            <div class="row ps-2">
-              <div class="col d-flex">
-                <div class="rounded-circle ranking-num mt-2" style="background-color: #FFEC82;">1</div>
-                <div class="ms-4 d-flex flex-column align-items-center">
-                  <img src="@/assets/images/face6.jpg" class="avatar ranking-img mb-3">
-                  <h5>제이미</h5>
-                  <div>
-                    <i class="fa fa-star" style="color: #FFC973;"></i>
-                    <span class="ms-1">4.8</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col d-flex">
-                <div class="rounded-circle ranking-num" style="background-color: #D5E1F4;">2</div>
-                <div class="ms-4 d-flex flex-column align-items-center">
-                  <img src="@/assets/images/avatar-4.jpg" class="avatar ranking-img mb-3">
-                  <h5>제이크</h5>
-                  <div>
-                    <i class="fa fa-star" style="color: #FFC973;"></i>
-                    <span class="ms-1">4.7</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col d-flex">
-                <div class="rounded-circle ranking-num" style="background-color: #CEB796;">3</div>
-                <div class="ms-4 d-flex flex-column align-items-center">
-                  <img src="@/assets/images/avatar-7.jpg" class="avatar ranking-img mb-3">
-                  <h5>드레이크</h5>
-                  <div>
-                    <i class="fa fa-star" style="color: #FFC973;"></i>
-                    <span class="ms-1">4.5</span>
-                  </div>
+          <div class="row ps-2">
+            <div class="col d-flex" v-if="popularBuddiz.length >= 1">
+              <div class="rounded-circle ranking-num mt-2" style="background-color: #FFEC82;">1</div>
+              <div class="ms-4 d-flex flex-column align-items-center">
+                <img :src="popularBuddiz[0].imgFile" class="avatar ranking-img mb-3">
+                <h5>{{ popularBuddiz[0].nickname }}</h5>
+                <div>
+                  <i class="fa fa-star" style="color: #FFC973;"></i>
+                  <span class="ms-1">{{ popularBuddiz[0].averageRating }}</span>
                 </div>
               </div>
             </div>
+
+            <div class="col d-flex" v-if="popularBuddiz.length >= 2">
+              <div class="rounded-circle ranking-num" style="background-color: #D5E1F4;">2</div>
+              <div class="ms-4 d-flex flex-column align-items-center">
+                <img :src="popularBuddiz[1].imgFile" class="avatar ranking-img mb-3">
+                <h5>{{ popularBuddiz[1].nickname }}</h5>
+                <div>
+                  <i class="fa fa-star" style="color: #FFC973;"></i>
+                  <span class="ms-1">{{ popularBuddiz[1].averageRating }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col d-flex" v-if="popularBuddiz.length >= 3">
+              <div class="rounded-circle ranking-num" style="background-color: #CEB796;">3</div>
+              <div class="ms-4 d-flex flex-column align-items-center">
+                <img :src="popularBuddiz[2].imgFile" class="avatar ranking-img mb-3">
+                <h5>{{ popularBuddiz[2].nickname }}</h5>
+                <div>
+                  <i class="fa fa-star" style="color: #FFC973;"></i>
+                  <span class="ms-1">{{ popularBuddiz[2].averageRating }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       
         <!-- 환율 -->
@@ -241,81 +240,36 @@ const loans = [
       </div>
 
       <div>
-          <div class="row gx-4 mx-0 pb-3" data-carousel-options="{&quot;items&quot;: 4, &quot;responsive&quot;: {&quot;0&quot;:{&quot;items&quot;:1},&quot;500&quot;:{&quot;items&quot;:2},&quot;768&quot;:{&quot;items&quot;:3},&quot;992&quot;:{&quot;items&quot;:4}}}">
-            <!-- Item-->
-            <div class="col">
-              <div class="card shadow-sm card-hover border-0 h-100">
-                <div class="card-img-top card-img-hover"><a class="img-overlay" href="real-estate-single-v1.html"></a>
-                  <div class="position-absolute start-0 top-0 pt-3 ps-3"><span class="d-table badge bg-info">New</span></div>
-                  <div class="content-overlay end-0 top-0 pt-3 pe-3">
-                    <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to Wishlist"><i class="fi-heart"></i></button>
-                  </div><img src="@/assets/images/03.jpg" alt="Image">
+        <div class="row gx-4 mx-0 pb-3" v-if="popularEstates.length">
+          <!-- 부동산 항목 렌더링 -->
+          <div v-for="(estate, index) in popularEstates" :key="index" class="col">
+            <div class="card shadow-sm card-hover border-0 h-100">
+              <div class="card-img-top card-img-hover">
+                <a class="img-overlay" href="real-estate-single-v1.html"></a>
+                <div class="position-absolute start-0 top-0 pt-3 ps-3">
+                  <span class="d-table badge bg-info">New</span>
                 </div>
-                <div class="card-body position-relative pb-3">
-                  <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">월세</h4>
-                  <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link" href="real-estate-single-v1.html">광진안틸리아 | 17.49㎡</a></h3>
-                  <p class="mb-2 fs-sm text-muted">서울 광진구 화양로34</p>
-                  <div class="fw-bold"><i class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>1,000 / 40</div>
+                <div class="content-overlay end-0 top-0 pt-3 pe-3">
+                  <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to Wishlist">
+                    <i class="fi-heart"></i>
+                  </button>
+                </div>
+                <img :src="estate.img" alt="Image" />
+              </div>
+              <div class="card-body position-relative pb-3">
+                <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">{{ estate.tradetype }}</h4>
+                <h3 class="h6 mb-2 fs-base">
+                  <a class="nav-link stretched-link" href="real-estate-single-v1.html">{{ estate.address }} | {{ estate.roomSize }}㎡</a>
+                </h3>
+                <p class="mb-2 fs-sm text-muted">{{ estate.address }}</p>
+                <div class="fw-bold">
+                  <i class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>{{ estate.deposit }} / {{ estate.monthlyPee }}
                 </div>
               </div>
             </div>
-
-            <!-- Item-->
-            <div class="col">
-              <div class="card shadow-sm card-hover border-0 h-100">
-                <div class="card-img-top card-img-hover"><a class="img-overlay" href="real-estate-single-v1.html"></a>
-                  <div class="position-absolute start-0 top-0 pt-3 ps-3"><span class="d-table badge bg-info">New</span></div>
-                  <div class="content-overlay end-0 top-0 pt-3 pe-3">
-                    <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to Wishlist"><i class="fi-heart"></i></button>
-                  </div><img src="@/assets/images/03.jpg" alt="Image">
-                </div>
-                <div class="card-body position-relative pb-3">
-                  <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">전세</h4>
-                  <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link" href="real-estate-single-v1.html">하이뷰오피스텔 | 17.49㎡</a></h3>
-                  <p class="mb-2 fs-sm text-muted">서울 광진구 화양로34</p>
-                  <div class="fw-bold"><i class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>25,000</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Item-->
-            <div class="col">
-              <div class="card shadow-sm card-hover border-0 h-100">
-                <div class="card-img-top card-img-hover"><a class="img-overlay" href="real-estate-single-v1.html"></a>
-                  <div class="position-absolute start-0 top-0 pt-3 ps-3"><span class="d-table badge bg-info">New</span></div>
-                  <div class="content-overlay end-0 top-0 pt-3 pe-3">
-                    <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to Wishlist"><i class="fi-heart"></i></button>
-                  </div><img src="@/assets/images/03.jpg" alt="Image">
-                </div>
-                <div class="card-body position-relative pb-3">
-                  <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">월세</h4>
-                  <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link" href="real-estate-single-v1.html">광진안틸리아 | 17.49㎡</a></h3>
-                  <p class="mb-2 fs-sm text-muted">서울 광진구 화양로34</p>
-                  <div class="fw-bold"><i class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>1,000 / 40</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Item-->
-            <div class="col">
-              <div class="card shadow-sm card-hover border-0 h-100">
-                <div class="card-img-top card-img-hover"><a class="img-overlay" href="real-estate-single-v1.html"></a>
-                  <div class="position-absolute start-0 top-0 pt-3 ps-3"><span class="d-table badge bg-info">New</span></div>
-                  <div class="content-overlay end-0 top-0 pt-3 pe-3">
-                    <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to Wishlist"><i class="fi-heart"></i></button>
-                  </div><img src="@/assets/images/03.jpg" alt="Image">
-                </div>
-                <div class="card-body position-relative pb-3">
-                  <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">전세</h4>
-                  <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link" href="real-estate-single-v1.html">하이뷰오피스텔 | 17.49㎡</a></h3>
-                  <p class="mb-2 fs-sm text-muted">서울 광진구 화양로34</p>
-                  <div class="fw-bold"><i class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>25,000</div>
-                </div>
-              </div>
-            </div>
-
           </div>
         </div>
+      </div>
     </div>
 
     <!-- 가이드 -->
@@ -473,6 +427,31 @@ const loans = [
     </div>
 </div>
 </template>
+
+
+<script>
+import popularBuddizApi from '@/api/homeApi.js';  // API 파일 불러오기
+import popularEstatesApi from '@/api/homeApi.js';
+export default {
+  data() {
+    return {
+      popularBuddiz: [],  // 인기 버디즈 데이터를 저장할 배열
+      popularEstates: [], // 부동산 데이터 저장
+    };
+  },
+  async mounted() {
+    try {
+      // API 호출 후 인기 버디즈 데이터를 받아옴
+      this.popularBuddiz = await popularBuddizApi.getPopularBuddiz();
+      this.popularEstates = await popularEstatesApi.getPopularEstate();
+    } catch (error) {
+      console.error('Error fetching popular buddies & popular estates:', error);
+    }
+  },
+};
+
+</script>
+
 
 <style scoped>
 
