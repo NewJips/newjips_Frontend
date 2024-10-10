@@ -48,7 +48,7 @@
           </div>
         </div>
 
-     
+
 
       <!-- 버디즈 목록 -->
       <div class="buddiz-list">
@@ -149,7 +149,7 @@ const load = async (query) => {
     const data = await api.getList(query);
 
     Buddizs.value = data.buddizList;
- 
+
     console.log("vue-buddiz", Buddizs.value);
     if (Buddizs.value.length === 0) {
       console.warn("No results found for query:", query);

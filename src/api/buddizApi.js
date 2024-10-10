@@ -21,7 +21,18 @@ export default{
     const { data } = await api.get(`${BASE_URL}/review/${uno}`);
     console.log('REVIEW GET', data);
     return data;
-  }
+  },
+  async create(article) {
+    const formData = new FormData();
   
+    // formData.append('writer', article.writer);
+    formData.append('type', article.rating);
+    formData.append('content', article.reviewContent);
+
+    const { data } = await api.post(`${BASE_URL}/reviewAdd/${uno}`, formData, { headers });
+    console.log('BOARD POST: ', data);
+    return data;
+  },
+
   
 }

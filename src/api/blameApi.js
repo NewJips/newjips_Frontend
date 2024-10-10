@@ -2,17 +2,13 @@ import api from '@/api'; //axios 기반의 API 인스턴스를 가져옵니다.
 
 const BASE_URL = '/api/blame';
 const headers = { 'Content-Type': 'multipart/form-data' };
+const headersjson = { 'Content-Type': 'application/json' };
 
 export default {
   //신고 하기
-  async insertblame(blamebudiz) {
-    const formData = new FormData();
-    formData.append('targetType', blamebudiz.targetType); // 신고 타입
-    formData.append('content', blamebudiz.content); // 신고 내용
-    formData.append('uno', blamebudiz.uno); // 신고자 ID
-    formData.append('blamedId', blamebudiz.blamedId); // 신고 당한 ID
-    const { data } = await api.post(BASE_URL, formData, headers);
-    console.log('INSERTBLAME', data);
+  async insertblame(formData) {
+    const { data } = await api.post(BASE_URL, formData, headersjson);
+    return data;
   },
 
   //신고 정보 조회
@@ -35,4 +31,6 @@ export default {
     console.log('GET BLAMEESTATE', data);
     return data;
   },
+
+
 };
