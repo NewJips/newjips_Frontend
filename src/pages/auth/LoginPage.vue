@@ -26,7 +26,14 @@ const login = async () => {
   } catch (e) {
     // 로그인 에러
     console.log('에러=======', e);
-    error.value = e.response && e.response.data ? e.response.data : '로그인 중 에러 발생';
+    if (e.response && e.response.status === 401) {
+      //인증 실패
+      error.value = '아이디 또는 비밀번호가 틀렸습니다.';
+      alert('아이디 또는 비밀번호가 틀렸습니다.');
+    } else {
+      alert('아이디 또는 비밀번호가 비어 있습니다.');
+      // error.value = e.response && e.response.data ? e.response.data : '로그인 중 에러 발생';
+    }
   }
 };
 </script>

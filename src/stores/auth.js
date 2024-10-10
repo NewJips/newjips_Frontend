@@ -19,7 +19,7 @@ const initState = {
 export const useAuthStore = defineStore('auth', () => {
   const state = ref({ ...initState });
 
-  const isLogin = computed(() => !!state.value.userId);
+  const isLogin = computed(() => !!state.value.userId); //로그인 상태를 나타내는 computed
 
   // state.value.user.id 존재하면 그 값은 truthy이므로,
   // ---> !!state.value.user.id true를 반환
@@ -83,11 +83,11 @@ export const useAuthStore = defineStore('auth', () => {
 
   const getToken = () => state.value.token;
 
-    const changeProfile = (member) => {
-        state.value.nickname = member.nickname;
-        state.value.profilePic = member.profilePic;
-        localStorage.setItem('auth', JSON.stringify(state.value));
-    };
+  const changeProfile = (member) => {
+    state.value.nickname = member.nickname;
+    state.value.profilePic = member.profilePic;
+    localStorage.setItem('auth', JSON.stringify(state.value));
+  };
 
   load();
 
