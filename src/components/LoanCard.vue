@@ -1,25 +1,20 @@
-<!-- LoanCard.vue -->
 <template>
-  <div class="loan-card" @click="handleClick">
+  <div class="loan-card" @click="selectLoan">
     <h3>{{ loan.title }}</h3>
     <p>{{ loan.subtitle }}</p>
     <p class="loan-limit">{{ loan.loanLimit }}</p>
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    loan: {
-      type: Object,
-      required: true
-    }
-  },
-  methods: {
-    handleClick() {
-      this.$emit('click', this.loan); // Emit the click event with the loan data
-    }
-  }
+<script setup>
+const props = defineProps({
+  loan: Object
+});
+
+const emit = defineEmits(['click']);  // Define the "click" event
+
+const selectLoan = () => {
+  emit('click', props.loan);  // Emit the "click" event with the loan details
 };
 </script>
 
@@ -28,7 +23,7 @@ export default {
   background-color: #446688;
   padding: 20px;
   border-radius: 12px;
-  color: white !important;
+  color: white;
   text-align: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;

@@ -30,26 +30,26 @@ const formattedKoreaMoney = computed(() => {
 const formattedVietnamMoney = computed(() => {
   return vietnamMoney.value.toLocaleString(); // 천 단위 콤마 추가
 });
+
+
 const loans = ref([]);
 const router = useRouter();
 
-// Fetch the loans for the homepage (top 3)
+// Fetch loans on mounted
 onMounted(() => {
   loanApi.fetchLoanList()
     .then(response => {
-      loans.value = response.slice(0, 3); // Get top 3 loans
-      console.log('Loans fetched:', loans.value); // Check if data is received
+      loans.value = response.slice(0, 3); // Display top 3 loans
     })
     .catch(error => {
-      console.error('Failed to fetch loans:', error);
+      console.error('Error fetching loans:', error);
     });
 });
 
-// Navigate to LoanProductPage with the selected loan ID
+// Navigate to LoanProductPage when a loan card is clicked
 const goToLoanProductPage = (loan) => {
   router.push({ name: 'loan-product', params: { loanId: loan.lno } });
 };
-
 
 const guides = ref([
   {
@@ -463,18 +463,18 @@ const guides = ref([
       </div>
     </div>
 
+    <!-- Loan Cards Section -->
     <div class="ms-5 me-5 mb-5">
       <h4 class="head-title">전세 대출 추천</h4>
       <div class="d-flex mb-4">
         <span class="subtitle">외국인을 위한 전세 대출을 추천합니다.</span>
-        <!-- Bring back the "더보기" router-link -->
         <span class="position-absolute end-0 me-5">
           <router-link class="btn-more text-muted" to="/loanproduct">더보기</router-link>
         </span>
       </div>
 
-      <!-- Loan Cards Section -->
       <div class="loan-grid pb-3">
+        <!-- Loan Cards -->
         <LoanCard v-for="(loan, index) in loans" :key="index" :loan="loan" @click="goToLoanProductPage(loan)" />
       </div>
     </div>

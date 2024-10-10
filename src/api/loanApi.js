@@ -1,9 +1,10 @@
+// loanApi.js
 import api from '@/api';  // Axios instance
 
 const BASE_URL = '/api/loan';
 
 export default {
-  // Fetch loan list from backend
+  // Fetch the loan list
   async fetchLoanList() {
     const { data } = await api.get(`${BASE_URL}/list`);
     return data;
