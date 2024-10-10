@@ -14,6 +14,11 @@ const profilePic = ref('');
 const avatar = ref(null);
 const maxFileSize = 5 * 1024 * 1024;
 
+const oldPw = ref('');
+const newPw1 = ref('');
+const newPw2 = ref('');
+const warn = ref('비밀번호가 일치하지 않습니다.');
+
 const member = reactive({
   uno: auth.uno,
   nickname: auth.nickname,
@@ -49,9 +54,32 @@ const onSubmit = async () => {
   }
 };
 
+// 비밀번호 바꾸기
 const onChangePw = async () => {
 
+    try {
+      const formData = new FormData();
+      formData.append('newPassword', newPw1.value);
+      formData.append('oldPassword', oldPw.value);
+      formData.append('uno', member.uno);
 
+      await authApi.changePassword(formData);
+      alert('정보를 수정하였습니다.');
+      oldPw.value = '';
+      newPw1.value = '';
+      newPw2.value = '';
+    } catch (error) {
+      alert(error.message);
+    }
+  
+};
+
+const newPwMatch = () => {
+  if (newPw1.value === newPw2.value) {
+    warn.value = '';
+  } else {
+    warn.value = '비밀번호가 일치하지 않습니다.';
+  }
 };
 
 //파일 변경 시 미리보기 처리
@@ -161,25 +189,26 @@ const onFileChange = (event) => {
           <div class="card-header card-bottom">
             <h4 class="card-header-title">{{ t('common.edit.changePw') }}</h4>
           </div>
-          <form class="card-body">
+          <div class="card-body">
             <div class="mb-3">
               <label class="form-label">{{ t('common.edit.oldPw') }}</label>
-              <input class="form-control" type="password" :placeholder="t('common.edit.oldPwHolder')"/>
+              <input class="form-control" v-model="oldPw" type="password" :placeholder="t('common.edit.oldPwHolder')"/>
             </div>
             <div class="mb-3">
               <label class="form-label">{{ t('common.edit.newPw') }}</label>
-              <input class="form-control" type="password" :placeholder="t('common.edit.newPwHolder')"/>
+              <input class="form-control" v-model="newPw1" type="password" :placeholder="t('common.edit.newPwHolder')" @change="newPwMatch()" />
             </div>
             <div class="mb-3">
               <label class="form-label">{{ t('common.edit.checkPw') }}</label>
-              <input class="form-control" type="password" :placeholder="t('common.edit.checkPwHolder')" />
+              <input class="form-control" v-model="newPw2" type="password" :placeholder="t('common.edit.checkPwHolder')" @change="newPwMatch()" />
+              <span class="ms-2" style="color: red;">{{ warn }}</span>
             </div>
             <div class="col-12 text-end">
               <button @click="onChangePw()" class="btn mb-1 me-3" style="border: 1px solid #ff8f17; max-height: 100%; background-color: #ff8f17; color: white">
                 {{ t('common.edit.edit') }}
               </button>
             </div>
-          </form>
+          </div>
           <!-- card-body End -->
         </div>
         <!-- caed-border End -->
