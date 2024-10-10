@@ -1,3 +1,4 @@
+// src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '../pages/HomePage.vue';  // Import HomePage component
 import LoanProductPage from '../pages/Loan/LoanProductPage.vue';  // Import LoanProductPage component
@@ -7,8 +8,6 @@ import mapRoutes from './map';  // Import map-related routes
 import chatRoutes from './chat';  // Import chat-related routes
 import blameRoutes from './blame';  // Import blame-related routes
 import guideRoutes from './guide';  // Import guide-related routes
-import Blp from '@/pages/board/BoardListPage.vue';  // Import BoardListPage component
-import Bdp from '@/pages/board/BoardDetailPage.vue';  // Import BoardDetailPage component
 import buddizRoutes from './buddiz';  // Import Buddiz-related routes
 import mypageRoutes from './mypage';  // Import MyPage-related routes
 import JoinPage from '@/pages/auth/JoinPage.vue';  // Import JoinPage component
@@ -41,12 +40,12 @@ const router = createRouter({
     {
       path: '/board',  // Board List Page
       name: 'Blp',
-      component: Blp,
+      component: () => import('../pages/board/BoardListPage.vue'),
     },
     {
       path: '/board/:no',  // Board Detail Page with dynamic "no" param
       name: 'Bdp',
-      component: Bdp,
+      component: () => import('../pages/board/BoardDetailPage.vue'),
       props: true,  // Pass URL params as props to the BoardDetailPage component
     },
     {

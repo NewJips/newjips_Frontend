@@ -1,6 +1,8 @@
 <!-- FormComponent.vue -->
 <script setup>
 import { ref } from 'vue';
+import { useAuthStore } from '@/stores/auth'; // Adjust the path as needed
+import buddizIntroApi from '@/api/buddizIntroApi';
 
 const nickname = ref('');
 const residence = ref('');
@@ -42,157 +44,171 @@ const handleDrop = (event) => {
   handleFileUpload(event); // Use the same handler for both input and drop
 };
 
-const submitForm = () => {
+const submitForm = async () => {
+  const authStore = useAuthStore(); // Initialize the store
+  const userUno = authStore.uno;    // Fetch the logged-in user's `uno`
+
+  if (!userUno) {
+    alert('User not logged in. Please log in to submit your form.');
+    return;
+  }
+
   const formData = {
-    nickname: nickname.value,
-    residence: residence.value,
-    koreaExperience: koreaExperience.value,
-    accompanyRegion: accompanyRegion.value,
-    transactionCount: transactionCount.value,
-    selectedCharacteristics: selectedCharacteristics.value,
-    selectedLanguages: selectedLanguages.value,
-    description: description.value,
-    price: price.value,
-    currencyUnit: currencyUnit.value,
-    photos: photos.value,
+    uno: userUno,  // logged-in user's `uno`
+    liveInKr: koreaExperience.value,  // Experience in Korea (maps to `liveInKr`)
+    personality: selectedCharacteristics.value.join(','),  // Personality (maps to `personality`)
+    cost: price.value,  // Price (maps to `cost`)
+    hiredTimes: transactionCount.value,  // Transaction count (maps to `hiredTimes`)
+    rating: 5.0,  // Placeholder for rating (since it's not in the form, you can adjust this)
+    selfInfo: description.value,  // Description (maps to `selfInfo`)
+    lan: selectedLanguages.value.length > 0 ? selectedLanguages.value[0] : 'KR',  // Primary language (maps to `lan`)
+    location: residence.value,  // Residence (maps to `location`)
+    useLan: selectedLanguages.value.join(','),  // Languages spoken (maps to `useLan`)
   };
-  console.log(formData);
-  alert('Form submitted!');
+
+  try {
+    const response = await buddizIntroApi.saveOrUpdateBuddizIntro(formData);
+    console.log('Form submission response:', response);
+    alert('Form submitted successfully!');
+  } catch (error) {
+    console.error('Error submitting form:', error);
+    alert('Failed to submit the form.');
+  }
 };
 </script>
 
 <template>
   <div class="fluid-container">
     <div class="type-header">
-        <h2>버디즈 이력 등록</h2>
-        <div style="font-size: 17pt; margin-top: 8pt;">버디즈로 활동하기 위한 나만의 소개를 입력해주세요!</div>
+      <h2>버디즈 이력 등록</h2>
+      <div style="font-size: 17pt; margin-top: 8pt;">버디즈로 활동하기 위한 나만의 소개를 입력해주세요!</div>
     </div>
 
     <!-- Basic Info Section -->
     <div class="fluid-container px-5 pt-5 pb-5" style="background-color: #fbfbfc;">
       <section class="section-card">
-          <h2 class="section-title"><i class="section-icon"></i> Basic Info</h2>
-          <div class="input-group">
-            <label for="nickname">닉네임</label>
-            <input v-model="nickname" type="text" id="nickname" placeholder="닉네임을 입력해주세요" maxlength="48" />
-            <span class="character-limit">{{ 48 - nickname.length }} characters left</span>
-          </div>
+        <h2 class="section-title"><i class="section-icon"></i> Basic Info</h2>
+        <div class="input-group">
+          <label for="nickname">닉네임</label>
+          <input v-model="nickname" type="text" id="nickname" placeholder="닉네임을 입력해주세요" maxlength="48" />
+          <span class="character-limit">{{ 48 - nickname.length }} characters left</span>
+        </div>
 
-          <div class="input-group">
-            <label for="residence">거주 지역</label>
-            <select v-model="residence" id="residence">
-              <option value="" disabled>지역 선택</option>
-              <option v-for="region in regions" :key="region" :value="region">{{ region }}</option>
-            </select>
-          </div>
+        <div class="input-group">
+          <label for="residence">거주 지역</label>
+          <select v-model="residence" id="residence">
+            <option value="" disabled>지역 선택</option>
+            <option v-for="region in regions" :key="region" :value="region">{{ region }}</option>
+          </select>
+        </div>
 
-          <div class="input-group">
-            <label for="koreaExperience">한국 자취 경력 (년)</label>
-            <input v-model="koreaExperience" type="number" id="koreaExperience" placeholder="숫자로 입력해주세요." />
-          </div>
-        </section>
+        <div class="input-group">
+          <label for="koreaExperience">한국 자취 경력 (년)</label>
+          <input v-model="koreaExperience" type="number" id="koreaExperience" placeholder="숫자로 입력해주세요." />
+        </div>
+      </section>
 
-        <!-- Description Section -->
-        <section class="section-card">
-          <h2 class="section-title"><i class="section-icon"></i> Description</h2>
-          <textarea v-model="description" placeholder="Describe your accommodation" maxlength="8000"></textarea>
-          <span class="character-limit">{{ 8000 - description.length }} characters left</span>
-        </section>
+      <!-- Description Section -->
+      <section class="section-card">
+        <h2 class="section-title"><i class="section-icon"></i> Description</h2>
+        <textarea v-model="description" placeholder="Describe your accommodation" maxlength="8000"></textarea>
+        <span class="character-limit">{{ 8000 - description.length }} characters left</span>
+      </section>
 
-        <!-- Accompany Region and Transaction Count -->
-        <section class="section-card">
-          <h2 class="section-title"><i class="section-icon"></i> 추가 정보</h2>
-          <div class="input-group">
-            <label for="accompanyRegion">동행 가능 지역</label>
-            <select v-model="accompanyRegion" id="accompanyRegion">
-              <option value="" disabled>지역 선택</option>
-              <option v-for="region in regions" :key="region" :value="region">{{ region }}</option>
-            </select>
-          </div>
+      <!-- Accompany Region and Transaction Count -->
+      <section class="section-card">
+        <h2 class="section-title"><i class="section-icon"></i> 추가 정보</h2>
+        <div class="input-group">
+          <label for="accompanyRegion">동행 가능 지역</label>
+          <select v-model="accompanyRegion" id="accompanyRegion">
+            <option value="" disabled>지역 선택</option>
+            <option v-for="region in regions" :key="region" :value="region">{{ region }}</option>
+          </select>
+        </div>
 
-          <div class="input-group">
-            <label for="transactionCount">거래 횟수</label>
-            <input v-model="transactionCount" type="number" id="transactionCount" placeholder="거래 횟수를 입력해주세요." />
-          </div>
-        </section>
+        <div class="input-group">
+          <label for="transactionCount">거래 횟수</label>
+          <input v-model="transactionCount" type="number" id="transactionCount" placeholder="거래 횟수를 입력해주세요." />
+        </div>
+      </section>
 
-        <!-- Characteristics and Languages -->
-        <section class="section-card">
-          <!-- Characteristics organized in grid -->
-          <div class="checkbox-group">
-            <h4>성격</h4>
-            <div class="left-align">
-              <div v-for="(characteristic, index) in characteristics" :key="index" class="checkbox-item">
-                <input type="checkbox" :id="'char-' + index" :value="characteristic" v-model="selectedCharacteristics" />
-                <label :for="'char-' + index">{{ characteristic }}</label>
-              </div>
+      <!-- Characteristics and Languages -->
+      <section class="section-card">
+        <!-- Characteristics organized in grid -->
+        <div class="checkbox-group">
+          <h4>성격</h4>
+          <div class="left-align">
+            <div v-for="(characteristic, index) in characteristics" :key="index" class="checkbox-item">
+              <input type="checkbox" :id="'char-' + index" :value="characteristic" v-model="selectedCharacteristics" />
+              <label :for="'char-' + index">{{ characteristic }}</label>
             </div>
           </div>
+        </div>
 
-          <!-- Languages aligned in a single column -->
-          <div class="checkbox-group">
-            <h4>소통 가능한 언어</h4>
-            <div class="left-align">
-              <div v-for="(language, index) in languages" :key="index" class="checkbox-item">
-                <input type="checkbox" :id="'lang-' + index" :value="language" v-model="selectedLanguages" />
-                <label :for="'lang-' + index">{{ language }}</label>
-              </div>
+        <!-- Languages aligned in a single column -->
+        <div class="checkbox-group">
+          <h4>소통 가능한 언어</h4>
+          <div class="left-align">
+            <div v-for="(language, index) in languages" :key="index" class="checkbox-item">
+              <input type="checkbox" :id="'lang-' + index" :value="language" v-model="selectedLanguages" />
+              <label :for="'lang-' + index">{{ language }}</label>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section class="section-card">
-          <h2 class="section-title"><i class="section-icon"></i> Price</h2>
+      <section class="section-card">
+        <h2 class="section-title"><i class="section-icon"></i> Price</h2>
 
-          <!-- Label above inputs -->
-          <label for="price">Price (per night) <span class="required-asterisk">*</span></label>
+        <!-- Label above inputs -->
+        <label for="price">Price (per night) <span class="required-asterisk">*</span></label>
 
-          <!-- Price input and dropdown in a horizontal row -->
-          <div class="price-group-inline">
-            <input v-model="price" type="number" placeholder="Min" min="0" id="price" />
-            <select v-model="currencyUnit">
-              <option value="$">$</option>
-              <option value="€">w</option>
-              <option value="₫">₫</option>
-            </select>
+        <!-- Price input and dropdown in a horizontal row -->
+        <div class="price-group-inline">
+          <input v-model="price" type="number" placeholder="Min" min="0" id="price" />
+          <select v-model="currencyUnit">
+            <option value="$">$</option>
+            <option value="€">w</option>
+            <option value="₫">₫</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- Photos Section with Simplified Design and Drag-and-Drop -->
+      <section class="section-card">
+        <h2 class="section-title"><i class="section-icon"></i> Photos</h2>
+        <div class="info-box">
+          <p>The maximum photo size is 8 MB. Formats: jpeg, jpg, png. Put the main picture first. The maximum video size
+            is 10 MB. Formats: mp4, mov.</p>
+        </div>
+        <div class="drag-and-drop-box" @dragover.prevent="handleDragOver" @drop.prevent="handleDrop">
+          <label class="upload-btn">
+            <input type="file" @change="handleFileUpload" multiple aria-label="Upload photos" />
+            <span>Upload photos</span>
+          </label>
+          <p>or drag them in</p>
+        </div>
+
+        <!-- Show photo previews if photos are uploaded -->
+        <div v-if="photos.length">
+          <div v-for="(photo, index) in photos" :key="index" class="photo-preview">
+            <img :src="photo" />
           </div>
-        </section>
+        </div>
+      </section>
 
-        <!-- Photos Section with Simplified Design and Drag-and-Drop -->
-        <section class="section-card">
-          <h2 class="section-title"><i class="section-icon"></i> Photos</h2>
-          <div class="info-box">
-            <p>The maximum photo size is 8 MB. Formats: jpeg, jpg, png. Put the main picture first. The maximum video size
-              is 10 MB. Formats: mp4, mov.</p>
-          </div>
-          <div class="drag-and-drop-box" @dragover.prevent="handleDragOver" @drop.prevent="handleDrop">
-            <label class="upload-btn">
-              <input type="file" @change="handleFileUpload" multiple aria-label="Upload photos" />
-              <span>Upload photos</span>
-            </label>
-            <p>or drag them in</p>
-          </div>
-
-          <!-- Show photo previews if photos are uploaded -->
-          <div v-if="photos.length">
-            <div v-for="(photo, index) in photos" :key="index" class="photo-preview">
-              <img :src="photo" />
-            </div>
-          </div>
-        </section>
-
-        <!-- Submit Button -->
-        <button class="submit-btn" @click="submitForm">Save and continue</button>      
-      </div>
+      <!-- Submit Button -->
+      <button class="submit-btn" @click="submitForm">Save and continue</button>
     </div>
+  </div>
 </template>
 
 <style scoped>
 .type-header {
-    background-color: #F5F6F7;
-    padding-top: 4vh;
-    padding-bottom: 4vh;
-    padding-left: 6vh;
+  background-color: #F5F6F7;
+  padding-top: 4vh;
+  padding-bottom: 4vh;
+  padding-left: 6vh;
 }
 
 .form-title {
