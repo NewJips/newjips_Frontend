@@ -11,12 +11,13 @@ const props = defineProps({
   loan: Object
 });
 
-const emit = defineEmits(['click']);  // Define the "click" event
+const emit = defineEmits(['click']);
 
 const selectLoan = () => {
   emit('click', props.loan);  // Emit the "click" event with the loan details
 };
 </script>
+
 
 <style scoped>
 .loan-card {

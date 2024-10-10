@@ -44,44 +44,27 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
-import loanApi from '@/api/loanApi';  // Import loan API module
-import LoanCard from '@/components/LoanCard.vue';  // Import LoanCard component
+import axios from 'axios';
+import LoanCard from '@/components/LoanCard.vue';
 
-// Store loans and selected loan
 const loans = ref([]);
 const selectedLoan = ref(null);
-const route = useRoute(); // Get the loanId from the route params
 
-// Fetch loan list and details when the component is mounted
 onMounted(() => {
-  const loanId = route.params.loanId;  // Get loanId from the route
-
-  // Fetch loan details using loanId
-  loanApi.fetchLoanDetail(loanId)
+  axios.get('http://localhost:8080/api/loan/list')
     .then(response => {
-      selectedLoan.value = response;
+      loans.value = response.data;
     })
     .catch(error => {
-      console.error('Failed to fetch loan details:', error);
-    });
-
-  // Fetch all loans (for the loan cards section)
-  loanApi.fetchLoanList()
-    .then(response => {
-      loans.value = response;
-    })
-    .catch(error => {
-      console.error('Failed to fetch loan list:', error);
+      console.error('Failed to fetch loan data:', error);
     });
 });
 
-// Function to fetch loan details when a loan card is clicked
 const goToLoanDetail = (loan) => {
-  loanApi.fetchLoanDetail(loan.lno)
+  axios.get(`http://localhost:8080/api/loan/detail/${loan.lno}`)
     .then(response => {
-      selectedLoan.value = response;
-      window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to the top when a new loan is selected
+      selectedLoan.value = response.data;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     })
     .catch(error => {
       console.error('Failed to fetch loan details:', error);

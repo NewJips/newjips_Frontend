@@ -48,6 +48,7 @@ onMounted(() => {
 
 // Navigate to LoanProductPage when a loan card is clicked
 const goToLoanProductPage = (loan) => {
+  console.log('Navigating to LoanProductPage with loanId:', loan.lno);  // Debugging log
   router.push({ name: 'loan-product', params: { loanId: loan.lno } });
 };
 
