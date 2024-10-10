@@ -37,6 +37,7 @@ export default{
   async reviewWish(uno){
     const formData = new FormData();
     formData.append('uno',uno);
+    console.log(uno);
     const{data}=await api.post(`${BASE_URL}/reviewWish/${uno}`, formData, { headers });
     return data;
   },

@@ -246,6 +246,7 @@ const submit = async () => {
 };
 
 const wishSubmit=async()=>{
+  console.log(uno);
   await buddizApi.reviewWish(uno);
 }
 
