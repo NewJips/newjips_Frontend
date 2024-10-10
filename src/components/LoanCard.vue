@@ -1,5 +1,4 @@
 <!-- LoanCard.vue -->
-<!-- LoanCard.vue -->
 <template>
   <div class="loan-card" @click="handleClick">
     <h3>{{ loan.title }}</h3>
@@ -18,7 +17,7 @@ export default {
   },
   methods: {
     handleClick() {
-      this.$emit('click', this.loan);
+      this.$emit('click', this.loan); // Emit the click event with the loan data
     }
   }
 };
@@ -43,21 +42,5 @@ export default {
 .loan-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-}
-
-.loan-card h3 {
-  font-size: 1.3rem;
-  margin-bottom: 0.5rem;
-}
-
-.loan-card p {
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-}
-
-.loan-limit {
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: #f1f1f1;
 }
 </style>
