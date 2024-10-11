@@ -2,7 +2,6 @@
 import { reactive, computed } from 'vue';
 import MenuGroup from './menu/MenuGroup.vue';
 import AccountMenuGroup from './menu/AccountMenuGroup.vue';
-import config from '@/config';
 import { useI18n } from 'vue-i18n';
 import { useAuthStore } from '@/stores/auth';
 
@@ -21,6 +20,25 @@ const changing = (lan) => {
   locale.value = lan;
   console.log(lan);
 };
+
+const menus = computed(() => [
+  {
+    title: t('common.map'),
+    url: '/map'
+  },
+  {
+    title: t('common.buddiz'),
+    url: '/buddiz'
+  },
+  {
+    title: t('common.notice'),
+    url: '/board'
+  },
+  {
+    title: t('common.chat'),
+    url: '/chat'
+  }
+]);
 </script>
 
 <template>
@@ -32,12 +50,10 @@ const changing = (lan) => {
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar" @click="toggleNavShow">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <!-- <button type="button" @click="changing('vn')">베트남어 {{ t('common.notice') }}</button>
-      <button type="button" @click="changing('ko')">한국어</button> -->
 
       <div :class="navClass" id="collapsibleNavbar" style="flex-grow: 0; background-color: white">
         <div style="flex-direction: row; display: flex">
-          <MenuGroup :menus="config.menus" />
+          <MenuGroup :menus="menus" />
 
           <AccountMenuGroup />
         </div>

@@ -2,12 +2,13 @@
   "notice": "thông báo",
   "buddiz": "buddiz",
   "exchange": "tỷ giá hối đoái",
-  "map": "bản đồ",
+  "map": "map",
   "chat": "trò chuyện",
   "login": "đăng nhập",
   "mypage": "Trang của tôi",
   "yes": "kiểm tra",
   "cancle": "hủy bỏ",
+  "login" : "Login",
   
   "footer": {
     "question": "câu hỏi",

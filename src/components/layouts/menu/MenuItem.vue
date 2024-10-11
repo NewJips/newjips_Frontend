@@ -5,7 +5,7 @@ const props = defineProps({
 </script>
 <template>
   <li class="nav-item">
-    <router-link class="nav-link" :to="menu.url">
+    <router-link class="nav-link" :to="menu.url" style="color: #111111;">
       <i :class="menu.icon"></i>
       {{ menu.title }}
     </router-link>
