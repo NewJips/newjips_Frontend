@@ -1,20 +1,12 @@
 <script setup>
-import { ref, computed } from 'vue';
-
-import buildings1 from '@/assets/images/building1.jpg'
-import buildings2 from '@/assets/images/building2.jpg'
-import buildings3 from '@/assets/images/building3.jpg'
-import buildings4 from '@/assets/images/building4.jpg'
-import buildings5 from '@/assets/images/building5.jpg'
-import buildings6 from '@/assets/images/building6.jpg'
-import faceImage1 from '@/assets/images/face2.jpg';
-import faceImage2 from '@/assets/images/face3.jpg';
-import faceImage3 from '@/assets/images/face8.jpg';
-import faceImage4 from '@/assets/images/face9.jpg';
-import faceImage5 from '@/assets/images/face10.jpg';
-import faceImage6 from '@/assets/images/face7.jpg';
+import { ref, computed, onMounted } from 'vue';
 import SideBar from '@/components/layouts/SideBar.vue';
+import { useAuthStore } from '@/stores/auth';
+import wishApi from '@/api/wishApi';
 
+const auth = useAuthStore();
+const uno = computed(() => auth.uno);
+console.log(auth.uno);
 
 // 매물 데이터를 슬라이드로 표시하기 위한 상태 관리
 const currentSlide = ref(0);
@@ -30,39 +22,53 @@ const isLiked = (estateId) => {
 // 하트 클릭 시 좋아요 상태를 토글하는 함수
 const toggleLike = (estateId) => {
   if (isLiked(estateId)) {
-    likedEstates.value = likedEstates.value.filter(id => id !== estateId); // 좋아요 해제
+    likedEstates.value = likedEstates.value.filter((id) => id !== estateId); // 좋아요 해제
   } else {
     likedEstates.value.push(estateId); // 좋아요 추가
   }
 };
 
+const wish_buddiz = ref([]);
+// 버디즈 데이터 가져오기
+async function fetchBlameBuddiz() {
+  try {
+    const data = await wishApi.getwishbuddiz(uno.value); // API 호출하여 버디즈 데이터 가져오기
+    console.log(uno.value);
+    wish_buddiz.value = data; // 가져온 데이터 할당
+    console.log('가져온 버디즈 데이터: ', wish_buddiz.value);
+  } catch (e) {
+    console.error('버디즈 데이터를 가져오지 못했습니다.', e);
+  }
+}
 
-const blame_buildings = [
-  { title: '매물 1', description: '도심에 위치한 넓고 현대적인 방입니다.', imageUrl: buildings1 },
-  { title: '매물 2', description: '교통이 편리한 위치에 있는 아파트입니다. 교통이 편리한 위치에 있는 아파트입니다.', imageUrl:buildings2},
-  { title: '매물 3', description: '바다가 보이는 멋진 스튜디오입니다.', imageUrl: buildings3 },
-  { title: '매물 4', description: '조용하고 평화로운 시골 주택입니다.', imageUrl:  buildings4},
-  { title: '매물 5', description: '럭셔리 스타일의 고급 주택입니다.', imageUrl: buildings5},
-  { title: '매물 6', description: '현대적인 디자인의 도심형 아파트입니다.', imageUrl: buildings6}
-];
-const blame_buddiz = [
-  { title: '버디 1', description: '활기찬 성격을 가진 친구입니다.', imageUrl: faceImage1 },
-  { title: '버디 2', description: '재미있는 이야기로 항상 즐거운 친구입니다.', imageUrl: faceImage2 },
-  { title: '버디 3', description: '모험을 좋아하는 친구입니다.', imageUrl: faceImage3 },
-  { title: '버디 4', description: '조용하고 사려 깊은 친구입니다.', imageUrl: faceImage4 },
-  { title: '버디 5', description: '유머감각이 뛰어난 친구입니다.', imageUrl: faceImage5 },
-  { title: '버디 6', description: '운동을 사랑하는 친구입니다.', imageUrl: faceImage6 }
-];
+const wish_buildings = ref([]);
+// 매물 데이터 가져오기
+async function fetchBlameBuildings() {
+  try {
+    const data = await wishApi.getwishestate(uno.value); // API 호출하여 신고 데이터 가져오기
+    console.log(uno.value);
+    wish_buildings.value = data; // 가져온 데이터 할당
+    console.log('가져온 매물 데이터: ', wish_buildings.value);
+  } catch (e) {
+    console.error('매물 데이터를 가져오지 못했습니다.', e);
+  }
+}
+
+// 컴포넌트 마운트 시 데이터 가져오기
+onMounted(() => {
+  fetchBlameBuddiz();
+  fetchBlameBuildings();
+});
 
 // 슬라이드에 표시될 매물 계산
 const displayedGuides = computed(() => {
   // 슬라이드에서 시작 인덱스(currentSlide)에서 4개의 매물을 보여줌
-  return blame_buildings.slice(currentSlide.value, currentSlide.value + 4);
+  return wish_buildings.value.slice(currentSlide.value, currentSlide.value + 4);
 });
 
 // 다음 슬라이드로 이동 (총 매물 개수에 맞춰 순환)
 const nextSlide = () => {
-  if (currentSlide.value + 4 >= blame_buildings.length) {
+  if (currentSlide.value + 4 >= wish_buildings.value.length) {
     currentSlide.value = 0;
   } else {
     currentSlide.value += 1;
@@ -72,21 +78,20 @@ const nextSlide = () => {
 // 이전 슬라이드로 이동 (총 매물 개수에 맞춰 순환)
 const prevSlide = () => {
   if (currentSlide.value === 0) {
-    currentSlide.value = blame_buildings.length - 4;
+    currentSlide.value = wish_buildings.length.value - 4;
   } else {
     currentSlide.value -= 1;
   }
 };
 
-
 // 슬라이드에 표시될 버디 계산
 const displayedBuddiz = computed(() => {
-  return blame_buddiz.slice(currentBuddySlide.value, currentBuddySlide.value + 4);
+  return wish_buddiz.value.slice(currentBuddySlide.value, currentBuddySlide.value + 4);
 });
 
 // 다음 슬라이드로 이동 (총 버디 개수에 맞춰 순환)
 const nextBuddySlide = () => {
-  if (currentBuddySlide.value + 4 >= blame_buddiz.length) {
+  if (currentBuddySlide.value + 4 >= wish_buddiz.value.length) {
     currentBuddySlide.value = 0;
   } else {
     currentBuddySlide.value += 1;
@@ -96,7 +101,7 @@ const nextBuddySlide = () => {
 // 이전 슬라이드로 이동 (총 버디 개수에 맞춰 순환)
 const prevBuddySlide = () => {
   if (currentBuddySlide.value === 0) {
-    currentBuddySlide.value = blame_buddiz.length - 4;
+    currentBuddySlide.value = wish_buddiz.value.length - 4;
   } else {
     currentBuddySlide.value -= 1;
   }
@@ -112,9 +117,9 @@ const prevBuddySlide = () => {
 
       <!-- 메인 콘텐츠 -->
       <div class="col-lg-9 col-md-9 col-sm-12">
-        <h2 class="mt-5" style="margin-left: 20px; margin-right: 0; margin-bottom: 20px;">관심 매물</h2>
+        <h2 class="mt-5" style="margin-left: 20px; margin-right: 0; margin-bottom: 20px">관심 매물</h2>
         <div class="position-relative">
-          <div v-if="blame_buildings.length > 0">
+          <div v-if="wish_buildings.length > 0">
             <!-- 왼쪽 화살표 -->
             <button @click="prevSlide" class="arrow-left">
               <img src="@/assets/icons/arrow_left.png" alt="Left Arrow" />
@@ -125,19 +130,15 @@ const prevBuddySlide = () => {
               <div class="col-lg-3 col-md-4 mb-4" v-for="(buildings, index) in displayedGuides" :key="index">
                 <div class="card hover-animate h-100 border-0 shadow card-custom">
                   <div class="card-img-top overflow-hidden img-container">
-                    <img :src="buildings.imageUrl" class="img-fluid img-custom" :alt="blame_buildings.title" />
+                    <img :src="buildings.img" class="img-fluid img-custom" :alt="wish_buildings.title" />
                   </div>
-                  <div class="card-body" style="position: relative;">
-                    <h5 class="card-title">{{ buildings.title }}
+                  <div class="card-body" style="position: relative">
+                    <h5 class="card-title">
+                      매물{{ currentSlide + index + 1 }}
                       <!-- 하트 버튼 -->
-                      <i
-                          :class="[isLiked(buildings.title) ? 'bi bi-heart-fill' : 'bi bi-heart']"
-                          @click="toggleLike(buildings.title)"
-                          class="heart-icon"
-                          style="position: absolute; right: 20px; top: 25%; transform: translateY(-50%);"
-                      ></i>
+                      <i class="heart-icon bi-heart-fill" style="position: absolute; right: 20px; top: 25%; transform: translateY(-50%); color: #ff8f17"></i>
                     </h5>
-                    <p class="card-text">{{ buildings.description }}</p>
+                    <p class="card-text">{{ buildings.content }}</p>
                   </div>
                 </div>
               </div>
@@ -150,15 +151,15 @@ const prevBuddySlide = () => {
           </div>
           <div v-else>
             <div class="text-center">
-              <img src="@/assets/images/nothing.png" alt="nothing" class="img-fluid" style="max-width: 300px;">
+              <img src="@/assets/images/nothing.png" alt="nothing" class="img-fluid" style="max-width: 300px" />
               <p>신고한 매물이 없습니다.</p>
             </div>
           </div>
         </div>
 
-        <h2 class="mt-4" style="margin-left: 20px; margin-right: 0; margin-bottom: 20px;">관심 버디즈</h2>
+        <h2 class="mt-4" style="margin-left: 20px; margin-right: 0; margin-bottom: 20px">관심 버디즈</h2>
         <div class="position-relative">
-          <div v-if="blame_buildings.length > 0">
+          <div v-if="wish_buddiz.length > 0">
             <!-- 왼쪽 화살표 -->
             <button @click="prevBuddySlide" class="arrow-left">
               <img src="@/assets/icons/arrow_left.png" alt="Left Arrow" />
@@ -166,22 +167,18 @@ const prevBuddySlide = () => {
 
             <div class="row">
               <!-- 버디즈 카드 슬라이드 -->
-              <div class="col-lg-3 col-md-4 mb-4" v-for="(buddy, index) in displayedBuddiz" :key="index">
+              <div class="col-lg-3 col-md-4 mb-4" v-for="(buddiz, index) in displayedBuddiz" :key="index">
                 <div class="card hover-animate h-100 border-0 shadow card-custom">
                   <div class="card-img-top overflow-hidden img-container">
-                    <img :src="buddy.imageUrl" class="img-fluid img-custom" :alt="buddy.title" />
+                    <img :src="buddiz.wishProfilePic" class="img-fluid img-custom" :alt="wish_buddiz" />
                   </div>
-                  <div class="card-body" style="position: relative;">
-                    <h5 class="card-title">{{ buddy.title }}
+                  <div class="card-body" style="position: relative">
+                    <h5 class="card-title">
+                      {{ buddiz.wishNickname }}
                       <!-- 하트 버튼 -->
-                      <i
-                          :class="[isLiked(buddy.title) ? 'bi bi-heart-fill' : 'bi bi-heart']"
-                          @click="toggleLike(buddy.title)"
-                          class="heart-icon"
-                          style="position: absolute; right: 20px; top: 25%; transform: translateY(-50%);"
-                      ></i>
+                      <i class="heart-icon bi-heart-fill" style="position: absolute; right: 20px; top: 25%; transform: translateY(-50%); color: #ff8f17"></i>
                     </h5>
-                    <p class="card-text">{{ buddy.description }}</p>
+                    <p class="card-text">{{ buddiz.wishPersonality }}</p>
                   </div>
                 </div>
               </div>
@@ -194,7 +191,7 @@ const prevBuddySlide = () => {
           </div>
           <div v-else>
             <div class="text-center">
-              <img src="@/assets/images/nothing.png" alt="nothing" class="img-fluid" style="max-width: 300px;">
+              <img src="@/assets/images/nothing.png" alt="nothing" class="img-fluid" style="max-width: 300px" />
               <p>신고한 매물이 없습니다.</p>
             </div>
           </div>
@@ -211,7 +208,6 @@ const prevBuddySlide = () => {
 
 .container-fluid {
   padding-right: 20px; /* 전체적인 오른쪽 여백 추가 */
-
 }
 
 /* 메인 콘텐츠를 오른쪽으로 이동시키기 위한 여백 */
@@ -292,5 +288,4 @@ const prevBuddySlide = () => {
   margin-left: 20px; /* 메인 콘텐츠를 오른쪽으로 이동 */
   width: 79%; /* 전체 콘텐츠 너비를 줄임 */
 }
-
 </style>
