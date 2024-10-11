@@ -5,30 +5,31 @@
       <div style="font-size: 17pt; margin-top: 8pt;">{{ t('common.budi.content') }}</div>
     </div>
 
-    <section class="content">
-      <div class="container">
-        <div class="row">
-          <!-- 왼쪽 배너: 선택된 버디즈 기본 정보 -->
-          <div class="col-lg-3 me-lg-auto">
-            <div class="card border-0 shadow mb-6 mb-lg-0">
-              <div class="card-header bg-gray-100 py-4 border-0 text-center">
-                <a class="d-inline-block" href="#">
-                  <img :src="buddiz.profilePic" alt="buddiz image" class="d-block avatar avatar-xxl p-1 mb-2"
-                    style="width: 100px; height: 100px;">
-                </a>
-                <h5 class="fw-bold">{{ buddiz.name }}</h5>
-                <p class="text-muted text-sm mb-0">{{ buddiz.location }}</p>
-              </div>
-              <div class="card-body p-4">
-                <div class="test">
-                  <div class="icon-rounded icon-rounded-sm bg-primary-light flex-shrink-0 me-2" style="width: 150px;">
-                    <img src="/src/assets/icons/roundstar.png" alt="star" style="width: 35px; height: 35px;">
-                    <span style="margin-left: 13px; margin-top: 15px; display: inline; white-space: nowrap;">
-                      <span style="margin-right: 5px;">{{ avg.toFixed(1) }}</span>
-                      <span>({{ totalCount }})</span>
-                    </span>
-                  </div>
+  <section class="content">
+    <div class="container">
+      <div class="row">
+        <!-- 왼쪽 배너: 선택된 버디즈 기본 정보 -->
+        <div class="col-lg-3 me-lg-auto">
+          <div class="card border-0 shadow mb-6 mb-lg-0">
+            <div class="card-header bg-gray-100 py-4 border-0 text-center">
+              <a class="d-inline-block" href="#">
+                <img :src="buddiz.profilePic" alt="buddiz image" class="d-block avatar avatar-xxl p-1 mb-2"
+                  style="width: 100px; height: 100px;">
+              </a>
+              <h5 class="fw-bold">{{ buddiz.name }}</h5>
+              <p class="text-muted text-sm mb-0">{{ buddiz.location }}</p>
+            </div>
+            
+            <div class="card-body p-4">
+              <div class="test">
+                <div class="icon-rounded icon-rounded-sm bg-primary-light flex-shrink-0 me-2" style="width: 150px;">
+                  <img src="/src/assets/icons/roundstar.png" alt="star" style="width: 35px; height: 35px;">
+                  <span style="margin-left: 13px; margin-top: 15px; display: inline; white-space: nowrap;">
+                    <span style="margin-right: 5px;">{{ avg === 0 ? 0 : avg.toFixed(2) }}</span>
+                    <span>({{ totalCount }})</span>
+                  </span>
                 </div>
+              </div>
 
                 <div class="test" style="margin-top: 20px;">
                   <div class="icon-rounded icon-rounded-sm bg-primary-light flex-shrink-0 me-2" style="width: 250px;">
@@ -69,25 +70,24 @@
                       </div>
                     </form>
                   </div>
-
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- 오른쪽 배너: 상세 정보와 리뷰 목록 -->
-          <div class="col-lg-9 ps-lg-5 mt-2">
-            <!-- 닉네임 및 기타 정보 -->
-            <h1 class="hero-heading mb-2 ">{{ buddiz.nickname }}</h1>
-            <div class="text-block">
-              <p>
-                <span style="margin-right: 7px;" class="badge badge-secondary-light">{{ t('common.budi.lived') }} {{ buddiz.liveInKr }}{{ t('common.budi.years') }}</span>
-                <span style="margin-right: 7px;" class="badge badge-secondary-light">{{ t('common.budi.active') }} {{ buddiz.hiredTimes }}{{ t('common.budi.count') }}</span>
-                <span style="margin-right: 7px;" class="badge badge-secondary-light">
-                  <span v-if="buddiz.lan === 'KR'">한국어</span>
-                  <span v-else-if="buddiz.lan === 'VM'">Vietnamese</span>
-                </span>
-              </p>
+        <!-- 오른쪽 배너: 상세 정보와 리뷰 목록 -->
+        <div class="col-lg-9 ps-lg-5 mt-2">
+          <!-- 닉네임 및 기타 정보 -->
+          <h1 class="hero-heading mb-0 ">{{ buddiz.nickname }}</h1>
+          <div class="text-block">
+            <p>
+              <span style="margin-right: 7px;" class="badge badge-secondary-light">{{ t('common.budi.lived') }} {{ buddiz.liveInKr }}{{ t('common.budi.years') }}</span>
+              <span style="margin-right: 7px;" class="badge badge-secondary-light">{{ t('common.budi.active') }} {{ buddiz.hiredTimes }}{{ t('common.budi.count') }}</span>
+              <span style="margin-right: 7px;" class="badge badge-secondary-light">
+                <span v-if="buddiz.lan === 'KR'">한국어</span>
+                <span v-else-if="buddiz.lan === 'VM'">Vietnamese</span>
+              </span>
+            </p>
             </div>
             <div class="text-block">
               <p>{{ buddiz.selfInfo }}</p>
@@ -125,17 +125,16 @@
               </div>
             </div>
 
-
-            <div v-if="reviewList.length > 0">
-              <div v-for="review in reviewList" :key="review.id" class="d-flex d-block d-sm-flex review"
-                style="padding: 15px 0 15px 0; border-bottom: 1.5px solid #ddd;">
-                <div class="flex align-items-center text-md-center flex-shrink-0 me-2 ms-2 ms-xl-4 me-xl-4">
-                  <div class="text-md-center flex-shrink-0 me-4 me-xl-5">
-                    <img :src="review.profilePic" alt="reviewer image" class="d-block avatar avatar-xxl p-1 mb-2"
-                      style="width: 100px; height: 100px;">
-                    <span class="text-uppercase text-muted text-sm">{{ new
-                      Date(review.createdAt).toLocaleDateString()}}</span>
-                  </div>
+          <div v-if="reviewList.length > 0">
+            <div v-for="review in reviewList.slice(0, 10)" :key="review.id" class="d-flex d-block d-sm-flex review"
+              style="padding: 15px 0 15px 0; border-bottom: 1.5px solid #ddd;">
+              <div class="flex align-items-center text-md-center flex-shrink-0 me-2 ms-2 ms-xl-4 me-xl-4">
+                <div class="text-md-center flex-shrink-0 me-4 me-xl-5">
+                  <img :src="review.profilePic" alt="reviewer image" class="d-block avatar avatar-xxl p-1 mb-2"
+                    style="width: 100px; height: 100px;">
+                  <span class="text-uppercase text-muted text-sm">
+                    {{ new Date(review.createdAt).toLocaleDateString()}}</span>
+                 </div>
                 </div>
                 <div>
                   <h6 class="mt-2 mb-1">{{ review.reviewer }}</h6>

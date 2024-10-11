@@ -3,6 +3,7 @@ import SideBar from '@/components/layouts/SideBar.vue';
 import { computed, ref, onMounted } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import blameApi from '@/api/blameApi';
+import wishApi from '@/api/wishApi';
 
 const auth = useAuthStore();
 
@@ -15,9 +16,44 @@ const profilePic = computed(() => auth.profilePic);
 const avatar = computed(() => `/api/member/${uno}/avatar`); // auth에서 직접 id를 가져옴
 console.log(auth.uno);
 
+//찜 등록한 매물 개수
+const wishestatecount = ref(0);
+//찜 등록한 버디즈 개수
+const wishbuddizcount = ref(0);
+//신고한 매물 개수
 const budizcount = ref(0);
+//신고한 버디즈 개수
 const estatecount = ref(0);
 
+//찜 등록한 매물 개수를 세는 함수
+async function fetchWishEstateCount() {
+  try {
+    const data = await wishApi.getwishestate(uno.value);
+    wishestatecount.value = data.length;
+    console.log('매물찜 등록한 개수: ', wishestatecount.value);
+  } catch (e) {
+    console.error('매물 찜 목록 조회 실패: ', e);
+  }
+}
+//찜 등록한 버디즈 개수를 세는 함수
+async function fetchWishBuddizCount() {
+  try {
+    const data = await wishApi.getwishbuddiz(uno.value);
+    wishbuddizcount.value = data.length;
+    console.log('버디즈찜 등록한 개수: ', wishbuddizcount.value);
+  } catch (e) {
+    console.error('버디즈 찜 목록 조회 실패: '.e);
+  }
+}
+//신고한 매물 개수를 세는 함수
+async function fetchBlameEstateCount() {
+  try {
+    const data = await blameApi.getblameestate(uno.value); // uno를 인자로 전달
+    estatecount.value = data.length; //신고한 매물 개수를 세어서 저장.
+  } catch (error) {
+    console.error('매물 신고 목록 조회 실패:', error);
+  }
+}
 // 신고한 버디즈 개수를 세는 함수
 async function fetchBlameBudizCount() {
   try {
@@ -27,21 +63,18 @@ async function fetchBlameBudizCount() {
     console.error('버디즈 신고 목록 조회 실패:', error);
   }
 }
-async function fetchBlameEstateCount() {
-  try {
-    const data = await blameApi.getblameestate(uno.value); // uno를 인자로 전달
-    estatecount.value = data.length; //신고한 매물 개수를 세어서 저장.
-  } catch (error) {
-    console.error('매물 신고 목록 조회 실패:', error);
-  }
-}
 
 // 컴포넌트가 마운트될 때 신고한 버디즈 개수를 가져오기
 onMounted(() => {
-  fetchBlameBudizCount();
+  //찜 등록한 매물 개수를 가져오기
+  fetchWishEstateCount();
+  //찜 등록한 버디즈 개수를 가져오기
+  fetchWishBuddizCount();
+  //신고한 매물 개수를 가져오기
   fetchBlameEstateCount();
+  //신고한 버디즈 개수를 가져오기
+  fetchBlameBudizCount();
 });
-
 </script>
 
 <template>
@@ -79,8 +112,12 @@ onMounted(() => {
             <h5 class="flex-fill text-center my-3" style="width: 25%">신고한 버디즈</h5>
           </div>
           <div class="d-flex" style="border: 2px; border-style: solid; border-color: #eaecef; border-radius: 0 0 10px 10px; border-top: none; justify-content: center">
-            <router-link to="/mypage/wish" class="flex-fill text-center my-3" style="width: 25%; text-decoration: none"><h5 style="color: black">0</h5></router-link>
-            <router-link to="/mypage/wish" class="flex-fill text-center my-3" style="width: 25%; text-decoration: none"><h5 style="color: black">0</h5></router-link>
+            <router-link to="/mypage/wish" class="flex-fill text-center my-3" style="width: 25%; text-decoration: none"
+              ><h5 style="color: black">{{ wishestatecount }}</h5></router-link
+            >
+            <router-link to="/mypage/wish" class="flex-fill text-center my-3" style="width: 25%; text-decoration: none"
+              ><h5 style="color: black">{{ wishbuddizcount }}</h5></router-link
+            >
             <router-link to="/mypage/blame" class="flex-fill text-center my-3" style="width: 25%; text-decoration: none"
               ><h5 style="color: black">{{ estatecount }}</h5></router-link
             >

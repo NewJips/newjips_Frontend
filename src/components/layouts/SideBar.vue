@@ -17,7 +17,7 @@ const active = (path) => {
     <!-- 사이드바 -->
     <div class="sidebar">
       <!-- mt-4 mb-4로 top,bottom 마진줌. -->
-      <h2 class="sidebar-header mt-4 mb-4 ms-2">마이 페이지</h2>
+      <h2 class="sidebar-header mt-4 mb-4 ms-2"><router-link class="mypage" to="/mypage/mystatus">마이 페이지</router-link></h2>
       <nav class="nav nav-pills flex-column">
         <!-- 아래쪽마진/활성화 -->
         <!-- 활성화했을 때 붙이고 싶으면 mb-2빼 -->
@@ -52,5 +52,9 @@ const active = (path) => {
   margin-bottom: 20px;
   margin-right: 10px; /* 사이드바와 콘텐츠 사이 간격 */
   width: 180px; /* 사이드바 너비 고정 */
+}
+.mypage {
+  text-decoration: none; /* 밑줄 제거 */
+  color: black;
 }
 </style>

@@ -155,7 +155,7 @@ const prevBuddySlide = () => {
                   <div class="card-body">
                     <h5 class="card-title">{{ buddiz.blamedNickName }}</h5>
                     <!-- nickname -->
-                    <p class="card-text">{{ buddiz.content }}</p>
+                    <p class="card-text">{{ buddiz.blamedPersonality }}</p>
                     <!-- content-->
                   </div>
                 </div>
