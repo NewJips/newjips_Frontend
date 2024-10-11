@@ -1,4 +1,5 @@
 <script setup>
+import { Dropdown } from 'bootstrap';
 import MenuItem from './MenuItem.vue';
 import { useI18n } from 'vue-i18n'; // i18n 사용
 import { computed, ref, onMounted, onBeforeUnmount } from 'vue';
@@ -87,24 +88,26 @@ onBeforeUnmount(() => {
   <ul class="navbar-nav">
     <template v-for="(menu, index) in menus" :key="menu.title">
       <!-- 채팅 메뉴는 아이콘만 표시 -->
-      <li v-if="index === 3" class="nav-item">
-        <router-link to="/chat">
-          <img class="mt-2" :src="isChatActive ? messageOnIconUrl : messageIconUrl" />
-        </router-link>
-      </li>
-      <MenuItem v-if="menu.title != '채팅'" :menu="menu" />
+       <div v-if="auth.isLogin">
+        <li v-if="index === 3" class="nav-item">
+          <router-link to="/chat">
+            <img class="mt-2" :src="isChatActive ? messageOnIconUrl : messageIconUrl" style="height: 23px;"/>
+          </router-link>
+        </li>
+       </div>
+      <MenuItem v-if="menu.title != t('common.chat')" :menu="menu" />
 
       <!-- '공지사항' 후에 드롭다운 추가 -->
       <li v-if="index === 2" class="nav-item dropdown">
-        <button class="btn dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown">
+        <button class="btn dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown"  style="color: #111111;">
           {{ displayLanguage }}
         </button>
         <ul class="dropdown-menu" aria-labelledby="languageDropdown">
           <li @click="changing('ko')">
-            <a class="dropdown-item" href="#">한국어</a>
+            <a class="dropdown-item" href="#"  style="color: #111111;">한국어</a>
           </li>
           <li @click="changing('vn')">
-            <a class="dropdown-item" href="#">vietnamese</a>
+            <a class="dropdown-item" href="#"  style="color: #111111;">vietnamese</a>
           </li>
         </ul>
       </li>

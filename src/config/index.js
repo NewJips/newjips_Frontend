@@ -1,21 +1,21 @@
-import { Dropdown } from 'bootstrap';
+import i18n from "@/i18n";
 
 export default {
   menus: [
     {
-      title: '지도',
+      title: i18n.global.t('common.map'),
       url: '/map',
     },
     {
-      title: '버디즈',
+      title: i18n.global.t('common.buddiz'),
       url: '/buddiz',
     },
     {
-      title: '공지사항',
+      title: i18n.global.t('common.notice'),
       url: '/board',
     },
     {
-      title: '채팅',
+      title: i18n.global.t('common.chat'),
       url: '/chat',
     },
   ],
@@ -23,7 +23,7 @@ export default {
   accoutMenus: {
     login: {
       url: '/auth/login',
-      title: '로그인',
+      title:  i18n.global.t('common.login'),
     },
   },
 };

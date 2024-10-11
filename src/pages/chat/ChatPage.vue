@@ -52,9 +52,6 @@ const requestChatRoom = async () => {
 // 폴링할 요청
 const requestChatMsgPolling = async () => {
   chatMsg.value = await chatApi.getChatMsgList(chatRoomid.value, uno.value);
-
-  await nextTick();
-  scrollToBottom();
 };
 
 const requestChatMsg = async (room) => {
