@@ -60,7 +60,7 @@
               <h3 style="font-size: 25px; font-weight: bold; margin-bottom: 5px;">{{ buddiz.name }}</h3>
               <div style="font-size: 1em; margin: 5px;">
                 <p style="margin-bottom: 5px;"><img src="/src/assets/icons/starIcon.png" alt="star"
-                    style="height: 18px; width: 18px;"> {{ buddiz.rating }}</p>
+                    style="height: 18px; width: 18px;"> {{ Number.isInteger(buddiz.avg) ? buddiz.avg : buddiz.avg.toFixed(2) }}</p>
                     <p style="margin-bottom: 5px;">한국 자취 {{ buddiz.liveInKr }}년차</p>
                 <p style="margin-bottom: 5px;">{{ buddiz.personality }}</p>
               </div>
