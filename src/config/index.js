@@ -12,7 +12,7 @@ export default {
     },
     {
       title: '공지사항',
-      url: '/board/list',
+      url: '/board',
     },
     {
       title: '채팅',
