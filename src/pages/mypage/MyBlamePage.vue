@@ -179,7 +179,7 @@ const prevBuddySlide = () => {
   </div>
 </template>
 
-<style>
+<style scoped>
 .nav-pills .nav-link.active {
   background-color: #ff8f17;
   color: white;

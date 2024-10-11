@@ -20,7 +20,32 @@
     "banner3": "Tôi sẽ là người bạn, người đồng hành và người hỗ trợ mạnh mẽ của bạn!",
     "banner4": "Tìm phòng bạn muốn tại NewZips và ghé thăm phòng đó cùng Bạn bè!",
     "find_buddiz": "Tìm Buddiz",
-    "find_room": "Tìm phòng"
+    "find_room": "Tìm phòng",
+    "popular_buddiz": "được mến mộ Buddiz",
+    "popular_buddiz_explain": "Là Buddiz nhận được nhiều điểm sao nhất",
+    "exchange": "tỷ giá hối đoái",
+    "exchange_explain": "Tỷ giá hối đoái giữa Hàn Quốc và Việt Nam.",
+    "popular_estates": "Các mặt hàng phổ biến",
+    "popular_estates_explain": "Đây là căn phòng được hấp nhiều nhất.",
+    "plusbtn": "Xem thêm",
+    "guide_kr": "Hướng dẫn bất động sản Hàn Quốc",
+    "guide_kr_explain": "Hướng dẫn bất động sản đơn giản và dễ dàng do New Jobs hướng dẫn",
+    "guide_kr_card1": "[Tip hay của Newzips] 5 điều răn phòng chống hàng giả",
+    "guide_kr_card1_detail": "Phân tích toàn bộ dữ liệu hàng hóa, loại hình và thông tin của hàng giả làm mê hoặc người tiêu dùng",
+    "guide_kr_card2": "Sau khi ký hợp đồng tại nhà, tổng kết các loại đăng ký và khai báo bắt buộc",
+    "guide_kr_card3": "[Tip hay của Newzips] Khi tìm được ngôi nhà mà bạn muốn ký hợp đồng, nhất định phải kiểm tra 'cái này'!",
+    "guide_kr_card4": "[Tip hay của Newzips] Danh sách kiểm tra hàng hóa cần tham khảo khi tìm nhà",
+    "guide_kr_card5": "[Tip hay của Newzips] Khi soạn hợp đồng thuê nhà bạn nên biết về kiến thức thông thường của pháp luật!",
+    "hotplace": "khu vực được ưa chuộng",
+    "hotplace_explain": "Đề cử khu vực nổi tiếng gần đây của Hàn Quốc",
+    "hotplace_card1": "Hongdae",
+    "hotplace_card2": "Seongsu",
+    "hotplace_card3": "Gangnam",
+    "hotplace_card4": "Konkuk University",
+    "recommend_title": "Đề cử cho vay thế chấp",
+    "recommend_explain": "Tôi khuyên bạn nên cho vay thế chấp cho người nước ngoài."
+
+
   },
   
   "chatting": {

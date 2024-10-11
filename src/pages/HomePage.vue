@@ -201,9 +201,9 @@ const goToLoanDetail = (loan) => {
       <div class="row">
         <!-- 인기 버디즈 -->
         <div class="col-md-8 pe-5">
-          <h4 class="head-title">인기 버디즈</h4>
+          <h4 class="head-title">{{ t('common.home.popular_buddiz') }}</h4>
           <div class="d-flex mb-4">
-            <span class="subtitle ">가장 많은 별점을 받은 버디즈입니다.</span>
+            <span class="subtitle ">{{ t('common.home.popular_buddiz_explain') }}</span>
           </div>
 
           <div class="row ps-2">
@@ -247,9 +247,9 @@ const goToLoanDetail = (loan) => {
 
         <!-- 환율 -->
         <div class="col-md-4">
-          <h4 class="head-title">환율</h4>
+          <h4 class="head-title">{{ t('common.home.exchange') }}</h4>
           <div class="d-flex mb-4">
-            <span class="subtitle">한국 - 베트남 환율 정보입니다.</span>
+            <span class="subtitle">{{ t('common.home.exchange_explain') }}</span>
           </div>
 
           <div class="flex ps-3 pt-3 align-items-center">
@@ -280,11 +280,11 @@ const goToLoanDetail = (loan) => {
 
     <!-- 인기 매물 -->
     <div class="ms-5 me-5 mb-5">
-      <h4 class="head-title">인기 매물</h4>
+      <h4 class="head-title">{{ t('common.home.popular_estates') }}</h4>
       <div class="d-flex mb-4">
-        <span class="subtitle ">찜을 가장 많이 받은 방입니다.</span>
+        <span class="subtitle ">{{ t('common.home.popular_estates_explain') }}</span>
         <span class="position-absolute end-0 me-5">
-          <router-link class="btn-more text-muted" to="/map">더보기</router-link>
+          <router-link class="btn-more text-muted" to="/map">{{ t('common.home.plusbtn') }}</router-link>
         </span>
       </div>
 
@@ -296,7 +296,7 @@ const goToLoanDetail = (loan) => {
               <div class="card-img-top card-img-hover">
                 <a class="img-overlay" href="real-estate-single-v1.html"></a>
                 <div class="position-absolute start-0 top-0 pt-3 ps-3">
-                  <span class="d-table badge bg-info">New</span>
+                  <span class="d-table badge bg-danger">HOT</span>
                 </div>
                 <div class="content-overlay end-0 top-0 pt-3 pe-3">
                   <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to Wishlist">
@@ -324,11 +324,11 @@ const goToLoanDetail = (loan) => {
     <!-- 가이드 -->
     <div class="mb-5">
       <div class="container-fluid banner-container overflow-hidden ps-5" style="background-color: #EAECEF;">
-        <h4 class="head-title">한국 부동산 가이드</h4>
+        <h4 class="head-title">{{ t('common.home.guide_kr') }}</h4>
         <div class="d-flex mb-4">
-          <span class="subtitle ">NewJips가 알려주는 쉽고 간단한 부동산 가이드</span>
+          <span class="subtitle ">{{ t('common.home.guide_kr_explain') }}</span>
           <span class="position-absolute end-0 me-5">
-            <router-link class="btn-more text-muted" to="/guide">더보기</router-link>
+            <router-link class="btn-more text-muted" to="/guide">{{ t('common.home.plusbtn') }}</router-link>
           </span>
         </div>
 
@@ -342,8 +342,8 @@ const goToLoanDetail = (loan) => {
                   <div class="icon-box mb-3">
                     <img src="@/assets/icons/bank-note.svg" style="height: 5vh;">
                   </div>
-                  <h5 class="guide-card-title">[뉴집스 꿀팁] 허위매물 예방 5계명</h5>
-                  <p>전체 매물 데이터를 분석하여 소비자를 현혹시키는 허위매물의 유형과 정보</p>
+                  <h5 class="guide-card-title">{{ t('common.home.guide_kr_card1') }}</h5>
+                  <p>{{ t('common.home.guide_kr_card1_detail') }}</p>
                 </div>
               </div>
             </a>
@@ -355,7 +355,7 @@ const goToLoanDetail = (loan) => {
               <a href="https://spacediver.tistory.com/10" class="text-muted" style="text-decoration: none; ">
                 <div class="card shadow hover-animate">
                   <div class="card-body">
-                    <h6 class="guide-card-title">[뉴집스 꿀팁] 집 계약 후 필수 신고 및 등기 신청 종류 총정리</h6>
+                    <h6 class="guide-card-title">{{ t('common.home.guide_kr_card2') }}</h6>
                   </div>
                 </div>
               </a>
@@ -364,7 +364,7 @@ const goToLoanDetail = (loan) => {
               <a href="https://spacediver.tistory.com/6" class="text-muted" style="text-decoration: none; ">
                 <div class="card shadow hover-animate">
                   <div class="card-body">
-                    <h6 class="guide-card-title">[뉴집스 꿀팁] 계약하고 싶은 집 찾을 때 ‘이것’ 꼭 확인해요!</h6>
+                    <h6 class="guide-card-title">{{ t('common.home.guide_kr_card3') }}</h6>
                   </div>
                 </div>
               </a>
@@ -377,7 +377,7 @@ const goToLoanDetail = (loan) => {
               <a href="https://spacediver.tistory.com/5" class="text-muted" style="text-decoration: none; ">
                 <div class="card shadow hover-animate">
                   <div class="card-body">
-                    <h6 class="guide-card-title">[뉴집스꿀팁] 집 구할 때 꼭! 참고해야 할 '매물 체크리스트'</h6>
+                    <h6 class="guide-card-title">{{ t('common.home.guide_kr_card4') }}'</h6>
                   </div>
                 </div>
               </a>
@@ -387,7 +387,7 @@ const goToLoanDetail = (loan) => {
               <a href="https://spacediver.tistory.com/3" class="text-muted" style="text-decoration: none; ">
                 <div class="card shadow hover-animate">
                   <div class="card-body">
-                    <h6 class="guide-card-title">[뉴집스꿀팁] 주택임대차계약서 작성 시 알아두면 좋은 법률 상식~!</h6>
+                    <h6 class="guide-card-title">{{ t('common.home.guide_kr_card5') }}</h6>
                   </div>
                 </div>
               </a>
@@ -400,9 +400,9 @@ const goToLoanDetail = (loan) => {
 
     <!-- 핫플 지역 -->
     <div class="ms-5 me-5 mb-5">
-      <h4 class="head-title">핫플 지역</h4>
+      <h4 class="head-title">{{ t('common.home.hotplace') }}</h4>
       <div class="d-flex mb-4">
-        <span class="subtitle ">한국의 최근 인기 지역을 추천합니다.</span>
+        <span class="subtitle ">{{ t('common.home.hotplace_explain') }}</span>
       </div>
 
       <div class="hotPlace-grid pb-3">
@@ -413,7 +413,7 @@ const goToLoanDetail = (loan) => {
               <img src="https://i.pinimg.com/564x/66/a2/ab/66a2ab3dc8ed82cd11376c277c74d47c.jpg" alt="">
             </div>
             <div class="card-body text-center">
-              <h3 class="mb-0 fs-base text-nav">홍대</h3>
+              <h3 class="mb-0 fs-base text-nav">{{ t('common.home.hotplace_card1') }}</h3>
             </div>
           </a>
         </div>
@@ -425,7 +425,7 @@ const goToLoanDetail = (loan) => {
               <img src="https://mediahub.seoul.go.kr/uploads/mediahub/2023/07/wHQEGwBLgYQBpvjKWCwKdRHPEmBMwLFy.png" alt="">
             </div>
             <div class="card-body text-center">
-              <h3 class="mb-0 fs-base text-nav">성수</h3>
+              <h3 class="mb-0 fs-base text-nav">{{ t('common.home.hotplace_card2') }}</h3>
             </div>
           </a>
         </div>
@@ -437,7 +437,7 @@ const goToLoanDetail = (loan) => {
               <img src="https://i.pinimg.com/564x/b3/e6/58/b3e658c5d2947f52b0b23bd96e0bf5a6.jpg" alt="">
             </div>
             <div class="card-body text-center">
-              <h3 class="mb-0 fs-base text-nav">강남</h3>
+              <h3 class="mb-0 fs-base text-nav">{{ t('common.home.hotplace_card3') }}</h3>
             </div>
           </a>
         </div>
@@ -449,7 +449,7 @@ const goToLoanDetail = (loan) => {
               <img src="https://cdn.news.unn.net/news/photo/202111/518970_321294_1325.jpg" alt="">
             </div>
             <div class="card-body text-center">
-              <h3 class="mb-0 fs-base text-nav">건대</h3>
+              <h3 class="mb-0 fs-base text-nav">{{ t('common.home.hotplace_card4') }}</h3>
             </div>
           </a>
         </div>
@@ -458,11 +458,11 @@ const goToLoanDetail = (loan) => {
 
     <!-- 전세 대출 추천 -->
     <div class="ms-5 me-5 mb-5">
-      <h4 class="head-title">전세 대출 추천</h4>
+      <h4 class="head-title">{{ t('common.home.recommend_title') }}</h4>
       <div class="d-flex mb-4">
-        <span class="subtitle ">외국인을 위한 전세 대출을 추천합니다.</span>
+        <span class="subtitle ">{{ t('common.home.recommend_title') }}</span>
         <span class="position-absolute end-0 me-5" to="/">
-          <router-link class="btn-more text-muted" >더보기</router-link>
+          <router-link class="btn-more text-muted" >{{ t('common.home.plusbtn') }}</router-link>
         </span>
       </div>
 
