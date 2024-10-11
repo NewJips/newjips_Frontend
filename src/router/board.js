@@ -8,7 +8,7 @@ export default [
     component: () => import('../pages/board/BoardListPage.vue'),
   },
   {
-    path: '/board/detail/:no',
+    path: '/board/detail/:nno',
     name: 'board/detail',
     component: () => import('../pages/board/BoardDetailPage.vue'),
   },

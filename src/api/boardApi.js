@@ -13,8 +13,8 @@ export default {
     return data;
   },
 
-  async get(no) {
-    const { data } = await api.get(`${BASE_URL}/${no}`);
+  async get(nno) {
+    const { data } = await api.get(`${BASE_URL}/detail/${nno}`);
     console.log('BOARD GET', data);
     return data;
   },

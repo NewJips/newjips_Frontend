@@ -18,7 +18,16 @@ const pageRequest = reactive({
   amount: parseInt(route.query.amount) || 6,
   searchType: '',
   searchValue: '',
+  lan:String(locale.value === 'ko' ? 'KR' : (locale.value === 'vn' ? 'VN' : '')),
 });
+
+const getLanValue = () => {
+  // return locale.value === 'ko' ? 'KR' : (locale.value === 'vn' ? 'VN' : '');
+  // return locale.value === 'ko' ? 'KR' : (locale.value === 'vn' ? 'VN' : '');
+
+  return locale.value === 'ko' ? 'KR' : (locale.value === 'vn' ? 'VN' : '');
+
+};
 
 const handlePageChange = async (pageNum) => {
   console.log(pageNum);
@@ -28,19 +37,29 @@ const handlePageChange = async (pageNum) => {
       amount: pageRequest.amount,
       searchType: pageRequest.searchType,
       searchValue: pageRequest.searchValue,
+      lan: pageRequest.lan, // locale에 따라 lan 값 설정
     },
   });
+  
 };
 
 // pageRequest의 값 변경된 경우 호출
-watch(route, async (newValue) => {
+watch([route,locale], async ([newValue, newLocale]) => {
   console.log('WATCH', route.query.page);
   pageRequest.page = parseInt(route.query.page);
   pageRequest.searchType = route.query.searchType;
   pageRequest.searchValue = route.query.searchValue;
   pageRequest.amount = parseInt(route.query.amount);
+  pageRequest.lan = String(route.query.lan || getLanValue());
   await load(pageRequest);
 });
+
+// // locale 값이 변경될 때마다 pageRequest.lan을 업데이트하고 데이터를 다시 로드
+// watch(locale, async (newLocale) => {
+//   console.log('Language changed:', newLocale);
+//   pageRequest.lan = getLanValue(); // locale에 따른 lan 값 업데이트
+//   await load(pageRequest); // 데이터 다시 로드
+// });
 
 
 const load = async (query) => {
@@ -64,8 +83,9 @@ load(pageRequest);
     <div class="row row-cols-md-2 row-cols-1 px-5 mb-lg-5 mb-4 notice-content">
 
       <!-- 한국어 부분 -->
-      <span v-if="locale === 'ko'">
-        <article class="col pb-3" v-for="article in articles.filter(a => a.lan === 'KR')" :key="article.id">
+      <!-- <div v-if="locale === 'ko'" style="background-color: aliceblue;"> -->
+        <article v-if="locale === 'ko'" class="col pb-3" v-for="article in articles.filter(a => a.lan === 'KR')">
+          <router-link :to="`/board/detail/${article.nno}`" class="user-link">
           <a class="d-block position-relative mb-3" :href="`/board/${article.id}`">
             <img class="d-block rounded-3 article-image"
               :src="article.imageUrl || 'https://image.ajunews.com/content/image/2022/04/04/20220404181310254680.jpg'"
@@ -77,12 +97,14 @@ load(pageRequest);
             <a class="nav-link" :href="`/board/${article.id}`">{{ article.title }}</a>
           </h3>
           <p class="mb-3 text-truncate">{{ article.content }}</p>
+        </router-link>
         </article>
-      </span>
+      <!-- </div> -->
 
       <!-- 베트남어 부분 -->
-      <span v-else-if="locale === 'vn'">
-        <article class="col pb-3" v-for="article in articles.filter(a => a.lan === 'VN')" :key="article.id">
+      <!-- <div v-else-if="locale === 'vn'" style="background-color: brown;"> -->
+        <article v-else-if="locale === 'vn'" class="col pb-3" v-for="article in articles.filter(a => a.lan === 'VN')">
+          <router-link :to="`/board/detail/${article.nno}`" class="user-link">
           <a class="d-block position-relative mb-3" :href="`/board/${article.id}`">
             <img class="d-block rounded-3 article-image"
               :src="article.imageUrl || 'https://image.ajunews.com/content/image/2022/04/04/20220404181310254680.jpg'"
@@ -94,8 +116,9 @@ load(pageRequest);
             <a class="nav-link" :href="`/board/${article.id}`">{{ article.title }}</a>
           </h3>
           <p class="mb-3 text-truncate">{{ article.content }}</p>
+        </router-link>
         </article>
-      </span>
+      <!-- </div> -->
     </div>
 
 
@@ -193,5 +216,17 @@ article {
   overflow: hidden;
   text-overflow: ellipsis;
   /* ... 처리 */
+}
+.user-link {
+  text-decoration: none;
+  /* 링크 밑줄 제거 */
+  color: #000;
+  /* 기본 글자색 */
+  display: block;
+  /* 링크 영역을 블록으로 만들어 전체 클릭 가능하게 */
+}
+.user-link:hover {
+  color: #007bff;
+  /* background-color: #d0d0d0; */
 }
 </style>
