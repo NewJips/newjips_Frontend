@@ -69,6 +69,13 @@
                         </button>
                       </div>
                     </form>
+                    
+                    <!-- 신고하기 -->
+                    <form @submit.prevent="goBlame" class="pt-2">
+                      <button type="submit" style="color: #616B79; text-align: center; width: 260px; font-size: 15px; background: none; border: none; cursor: pointer;">
+                          {{ t('common.blame.blame') }}
+                      </button>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -162,9 +169,11 @@ import { computed, reactive, ref } from 'vue';
 import buddizApi from '@/api/buddizApi';
 import { useI18n } from 'vue-i18n';
 import { useAuthStore } from '@/stores/auth';
+import { useBlameStore } from '@/stores/blame';
 
 const { t, locale } = useI18n();
 const auth = useAuthStore();
+const blameStore = useBlameStore();
 
 const route = useRoute();
 const router = useRouter();
@@ -209,6 +218,14 @@ const makeChating = async () => {
   } catch(e) {
     console.error('Failed to load data:', e);
   }
+};
+
+const goBlame = () => {
+  blameStore.blamedId = uno;
+  blameStore.buddizProfile = buddiz.value.profilePic;
+  blameStore.buddizNM = buddiz.value.nickname;
+  blameStore.buddizid = buddiz.value.name;
+  router.replace('/blame/buddiz');
 };
 
 const load = async () => {
