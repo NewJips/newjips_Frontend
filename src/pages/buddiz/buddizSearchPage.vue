@@ -1,5 +1,6 @@
 <template>
   <div class="fluid-container">
+    <FloatingAi/>
     <div class="type-header">
       <h2>{{ t('common.budi.title') }}</h2>
       <div style="font-size: 17pt; margin-top: 8pt;">{{ t('common.budi.content') }}</div>
@@ -93,7 +94,7 @@ import api from '@/api/buddizApi';
 import { ref, reactive, computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-
+import FloatingAi from '@/components/FloatingAi.vue';
 
 const { t, locale } = useI18n();
 const route = useRoute();
