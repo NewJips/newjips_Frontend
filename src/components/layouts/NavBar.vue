@@ -25,7 +25,7 @@ const changing = (lan) => {
 
 <template>
   <nav class="navbar navbar-expand-sm sticky-top bg-white shadow fixed-height">
-    <div class="container-fluid" style="padding: 0">
+    <div class="container-fluid" style="padding: 10px">
       <router-link class="navbar-brand" to="/">
         <img src="@/assets/images/newjips.png" alt="Brand Logo" style="height: 100%; max-height: 40px" />
       </router-link>
