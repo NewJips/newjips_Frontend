@@ -20,7 +20,31 @@
     "banner3": "가 친구, 동행자, 든든한 지원군이 되어줄게요!",
     "banner4": "뉴집스에서 원하는 방을 찾고 버디즈와 함께 방문해보세요!",
     "find_buddiz": "버디즈 찾기",
-    "find_room": "방 찾기"
+    "find_room": "방 찾기",
+    "popular_buddiz": "인기 버디즈",
+    "popular_buddiz_explain": "가장 많은 별점을 받은 버디즈 입니다.",
+    "exchange": "환율",
+    "exchange_explain": "한국-베트남 환율 정보입니다.",
+    "popular_estates": "인기 매물",
+    "popular_estates_explain": "찜을 가장 많이 받은 방입니다.",
+    "plusbtn": "더보기",
+    "guide_kr": "한국 부동산 가이드",
+    "guide_kr_explain": "New Jips가 알려주는 쉽고 간단한 부동산 가이드",
+    "guide_kr_card1": "[뉴집스 꿀팁] 허위매물 예방 5계명",
+    "guide_kr_card1_detail":"전체 매물 데이터를 분석하여 소비자를 현혹시키는 허위매물의 유형과 정보",
+    "guide_kr_card2":"[뉴집스 꿀팁] 집 계약 후 필수 신고 및 등기 신청 종류 총정리",
+    "guide_kr_card3":"[뉴집스 꿀팁] 계약하고 싶은 집 찾을 때 ‘이것’ 꼭 확인해요!",
+    "guide_kr_card4":"[뉴집스 꿀팁] 집 구할 때 꼭! 참고해야 할 '매물 체크리스트",
+    "guide_kr_card5":"[뉴집스 꿀팁] 주택임대차계약서 작성 시 알아두면 좋은 법률 상식~!",
+    "hotplace": "핫플 지역",
+    "hotplace_explain": "한국의 최근 인기 지역을 추천합니다.",
+    "hotplace_card1": "홍대",
+    "hotplace_card2": "성수",
+    "hotplace_card3": "강남",
+    "hotplace_card4": "건대",
+    "recommend_title": "전세 대출 추천",
+    "recommend_explain": "외국인을 위한 전세 대출을 추천합니다."
+
   },
   
   "tradetype": {
