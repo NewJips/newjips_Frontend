@@ -91,5 +91,33 @@
     "agentphone": "số điện thoại",
     "estatenum": "số niêm yết",
     "address": "vị trí bất động sản"
+  },
+
+  "makeChat" : "trò chuyện",
+
+  "budi" : {
+    "lived" : "dấu vết",
+    "years" : "y",
+    "active" : "hoạt động",
+    "count" : "",
+    "pick" : "Buddiz Cứu",
+    "review" : "Buddiz Đánh giá",
+    "writeReview" : "Viết đánh giá",
+    "title" : "Buddiz",
+    "content" : "Hãy tìm người bạn phù hợp với bạn!",
+    "searchNm" : "Tìm kiếm biệt danh",
+    "searchFilter" : "Lọc Tìm kiếm",
+    "searchSort" : "mảng",
+    "sortf" : "nữ giới",
+    "sortm" : "nam giới",
+    "sortReview" : "Nhiều đánh giá nhất",
+    "sortPrice" : "Theo giá",
+    "sortStar" : "phạm vi",
+    "searchPH" : "Nhập cụm từ tìm kiếm",
+    "star" : "đánh giá",
+    "reviewContent" : "Xem lại nội dung",
+    "reviewPH" : "Vui lòng nhập đánh giá.",
+    "confirm" : "Đăng ký đánh giá"
   }
+
 }

@@ -1,33 +1,33 @@
 <template>
   <div class="fluid-container">
     <div class="type-header">
-      <h2>버디즈</h2>
-      <div style="font-size: 17pt; margin-top: 8pt;">나에게 꼭 맞는 버디를 찾아보세요!</div>
+      <h2>{{ t('common.budi.title') }}</h2>
+      <div style="font-size: 17pt; margin-top: 8pt;">{{ t('common.budi.content') }}</div>
     </div>
 
     <div class="buddiz-search">
       <!-- 필터와 목록을 가로로 정렬 -->
       <div class="content">
         <div class="filter-section">
-          <p>닉네임으로 검색</p>
+          <p>{{ t('common.budi.searchNm') }}</p>
           <div class="search-bar">
             <input v-model="pageRequest.searchValue" v-on:keyup.enter="load(pageRequest)" type="text"
-              class="search-input" placeholder="검색어입력">
+              class="search-input" :placeholder="t('common.budi.searchPH')">
             <button @click="load(pageRequest)" class="search-button"><i class="fa fa-search"></i></button>
             <!-- 검색 버튼 -->
           </div>
           <hr style="width:240px; border-bottom: 1.5px solid #ddd;">
 
           <div class="filter-options">
-            <p>필터로 검색</p>
+            <p>{{ t('common.budi.searchFilter') }}</p>
             <div class="filter-buttons">
               <button :class="{ 'active': pageRequest.searchType === 'F' }" @click="toggleSearchType('F')"
                 class="filter-select">
-                여성
+                {{ t('common.budi.sortf') }}
               </button>
               <button :class="{ 'active': pageRequest.searchType === 'M' }" @click="toggleSearchType('M')"
                 class="filter-select">
-                남성
+                {{ t('common.budi.sortm') }}
               </button>
             </div>
           </div>
@@ -36,15 +36,15 @@
 
 
           <div class="sort-options">
-            <p>정렬</p>
+            <p>{{ t('common.budi.searchSort') }}</p>
             <button :class="{ 'active': pageRequest.sort === 'rating' }" @click="changeSort('별점순')"
-              class="filter-select">별점순</button>
+              class="filter-select">{{ t('common.budi.sortStar') }}</button>
             <button :class="{ 'active': pageRequest.sort === 'cost' }" @click="changeSort('가격순')"
-              class="filter-select">가격순</button>
+              class="filter-select">{{ t('common.budi.sortPrice') }}</button>
           </div>
           <div class="filter-buttons">
             <button :class="{ 'active': pageRequest.sort === 'reviewcnt' }" @click="changeSort('리뷰 많은 순')"
-              class="filter-select" style="width: 235px;">리뷰 많은 순</button>
+              class="filter-select" style="width: 235px;">{{ t('common.budi.sortReview') }}</button>
           </div>
         </div>
 
@@ -61,7 +61,7 @@
               <div style="font-size: 1em; margin: 5px;">
                 <p style="margin-bottom: 5px;"><img src="/src/assets/icons/starIcon.png" alt="star"
                     style="height: 18px; width: 18px;"> {{ Number.isInteger(buddiz.avg) ? buddiz.avg : buddiz.avg.toFixed(2) }}</p>
-                    <p style="margin-bottom: 5px;">한국 자취 {{ buddiz.liveInKr }}년차</p>
+                    <p style="margin-bottom: 5px;">{{ t('common.budi.lived') }} {{ buddiz.liveInKr }}{{ t('common.budi.years') }}</p>
                 <p style="margin-bottom: 5px;">{{ buddiz.personality }}</p>
               </div>
             </div>
@@ -92,7 +92,10 @@
 import api from '@/api/buddizApi';
 import { ref, reactive, computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 
+
+const { t, locale } = useI18n();
 const route = useRoute();
 const router = useRouter();
 const Buddizs = ref([]);

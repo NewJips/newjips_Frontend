@@ -1,10 +1,9 @@
 <template>
-  <div style="background-color: #F5F6F7;">
-    <div class="buddiz-banner" style="margin-top: 10px; margin-bottom: 30px;">
-      <h1>버디즈</h1>
-      <p>나에게 꼭 맞는 버디를 찾아보세요!</p>
+  <div class="fluid-container">
+    <div class="type-header mb-4">
+      <h2>{{ t('common.budi.title') }}</h2>
+      <div style="font-size: 17pt; margin-top: 8pt;">{{ t('common.budi.content') }}</div>
     </div>
-  </div>
 
   <section class="content">
     <div class="container">
@@ -14,12 +13,13 @@
           <div class="card border-0 shadow mb-6 mb-lg-0">
             <div class="card-header bg-gray-100 py-4 border-0 text-center">
               <a class="d-inline-block" href="#">
-                <img :src="buddiz.profilePic" alt="buddiz image" class="d-block avatar avatar-xxl p-2 mb-2"
+                <img :src="buddiz.profilePic" alt="buddiz image" class="d-block avatar avatar-xxl p-1 mb-2"
                   style="width: 100px; height: 100px;">
               </a>
               <h5 class="fw-bold">{{ buddiz.name }}</h5>
               <p class="text-muted text-sm mb-0">{{ buddiz.location }}</p>
             </div>
+            
             <div class="card-body p-4">
               <div class="test">
                 <div class="icon-rounded icon-rounded-sm bg-primary-light flex-shrink-0 me-2" style="width: 150px;">
@@ -31,191 +31,141 @@
                 </div>
               </div>
 
-              <div class="test" style="margin-top: 20px;">
-                <div class="icon-rounded icon-rounded-sm bg-primary-light flex-shrink-0 me-2" style="width: 250px;">
-                  <img src="/src/assets/icons/roundmoney.png" alt="money" style="width: 35px; height: 35px;">
-                  <span style="margin-left: 10px; margin-top: 15px;">
-                    ₩{{ buddiz.cost }}
-                  </span>
+                <div class="test" style="margin-top: 20px;">
+                  <div class="icon-rounded icon-rounded-sm bg-primary-light flex-shrink-0 me-2" style="width: 250px;">
+                    <img src="/src/assets/icons/roundmoney.png" alt="money" style="width: 35px; height: 35px;">
+                    <span style="margin-left: 10px; margin-top: 15px;">
+                      ₩ {{ buddiz.cost.toLocaleString() }}
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <hr>
-              <div class="card-text text-muted">
-                <div class="text-block">
-                  {{ buddiz.personality }}
-                  <!-- 찜하기 상태에 따라 버튼 표시 -->
-                  <form @submit.prevent="wishSubmit">
-                    <div>
-                    <button type="submit" class="badge2 badge-secondary-light2" style="width: 260px; font-size: 15px; border: none;">
+                <hr>
+                <div class="card-text text-muted">
+                  <div class="text-block">
+                    {{ buddiz.personality }}
+                    <!-- 찜하기 상태에 따라 버튼 표시 -->
+                    <form @submit.prevent="wishSubmit" class="mt-3">
+                      <div>
+                        <button type="submit" class="badge2 badge-secondary-light2" style="width: 260px; font-size: 15px; border: none;">
+                          <img src="/src/assets/icons/heart.png" alt="star" height="24px" class="me-2"> 
+                          {{ t('common.budi.pick') }}
+                        </button>
+                      </div>
+                    </form>
+
+                    <!-- <div v-if="!isLiked" @click="handleLikeBuddiz" class="badge2 badge-secondary-light2"
+                      style="font-size: 15px;">
                       <img src="/src/assets/icons/heart.png" alt="star" height="24px"> 버디즈 찜하기
-                    </button>
-                  </div>
-                  </form>
-
-                  <!-- <div v-if="!isLiked" @click="handleLikeBuddiz" class="badge2 badge-secondary-light2"
-                    style="font-size: 15px;">
-                    <img src="/src/assets/icons/heart.png" alt="star" height="24px"> 버디즈 찜하기
-                  </div> -->
-                  <!-- <div v-else @click="handleUnlikeBuddiz" class="badge2 badge-secondary-light2"
-                    style="font-size: 15px;">
-                    <img src="" alt="star"> 찜 해제
-                  </div> -->
-                  <div class="badge2 badge-secondary-light2" style="font-size: 15px;">
-                    <img src="/src/assets/icons/chatIcon.png" alt="chat" height="20px"> 채팅하기
+                    </div> -->
+                    <!-- <div v-else @click="handleUnlikeBuddiz" class="badge2 badge-secondary-light2"
+                      style="font-size: 15px;">
+                      <img src="" alt="star"> 찜 해제
+                    </div> -->
+                    <form @submit.prevent="makeChating">
+                      <div>
+                        <button type="submit" class="badge2 badge-secondary-light2" style="width: 260px; font-size: 15px; border: none;">
+                          <img src="/src/assets/icons/chatIcon.png" alt="star" height="20px" class="me-2"> 
+                          {{ t('common.makeChat') }}
+                        </button>
+                      </div>
+                    </form>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
-        </div>
 
         <!-- 오른쪽 배너: 상세 정보와 리뷰 목록 -->
-        <div class="col-lg-9 ps-lg-5">
+        <div class="col-lg-9 ps-lg-5 mt-2">
           <!-- 닉네임 및 기타 정보 -->
           <h1 class="hero-heading mb-0 ">{{ buddiz.nickname }}</h1>
           <div class="text-block">
             <p>
-              <span style="margin-right: 7px;" class="badge badge-secondary-light">한국 자취 {{ buddiz.liveInKr }}년차</span>
-              <span style="margin-right: 7px;" class="badge badge-secondary-light">활동 {{ buddiz.hiredTimes }}회</span>
+              <span style="margin-right: 7px;" class="badge badge-secondary-light">{{ t('common.budi.lived') }} {{ buddiz.liveInKr }}{{ t('common.budi.years') }}</span>
+              <span style="margin-right: 7px;" class="badge badge-secondary-light">{{ t('common.budi.active') }} {{ buddiz.hiredTimes }}{{ t('common.budi.count') }}</span>
               <span style="margin-right: 7px;" class="badge badge-secondary-light">
                 <span v-if="buddiz.lan === 'KR'">한국어</span>
                 <span v-else-if="buddiz.lan === 'VM'">Vietnamese</span>
               </span>
             </p>
-          </div>
-          <div class="text-block">
-            <p>{{ buddiz.selfInfo }}</p>
-          </div>
-          <br>
-
-          <!-- 리뷰 목록 -->
-          <!-- <h5 class="mb-4">후기</h5> -->
-
-          <!-- 리뷰 입력란 -->
-          <!-- <div class="py-5">
-            <button class="btn btn-outline-primary" type="button" @click="toggleReview">리뷰 남기기</button>
-            <div v-show="isReviewVisible" class="mt-4">
-              <h5 class="mb-4">리뷰 작성</h5>
-              <form @submit.prevent="submit" class="form" id="contact-form">
-                <div class="mb-4">
-                  <label class="form-label" for="rating">평점</label>
-                  <select class="form-select focus-shadow-0" v-model="article.rating" id="rating" required>
-                    <option value="5">★★★★★ (5/5)</option>
-                    <option value="4">★★★★☆ (4/5)</option>
-                    <option value="3">★★★☆☆ (3/5)</option>
-                    <option value="2">★★☆☆☆ (2/5)</option>
-                    <option value="1">★☆☆☆☆ (1/5)</option>
-                  </select>
-                </div>
-                <div class="mb-4">
-                  <label class="form-label" for="article">리뷰 내용</label>
-                  <textarea class="form-control" v-model="article.reviewContent" rows="4" id="article"
-                    placeholder="리뷰를 입력하세요" required></textarea>
-                </div>
-                <button class="btn btn-primary" type="submit" :disabled="disableSubmit">리뷰 등록</button>
-              </form>
             </div>
-          </div> -->
-
-          <!-- 리뷰 목록 -->
-          <div class="d-flex align-items-center justify-content-between mb-1">
-            <h3 class="subtitle text-sm text-primary">버디즈 후기</h3>
-            <button class="btn btn-outline-primary" type="button" @click="toggleReview">리뷰 남기기</button>
-          </div>
-
-          <!-- 리뷰 입력란 -->
-          <div class="py-1">
-            <div v-show="isReviewVisible" class="mt-4">
-              <h5 class="mb-4">리뷰 작성</h5>
-              <form @submit.prevent="submit" class="form" id="contact-form">
-                <div class="mb-4">
-                  <label class="form-label" for="rating">평점</label>
-                  <select class="form-select focus-shadow-0" v-model="article.rating" id="rating" required>
-                    <option value="5">★★★★★</option>
-                    <option value="4">★★★★</option>
-                    <option value="3">★★★</option>
-                    <option value="2">★★</option>
-                    <option value="1">★</option>
-                  </select>
-                </div>
-                <div class="mb-4">
-                  <label class="form-label" for="article">리뷰 내용</label>
-                  <textarea class="form-control" v-model="article.reviewContent" rows="4" id="article"
-                    placeholder="리뷰를 입력하세요" required></textarea>
-                </div>
-                <button class="btn btn-primary" type="submit" :disabled="disableSubmit">리뷰 등록</button>
-              </form>
+            <div class="text-block">
+              <p>{{ buddiz.selfInfo }}</p>
             </div>
-          </div>
+            <br>
 
+            <!-- 리뷰 목록 -->
+            <div class="d-flex align-items-center justify-content-between mb-1">
+              <h3 class="subtitle text-sm text-primary">{{ t('common.budi.review') }}</h3>
+              <button class="btn btn-outline-primary" type="button" @click="toggleReview">{{ t('common.budi.writeReview') }}</button>
+            </div>
+
+            <!-- 리뷰 입력란 -->
+            <div class="py-1">
+              <div v-show="isReviewVisible" class="mt-4">
+                <h5 class="mb-4">{{ t('common.budi.writeReview') }}</h5>
+                <form @submit.prevent="submit" class="form" id="contact-form">
+                  <div class="mb-4">
+                    <label class="form-label" for="rating">{{ t('common.budi.star') }}</label>
+                    <select class="form-select focus-shadow-0" v-model="article.rating" id="rating" required>
+                      <option value="5">★★★★★</option>
+                      <option value="4">★★★★</option>
+                      <option value="3">★★★</option>
+                      <option value="2">★★</option>
+                      <option value="1">★</option>
+                    </select>
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label" for="article">{{ t('common.budi.reviewContent') }}</label>
+                    <textarea class="form-control" v-model="article.reviewContent" rows="4" id="article"
+                      :placeholder="t('common.budi.reviewPH')" required></textarea>
+                  </div>
+                  <button class="btn btn-primary" type="submit" :disabled="disableSubmit">{{ t('common.budi.confirm') }}</button>
+                </form>
+              </div>
+            </div>
 
           <div v-if="reviewList.length > 0">
-            <div v-for="review in reviewList.slice(0, 4)" :key="review.id" class="d-flex d-block d-sm-flex review"
+            <div v-for="review in reviewList.slice(0, 10)" :key="review.id" class="d-flex d-block d-sm-flex review"
               style="padding: 15px 0 15px 0; border-bottom: 1.5px solid #ddd;">
               <div class="flex align-items-center text-md-center flex-shrink-0 me-2 ms-2 ms-xl-4 me-xl-4">
                 <div class="text-md-center flex-shrink-0 me-4 me-xl-5">
-                  <img :src="review.profilePic" alt="reviewer image" class="d-block avatar avatar-xxl p-2 mb-2"
+                  <img :src="review.profilePic" alt="reviewer image" class="d-block avatar avatar-xxl p-1 mb-2"
                     style="width: 100px; height: 100px;">
                   <span class="text-uppercase text-muted text-sm">
                     {{ new Date(review.createdAt).toLocaleDateString()}}</span>
+                 </div>
                 </div>
-              </div>
-              <div>
-                <h6 class="mt-2 mb-1">{{ review.reviewer }}</h6>
-                <div class="mb-2">
-                  <i v-for="star in review.rating" :key="star" class="fa fa-xs fa-star text-primary"></i>
-                  <i v-for="emptyStar in 5 - review.rating" :key="emptyStar" class="fa fa-xs fa-star text-gray-200"></i>
+                <div>
+                  <h6 class="mt-2 mb-1">{{ review.reviewer }}</h6>
+                  <div class="mb-2">
+                    <i v-for="star in review.rating" :key="star" class="fa fa-xs fa-star text-primary"></i>
+                    <i v-for="emptyStar in 5 - review.rating" :key="emptyStar" class="fa fa-xs fa-star text-gray-200"></i>
+                  </div>
+                  <p class="text-muted text-sm">{{ review.reviewContent }}</p>
                 </div>
-                <p class="text-muted text-sm">{{ review.reviewContent }}</p>
               </div>
             </div>
           </div>
-
-
-
-
-          <!-- <form @submit.prevent="submit">
-
-            <div class="mb-3 mt-3 row">
-              <div class="col-8">
-                <label for="title" class="form-label"> 제목 </label>
-                <input type="text" class="form-control" placeholder="제목" id="title" v-model="article.title" />
-              </div>
-            </div>
-
-            <div class="mb-3 mt-3">
-              <label for="content" class="form-label"> 내용 </label>
-              <textarea class="form-control" placeholder="내용" id="content" v-model="article.content" rows="10"></textarea>
-            </div>
-
-            <div class="my-5 text-center">
-              <button type="submit" class="btn btn-primary me-3" :disabled="disableSubmit">
-                <i class="fa-solid fa-check"></i>
-                확인
-              </button>
-
-            </div>
-            
-          </form> -->
-
-
-
+          <!-- 오른쪽 배너 끝 -->
         </div>
-        <!-- 오른쪽 배너 끝 -->
       </div>
-    </div>
-  </section>
+    </section>  
+  </div>
 </template>
 
 <script setup>
 import { useRoute, useRouter } from 'vue-router';
 import api from '@/api/buddizApi';
+import chatApi from '@/api/chatApi';
 import { computed, reactive, ref } from 'vue';
 import buddizApi from '@/api/buddizApi';
-// import { useAuthStore } from '@/stores/auth';
+import { useI18n } from 'vue-i18n';
+import { useAuthStore } from '@/stores/auth';
 
-// const auth = useAuthStore();
+const { t, locale } = useI18n();
+const auth = useAuthStore();
+
 const route = useRoute();
 const router = useRouter();
 
@@ -237,29 +187,29 @@ const disableSubmit = computed(() => !article.rating || !article.reviewContent);
 const submit = async () => {
   if (!confirm('등록할까요?')) return;
 
-  console.log('Route params uno:', route.params.uno);
-  console.log(article.reviewContent);
-  console.log(article.rating);
+  // console.log('Route params uno:', route.params.uno);
+  // console.log(article.reviewContent);
+  // console.log(article.rating);
   await buddizApi.create(article, uno);
   alert('리뷰가 등록되었습니다!');
   load();
 };
 
 const wishSubmit=async()=>{
-  console.log(uno);
+  // console.log(uno);
   await buddizApi.reviewWish(uno);
 }
 
-
-// const load = async () => {
-//   try {
-//     buddiz.value = await api.get(uno);
-//     reviewList.value = await api.getReview(uno);
-//     console.log('DETAIL', buddiz.value);
-//   } catch (error) {
-//     console.error('Failed to load data:', error);
-//   }
-// };
+const makeChating = async () => {
+  try {
+    const result = await chatApi.createRoom(auth.uno, uno);
+    if (result != null) {
+      router.replace('/chat');
+    }
+  } catch(e) {
+    console.error('Failed to load data:', e);
+  }
+};
 
 const load = async () => {
   try {
@@ -270,8 +220,8 @@ const load = async () => {
     reviewList.value = response.reviewList || [];  // 리뷰 리스트 저장
     totalCount.value = response.totalCount;  // totalCount 저장
     avg.value=response.avg;
-    console.log('DETAIL', buddiz.value);
-    console.log('REVIEWS', reviewList.value);
+    // console.log('DETAIL', buddiz.value);
+    // console.log('REVIEWS', reviewList.value);
   } catch (error) {
     console.error('Failed to load data:', error);
   }
@@ -292,6 +242,13 @@ load();
 
 
 <style scoped>
+.type-header {
+  background-color: #F5F6F7;
+  padding-top: 4vh;
+  padding-bottom: 4vh;
+  padding-left: 6vh;
+}
+
 .buddiz-banner {
   max-width: 1300px;
   margin: 0 auto;

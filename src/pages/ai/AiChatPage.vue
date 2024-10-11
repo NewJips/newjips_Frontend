@@ -160,14 +160,12 @@
 
       // 컴포넌트가 마운트될 때 Pinia에서 messages 불러오기
       onMounted(() => {
-        console.log('컴포넌트가 마운트되었습니다. Pinia에서 messages 불러오기 ', chatStore.getMessages);
         if (chatStore.getMessages.length > 0) {
           messages.value = chatStore.getMessages;  // Pinia에서 messages 불러오기
         }
       });
 
       onBeforeUnmount(() => {
-        console.log('컴포넌트 파괴 직전, messages 저장', messages.value);
         chatStore.setMessages(messages.value);  // messages를 Pinia에 저장
       });
 

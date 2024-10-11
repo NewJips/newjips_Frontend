@@ -91,5 +91,32 @@
     "agentphone": "전화번호",
     "estatenum": "매물 번호",
     "address": "매물 소재지"
+  },
+
+  "makeChat" : "채팅하기",
+
+  "budi" : {
+    "lived" : "한국 자취",
+    "years" : "년차",
+    "active" : "활동",
+    "count" : "회",
+    "pick" : "버디즈 찜하기",
+    "review" : "버디즈 후기",
+    "writeReview" : "리뷰 남기기",
+    "title" : "버디즈",
+    "content" : "나에게 꼭 맞는 버디를 찾아보세요!",
+    "searchNm" : "닉네임으로 검색",
+    "searchFilter" : "필터로 검색",
+    "searchSort" : "정렬",
+    "sortf" : "여성",
+    "sortm" : "남성",
+    "sortReview" : "리뷰 많은 순",
+    "sortPrice" : "가격순",
+    "sortStar" : "별점순",
+    "searchPH" : "검색어 입력",
+    "star" : "평점",
+    "reviewContent" : "리뷰 내용",
+    "reviewPH" : "리뷰를 입력하세요.",
+    "confirm" : "리뷰 등록"
   }
 }
