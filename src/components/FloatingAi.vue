@@ -7,8 +7,7 @@
       </div>
 
       <div class="hidden-text">
-        안전한 부동산 계약을 위해<br/>
-        AI 토리에게 물어보세요 !
+        <div v-html="t('common.chatting.desc')"></div>
       </div>
     </div>
     
@@ -62,8 +61,9 @@
   }
 </style>
 
-<script>
+<script setup>
 import { reactive, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
-
+const { t } = useI18n();
 </script>
