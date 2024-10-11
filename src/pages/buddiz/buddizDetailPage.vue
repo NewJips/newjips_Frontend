@@ -25,7 +25,7 @@
                 <div class="icon-rounded icon-rounded-sm bg-primary-light flex-shrink-0 me-2" style="width: 150px;">
                   <img src="/src/assets/icons/roundstar.png" alt="star" style="width: 35px; height: 35px;">
                   <span style="margin-left: 13px; margin-top: 15px; display: inline; white-space: nowrap;">
-                    <span style="margin-right: 5px;">{{ avg }}</span>
+                    <span style="margin-right: 5px;">{{ avg === 0 ? 0 : avg.toFixed(2) }}</span>
                     <span>({{ totalCount }})</span>
                   </span>
                 </div>
@@ -72,7 +72,7 @@
 
         <!-- 오른쪽 배너: 상세 정보와 리뷰 목록 -->
         <div class="col-lg-9 ps-lg-5">
-          <!-- 닉네임 및 기타 정보 -->daa
+          <!-- 닉네임 및 기타 정보 -->
           <h1 class="hero-heading mb-0 ">{{ buddiz.nickname }}</h1>
           <div class="text-block">
             <p>

@@ -111,7 +111,17 @@ const pageRequest = reactive({
 });
 
 const changeSort = (sortOption) => {
-  pageRequest.sort = sortOption;
+  switch (sortOption) {
+    case '별점순':
+      pageRequest.sort = 'rating';
+      break;
+    case '가격순':
+      pageRequest.sort = 'cost';
+      break;
+    case '리뷰 많은 순':
+      pageRequest.sort = 'reviewcnt';
+      break;
+  }
   handlePageChange(1); // 정렬 변경 후 1페이지로 이동
 };
 
@@ -137,17 +147,16 @@ const handlePageChange = async (pageNum) => {
 // pageRequest의 값 변경된 경우 호출
 watch(route, async (newValue) => {
   console.log('WATCH', route.query.page);
-  pageRequest.page = parseInt(route.query.page);
-  pageRequest.searchType = route.query.searchType;
-  pageRequest.searchValue = route.query.searchValue;
-  pageRequest.amount = parseInt(route.query.amount);
+  pageRequest.page = parseInt(route.query.page) || 1;
+  pageRequest.searchType = route.query.searchType || '';
+  pageRequest.searchValue = route.query.searchValue || '';
+  pageRequest.amount = parseInt(route.query.amount) || 10;
   await load(pageRequest);
 });
-
 const load = async (query) => {
   try {
     const data = await api.getList(query);
-    page.value = await api.getList(query);
+    page.value = data.pageInfo;
     Buddizs.value = data.buddizList;
  
     console.log("vue-buddiz", Buddizs.value);
