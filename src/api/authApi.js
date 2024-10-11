@@ -69,4 +69,10 @@ export default {
     const { data } = await api.put(`${BASE_URL}/changepassword`, formData);
     return data;
   },
+
+  /////////////// 버디즈 회원 조회 /////////////////////////////
+  async findBuddiz(uno) {
+    const { data } = await api.get(`${BASE_URL}/buddiz/${uno}`);
+    return data;
+  },
 };

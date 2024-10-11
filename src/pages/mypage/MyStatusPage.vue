@@ -4,6 +4,7 @@ import { computed, ref, onMounted } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import blameApi from '@/api/blameApi';
 import wishApi from '@/api/wishApi';
+import authApi from '@/api/authApi';
 
 const auth = useAuthStore();
 
@@ -74,7 +75,21 @@ onMounted(() => {
   fetchBlameEstateCount();
   //신고한 버디즈 개수를 가져오기
   fetchBlameBudizCount();
+  findBuddiz(uno.value);
 });
+
+//버디즈 등록/미등록
+const isBuddiz = ref(false);
+
+async function findBuddiz(uno) {
+  try {
+    const data = await authApi.findBuddiz(uno);
+    isBuddiz.value = data ? true : false; //데이터 있으면 true, 없으면 false
+    console.log('버디즈 등록 여부: ', isBuddiz.value);
+  } catch (e) {
+    console.log('확인 여부 실패: ', e);
+  }
+}
 </script>
 
 <template>
@@ -128,31 +143,35 @@ onMounted(() => {
         </div>
         <!-- ---프로필정보창 여기까지--- -->
         <!-- 버디즈 미등록시-->
-        <div class="profile-info mt-5 mb-5 d-flex" style="justify-content: flex-end; flex-direction: row; align-items: center">
-          <router-link to="/form" class="text-center my-2" style="text-decoration: none; display: inline-block">
-            <button
-              class="btn-buddiz"
-              style="border: 1px solid #eaecef; border-radius: 10px; width: 100%; background-color: #eaecef; padding: 10px; font-size: 18px"
-              onmouseover="this.style.backgroundColor='#ff8f17'; this.style.color='white';"
-              onmouseout="this.style.backgroundColor='#eaecef'; this.style.color='#616b79';"
-            >
-              <h5 style="margin: 0">버디즈 등록하기</h5>
-            </button>
-          </router-link>
+        <div v-if="isBuddiz === false">
+          <div class="profile-info mt-5 mb-5 d-flex" style="justify-content: flex-end; flex-direction: row; align-items: center">
+            <router-link to="/form" class="text-center my-2" style="text-decoration: none; display: inline-block">
+              <button
+                class="btn-buddiz"
+                style="border: 1px solid #eaecef; border-radius: 10px; width: 100%; background-color: #eaecef; padding: 10px; font-size: 18px"
+                onmouseover="this.style.backgroundColor='#ff8f17'; this.style.color='white';"
+                onmouseout="this.style.backgroundColor='#eaecef'; this.style.color='#616b79';"
+              >
+                <h5 style="margin: 0">버디즈 등록하기</h5>
+              </button>
+            </router-link>
+          </div>
         </div>
         <!-- 버디즈 미등록시 여기까지 -->
         <!-- 버디즈 등록시 -->
-        <!-- <div class="budiiz mb-5">
-          <h4 class="mb-3">버디즈 이력</h4>
-          <div class="budiiz-btn d-flex justify-content-start">
-            <button style="border: 1px solid #eaecef; border-radius: 10px; width: 30%; background-color: #eaecef; background-color: #1e4475">
-              <h5 class="text-center my-2" style="color: white">게시글 보러가기</h5>
-            </button>
-            <button style="border: 1px solid #eaecef; border-radius: 10px; width: 30%; background-color: #eaecef; margin-left: 1rem">
-              <h5 class="text-center my-2" style="color: #616b79">수정하기</h5>
-            </button>
+        <div v-else>
+          <div class="budiiz mb-5">
+            <h4 class="mb-3">버디즈 이력</h4>
+            <div class="budiiz-btn d-flex justify-content-start">
+              <button style="border: 1px solid #eaecef; border-radius: 10px; width: 30%; background-color: #eaecef; background-color: #1e4475">
+                <h5 class="text-center my-2" style="color: white">게시글 보러가기</h5>
+              </button>
+              <button style="border: 1px solid #eaecef; border-radius: 10px; width: 30%; background-color: #eaecef; margin-left: 1rem">
+                <h5 class="text-center my-2" style="color: #616b79">수정하기</h5>
+              </button>
+            </div>
           </div>
-        </div> -->
+        </div>
         <!-- 버디즈 등록시 여기까지 -->
       </div>
     </div>

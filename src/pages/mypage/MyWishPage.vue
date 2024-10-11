@@ -12,22 +12,6 @@ console.log(auth.uno);
 const currentSlide = ref(0);
 const currentBuddySlide = ref(0);
 
-const likedEstates = ref([]); // 좋아요 상태를 저장할 배열
-
-// 하트가 눌렸는지 확인하는 함수
-const isLiked = (estateId) => {
-  return likedEstates.value.includes(estateId);
-};
-
-// 하트 클릭 시 좋아요 상태를 토글하는 함수
-const toggleLike = (estateId) => {
-  if (isLiked(estateId)) {
-    likedEstates.value = likedEstates.value.filter((id) => id !== estateId); // 좋아요 해제
-  } else {
-    likedEstates.value.push(estateId); // 좋아요 추가
-  }
-};
-
 const wish_buddiz = ref([]);
 // 버디즈 데이터 가져오기
 async function fetchBlameBuddiz() {
@@ -106,6 +90,16 @@ const prevBuddySlide = () => {
     currentBuddySlide.value -= 1;
   }
 };
+
+const tradeType = ref([]);
+
+const data = wish_buildings.tradetype; // 'value'를 제거하고 tradetype에 직접 접근
+
+if (data === 'monthly') {
+  tradeType.value = '전세'; // monthly를 전세로 변환
+} else {
+  tradeType.value = '월세'; // charter를 월세로 변환
+}
 </script>
 <template>
   <div class="container-fluid">
@@ -138,7 +132,8 @@ const prevBuddySlide = () => {
                       <!-- 하트 버튼 -->
                       <i class="heart-icon bi-heart-fill" style="position: absolute; right: 20px; top: 25%; transform: translateY(-50%); color: #ff8f17"></i>
                     </h5>
-                    <p class="card-text">{{ buildings.content }}</p>
+                    <p class="card-text">{{ buildings.deposit }} / {{ buildings.monthlyPee }}</p>
+                    <p class="card-text">{{ tradeType }}</p>
                   </div>
                 </div>
               </div>
@@ -152,7 +147,7 @@ const prevBuddySlide = () => {
           <div v-else>
             <div class="text-center">
               <img src="@/assets/images/nothing.png" alt="nothing" class="img-fluid" style="max-width: 300px" />
-              <p>신고한 매물이 없습니다.</p>
+              <p>관심 매물이 없습니다.</p>
             </div>
           </div>
         </div>
@@ -192,7 +187,7 @@ const prevBuddySlide = () => {
           <div v-else>
             <div class="text-center">
               <img src="@/assets/images/nothing.png" alt="nothing" class="img-fluid" style="max-width: 300px" />
-              <p>신고한 매물이 없습니다.</p>
+              <p>관심 버디즈가 없습니다.</p>
             </div>
           </div>
         </div>
