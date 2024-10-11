@@ -1,35 +1,79 @@
 <script setup>
-import { ref, computed } from 'vue';
+
+import { ref, computed, onMounted } from 'vue';
+import popularBuddizApi from '@/api/homeApi.js';  // 인기 버디즈 API 불러오기
+import popularEstatesApi from '@/api/homeApi.js'; // 부동산 API 불러오기
+import exchangeRateApi from '@/api/changemoneyApi.js'; // 환율 API 호출
 import LoanCard from '@/components/LoanCard.vue';
 import FloatingAi from '@/components/FloatingAi.vue';
 import GuideCard from '@/components/GuideCard.vue';
 import { useI18n } from 'vue-i18n';
 
-const { t, locale } = useI18n();
-// locale.value = 'ko'
+const { t } = useI18n();
 
-const koreaMoney = ref(1000);
-const latio = ref(18.55);
-const vietnamMoney = computed(() => koreaMoney.value * latio.value);
+// 인기 버디즈 데이터를 저장할 배열
+const popularBuddiz = ref([]);
 
-// 사용자가 입력할 때 호출되는 함수
+// 부동산 데이터를 저장할 배열
+const popularEstates = ref([]);
+
+// 한국 돈을 저장할 변수
+const koreaMoney = ref(0);  // 초기값 설정 (1000원)
+
+// 베트남 돈을 저장할 변수
+const vietnamMoney = ref(0);
+
+// 환율을 저장할 변수 (KRW to VND)
+const exchangeRate = ref(18.55);  // 기본 환율
+
+// 한국 돈을 입력할 때 호출되는 함수
 const updateKoreaMoney = (event) => {
-  let value = event.target.value.replace(/,/g, ''); // 콤마 제거
-
-  // 숫자로 변환 후 koreaMoney에 저장
-  koreaMoney.value = isNaN(parseFloat(value)) ? 0 : parseFloat(value);
-  vietnamMoney.value = isNaN(parseFloat(value)) ? 0 : parseFloat(value);
+  const value = event.target.value.replace(/[^0-9]/g, '');  // 숫자만 남김
+  koreaMoney.value = parseFloat(value) || 0;  // 숫자로 변환 후 저장
+  vietnamMoney.value = koreaMoney.value * exchangeRate.value; // 한국 돈을 베트남 돈으로 변환
 };
 
-// 천 단위 콤마를 추가한 값을 반환
+// 베트남 돈을 입력할 때 호출되는 함수 (숫자만 허용)
+const updateVietnamMoney = (event) => {
+  const value = event.target.value.replace(/[^0-9]/g, '');  // 숫자만 남김
+  vietnamMoney.value = parseFloat(value) || 0;  // 숫자로 변환 후 저장
+  koreaMoney.value = vietnamMoney.value / exchangeRate.value; // 베트남 돈을 한국 돈으로 변환
+};
+
+// 천 단위 콤마를 추가한 한국 돈 출력
 const formattedKoreaMoney = computed(() => {
-  return koreaMoney.value.toLocaleString(); // 천 단위 콤마 추가
+  return koreaMoney.value.toLocaleString();
 });
 
+// 천 단위 콤마를 추가한 베트남 돈 출력
 const formattedVietnamMoney = computed(() => {
-  return vietnamMoney.value.toLocaleString(); // 천 단위 콤마 추가
+  return vietnamMoney.value.toLocaleString();
 });
 
+// 컴포넌트가 마운트될 때 실행
+onMounted(async () => {
+  try {
+    // 인기 버디즈 데이터를 API에서 받아옴
+    popularBuddiz.value = await popularBuddizApi.getPopularBuddiz();
+
+    // 부동산 데이터를 API에서 받아옴
+    popularEstates.value = await popularEstatesApi.getPopularEstate();
+
+    // 환율 데이터를 API에서 받아옴
+    const exchangeRateData = await exchangeRateApi.getExchangeRate();
+    const rates = exchangeRateData.rates;
+
+    // KRW to VND 환율 설정
+    exchangeRate.value = rates.VND / rates.KRW;
+
+    // 초기값 설정
+    vietnamMoney.value = koreaMoney.value * exchangeRate.value;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+});
+
+// 대출 정보 예시
 const loans = [
   {
     id: 1,
@@ -66,16 +110,18 @@ const loans = [
     interest: '연 3.5%',
     usageInfo: '조건에 따라 이용 가능',
     link: 'https://obank.kbstar.com',
-  },
+  }
 ];
 
+// 가이드 정보 예시
 const guides = ref([
   {
     imageSrc: '../src/assets/images/guide1.jpeg',
     category: 'Living',
     title: '원룸? 1.5룸? 이란',
     date: 'September 1, 2023',
-    description: 'Learn the differences between one-room and 1.5-room apartments.',
+    description:
+        'Learn the differences between one-room and 1.5-room apartments.',
     link: 'https://spacediver.tistory.com/2',
   },
   {
@@ -101,45 +147,50 @@ const guides = ref([
     date: 'September 4, 2023',
     description: 'How to avoid fraudulent listings when searching for a house.',
     link: 'https://spacediver.tistory.com/5',
-  },
+  }
 ]);
 
+// 대출 상세 페이지로 이동하는 함수
 const goToLoanDetail = (loan) => {
-  // url 요청 보내는 방식으로 변경
-  // Fix Loan url type
+  // 대출 상세 페이지로 URL 요청 처리
 };
 </script>
+
 
 <template>
   <div class="container-fluid px-0">
     <FloatingAi></FloatingAi>
     <!-- 메인 검색탭 -->
     <section class="mb-5">
-      <div class="container-fluid banner-container overflow-hidden" style="background-color: #354962; min-height: 55vh">
+      <div class="container-fluid banner-container overflow-hidden "
+           style="background-color: #354962; min-height: 55vh; ">
         <div class="row align-items-center px-4">
           <!-- 텍스트 및 버튼 -->
-          <div class="col-md-5 ps-5" style="margin-left: 17vh">
-            <h1 class="banner-text">{{ t('common.home.banner1') }}<br />{{ t('common.home.banner2') }}</h1>
+          <div class="col-md-5 ps-5" style="margin-left: 17vh;">
+            <h1 class="banner-text">{{ t('common.home.banner1') }}<br/>{{ t('common.home.banner2') }}</h1>
             <p class="sub-text">
-              <span style="color: #ff8f17; font-weight: bold">{{ t('common.buddiz') }}</span
-              >{{ t('common.home.banner3') }}<br />
+              <span style="color: #FF8F17; font-weight: bold;">{{ t('common.buddiz') }}</span>{{ t('common.home.banner3') }}<br>
               {{ t('common.home.banner4') }}
             </p>
 
             <div class="btn-container">
               <router-link to="/buddiz" class="text-muted">
-                <button class="banner-btn btn btn-outline-light me-4 px-4 py-2"><i class="fas fa-user-friends me-2"></i>{{ t('common.home.find_buddiz') }}</button>
+                <button class="banner-btn btn btn-outline-light me-4 px-4 py-2">
+                  <i class="fas fa-user-friends me-2"></i>{{ t('common.home.find_buddiz') }}
+                </button>
               </router-link>
 
               <router-link to="/map" class="text-muted">
-                <button class="banner-btn btn btn-outline-light px-4 py-2"><i class="fas fa-home me-2"></i>{{ t('common.home.find_room') }}</button>
+                <button class="banner-btn btn btn-outline-light px-4 py-2">
+                  <i class="fas fa-home me-2"></i>{{ t('common.home.find_room') }}
+                </button>
               </router-link>
             </div>
           </div>
 
           <!-- 이미지 -->
           <div class="col-md-5 ms-4">
-            <img src="@/assets/images/banner_people.png" style="height: 45vh" />
+            <img src="@/assets/images/banner_people.png" style="height: 45vh; ">
           </div>
         </div>
       </div>
@@ -152,7 +203,7 @@ const goToLoanDetail = (loan) => {
         <div class="col-md-8 pe-5">
           <h4 class="head-title">인기 버디즈</h4>
           <div class="d-flex mb-4">
-            <span class="subtitle">가장 많은 별점을 받은 버디즈입니다.</span>
+            <span class="subtitle ">가장 많은 별점을 받은 버디즈입니다.</span>
           </div>
 
           <div class="row ps-2">
@@ -193,12 +244,12 @@ const goToLoanDetail = (loan) => {
             </div>
           </div>
         </div>
-      
+
         <!-- 환율 -->
         <div class="col-md-4">
           <h4 class="head-title">환율</h4>
           <div class="d-flex mb-4">
-            <span class="subtitle ">한국 - 베트남 환율 정보입니다.</span>
+            <span class="subtitle">한국 - 베트남 환율 정보입니다.</span>
           </div>
 
           <div class="flex ps-3 pt-3 align-items-center">
@@ -211,13 +262,14 @@ const goToLoanDetail = (loan) => {
               </div>
             </div>
 
-            <i class="fas fa-arrow-down mb-3 ms-8 ps-5" style="padding-left: 20vh;"></i>
+            <i class="fas fa-arrows-alt-v fa-2x mb-3 ms-8 ps-5" style="padding-left: 20vh;"></i>
 
-            <!-- 베트남 -->
+
+            <!-- 베트남 (입력 가능) -->
             <div class="mb-3 d-flex align-items-center">
               <img src="@/assets/images/vietnam.png" class="avatar border me-3" style="width: 8vh; height: 8vh; object-fit: cover;">
               <div class="rounded-3 d-flex justify-content-end align-items-center px-3" style="background-color: #EAECEF; height: 6vh;">
-                <input :value="formattedVietnamMoney" @input="updateKoreaMoney" style="all: unset; text-align: right; font-size: large; width: 18vh;" class="me-3">
+                <input :value="formattedVietnamMoney" @input="updateVietnamMoney" style="all: unset; text-align: right; font-size: large; width: 18vh;" class="me-3">
                 <p style="all: unset; text-align: right; font-weight: bold;">VND</p>
               </div>
             </div>
@@ -377,7 +429,7 @@ const goToLoanDetail = (loan) => {
             </div>
           </a>
         </div>
-          
+
         <!-- 강남 -->
         <div class="col">
           <a class="card shadow-sm border-0" href="">
@@ -393,8 +445,8 @@ const goToLoanDetail = (loan) => {
         <!-- 건대 -->
         <div class="col">
           <a class="card shadow-sm border-0" href="">
-            <div class="card-img-top card-img-hover" style="height: 27vh">
-              <img src="https://cdn.news.unn.net/news/photo/202111/518970_321294_1325.jpg" alt="" />
+            <div class="card-img-top card-img-hover" style="height: 27vh;">
+              <img src="https://cdn.news.unn.net/news/photo/202111/518970_321294_1325.jpg" alt="">
             </div>
             <div class="card-body text-center">
               <h3 class="mb-0 fs-base text-nav">건대</h3>
@@ -402,53 +454,28 @@ const goToLoanDetail = (loan) => {
           </a>
         </div>
       </div>
-    </div>    
+    </div>
 
     <!-- 전세 대출 추천 -->
     <div class="ms-5 me-5 mb-5">
       <h4 class="head-title">전세 대출 추천</h4>
       <div class="d-flex mb-4">
-        <span class="subtitle">외국인을 위한 전세 대출을 추천합니다.</span>
-        <span class="position-absolute end-0 me-5">
-          <router-link class="btn-more text-muted" to="/">더보기</router-link>
+        <span class="subtitle ">외국인을 위한 전세 대출을 추천합니다.</span>
+        <span class="position-absolute end-0 me-5" to="/">
+          <router-link class="btn-more text-muted" >더보기</router-link>
         </span>
       </div>
 
       <div class="loan-grid pb-3">
         <LoanCard
-          v-for="(loan, index) in loans"
-          :key="index"
-          :loan="loan"
-          @click="goToLoanDetail(loan)" />
+            v-for="(loan, index) in loans"
+            :key="index"
+            :loan="loan"
+            @click="goToLoanDetail(loan)" />
       </div>
     </div>
-</div>
+  </div>
 </template>
-
-
-<script>
-import popularBuddizApi from '@/api/homeApi.js';  // API 파일 불러오기
-import popularEstatesApi from '@/api/homeApi.js';
-export default {
-  data() {
-    return {
-      popularBuddiz: [],  // 인기 버디즈 데이터를 저장할 배열
-      popularEstates: [], // 부동산 데이터 저장
-    };
-  },
-  async mounted() {
-    try {
-      // API 호출 후 인기 버디즈 데이터를 받아옴
-      this.popularBuddiz = await popularBuddizApi.getPopularBuddiz();
-      this.popularEstates = await popularEstatesApi.getPopularEstate();
-    } catch (error) {
-      console.error('Error fetching popular buddies & popular estates:', error);
-    }
-  },
-};
-
-</script>
-
 
 <style scoped>
 
@@ -494,7 +521,7 @@ export default {
 }
 .banner-btn:hover {
   text-decoration: none;
-  color: #ff8f17;
+  color : #FF8F17;
 }
 
 .ps-sm-3 {
@@ -553,8 +580,7 @@ export default {
   transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out !important;
 }
 
-.card-hover:hover,
-.card-hover.show {
+.card-hover:hover, .card-hover.show {
   box-shadow: 0 0.125rem 0.125rem -0.125rem rgba(31, 27, 45, 0.08), 0 0.25rem 0.75rem rgba(31, 27, 45, 0.08);
 }
 
@@ -615,6 +641,7 @@ h3 {
   line-height: 1.3;
 }
 
+
 @media (min-width: 1200px) {
   .display-5 {
     font-size: 3rem;
@@ -640,19 +667,16 @@ h3 {
   background-color: transparent;
   border: 0;
 }
-.dropdown-item:hover,
-.dropdown-item:focus {
+.dropdown-item:hover, .dropdown-item:focus {
   color: #fd5631;
   background-color: transparent;
 }
-.dropdown-item.active,
-.dropdown-item:active {
+.dropdown-item.active, .dropdown-item:active {
   color: #fd5631;
   text-decoration: none;
   background-color: transparent;
 }
-.dropdown-item.disabled,
-.dropdown-item:disabled {
+.dropdown-item.disabled, .dropdown-item:disabled {
   color: #9691a4;
   pointer-events: none;
   background-color: transparent;
@@ -684,8 +708,7 @@ h3 {
   margin-top: -0.125rem;
   transition: opacity 0.25s ease-in-out;
 }
-.dropdown-item:hover > i,
-.dropdown-item.active > i {
+.dropdown-item:hover > i, .dropdown-item.active > i {
   opacity: 1 !important;
 }
 
@@ -719,21 +742,18 @@ h3 {
   gap: 20px;
 }
 
-.head-title,
-.btn-more,
-.guide-card-title {
+.head-title, .btn-more, .guide-card-title {
   color: #111111;
   text-decoration: none;
 }
 
 .subtitle {
   font-size: large;
-  color: #3e444e;
+  color: #3E444E;
   font-weight: 500;
 }
 
-.card-img-top img,
-.img-overlay {
+.card-img-top img, .img-overlay {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -744,6 +764,7 @@ h3 {
   border-top-right-radius: calc(0.75rem - 1px);
 }
 
+
 .icon-box {
   display: inline-block;
   width: 4rem;
@@ -751,7 +772,7 @@ h3 {
   border-radius: 50%;
   text-align: center;
   line-height: 4rem;
-  background-color: #f8e3ed;
+  background-color: #F8E3ED;
 }
 
 .img-overlay {
@@ -796,16 +817,14 @@ h3 {
   color: #9691a4;
 }
 
-.dropdown-toggle.btn-link:hover,
-.form-group .dropdown-toggle.btn-link.show {
+.dropdown-toggle.btn-link:hover, .form-group .dropdown-toggle.btn-link.show {
   color: #454056;
 }
 
 .form-group-light .dropdown-toggle.btn-link {
   color: rgba(255, 255, 255, 0.5);
 }
-.form-group-light .dropdown-toggle.btn-link:hover,
-.form-group-light .dropdown-toggle.btn-link.show {
+.form-group-light .dropdown-toggle.btn-link:hover, .form-group-light .dropdown-toggle.btn-link.show {
   color: #fff;
 }
 
