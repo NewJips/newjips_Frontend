@@ -1,13 +1,13 @@
 import api from '@/api';
+import i18n from '@/i18n';
 
 const BASE_URL = '/api/estate';
-const headers = { 'Content-Type': 'multipart/form-data' };
 
-// 매물 리스트 조회 API
-const getEstateList = () => {
-  return api.get(`${BASE_URL}/list`);
-};
+// API 함수
+const getEstateList = () => api.get(`${BASE_URL}/list`);
+const getEstateDetail = (eno) => api.get(`${BASE_URL}/list/${eno}`);
 
 export default {
   getEstateList,
+  getEstateDetail,
 };

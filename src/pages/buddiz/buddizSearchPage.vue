@@ -48,14 +48,14 @@
           </div>
         </div>
 
-
+     
 
       <!-- 버디즈 목록 -->
       <div class="buddiz-list">
         <div v-for="buddiz in Buddizs" :key="buddiz.uno" class="buddiz-item under-line">
           <router-link :to="`/buddiz/userDetail/${buddiz.uno}`"
             class="user-link">
-            <img :src="buddiz.profileImage" alt="buddiz image" class="buddiz-image" />
+            <img :src="buddiz.profilePic" alt="buddiz image" class="buddiz-image" />
             <div style="margin-top: 10px;">
               <h3 style="font-size: 25px; font-weight: bold; margin-bottom: 5px;">{{ buddiz.name }}</h3>
               <div style="font-size: 1em; margin: 5px;">
@@ -147,9 +147,9 @@ watch(route, async (newValue) => {
 const load = async (query) => {
   try {
     const data = await api.getList(query);
-
+    page.value = await api.getList(query);
     Buddizs.value = data.buddizList;
-
+ 
     console.log("vue-buddiz", Buddizs.value);
     if (Buddizs.value.length === 0) {
       console.warn("No results found for query:", query);
@@ -234,12 +234,12 @@ const toggleSearchType = (type) => {
   /* 밑줄의 길이 조정 */
   border-bottom: 1px solid #ddd;
   /* 밑줄 추가 */
-}
+} 
 
 .buddiz-image {
   width: 140px;
   height: 140px;
-  border-radius: 5px;
+  border-radius: 10px;
   object-fit: cover;
 }
 

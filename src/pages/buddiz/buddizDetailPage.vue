@@ -14,10 +14,10 @@
           <div class="card border-0 shadow mb-6 mb-lg-0">
             <div class="card-header bg-gray-100 py-4 border-0 text-center">
               <a class="d-inline-block" href="#">
-                <img :src="buddiz.imageUrl" alt="buddiz image" class="d-block avatar avatar-xxl p-2 mb-2"
+                <img :src="buddiz.profilePic" alt="buddiz image" class="d-block avatar avatar-xxl p-2 mb-2"
                   style="width: 100px; height: 100px;">
               </a>
-              <h5>{{ buddiz.name }}</h5>
+              <h5 class="fw-bold">{{ buddiz.name }}</h5>
               <p class="text-muted text-sm mb-0">{{ buddiz.location }}</p>
             </div>
             <div class="card-body p-4">
@@ -25,7 +25,7 @@
                 <div class="icon-rounded icon-rounded-sm bg-primary-light flex-shrink-0 me-2" style="width: 150px;">
                   <img src="/src/assets/icons/roundstar.png" alt="star" style="width: 35px; height: 35px;">
                   <span style="margin-left: 13px; margin-top: 15px; display: inline; white-space: nowrap;">
-                    <span style="margin-right: 5px;">{{ buddiz.rating }}</span>
+                    <span style="margin-right: 5px;">{{ avg }}</span>
                     <span>({{ totalCount }})</span>
                   </span>
                 </div>
@@ -44,16 +44,24 @@
                 <div class="text-block">
                   {{ buddiz.personality }}
                   <!-- 찜하기 상태에 따라 버튼 표시 -->
-                  <div v-if="!isLiked" @click="handleLikeBuddiz" class="badge2 badge-secondary-light2"
-                    style="font-size: 15px;">
-                    <img src="/src/assets/icons/heart.png" alt="star"> 버디즈 찜하기
+                  <form @submit.prevent="wishSubmit">
+                    <div>
+                    <button type="submit" class="badge2 badge-secondary-light2" style="width: 260px; font-size: 15px; border: none;">
+                      <img src="/src/assets/icons/heart.png" alt="star" height="24px"> 버디즈 찜하기
+                    </button>
                   </div>
-                  <div v-else @click="handleUnlikeBuddiz" class="badge2 badge-secondary-light2"
+                  </form>
+
+                  <!-- <div v-if="!isLiked" @click="handleLikeBuddiz" class="badge2 badge-secondary-light2"
+                    style="font-size: 15px;">
+                    <img src="/src/assets/icons/heart.png" alt="star" height="24px"> 버디즈 찜하기
+                  </div> -->
+                  <!-- <div v-else @click="handleUnlikeBuddiz" class="badge2 badge-secondary-light2"
                     style="font-size: 15px;">
                     <img src="" alt="star"> 찜 해제
-                  </div>
+                  </div> -->
                   <div class="badge2 badge-secondary-light2" style="font-size: 15px;">
-                    <img src="/src/assets/icons/chatIcon.png" alt="chat"> 채팅하기
+                    <img src="/src/assets/icons/chatIcon.png" alt="chat" height="20px"> 채팅하기
                   </div>
                 </div>
 
@@ -64,8 +72,8 @@
 
         <!-- 오른쪽 배너: 상세 정보와 리뷰 목록 -->
         <div class="col-lg-9 ps-lg-5">
-          <!-- 닉네임 및 기타 정보 -->
-          <h1 class="hero-heading mb-0">{{ buddiz.nickname }}</h1>
+          <!-- 닉네임 및 기타 정보 -->daa
+          <h1 class="hero-heading mb-0 ">{{ buddiz.nickname }}</h1>
           <div class="text-block">
             <p>
               <span style="margin-right: 7px;" class="badge badge-secondary-light">한국 자취 {{ buddiz.liveInKr }}년차</span>
@@ -82,28 +90,10 @@
           <br>
 
           <!-- 리뷰 목록 -->
-          <h5 class="mb-4">후기</h5>
-          <div v-if="reviewList.length > 0">
-            <div v-for="review in reviewList.slice(0, 4)" :key="review.id" class="d-flex d-block d-sm-flex review">
-              <div class="text-md-center flex-shrink-0 me-4 me-xl-5">
-                <img src="" alt="reviewer image" class="d-block avatar avatar-xxl p-2 mb-2"
-                  style="width: 100px; height: 100px;">
-                <span class="text-uppercase text-muted text-sm">{{ new Date(review.createdAt).toLocaleDateString()
-                  }}</span>
-              </div>
-              <div>
-                <h6 class="mt-2 mb-1">{{ review.reviewer }}</h6>
-                <div class="mb-2">
-                  <i v-for="star in review.rating" :key="star" class="fa fa-xs fa-star text-primary"></i>
-                  <i v-for="emptyStar in 5 - review.rating" :key="emptyStar" class="fa fa-xs fa-star text-gray-200"></i>
-                </div>
-                <p class="text-muted text-sm">{{ review.reviewContent }}</p>
-              </div>
-            </div>
-          </div>
+          <!-- <h5 class="mb-4">후기</h5> -->
 
           <!-- 리뷰 입력란 -->
-          <div class="py-5">
+          <!-- <div class="py-5">
             <button class="btn btn-outline-primary" type="button" @click="toggleReview">리뷰 남기기</button>
             <div v-show="isReviewVisible" class="mt-4">
               <h5 class="mb-4">리뷰 작성</h5>
@@ -126,7 +116,63 @@
                 <button class="btn btn-primary" type="submit" :disabled="disableSubmit">리뷰 등록</button>
               </form>
             </div>
+          </div> -->
+
+          <!-- 리뷰 목록 -->
+          <div class="d-flex align-items-center justify-content-between mb-1">
+            <h3 class="subtitle text-sm text-primary">버디즈 후기</h3>
+            <button class="btn btn-outline-primary" type="button" @click="toggleReview">리뷰 남기기</button>
           </div>
+
+          <!-- 리뷰 입력란 -->
+          <div class="py-1">
+            <div v-show="isReviewVisible" class="mt-4">
+              <h5 class="mb-4">리뷰 작성</h5>
+              <form @submit.prevent="submit" class="form" id="contact-form">
+                <div class="mb-4">
+                  <label class="form-label" for="rating">평점</label>
+                  <select class="form-select focus-shadow-0" v-model="article.rating" id="rating" required>
+                    <option value="5">★★★★★</option>
+                    <option value="4">★★★★</option>
+                    <option value="3">★★★</option>
+                    <option value="2">★★</option>
+                    <option value="1">★</option>
+                  </select>
+                </div>
+                <div class="mb-4">
+                  <label class="form-label" for="article">리뷰 내용</label>
+                  <textarea class="form-control" v-model="article.reviewContent" rows="4" id="article"
+                    placeholder="리뷰를 입력하세요" required></textarea>
+                </div>
+                <button class="btn btn-primary" type="submit" :disabled="disableSubmit">리뷰 등록</button>
+              </form>
+            </div>
+          </div>
+
+
+          <div v-if="reviewList.length > 0">
+            <div v-for="review in reviewList.slice(0, 4)" :key="review.id" class="d-flex d-block d-sm-flex review"
+              style="padding: 15px 0 15px 0; border-bottom: 1.5px solid #ddd;">
+              <div class="flex align-items-center text-md-center flex-shrink-0 me-2 ms-2 ms-xl-4 me-xl-4">
+                <div class="text-md-center flex-shrink-0 me-4 me-xl-5">
+                  <img :src="review.profilePic" alt="reviewer image" class="d-block avatar avatar-xxl p-2 mb-2"
+                    style="width: 100px; height: 100px;">
+                  <span class="text-uppercase text-muted text-sm">{{ new
+                    Date(review.createdAt).toLocaleDateString()}}</span>
+                </div>
+              </div>
+              <div>
+                <h6 class="mt-2 mb-1">{{ review.reviewer }}</h6>
+                <div class="mb-2">
+                  <i v-for="star in review.rating" :key="star" class="fa fa-xs fa-star text-primary"></i>
+                  <i v-for="emptyStar in 5 - review.rating" :key="emptyStar" class="fa fa-xs fa-star text-gray-200"></i>
+                </div>
+                <p class="text-muted text-sm">{{ review.reviewContent }}</p>
+              </div>
+            </div>
+          </div>
+
+
 
 
           <!-- <form @submit.prevent="submit">
@@ -150,7 +196,7 @@
               </button>
 
             </div>
-
+            
           </form> -->
 
 
@@ -178,6 +224,7 @@ const buddiz = ref({});
 
 const reviewList = ref([]);
 const totalCount = ref(0);
+const avg=ref(0);
 
 const article = reactive({
   // writer: auth.id,
@@ -190,8 +237,18 @@ const disableSubmit = computed(() => !article.rating || !article.reviewContent);
 const submit = async () => {
   if (!confirm('등록할까요?')) return;
 
-  await buddizApi.create(article);
+  console.log('Route params uno:', route.params.uno);
+  console.log(article.reviewContent);
+  console.log(article.rating);
+  await buddizApi.create(article, uno);
+  alert('리뷰가 등록되었습니다!');
+  load();
 };
+
+const wishSubmit=async()=>{
+  console.log(uno);
+  await buddizApi.reviewWish(uno);
+}
 
 
 // const load = async () => {
@@ -212,6 +269,7 @@ const load = async () => {
     const response = await api.getReview(uno);  // API 호출
     reviewList.value = response.reviewList || [];  // 리뷰 리스트 저장
     totalCount.value = response.totalCount;  // totalCount 저장
+    avg.value=response.avg;
     console.log('DETAIL', buddiz.value);
     console.log('REVIEWS', reviewList.value);
   } catch (error) {

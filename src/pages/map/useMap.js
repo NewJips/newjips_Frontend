@@ -1,13 +1,66 @@
 import { ref } from 'vue';
-
+import MarkerClustering from './markerClustering';
 import estateApi from '@/api/estateApi';
 import hotplaceApi from '@/api/hotplaceApi';
 
 export function useMap(HOME_PATH) {
   const visibleMarkerCount = 0;
   const markers = ref([]);
+  const estateMarkers = ref([]); // Estate 마커 배열
+  const hotplaceMarkers = ref([]);
   const selectedMarker = ref(null);
 
+  // 클러스터링 초기화 함수
+  function initializeClustering(map, markers) {
+    if (markers.length > 0) {
+      const markerClustering = new MarkerClustering({
+        minClusterSize: 2,
+        maxZoom: 18,
+        map: map,
+        markers: markers,
+        disableClickZoom: false,
+        gridSize: 120,
+        icons: [clusterMarker1],
+        indexGenerator: function (count) {
+          var index = 0;
+
+          if (count >= 100 && count < 200) {
+            index = 1;
+          } else if (count >= 200 && count < 500) {
+            index = 2;
+          }
+
+          return index;
+        },
+        stylingFunction: function (clusterMarker, count) {
+          const element = clusterMarker.getElement();
+          const textElement = element.querySelector('div:first-child');
+          var count = count - 1;
+          if (textElement) {
+            textElement.textContent = count;
+
+            element.style.display = 'flex';
+            element.style.alignItems = 'center';
+            element.style.justifyContent = 'center';
+            element.style.width = '3rem';
+            element.style.height = '3rem';
+            element.style.backgroundImage =
+              "url('src/assets/icons/estate_marker.svg')";
+            element.style.backgroundSize = 'cover';
+            element.style.backgroundRepeat = 'no-repeat';
+            element.style.backgroundPosition = 'center';
+            element.style.cursor = 'pointer';
+            element.style.color = 'white';
+            element.style.fontWeight = 'bold';
+            textElement.style.transform = 'translateY(4px)';
+          }
+        },
+      });
+      console.log('Clustering initialized.'); // 클러스터링 초기화 완료 로그
+    } else {
+      console.warn('No markers to cluster.');
+    }
+  }
   // 전세가 포맷
   const formatPrice = (price, tradetype) => {
     if (tradetype === 'monthly') {
@@ -33,7 +86,7 @@ export function useMap(HOME_PATH) {
     const formattedPrice = formatPrice(price, tradetype); // 가격 포맷
 
     return `
-      <div style="display: flex; align-items: center; justify-content: center; width: 4rem; height: 4rem; background-image: url('../src/assets/icons/estate_marker.svg'); background-size: contain; background-repeat: no-repeat; background-position: center; cursor: pointer;">
+      <div style="display: flex; align-items: center; justify-content: center; width: 4rem; height: 4rem; background-image: url('/src/assets/icons/estate_marker.svg'); background-size: contain; background-repeat: no-repeat; background-position: center; cursor: pointer;">
         <span style="color: white; font-size: 1rem; font-weight: 600; text-align: center;">
           <p style="margin:0; font-size:12px; font-weight:400;">${displayTradeType}</p>
           <p style="margin:0; font-size:16px; line-height:1.5;">${formattedPrice}</p>
@@ -41,6 +94,15 @@ export function useMap(HOME_PATH) {
       </div>
     `;
   };
+  const clusterMarker1 = {
+    content: `
+      <div style="display: flex; align-items: center; justify-content: center; width: 4rem; height: 4rem; background-image: url('../assets/icons/estate_marker.svg'); background-size: cover; background-repeat: no-repeat; background-position: center; cursor: pointer;">
+      </div>
+    `,
+    size: N.Size(40, 40),
+    anchor: N.Point(20, 20),
+  };
+
   const subWayMapMarker = `
  <div
     style="
@@ -87,8 +149,8 @@ export function useMap(HOME_PATH) {
 
   const initializeMap = (mapElement) => {
     const map = new naver.maps.Map(mapElement, {
-      center: new naver.maps.LatLng(37.3595704, 127.105399),
-      zoom: 10,
+      center: new naver.maps.LatLng(37.564214, 127.001699),
+      zoom: 12,
       scaleControl: true,
       logoControl: false,
       mapDataControl: false,
@@ -169,7 +231,7 @@ export function useMap(HOME_PATH) {
             map: map,
             position: position,
             title: hotplace.hpName,
-            animation: naver.maps.Animation.DROP,
+
             icon: {
               content: hotplaceMarker(hotplace.hpName),
               size: new naver.maps.Size(24, 37),
@@ -184,14 +246,14 @@ export function useMap(HOME_PATH) {
             // 핫플레이스 관련 작업 수행
           });
 
-          markers.value.push(marker);
+          hotplaceMarkers.value.push(marker);
         });
       })
       .catch((error) => {
         console.error('Error fetching hotplace data:', error);
       });
 
-    // Estate 마커찍기
+    // Estate 마커 찍기
     estateApi
       .getEstateList()
       .then((response) => {
@@ -202,6 +264,7 @@ export function useMap(HOME_PATH) {
             estate.latitude,
             estate.longitude
           );
+
           const price =
             estate.tradetype === 'monthly' ? estate.monthlyPee : estate.deposit;
 
@@ -222,14 +285,27 @@ export function useMap(HOME_PATH) {
           naver.maps.Event.addListener(marker, 'click', () => {
             console.log('Marker clicked:', estate);
             selectedMarker.value = {
+              eno: estate.eno,
               latitude: estate.latitude,
               longitude: estate.longitude,
               title: estate.title,
+              tradetype: estate.tradetype,
+              deposit: estate.deposit,
+              monthlyPee: estate.monthlyPee,
+              housetype: estate.housetype,
+              floor: estate.floor,
+              roomSize: estate.roomSize,
+              distToSub: estate.distToSub,
+              img: estate.img,
+              lan: estate.lan,
             };
           });
 
-          markers.value.push(marker);
+          estateMarkers.value.push(marker);
         });
+
+        // 모든 마커 추가 후 클러스터링 초기화
+        initializeClustering(map, estateMarkers.value);
       })
       .catch((error) => {
         console.error('Error fetching estate data:', error);
