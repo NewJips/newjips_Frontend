@@ -9,7 +9,7 @@ const router = useRouter();
 const page = ref({});
 const boards = ref([]);
 
-const { locale } = useI18n();
+const { t, locale } = useI18n();
 
 const articles = computed(() => page.value.boardList);
 
@@ -120,43 +120,6 @@ load(pageRequest);
         </article>
       <!-- </div> -->
     </div>
-
-
-    <!-- <tr v-for="article in articles" :key="article.bno">
-          <td>{{ article.bno }}</td>
-          <td>{{ page.boardCategory.filter((value)=>{
-                    if(value.type == article.type){
-                      return article.type
-                    }
-                 })[0].name }}</td>
-          <td>
-            <router-link :to="{ name: 'board/detail', params: { no: article.bno }, query: route.query }"> {{
-              article.title }} </router-link>
-          </td>
-          <td>{{ article.memberName }}({{ article.memberId }})</td>
-          <td>{{ moment(article.regDate).format('YYYY-MM-DD') }}</td>
-          <td>{{ article.readCount }}</td>
-        </tr> -->
-
-
-
-    <!-- <div v-for="board in boards" class="buddiz-item under-line">
-          <router-link :to="`/buddiz/userDetail/${buddiz.uno}`"
-            class="user-link">
-            <img :src="buddiz.profilePic" alt="buddiz image" class="buddiz-image" />
-            <div style="margin-top: 10px;">
-              <h3 style="font-size: 25px; font-weight: bold; margin-bottom: 5px;">{{ buddiz.name }}</h3>
-              <div style="font-size: 1em; margin: 5px;">
-                <p style="margin-bottom: 5px;"><img src="/src/assets/icons/starIcon.png" alt="star"
-                    style="height: 18px; width: 18px;"> {{ Number.isInteger(buddiz.avg) ? buddiz.avg : buddiz.avg.toFixed(2) }}</p>
-                    <p style="margin-bottom: 5px;">한국 자취 {{ buddiz.liveInKr }}년차</p>
-                <p style="margin-bottom: 5px;">{{ buddiz.personality }}</p>
-              </div>
-            </div>
-          </router-link>
-        </div> -->
-
-
 
 
     <!-- 페이지네이션 -->

@@ -144,5 +144,9 @@
     "reviewContent" : "리뷰 내용",
     "reviewPH" : "리뷰를 입력하세요.",
     "confirm" : "리뷰 등록"
+  },
+  "noti":{
+    "title":"공지 사항",
+    "content":"새로운 소식과 공지를 확인하세요!"
   }
 }

@@ -2,7 +2,9 @@
 import { useRoute, useRouter } from 'vue-router';
 import { ref } from 'vue';
 import api from '@/api/boardApi';
+import { useI18n } from 'vue-i18n';
 
+const { t, locale } = useI18n();
 const route = useRoute();
 const router = useRouter();
 

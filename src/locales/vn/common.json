@@ -144,6 +144,10 @@
     "reviewContent" : "Xem lại nội dung",
     "reviewPH" : "Vui lòng nhập đánh giá.",
     "confirm" : "Đăng ký đánh giá"
+  },
+  "noti":{
+    "title":"điều khoản thông báo",
+    "content":"Hãy kiểm tra thông báo và tin tức mới."
   }
 
 }
