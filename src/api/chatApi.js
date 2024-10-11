@@ -40,11 +40,12 @@ export default {
 
   // 채팅방 만들기
   async createRoom(from_id, to_id) {
-    const { data } = await api.post(`${BASE_URL}/room`, {
-        fromId : from_id,
-        toId : to_id
-      }, headers);
+    const formData = {
+        fromId: from_id,
+        toId: to_id
+    };
 
+    const { data } = await api.post(`${BASE_URL}/room`, formData, headers);
     return data;
   },
 
