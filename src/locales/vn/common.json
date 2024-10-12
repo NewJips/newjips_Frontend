@@ -215,5 +215,36 @@
   "pagination": {
     "older": "← Bài cũ hơn",
     "newer": "Bài mới hơn →"
+  },
+  "buddizForm": {
+    "header": "Đăng ký thông tin Buddiz",
+    "subtitle": "Vui lòng nhập giới thiệu cá nhân của bạn để tham gia hoạt động Buddiz!",
+    "basic_info": "Thông tin cơ bản",
+    "residence": "Nơi cư trú",
+    "select_region": "Chọn khu vực",
+    "korea_experience": "Kinh nghiệm sống tại Hàn Quốc (năm)",
+    "enter_years": "Vui lòng nhập số năm.",
+    "description": "Mô tả",
+    "enter_description": "Mô tả nơi cư trú của bạn.",
+    "characters_left": "kí tự còn lại",
+    "additional_info": "Thông tin bổ sung",
+    "accompany_region": "Khu vực có thể đồng hành",
+    "transaction_count": "Số lượng giao dịch",
+    "enter_transactions": "Vui lòng nhập số lượng giao dịch.",
+    "characteristics": "Tính cách",
+    "languages": "Ngôn ngữ có thể giao tiếp",
+    "price": "Giá cả",
+    "price_label": "Giá (mỗi đêm)",
+    "min": "Giá tối thiểu",
+    "submit": "Lưu lại",
+    "unknown": "Không rõ",
+    "no_description": "Không có mô tả."
+  },
+  "alerts": {
+    "not_logged_in": "Bạn chưa đăng nhập. Vui lòng đăng nhập để thực hiện thao tác này."
+  },
+  "errors": {
+    "fetch_failed": "Không thể tải dữ liệu.",
+    "submit_failed": "Gửi biểu mẫu thất bại."
   }
 }

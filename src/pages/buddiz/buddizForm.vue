@@ -1,4 +1,3 @@
-<!-- buddizForm.vue -->
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useAuthStore } from '@/stores/auth'; 
@@ -7,7 +6,7 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-const { locale } = useI18n(); 
+const { locale, t } = useI18n(); // Using locale and t for translation
 
 // Form fields
 const residence = ref('');
@@ -31,22 +30,15 @@ onMounted(async () => {
   const userUno = authStore.uno;
 
   if (!userUno) {
-    alert('User not logged in. Please log in to view the form.');
+    alert(t('alerts.not_logged_in')); // Use t() for translated alert
     return;
   }
 
   try {
     const data = await buddizIntroApi.getBuddizIntro(userUno);
-    
-    // Debugging: Log the raw fetched data
     console.log('Fetched data from API:', data);
 
     if (data) {
-      // Make sure the properties exist in the fetched data
-      console.log('Location:', data.location);
-      console.log('Live in Korea experience:', data.liveInKr);
-      
-      // Pre-fill the form with existing data (adding fallback empty strings)
       residence.value = data.location || '';
       koreaExperience.value = data.liveInKr || '';
       accompanyRegion.value = data.accompanyRegion || '';
@@ -56,18 +48,13 @@ onMounted(async () => {
       currencyUnit.value = data.currency || '$';
       selectedCharacteristics.value = data.personality ? data.personality.split(',') : [];
       selectedLanguages.value = data.useLan ? data.useLan.split(',') : [];
-      
-      // Log the values that are being set to confirm they are being assigned
-      console.log('Pre-filled residence:', residence.value);
-      console.log('Pre-filled characteristics:', selectedCharacteristics.value);
     } else {
       console.warn('No data found for the user');
     }
   } catch (error) {
-    console.error('Failed to fetch existing Buddiz data:', error);
+    console.error(t('common.errors.fetch_failed'), error);
   }
 });
-
 
 // Form submission
 const submitForm = async () => {  
@@ -75,31 +62,31 @@ const submitForm = async () => {
   const userUno = authStore.uno;
 
   if (!userUno) {
-    alert('User not logged in. Please log in to submit your form.');
+    alert(t('common.alerts.not_logged_in'));
     return;
   }
 
   const formData = {
     uno: userUno,  
     liveInKr: koreaExperience.value || 0,  
-    personality: selectedCharacteristics.value.join(',') || 'Unknown', 
+    personality: selectedCharacteristics.value.join(',') || t('common.buddizForm.unknown'), 
     cost: price.value || 0,  
     hiredTimes: transactionCount.value || 0,  
     rating: 5.0,  
-    selfInfo: description.value || 'No description provided',  
+    selfInfo: description.value || t('common.buddizForm.no_description'),  
     lan: locale.value === 'ko' ? 'KR' : 'VN',  
-    location: residence.value || 'Unknown',  
-    useLan: selectedLanguages.value.join(',') || 'Unknown',  
+    location: residence.value || t('common.buddizForm.unknown'),  
+    useLan: selectedLanguages.value.join(',') || t('common.buddizForm.unknown'),  
   };
 
   try {
     const response = await buddizIntroApi.saveOrUpdateBuddizIntro(formData);
     console.log('Form submission response:', response);
-    alert('Form submitted successfully!');
-    router.push('/mypage/mystatus');  // Redirect after successful submission
+    alert(t('common.alerts.form_submitted'));
+    router.push('/mypage/mystatus');
   } catch (error) {
-    console.error('Error submitting form:', error);
-    alert('Failed to submit the form.');
+    console.error(t('common.errors.submit_failed'), error);
+    alert(t('common.errors.submit_failed'));
   } 
 };
 </script>
@@ -107,57 +94,57 @@ const submitForm = async () => {
 <template>
   <div class="fluid-container">
     <div class="type-header">
-      <h2>버디즈 이력 등록</h2>
-      <div style="font-size: 17pt; margin-top: 8pt;">버디즈로 활동하기 위한 나만의 소개를 입력해주세요!</div>
+      <h2>{{ t('common.buddizForm.header') }}</h2>
+      <div style="font-size: 17pt; margin-top: 8pt;">{{ t('common.buddizForm.subtitle') }}</div>
     </div>
 
     <!-- Basic Info Section -->
     <div class="fluid-container px-5 pt-5 pb-5" style="background-color: #fbfbfc;">
       <section class="section-card">
-        <h2 class="section-title"><i class="section-icon"></i> Basic Info</h2>
+        <h2 class="section-title"><i class="section-icon"></i> {{ t('common.buddizForm.basic_info') }}</h2>
 
         <div class="input-group">
-          <label for="residence">거주 지역</label>
+          <label for="residence">{{ t('common.buddizForm.residence') }}</label>
           <select v-model="residence" id="residence">
-            <option value="" disabled>지역 선택</option>
+            <option value="" disabled>{{ t('common.buddizForm.select_region') }}</option>
             <option v-for="region in regions" :key="region" :value="region">{{ region }}</option>
           </select>
         </div>
 
         <div class="input-group">
-          <label for="koreaExperience">한국 자취 경력 (년)</label>
-          <input v-model="koreaExperience" type="number" id="koreaExperience" placeholder="숫자로 입력해주세요." />
+          <label for="koreaExperience">{{ t('common.buddizForm.korea_experience') }}</label>
+          <input v-model="koreaExperience" type="number" id="koreaExperience" :placeholder="t('common.buddizForm.enter_years')" />
         </div>
       </section>
 
       <!-- Description Section -->
       <section class="section-card">
-        <h2 class="section-title"><i class="section-icon"></i> Description</h2>
-        <textarea v-model="description" placeholder="Describe your accommodation" maxlength="8000"></textarea>
-        <span class="character-limit">{{ 8000 - description.length }} characters left</span>
+        <h2 class="section-title"><i class="section-icon"></i> {{ t('common.buddizForm.description') }}</h2>
+        <textarea v-model="description" :placeholder="t('common.buddizForm.enter_description')" maxlength="8000"></textarea>
+        <span class="character-limit">{{ 8000 - description.length }} {{ t('common.buddizForm.characters_left') }}</span>
       </section>
 
       <!-- Accompany Region and Transaction Count -->
       <section class="section-card">
-        <h2 class="section-title"><i class="section-icon"></i> 추가 정보</h2>
+        <h2 class="section-title"><i class="section-icon"></i> {{ t('common.buddizForm.additional_info') }}</h2>
         <div class="input-group">
-          <label for="accompanyRegion">동행 가능 지역</label>
+          <label for="accompanyRegion">{{ t('common.buddizForm.accompany_region') }}</label>
           <select v-model="accompanyRegion" id="accompanyRegion">
-            <option value="" disabled>지역 선택</option>
+            <option value="" disabled>{{ t('common.buddizForm.select_region') }}</option>
             <option v-for="region in regions" :key="region" :value="region">{{ region }}</option>
           </select>
         </div>
 
         <div class="input-group">
-          <label for="transactionCount">거래 횟수</label>
-          <input v-model="transactionCount" type="number" id="transactionCount" placeholder="거래 횟수를 입력해주세요." />
+          <label for="transactionCount">{{ t('common.buddizForm.transaction_count') }}</label>
+          <input v-model="transactionCount" type="number" id="transactionCount" :placeholder="t('buddizForm.enter_transactions')" />
         </div>
       </section>
 
       <!-- Characteristics and Languages -->
       <section class="section-card">
         <div class="checkbox-group">
-          <h4>성격</h4>
+          <h4>{{ t('common.buddizForm.characteristics') }}</h4>
           <div class="left-align">
             <div v-for="(characteristic, index) in characteristics" :key="index" class="checkbox-item">
               <input type="checkbox" :id="'char-' + index" :value="characteristic" v-model="selectedCharacteristics" />
@@ -167,7 +154,7 @@ const submitForm = async () => {
         </div>
 
         <div class="checkbox-group">
-          <h4>소통 가능한 언어</h4>
+          <h4>{{ t('common.buddizForm.languages') }}</h4>
           <div class="left-align">
             <div v-for="(language, index) in languages" :key="index" class="checkbox-item">
               <input type="checkbox" :id="'lang-' + index" :value="language" v-model="selectedLanguages" />
@@ -179,10 +166,10 @@ const submitForm = async () => {
 
       <!-- Price Section -->
       <section class="section-card">
-        <h2 class="section-title"><i class="section-icon"></i> Price</h2>
-        <label for="price">Price (per night) <span class="required-asterisk">*</span></label>
+        <h2 class="section-title"><i class="section-icon"></i> {{ t('common.buddizForm.price') }}</h2>
+        <label for="price">{{ t('common.buddizForm.price_label') }} <span class="required-asterisk">*</span></label>
         <div class="price-group-inline">
-          <input v-model="price" type="number" placeholder="Min" min="0" id="price" />
+          <input v-model="price" type="number" :placeholder="t('common.buddizForm.min')" min="0" id="price" />
           <select v-model="currencyUnit">
             <option value="$">$</option>
             <option value="€">w</option>
@@ -191,7 +178,7 @@ const submitForm = async () => {
         </div>
       </section>
 
-      <button class="submit-btn" @click="submitForm">저장하기</button>
+      <button class="submit-btn" @click="submitForm">{{ t('common.buddizForm.submit') }}</button>
     </div>
   </div>
 </template>
