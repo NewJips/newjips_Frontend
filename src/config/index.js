@@ -26,6 +26,10 @@ export default {
       title: i18n.global.t('common.guide'),
       url: '/guide',
     },
+    {
+      title: i18n.global.t('form.guide'),
+      url: '/form',
+    },
   ],
 
   accoutMenus: {
