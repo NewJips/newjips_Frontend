@@ -2,12 +2,13 @@
   "notice": "thông báo",
   "buddiz": "buddiz",
   "exchange": "tỷ giá hối đoái",
-  "map": "bản đồ",
+  "map": "map",
   "chat": "trò chuyện",
   "login": "đăng nhập",
   "mypage": "Trang của tôi",
   "yes": "kiểm tra",
   "cancle": "hủy bỏ",
+  "login" : "Login",
   
   "footer": {
     "question": "câu hỏi",
@@ -53,8 +54,8 @@
     "placeholder": "Vui lòng nhập tin nhắn của bạn",
     "special_terms": "điều khoản đặc biệt?",
     "insurance": "vay tiền thuê nhà?",
-    "aiIntro": "Rất vui được gặp bạn, <br/>đây là Tori, chatbot của New Zip. <br/>Hãy hỏi bất kỳ câu hỏi nào của bạn về các điều<br/>khoản đặc biệt và bảo hiểm bảo hành! <br/><br/>MẸO khi đặt câu hỏi! <br/>Xin vui lòng đặt một câu hỏi đơn giản sử dụng các<br/>từ khóa liên quan đến bảo hiểm! <br/>(Ví dụ) Hợp đồng đặc biệt, loại bảo hiểm bảo hành <br/>"
-  },
+    "aiIntro": "Rất vui được gặp bạn, <br/>đây là Tori, chatbot của New Zip. <br/>Hãy hỏi bất kỳ câu hỏi nào của bạn về các điều<br/>khoản đặc biệt và bảo hiểm bảo hành! <br/><br/>MẸO khi đặt câu hỏi! <br/>Xin vui lòng đặt một câu hỏi đơn giản sử dụng các<br/>từ khóa liên quan đến bảo hiểm! <br/>(Ví dụ) Hợp đồng đặc biệt, loại bảo hiểm bảo hành <br/>",
+    "desc" : "Hãy hỏi AI Tori<br/>để có được một hợp đồng bất động sản an toàn!"  },
   
   "edit": {
     "edit": "Sửa chữa",
@@ -89,7 +90,7 @@
     "blame": "Báo cáo",
     "des": "Báo cáo vấn đề với các mặt hàng để bán, bất động sản, cặp đồng bộ, v.v.!",
     "binfo": "Báo cáo thông tin Buddiz",
-    "id": "nhận dạng",
+    "id": "tên",
     "reason": "Lý do báo cáo",
     "content": "Chi tiết báo cáo",
     "holder": "Vui lòng nhập chi tiết báo cáo của bạn.",
@@ -126,6 +127,37 @@
     "blame_estate": "신고한 매물",
     "blame_buddiz": "신고한 버디즈",
     "add_buddiz_btn": "버디즈 등록하기"
+
+
+  "makeChat" : "trò chuyện",
+
+  "budi" : {
+    "lived" : "dấu vết",
+    "years" : "y",
+    "active" : "hoạt động",
+    "count" : "",
+    "pick" : "Buddiz Cứu",
+    "review" : "Buddiz Đánh giá",
+    "writeReview" : "Viết đánh giá",
+    "title" : "Buddiz",
+    "content" : "Hãy tìm người bạn phù hợp với bạn!",
+    "searchNm" : "Tìm kiếm biệt danh",
+    "searchFilter" : "Lọc Tìm kiếm",
+    "searchSort" : "mảng",
+    "sortf" : "nữ giới",
+    "sortm" : "nam giới",
+    "sortReview" : "Nhiều đánh giá nhất",
+    "sortPrice" : "Theo giá",
+    "sortStar" : "phạm vi",
+    "searchPH" : "Nhập cụm từ tìm kiếm",
+    "star" : "đánh giá",
+    "reviewContent" : "Xem lại nội dung",
+    "reviewPH" : "Vui lòng nhập đánh giá.",
+    "confirm" : "Đăng ký đánh giá"
+  },
+  "noti":{
+    "title":"điều khoản thông báo",
+    "content":"Hãy kiểm tra thông báo và tin tức mới."
 
   }
 

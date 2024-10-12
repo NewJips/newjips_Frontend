@@ -8,6 +8,7 @@
   "mypage": "마이페이지",
   "yes": "확인",
   "cancle": "취소",
+  "login" : "로그인",
   
   "footer": {
     "question": "자주묻는 질문",
@@ -66,7 +67,8 @@
     "placeholder": "메시지를 입력해주세요",
     "special_terms": "특약이란?",
     "insurance": "보증보험이란?",
-    "aiIntro": "반가워요, 뉴집스챗봇 토리입니다.<br/>특약사항, 보증보험 관련된 궁금한 내용을 물어보세요! <br/><br/>질문하기 TIP! <br/>보험 관련 핵심단어로 간단하게 질문해 주세요! <br/>(예시) 특약, 보증보험 종류 <br/>"
+    "aiIntro": "반가워요, 뉴집스챗봇 토리입니다.<br/>특약사항, 보증보험 관련된 궁금한 내용을 물어보세요! <br/><br/>질문하기 TIP! <br/>보험 관련 핵심단어로 간단하게 질문해 주세요! <br/>(예시) 특약, 보증보험 종류 <br/>",
+    "desc" : "안전한 부동산 계약을 위해<br/>AI 토리에게 물어보세요 !"
   },
   
   "edit": {
@@ -88,7 +90,7 @@
     "blame": "신고하기",
     "des": "매물, 부동산, 버디즈 등 문제 상황을 신고하세요!",
     "binfo": "신고 버디즈 정보",
-    "id": "아이디",
+    "id": "이름",
     "reason": "신고 사유",
     "content": "신고 내용",
     "holder": "신고 내용을 입력해주세요.",
@@ -126,5 +128,35 @@
     "blame_buddiz": "신고한 버디즈",
     "add_buddiz_btn": "버디즈 등록하기"
 
+
+  "makeChat" : "채팅하기",
+
+  "budi" : {
+    "lived" : "한국 자취",
+    "years" : "년차",
+    "active" : "활동",
+    "count" : "회",
+    "pick" : "버디즈 찜하기",
+    "review" : "버디즈 후기",
+    "writeReview" : "리뷰 남기기",
+    "title" : "버디즈",
+    "content" : "나에게 꼭 맞는 버디를 찾아보세요!",
+    "searchNm" : "닉네임으로 검색",
+    "searchFilter" : "필터로 검색",
+    "searchSort" : "정렬",
+    "sortf" : "여성",
+    "sortm" : "남성",
+    "sortReview" : "리뷰 많은 순",
+    "sortPrice" : "가격순",
+    "sortStar" : "별점순",
+    "searchPH" : "검색어 입력",
+    "star" : "평점",
+    "reviewContent" : "리뷰 내용",
+    "reviewPH" : "리뷰를 입력하세요.",
+    "confirm" : "리뷰 등록"
+  },
+  "noti":{
+    "title":"공지 사항",
+    "content":"새로운 소식과 공지를 확인하세요!"
   }
 }

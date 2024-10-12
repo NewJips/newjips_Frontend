@@ -36,6 +36,11 @@ const login = async () => {
     }
   }
 };
+
+const passwordHidden = ref(true);
+const togglePasswordVisibility = () => {
+  passwordHidden.value = !passwordHidden.value;
+};
 </script>
 
 <template>
@@ -63,16 +68,30 @@ const login = async () => {
             <div class="col-md-6 mb-5 px-2 pt-2 pb-4 px-sm-2 pb-sm-5 pt-md-5">
               <form class="needs-validation mt-5" @submit.prevent="login" novalidate>
                 <div class="mb-4">
-                  <label class="form-label mb-2 mt-5" for="signin-email">이메일</label>
-                  <input class="form-control" type="email" id="signin-email" v-model="member.userId" placeholder="이메일을 입력하세요." required />
+                  <label class="form-label mb-2 mt-5" for="signin-email">아이디</label>
+                  <input class="form-control" type="email" id="signin-email" v-model="member.userId" placeholder="아이디를 입력하세요." required />
                 </div>
                 <div class="mb-4">
                   <div class="d-flex align-items-center justify-content-between mb-2">
                     <label class="form-label mb-0" for="signin-password">비밀번호</label>
-                    <a class="fs-ms" href="#" style="color: #ff8f17">잊으셨나요?</a>
                   </div>
-                  <div class="change">
-                    <input class="form-control" type="password" id="signin-password" v-model="member.password" placeholder="비밀번호를 입력하세요" required />
+                  <div class="change d-flex align-items-center" style="position: relative">
+                    <input
+                      :type="passwordHidden ? 'password' : 'text'"
+                      class="form-control"
+                      type="password"
+                      id="signin-password"
+                      v-model="member.password"
+                      placeholder="비밀번호를 입력하세요"
+                      style="padding-right: 40px"
+                      required
+                    />
+                    <!-- 비밀번호 암호화 해지 버튼 -->
+                    <span
+                      :class="passwordHidden ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"
+                      @click="togglePasswordVisibility"
+                      style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer"
+                    ></span>
                   </div>
                 </div>
                 <button class="btn-orange btn-lg w-100 mt-4 mb-4" type="submit" :disabled="disableSubmit">로그인</button>

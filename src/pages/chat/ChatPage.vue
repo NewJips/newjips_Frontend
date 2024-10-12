@@ -49,6 +49,11 @@ const requestChatRoom = async () => {
   }
 };
 
+// 폴링할 요청
+const requestChatMsgPolling = async () => {
+  chatMsg.value = await chatApi.getChatMsgList(chatRoomid.value, uno.value);
+};
+
 const requestChatMsg = async (room) => {
   chatMsg.value = await chatApi.getChatMsgList(room.cno, uno.value);
   chatRoomid.value = room.cno;
@@ -95,7 +100,8 @@ const requestSendMsg = async () => {
 // 폴링을 시작하는 함수
 const startPolling = () => {
   pollingInterval.value = setInterval(() => {
-    requestChatRoom(); // 일정 간격으로 메시지를 가져옴
+    requestChatRoom();
+    requestChatMsgPolling();
     console.log('폴링 send');
   }, 500); // 5000ms (5초) 간격으로 폴링
 };
@@ -267,7 +273,7 @@ requestChatRoomSetting();
                       <!-- media body -->
                       <div class="me-3 text-end">
                         <small>{{ formatDateForChat(msg.createAt) }}</small>
-                        <div class="d-flex">
+                        <div class="d-flex justify-content-end">
                           <!-- card -->
                           <div class="card mt-2 rounded-top-md-end-0 text-white" style="background-color: #8892a0">
                             <!-- card body -->
@@ -309,7 +315,7 @@ requestChatRoomSetting();
                       <!-- media body -->
                       <div class="me-3 text-end">
                         <small>{{ formatDateForChat(msg.createAt) }}</small>
-                        <div class="d-flex">
+                        <div class="d-flex justify-content-end">
                           <!-- card -->
                           <div class="card mt-2 rounded-top-md-end-0 text-white" style="background-color: #8892a0">
                             <!-- card body -->

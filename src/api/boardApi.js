@@ -8,14 +8,13 @@ const headers = { 'Content-Type': 'multipart/form-data' };
 
 export default {
   async getList(params) {
-    
     const { data } = await api.get(BASE_URL, { params });
     console.log('BOARD GET LIST: ', data);
     return data;
   },
 
-  async get(no) {
-    const { data } = await api.get(`${BASE_URL}/${no}`);
+  async get(nno) {
+    const { data } = await api.get(`${BASE_URL}/detail/${nno}`);
     console.log('BOARD GET', data);
     return data;
   },

@@ -4,8 +4,9 @@ import AccountMenuItem from './AccountMenuItem.vue';
 import config from '@/config';
 import { useAuthStore } from '@/stores/auth';
 import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
-const { login, join } = config.accoutMenus;
+const { t } = useI18n();
 const auth = useAuthStore();
 
 const islogin = computed(() => auth.isLogin);
@@ -21,7 +22,9 @@ const profilePic = computed(() => auth.profilePic);
       <AccountMenuItem :nickname="nickname" :userId="userId" :profilePic="profilePic" />
     </template>
     <template v-else>
-      <MenuItem :menu="login" />
+      <router-link class="nav-link" to="/auth/login" style="color: #111111;">
+        {{ t('common.login') }}
+      </router-link>
     </template>
   </ul>
 </template>

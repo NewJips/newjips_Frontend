@@ -90,6 +90,16 @@ const prevBuddySlide = () => {
     currentBuddySlide.value -= 1;
   }
 };
+
+const tradeType = ref([]);
+
+const data = blame_buildings.tradetype; // 'value'를 제거하고 tradetype에 직접 접근
+
+if (data === 'monthly') {
+  tradeType.value = '전세'; // monthly를 전세로 변환
+} else {
+  tradeType.value = '월세'; // charter를 월세로 변환
+}
 </script>
 <template>
   <div class="container-fluid">
@@ -118,7 +128,8 @@ const prevBuddySlide = () => {
                   </div>
                   <div class="card-body">
                     <h5 class="card-title">매물{{ currentSlide + index + 1 }}</h5>
-                    <p class="card-text">{{ buildings.content }}</p>
+                    <p class="card-text">{{ buildings.deposit }} / {{ buildings.monthlyPee }}</p>
+                    <p class="card-text">{{ tradeType }}</p>
                   </div>
                 </div>
               </div>
@@ -155,7 +166,7 @@ const prevBuddySlide = () => {
                   <div class="card-body">
                     <h5 class="card-title">{{ buddiz.blamedNickName }}</h5>
                     <!-- nickname -->
-                    <p class="card-text">{{ buddiz.content }}</p>
+                    <p class="card-text">{{ buddiz.blamedPersonality }}</p>
                     <!-- content-->
                   </div>
                 </div>
@@ -170,7 +181,7 @@ const prevBuddySlide = () => {
           <div v-else>
             <div class="text-center">
               <img src="@/assets/images/nothing.png" alt="nothing" class="img-fluid" style="max-width: 300px" />
-              <p>신고한 매물이 없습니다.</p>
+              <p>신고한 버디즈가 없습니다.</p>
             </div>
           </div>
         </div>

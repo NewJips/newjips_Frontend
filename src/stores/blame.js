@@ -14,22 +14,5 @@ export const useBlameStore = defineStore('blame', () => {
     const eno = ref('');
     const estateAddress = ref('');
 
-    const setBlamedId = (id) => {
-        blamedId.value = id;
-    };
-
-    const setBuddiz = (obj) => {
-        buddizProfile.value = obj.profilePic;
-        buddizNM.value = obj.nickName;
-        buddizid.value = obj.userId;
-    };
-
-    const setEstate = (obj) => {
-        agentNm.value = obj.agentNm;
-        agentPhone.value = obj.agentPhone;
-        eno.value = obj.eno;
-        estateAddress.value = obj.estateAddress;
-    }
-
-    return { blamedId, buddizProfile, buddizNM, buddizid, agentNm, agentPhone, eno, estateAddress, setBlamedId, setBuddiz, setEstate };
+    return { blamedId, buddizProfile, buddizNM, buddizid, agentNm, agentPhone, eno, estateAddress };
 });
