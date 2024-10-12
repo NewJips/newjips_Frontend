@@ -217,6 +217,21 @@
     "url": "상세 주소",
     "otherLoans": "다른 대출 정보"
   },
+  "homecard": {
+    "indetail":"상세주소",
+    "1": {
+      "name": "KB WELCOME PLUS",
+      "subtitle": "임차보증금 80% 이내, 최대 2억까지"
+    },
+    "2": {
+      "name": "KB 전세실심 대출보증",
+      "subtitle": "전세보증금 90%까지"
+    },
+    "3": {
+      "name": "KB 외국인 전용 주택 전세자금 대출",
+      "subtitle": "외국인을 위한 전세자금 대출"
+    }
+  },
   "pagination": {
     "older": "← Older posts",
     "newer": "Newer posts →"

@@ -246,5 +246,20 @@
   "errors": {
     "fetch_failed": "Không thể tải dữ liệu.",
     "submit_failed": "Gửi biểu mẫu thất bại."
+  },
+  "homecard": {
+    "indetail": "Địa chỉ chi tiết",
+    "1": {
+      "name": "KB WELCOME PLUS",
+      "subtitle": "Cho vay tối đa 80% tiền thuê, lên đến 2 tỷ đồng"
+    },
+    "2": {
+      "name": "Bảo lãnh cho vay ký quỹ KB",
+      "subtitle": "Tối đa 90% tiền ký quỹ"
+    },
+    "3": {
+      "name": "Cho vay ký quỹ nhà ở cho người nước ngoài KB",
+      "subtitle": "Cho vay ký quỹ nhà cho người nước ngoài"
+    }
   }
 }
