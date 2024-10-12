@@ -1,6 +1,7 @@
 import { ref, computed, reactive } from 'vue';
 import { defineStore } from 'pinia';
 import axios from 'axios';
+import { useChatStore } from './chat';
 
 const initState = {
   uno: '',
@@ -18,6 +19,7 @@ const initState = {
 
 export const useAuthStore = defineStore('auth', () => {
   const state = ref({ ...initState });
+  const chat = useChatStore();
 
   const isLogin = computed(() => !!state.value.userId); //로그인 상태를 나타내는 computed
 
@@ -75,6 +77,7 @@ export const useAuthStore = defineStore('auth', () => {
   const logout = () => {
     localStorage.clear();
     state.value = { ...initState };
+    chat.setMessages([]);
   };
 
   //로그아웃 시 저장된 데이터를 지우고, 상태를 초기화하는 역할
