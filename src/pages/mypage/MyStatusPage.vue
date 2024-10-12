@@ -114,19 +114,21 @@ async function findBuddiz(uno) {
               <p style="color: #8f9bb3">{{ userId }}</p>
             </div>
             <div class="edit-btn d-flex" style="margin-left: auto; max-width: 100%; margin-right: 4%">
-              <router-link class="btn mt-5" style="border: 1px solid #ff8f17; max-height: 27%; background-color: #ff8f17; color: white" to="/mypage/myedit">{{ t('common.mystatus.editbtn') }}</router-link>
+              <router-link class="btn mt-5" style="border: 1px solid #ff8f17; max-height: 27%; background-color: #ff8f17; color: white" to="/mypage/myedit">{{
+                t('common.mystatus.editbtn')
+              }}</router-link>
             </div>
           </div>
         </div>
         <!-- 프로필정보창 여기까지 -->
         <!-- 내역 -->
         <div class="history mb-4">
-          <h4 class="mb-3">{{ t('common.mystatus.my_content')}}</h4>
+          <h4 class="mb-3">{{ t('common.mystatus.my_content') }}</h4>
           <div class="d-flex" style="border: 2px; border-style: solid; border-color: #eaecef; border-radius: 10px 10px 0 0; justify-content: center">
-            <h5 class="flex-fill text-center my-3" style="width: 25%">{{ t('common.mystatus.wish_estate')}}</h5>
-            <h5 class="flex-fill text-center my-3" style="width: 25%">{{ t('common.mystatus.wish_buddiz')}}</h5>
-            <h5 class="flex-fill text-center my-3" style="width: 25%">{{ t('common.mystatus.blame_estate')}}</h5>
-            <h5 class="flex-fill text-center my-3" style="width: 25%">{{ t('common.mystatus.blame_buddiz')}}</h5>
+            <h5 class="flex-fill text-center my-3" style="width: 25%">{{ t('common.mystatus.wish_estate') }}</h5>
+            <h5 class="flex-fill text-center my-3" style="width: 25%">{{ t('common.mystatus.wish_buddiz') }}</h5>
+            <h5 class="flex-fill text-center my-3" style="width: 25%">{{ t('common.mystatus.blame_estate') }}</h5>
+            <h5 class="flex-fill text-center my-3" style="width: 25%">{{ t('common.mystatus.blame_buddiz') }}</h5>
           </div>
           <div class="d-flex" style="border: 2px; border-style: solid; border-color: #eaecef; border-radius: 0 0 10px 10px; border-top: none; justify-content: center">
             <router-link to="/mypage/wish" class="flex-fill text-center my-3" style="width: 25%; text-decoration: none"
@@ -147,14 +149,14 @@ async function findBuddiz(uno) {
         <!-- 버디즈 미등록시-->
         <div v-if="isBuddiz === false">
           <div class="profile-info mt-5 mb-5 d-flex" style="justify-content: flex-end; flex-direction: row; align-items: center">
-            <router-link to="/form" class="text-center my-2" style="text-decoration: none; display: inline-block">
+            <router-link :to="`/form/${uno}`" class="text-center my-2" style="text-decoration: none; display: inline-block">
               <button
                 class="btn-buddiz"
                 style="border: 1px solid #eaecef; border-radius: 10px; width: 100%; background-color: #eaecef; padding: 10px; font-size: 18px"
                 onmouseover="this.style.backgroundColor='#ff8f17'; this.style.color='white';"
                 onmouseout="this.style.backgroundColor='#eaecef'; this.style.color='#616b79';"
               >
-                <h5 style="margin: 0">{{ t('common.mystatus.add_buddiz_btn')}} </h5>
+                <h5 style="margin: 0">{{ t('common.mystatus.add_buddiz_btn') }}</h5>
               </button>
             </router-link>
           </div>
@@ -163,14 +165,22 @@ async function findBuddiz(uno) {
         <!-- 버디즈 등록시 -->
         <div v-else>
           <div class="budiiz mb-5">
-            <h4 class="mb-3">{{ t('common.mystatus.buddiz_e')}}</h4>
+            <h4 class="mb-3">{{ t('common.mystatus.buddiz_e') }}</h4>
             <div class="budiiz-btn d-flex justify-content-start">
-              <button style="border: 1px solid #eaecef; border-radius: 10px; width: 30%; background-color: #eaecef; background-color: #1e4475">
-                <h5 class="text-center my-2" style="color: white">{{ t('common.mystatus.watch_btn')}}</h5>
-              </button>
-              <button style="border: 1px solid #eaecef; border-radius: 10px; width: 30%; background-color: #eaecef; margin-left: 1rem">
-                <h5 class="text-center my-2" style="color: #616b79">{{ t('common.mystatus.edit_btn')}}</h5>
-              </button>
+              <router-link
+                :to="`/buddiz/userDetail/${uno}`"
+                class="no-underline"
+                style="border: 1px solid #eaecef; border-radius: 10px; width: 30%; background-color: #eaecef; background-color: #1e4475"
+              >
+                <h5 class="text-center my-2" style="color: white">{{ t('common.mystatus.watch_btn') }}</h5>
+              </router-link>
+              <router-link
+                :to="`/form/${uno}`"
+                class="no-underline"
+                style="border: 1px solid #eaecef; border-radius: 10px; width: 30%; background-color: #eaecef; margin-left: 1rem"
+              >
+                <h5 class="text-center my-2" style="color: #616b79">{{ t('common.mystatus.edit_btn') }}</h5>
+              </router-link>
             </div>
           </div>
         </div>
@@ -201,5 +211,8 @@ async function findBuddiz(uno) {
   margin-bottom: 20px;
   margin-right: 10px; /* 사이드바와 콘텐츠 사이 간격 */
   width: 180px; /* 사이드바 너비 고정 */
+}
+.no-underline {
+  text-decoration: none; /* 밑줄 제거 */
 }
 </style>
