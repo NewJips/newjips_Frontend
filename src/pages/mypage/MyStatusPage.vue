@@ -154,7 +154,7 @@ async function findBuddiz(uno) {
                 onmouseover="this.style.backgroundColor='#ff8f17'; this.style.color='white';"
                 onmouseout="this.style.backgroundColor='#eaecef'; this.style.color='#616b79';"
               >
-                <h5 style="margin: 0">버디즈 등록하기</h5>
+                <h5 style="margin: 0">{{ t('common.mystatus.add_buddiz_btn')}} </h5>
               </button>
             </router-link>
           </div>
