@@ -1,6 +1,6 @@
+<!-- LoanProductPage.vue -->
 <template>
   <div class="fluid-container pb-5">
-    <!-- Header with grey background -->
     <div class="type-header">
       <h2>{{ t('common.loan.header') }}</h2>
       <div style="font-size: 17pt; margin-top: 8pt;">{{ t('common.loan.description') }}</div>
@@ -43,31 +43,47 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import axios from 'axios';
 import LoanCard from '@/components/LoanCard.vue';
-import { useI18n } from 'vue-i18n'; // Import the i18n function
+import { useI18n } from 'vue-i18n';
 
-const { t } = useI18n(); // Get t() function for translations
+const { t, locale } = useI18n(); // Get t() function and locale
 
 const loans = ref([]);
 const selectedLoan = ref(null);
 
-onMounted(() => {
-  axios.get('http://localhost:8080/api/loan/list')
+// Fetch loans based on language
+const fetchLoans = () => {
+  const currentLanguage = locale.value === 'ko' ? 'KR' : 'VN';  // Dynamically determine the current language
+
+  axios.get('http://localhost:8080/api/loan/list', { params: { lan: currentLanguage } })
     .then(response => {
       loans.value = response.data;
     })
     .catch(error => {
       console.error('Failed to fetch loan data:', error);
     });
+};
+
+// Load loans on initial load
+onMounted(() => {
+  fetchLoans();
 });
 
+// Watch for language changes
+watch(locale, () => {
+  fetchLoans();  // Re-fetch loans when the language changes
+});
+
+// Fetch loan details
 const goToLoanDetail = (loan) => {
-  axios.get(`http://localhost:8080/api/loan/detail/${loan.lno}`)
+  const currentLanguage = locale.value === 'ko' ? 'KR' : 'VN';  // Dynamically determine the current language
+
+  axios.get(`http://localhost:8080/api/loan/detail/${loan.lno}`, { params: { lan: currentLanguage } })
     .then(response => {
       selectedLoan.value = response.data;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top after fetching details
     })
     .catch(error => {
       console.error('Failed to fetch loan details:', error);
@@ -83,7 +99,6 @@ const goToLoanDetail = (loan) => {
     padding-left: 6vh;
 }
 
-/* Grey background for the header section */
 .header.grey-background {
   background-color: #f5f5f5;
   padding: 40px;
@@ -102,11 +117,9 @@ const goToLoanDetail = (loan) => {
   color: #666;
 }
 
-/* Loan Details Section */
 .loan-details {
   margin-top: 20px;
   padding: 20px;
-
 }
 
 .loan-details h3 {
@@ -120,7 +133,6 @@ const goToLoanDetail = (loan) => {
   margin-bottom: 10px;
 }
 
-/* Highlighted Description Box */
 .highlight-box {
   background-color: #F5F6F7;
   border-radius: 8px;
@@ -130,7 +142,6 @@ const goToLoanDetail = (loan) => {
   color: #333;
 }
 
-/* Two-column layout for duration and amount */
 .details-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -148,11 +159,6 @@ const goToLoanDetail = (loan) => {
   margin-right: 10px;
 }
 
-.detail-item p {
-  margin: 0;
-}
-
-/* Loan Cards Section */
 .loan-cards {
   margin-top: 40px;
 }
@@ -162,7 +168,6 @@ const goToLoanDetail = (loan) => {
   margin-bottom: 20px;
 }
 
-/* Loan grid with smaller cards */
 .loan-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
