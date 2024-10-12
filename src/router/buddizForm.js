@@ -1,9 +1,7 @@
 export default [
   {
-    path: '/form',
+    path: '/form/:uno',
     name: 'form',
     component: () => import('../pages/buddiz/buddizForm.vue'),
   },
 ];
-
-

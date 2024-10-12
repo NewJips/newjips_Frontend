@@ -5,7 +5,6 @@ import { useAuthStore } from '@/stores/auth'; // Adjust the path as needed
 import buddizIntroApi from '@/api/buddizIntroApi';
 import { useI18n } from 'vue-i18n';
 
-
 const { locale } = useI18n(); // Destructure the locale properly
 console.log(locale.value); // You should see the current locale
 const nickname = ref('');
@@ -28,7 +27,7 @@ const regions = ['서울', '부산', '대구', '인천', '광주'];
 
 const submitForm = async () => {
   const authStore = useAuthStore(); // Initialize the store
-  const userUno = authStore.uno;    // Fetch the logged-in user's `uno`
+  const userUno = authStore.uno; // Fetch the logged-in user's `uno`
 
   if (!userUno) {
     alert('User not logged in. Please log in to submit your form.');
@@ -36,19 +35,19 @@ const submitForm = async () => {
   }
 
   const formData = {
-  uno: userUno,  
-  liveInKr: koreaExperience.value || 0,  // Ensure numeric value
-  personality: selectedCharacteristics.value.join(',') || 'Unknown',  // Default if empty
-  cost: price.value || 0,  // Ensure numeric value
-  hiredTimes: transactionCount.value || 0,  // Ensure numeric value
-  rating: 5.0,  // Placeholder for rating
-  selfInfo: description.value || 'No description provided',  // Default if empty
-  lan: locale.value === 'ko' ? 'KR' : 'VN',  // Default to 'KR' or 'VN'
-  location: residence.value || 'Unknown',  // Default if empty
-  useLan: selectedLanguages.value.join(',') || 'Unknown',  // Default if empty
-};
+    uno: userUno,
+    liveInKr: koreaExperience.value || 0, // Ensure numeric value
+    personality: selectedCharacteristics.value.join(',') || 'Unknown', // Default if empty
+    cost: price.value || 0, // Ensure numeric value
+    hiredTimes: transactionCount.value || 0, // Ensure numeric value
+    rating: 5.0, // Placeholder for rating
+    selfInfo: description.value || 'No description provided', // Default if empty
+    lan: locale.value === 'ko' ? 'KR' : 'VN', // Default to 'KR' or 'VN'
+    location: residence.value || 'Unknown', // Default if empty
+    useLan: selectedLanguages.value.join(',') || 'Unknown', // Default if empty
+  };
 
-console.log('Submitting form data:', formData);  // For debugging
+  console.log('Submitting form data:', formData); // For debugging
 
   try {
     const response = await buddizIntroApi.saveOrUpdateBuddizIntro(formData);
@@ -65,11 +64,11 @@ console.log('Submitting form data:', formData);  // For debugging
   <div class="fluid-container">
     <div class="type-header">
       <h2>버디즈 이력 등록</h2>
-      <div style="font-size: 17pt; margin-top: 8pt;">버디즈로 활동하기 위한 나만의 소개를 입력해주세요!</div>
+      <div style="font-size: 17pt; margin-top: 8pt">버디즈로 활동하기 위한 나만의 소개를 입력해주세요!</div>
     </div>
 
     <!-- Basic Info Section -->
-    <div class="fluid-container px-5 pt-5 pb-5" style="background-color: #fbfbfc;">
+    <div class="fluid-container px-5 pt-5 pb-5" style="background-color: #fbfbfc">
       <section class="section-card">
         <h2 class="section-title"><i class="section-icon"></i> Basic Info</h2>
         <div class="input-group">
@@ -166,7 +165,7 @@ console.log('Submitting form data:', formData);  // For debugging
 
 <style scoped>
 .type-header {
-  background-color: #F5F6F7;
+  background-color: #f5f6f7;
   padding-top: 4vh;
   padding-bottom: 4vh;
   padding-left: 6vh;
