@@ -3,7 +3,9 @@ import { ref, computed, onMounted } from 'vue';
 import SideBar from '@/components/layouts/SideBar.vue';
 import { useAuthStore } from '@/stores/auth';
 import wishApi from '@/api/wishApi';
+import { useI18n } from 'vue-i18n';
 
+const { t, locale } = useI18n();
 const auth = useAuthStore();
 const uno = computed(() => auth.uno);
 console.log(auth.uno);
@@ -30,7 +32,6 @@ const wish_buildings = ref([]);
 async function fetchBlameBuildings() {
   try {
     const data = await wishApi.getwishestate(uno.value); // API 호출하여 신고 데이터 가져오기
-    console.log(uno.value);
     wish_buildings.value = data; // 가져온 데이터 할당
     console.log('가져온 매물 데이터: ', wish_buildings.value);
   } catch (e) {
@@ -90,16 +91,6 @@ const prevBuddySlide = () => {
     currentBuddySlide.value -= 1;
   }
 };
-
-const tradeType = ref([]);
-
-const data = wish_buildings.tradetype; // 'value'를 제거하고 tradetype에 직접 접근
-
-if (data === 'monthly') {
-  tradeType.value = '전세'; // monthly를 전세로 변환
-} else {
-  tradeType.value = '월세'; // charter를 월세로 변환
-}
 </script>
 <template>
   <div class="container-fluid">
@@ -111,7 +102,7 @@ if (data === 'monthly') {
 
       <!-- 메인 콘텐츠 -->
       <div class="col-lg-9 col-md-9 col-sm-12">
-        <h2 class="mt-5" style="margin-left: 20px; margin-right: 0; margin-bottom: 20px">관심 매물</h2>
+        <h2 class="mt-5" style="margin-left: 20px; margin-right: 0; margin-bottom: 20px">{{ t('common.wish.wishestate') }}</h2>
         <div class="position-relative">
           <div v-if="wish_buildings.length > 0">
             <!-- 왼쪽 화살표 -->
@@ -128,12 +119,13 @@ if (data === 'monthly') {
                   </div>
                   <div class="card-body" style="position: relative">
                     <h5 class="card-title">
-                      매물{{ currentSlide + index + 1 }}
+                      {{ t('common.wish.etitle') }} {{ buildings.wishedId }}
                       <!-- 하트 버튼 -->
                       <i class="heart-icon bi-heart-fill" style="position: absolute; right: 20px; top: 25%; transform: translateY(-50%); color: #ff8f17"></i>
                     </h5>
                     <p class="card-text">{{ buildings.deposit }} / {{ buildings.monthlyPee }}</p>
-                    <p class="card-text">{{ tradeType }}</p>
+                    <p v-if="buildings.tradetype == 'monthly'" class="card-text">{{ t('common.wish.monthly') }}</p>
+                    <p v-else class="card-text">{{ t('common.wish.charter') }}</p>
                   </div>
                 </div>
               </div>
@@ -147,12 +139,12 @@ if (data === 'monthly') {
           <div v-else>
             <div class="text-center">
               <img src="@/assets/images/nothing.png" alt="nothing" class="img-fluid" style="max-width: 300px" />
-              <p>관심 매물이 없습니다.</p>
+              <p>{{ t('common.wish.notwishestate') }}</p>
             </div>
           </div>
         </div>
 
-        <h2 class="mt-4" style="margin-left: 20px; margin-right: 0; margin-bottom: 20px">관심 버디즈</h2>
+        <h2 class="mt-4" style="margin-left: 20px; margin-right: 0; margin-bottom: 20px">{{ t('common.wish.wishbuddiz') }}</h2>
         <div class="position-relative">
           <div v-if="wish_buddiz.length > 0">
             <!-- 왼쪽 화살표 -->
@@ -173,7 +165,6 @@ if (data === 'monthly') {
                       <!-- 하트 버튼 -->
                       <i class="heart-icon bi-heart-fill" style="position: absolute; right: 20px; top: 25%; transform: translateY(-50%); color: #ff8f17"></i>
                     </h5>
-                    <p class="card-text">{{ buddiz.wishPersonality }}</p>
                   </div>
                 </div>
               </div>
@@ -187,7 +178,7 @@ if (data === 'monthly') {
           <div v-else>
             <div class="text-center">
               <img src="@/assets/images/nothing.png" alt="nothing" class="img-fluid" style="max-width: 300px" />
-              <p>관심 버디즈가 없습니다.</p>
+              <p>{{ t('common.wish.notwishbuddiz') }}</p>
             </div>
           </div>
         </div>

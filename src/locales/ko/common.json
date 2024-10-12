@@ -8,13 +8,13 @@
   "mypage": "마이페이지",
   "yes": "확인",
   "cancle": "취소",
-  "login" : "로그인",
-  
+  "login": "로그인",
+
   "footer": {
     "question": "자주묻는 질문",
     "copyright": "저작권"
   },
-  
+
   "home": {
     "banner1": "한국에서 방 구하기,",
     "banner2": "고민되고 걱정 되시나요?",
@@ -32,11 +32,11 @@
     "guide_kr": "한국 부동산 가이드",
     "guide_kr_explain": "New Jips가 알려주는 쉽고 간단한 부동산 가이드",
     "guide_kr_card1": "[뉴집스 꿀팁] 허위매물 예방 5계명",
-    "guide_kr_card1_detail":"전체 매물 데이터를 분석하여 소비자를 현혹시키는 허위매물의 유형과 정보",
-    "guide_kr_card2":"[뉴집스 꿀팁] 집 계약 후 필수 신고 및 등기 신청 종류 총정리",
-    "guide_kr_card3":"[뉴집스 꿀팁] 계약하고 싶은 집 찾을 때 ‘이것’ 꼭 확인해요!",
-    "guide_kr_card4":"[뉴집스 꿀팁] 집 구할 때 꼭! 참고해야 할 '매물 체크리스트",
-    "guide_kr_card5":"[뉴집스 꿀팁] 주택임대차계약서 작성 시 알아두면 좋은 법률 상식~!",
+    "guide_kr_card1_detail": "전체 매물 데이터를 분석하여 소비자를 현혹시키는 허위매물의 유형과 정보",
+    "guide_kr_card2": "[뉴집스 꿀팁] 집 계약 후 필수 신고 및 등기 신청 종류 총정리",
+    "guide_kr_card3": "[뉴집스 꿀팁] 계약하고 싶은 집 찾을 때 ‘이것’ 꼭 확인해요!",
+    "guide_kr_card4": "[뉴집스 꿀팁] 집 구할 때 꼭! 참고해야 할 '매물 체크리스트",
+    "guide_kr_card5": "[뉴집스 꿀팁] 주택임대차계약서 작성 시 알아두면 좋은 법률 상식~!",
     "hotplace": "핫플 지역",
     "hotplace_explain": "한국의 최근 인기 지역을 추천합니다.",
     "hotplace_card1": "홍대",
@@ -45,14 +45,13 @@
     "hotplace_card4": "건대",
     "recommend_title": "전세 대출 추천",
     "recommend_explain": "외국인을 위한 전세 대출을 추천합니다."
-
   },
-  
+
   "tradetype": {
     "monthly": "월세",
     "charter": "전세"
   },
-  
+
   "housetype": {
     "villa": "빌라",
     "officeTel": "오피스텔",
@@ -61,16 +60,16 @@
     "oneRoom": "원룸",
     "twoRoom": "투룸"
   },
-  
+
   "chatting": {
     "torry": "뉴집스 토리",
     "placeholder": "메시지를 입력해주세요",
     "special_terms": "특약이란?",
     "insurance": "보증보험이란?",
     "aiIntro": "반가워요, 뉴집스챗봇 토리입니다.<br/>특약사항, 보증보험 관련된 궁금한 내용을 물어보세요! <br/><br/>질문하기 TIP! <br/>보험 관련 핵심단어로 간단하게 질문해 주세요! <br/>(예시) 특약, 보증보험 종류 <br/>",
-    "desc" : "안전한 부동산 계약을 위해<br/>AI 토리에게 물어보세요 !"
+    "desc": "안전한 부동산 계약을 위해<br/>AI 토리에게 물어보세요 !"
   },
-  
+
   "edit": {
     "edit": "수정",
     "upload_img": "프로필 사진을 업로드하세요.",
@@ -85,7 +84,7 @@
     "oldPw": "기존 비밀번호",
     "oldPwHolder": "비밀번호를 입력하세요."
   },
-  
+
   "blame": {
     "blame": "신고하기",
     "des": "매물, 부동산, 버디즈 등 문제 상황을 신고하세요!",
@@ -94,24 +93,24 @@
     "reason": "신고 사유",
     "content": "신고 내용",
     "holder": "신고 내용을 입력해주세요.",
-    
+
     "b1": "불법 행위",
     "b2": "인종차별적 행위",
     "b3": "폭언, 폭행",
     "b4": "동행 승인 후 잠수",
     "b5": "기타 부적절한 버디즈",
-    
+
     "e1": "허위 / 과장된 가격정보를 가진 매물",
     "e2": "거래 완료 혹은 철회에도 온라인상에 노출 중인 매물",
     "e3": "경매 의심 매물",
     "e4": "매도자 사칭 매물",
     "e5": "기타 사유로 정보가 부정확한 매물",
-    
+
     "successT": "신고를 완료했습니다!",
     "successD": "불편한 경험을 드려 죄송합니다.<br/>많은 유저들의 안전한 활동에 도움이 되었습니다.<br/>앞으로 좋은 경험만 가질 수 있도록<br/>열심히 노력하는 NewJips가 되겠습니다.",
     "goBlameList": "신고 목록으로",
     "goBack": "돌아가기",
-    
+
     "einfo": "신고 매물 정보",
     "agentNm": "중개업소",
     "agentphone": "전화번호",
@@ -119,7 +118,7 @@
     "address": "매물 소재지"
   },
 
-  "mystatus":{
+  "mystatus": {
     "profile": "프로필 정보",
     "editbtn": "수정",
     "my_content": "내역",
@@ -127,37 +126,47 @@
     "wish_buddiz": "찜한 버디즈",
     "blame_estate": "신고한 매물",
     "blame_buddiz": "신고한 버디즈",
-    "add_buddiz_btn": "버디즈 등록하기"},
-
-
-  "makeChat" : "채팅하기",
-
-  "budi" : {
-    "lived" : "한국 자취",
-    "years" : "년차",
-    "active" : "활동",
-    "count" : "회",
-    "pick" : "버디즈 찜하기",
-    "review" : "버디즈 후기",
-    "writeReview" : "리뷰 남기기",
-    "title" : "버디즈",
-    "content" : "나에게 꼭 맞는 버디를 찾아보세요!",
-    "searchNm" : "닉네임으로 검색",
-    "searchFilter" : "필터로 검색",
-    "searchSort" : "정렬",
-    "sortf" : "여성",
-    "sortm" : "남성",
-    "sortReview" : "리뷰 많은 순",
-    "sortPrice" : "가격순",
-    "sortStar" : "별점순",
-    "searchPH" : "검색어 입력",
-    "star" : "평점",
-    "reviewContent" : "리뷰 내용",
-    "reviewPH" : "리뷰를 입력하세요.",
-    "confirm" : "리뷰 등록"
+    "add_buddiz_btn": "버디즈 등록하기"
   },
-  "noti":{
-    "title":"공지 사항",
-    "content":"새로운 소식과 공지를 확인하세요!"
+
+  "makeChat": "채팅하기",
+
+  "budi": {
+    "lived": "한국 자취",
+    "years": "년차",
+    "active": "활동",
+    "count": "회",
+    "pick": "버디즈 찜하기",
+    "review": "버디즈 후기",
+    "writeReview": "리뷰 남기기",
+    "title": "버디즈",
+    "content": "나에게 꼭 맞는 버디를 찾아보세요!",
+    "searchNm": "닉네임으로 검색",
+    "searchFilter": "필터로 검색",
+    "searchSort": "정렬",
+    "sortf": "여성",
+    "sortm": "남성",
+    "sortReview": "리뷰 많은 순",
+    "sortPrice": "가격순",
+    "sortStar": "별점순",
+    "searchPH": "검색어 입력",
+    "star": "평점",
+    "reviewContent": "리뷰 내용",
+    "reviewPH": "리뷰를 입력하세요.",
+    "confirm": "리뷰 등록"
+  },
+  "noti": {
+    "title": "공지 사항",
+    "content": "새로운 소식과 공지를 확인하세요!"
+  },
+  "wish": {
+    "wishestate": "관심 매물",
+    "wishbuddiz": "관심 버디즈",
+    "estate": "매물",
+    "notwishestate": "관심 매물이 없습니다.",
+    "notwishbuddiz": "관심 버디즈가 없습니다.",
+    "etitle": "매물번호 : ",
+    "monthly": "월세",
+    "charter": "전세"
   }
 }
