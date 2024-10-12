@@ -61,7 +61,12 @@
               <h3 style="font-size: 25px; font-weight: bold; margin-bottom: 5px;">{{ buddiz.name }}</h3>
               <div style="font-size: 1em; margin: 5px;">
                 <p style="margin-bottom: 5px;"><img src="/src/assets/icons/starIcon.png" alt="star"
-                    style="height: 18px; width: 18px;"> {{ Number.isInteger(buddiz.avg) ? buddiz.avg : buddiz.avg.toFixed(2) }}</p>
+                    style="height: 18px; width: 18px;">
+                    {{ Number.isInteger(buddiz.avg) ? buddiz.avg : buddiz.avg.toFixed(2) }}
+                    ({{ buddiz.reviewcnt }})
+                  </p>
+                  <img src="/src/assets/icons/bankicon.png" alt="money" style="width: 18px; height: 18px;">
+                  {{ buddiz.cost.toLocaleString() }}
                     <p style="margin-bottom: 5px;">{{ t('common.budi.lived') }} {{ buddiz.liveInKr }}{{ t('common.budi.years') }}</p>
                 <p style="margin-bottom: 5px;">{{ buddiz.personality }}</p>
               </div>
@@ -155,6 +160,7 @@ watch(route, async (newValue) => {
   pageRequest.searchType = route.query.searchType || '';
   pageRequest.searchValue = route.query.searchValue || '';
   pageRequest.amount = parseInt(route.query.amount) || 10;
+
   await load(pageRequest);
 });
 const load = async (query) => {
