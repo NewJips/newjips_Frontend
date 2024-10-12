@@ -118,6 +118,16 @@
     "estatenum": "매물 번호",
     "address": "매물 소재지"
   },
+  "mystatus":{
+    "profile": "프로필 정보",
+    "editbtn": "수정",
+    "my_content": "내역",
+    "wish_estate": "찜한 매물",
+    "wish_buddiz": "찜한 버디즈",
+    "blame_estate": "신고한 매물",
+    "blame_buddiz": "신고한 버디즈",
+    "add_buddiz_btn": "버디즈 등록하기"
+
 
   "makeChat" : "채팅하기",
 

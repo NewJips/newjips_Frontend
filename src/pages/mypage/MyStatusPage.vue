@@ -5,7 +5,9 @@ import { useAuthStore } from '@/stores/auth';
 import blameApi from '@/api/blameApi';
 import wishApi from '@/api/wishApi';
 import authApi from '@/api/authApi';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const auth = useAuthStore();
 
 // Auth 상태 관리
@@ -104,7 +106,7 @@ async function findBuddiz(uno) {
       <div class="col-lg-10 col-xl-8 col-lg-3 mt-5 ms-5">
         <!-- 프로필정보창 -->
         <div class="profile-info mb-4">
-          <h4 class="mb-3">프로필 정보</h4>
+          <h4 class="mb-3">{{ t('common.mystatus.profile') }}</h4>
           <div class="profile-content d-flex" style="border: 2px; border-style: solid; border-color: #eaecef; border-radius: 10px">
             <img class="mx-4 my-4" :src="profilePic" style="max-width: 10%; height: auto; border-radius: 50%" alt="Profile Picture" />
             <div class="profile-data mt-5">
@@ -112,19 +114,19 @@ async function findBuddiz(uno) {
               <p style="color: #8f9bb3">{{ userId }}</p>
             </div>
             <div class="edit-btn d-flex" style="margin-left: auto; max-width: 100%; margin-right: 4%">
-              <router-link class="btn mt-5" style="border: 1px solid #ff8f17; max-height: 27%; background-color: #ff8f17; color: white" to="/mypage/myedit">수정</router-link>
+              <router-link class="btn mt-5" style="border: 1px solid #ff8f17; max-height: 27%; background-color: #ff8f17; color: white" to="/mypage/myedit">{{ t('common.mystatus.editbtn') }}</router-link>
             </div>
           </div>
         </div>
         <!-- 프로필정보창 여기까지 -->
         <!-- 내역 -->
         <div class="history mb-4">
-          <h4 class="mb-3">내역</h4>
+          <h4 class="mb-3">{{ t('common.mystatus.my_content')}}</h4>
           <div class="d-flex" style="border: 2px; border-style: solid; border-color: #eaecef; border-radius: 10px 10px 0 0; justify-content: center">
-            <h5 class="flex-fill text-center my-3" style="width: 25%">찜한 매물</h5>
-            <h5 class="flex-fill text-center my-3" style="width: 25%">찜한 버디즈</h5>
-            <h5 class="flex-fill text-center my-3" style="width: 25%">신고한 매물</h5>
-            <h5 class="flex-fill text-center my-3" style="width: 25%">신고한 버디즈</h5>
+            <h5 class="flex-fill text-center my-3" style="width: 25%">{{ t('common.mystatus.my_estate')}}</h5>
+            <h5 class="flex-fill text-center my-3" style="width: 25%">{{ t('common.mystatus.wish_buddiz')}}</h5>
+            <h5 class="flex-fill text-center my-3" style="width: 25%">{{ t('common.mystatus.blame_estate')}}</h5>
+            <h5 class="flex-fill text-center my-3" style="width: 25%">{{ t('common.mystatus.blame_buddiz')}}</h5>
           </div>
           <div class="d-flex" style="border: 2px; border-style: solid; border-color: #eaecef; border-radius: 0 0 10px 10px; border-top: none; justify-content: center">
             <router-link to="/mypage/wish" class="flex-fill text-center my-3" style="width: 25%; text-decoration: none"
