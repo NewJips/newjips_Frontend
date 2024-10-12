@@ -25,8 +25,10 @@ load();
 <template>
 
     <div class="notice-header">
-      <h2>공지 사항</h2>
-      <div class="form-label" style="font-size: 17pt; margin-top: 8pt;">새로운 소식과 공지를 확인하세요!</div>
+      <!-- <h2>공지 사항</h2> -->
+      <h2>{{t('common.noti.title')}}</h2>
+      <!-- <div class="form-label" style="font-size: 17pt; margin-top: 8pt;">새로운 소식과 공지를 확인하세요!</div> -->
+      <div style="font-size: 17pt; margin-top: 8pt;">{{t('common.noti.content')}}</div>
     </div>
 
 

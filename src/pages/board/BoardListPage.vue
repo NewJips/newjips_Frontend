@@ -76,8 +76,10 @@ load(pageRequest);
 <template>
   <div class="fluid-container">
     <div class="type-header">
-      <h2>공지 사항</h2>
-      <div style="font-size: 17pt; margin-top: 8pt;">새로운 소식과 공지를 확인하세요!</div>
+      <!-- <h2>공지 사항</h2> -->
+       <h2>{{t('common.noti.title')}}</h2>
+      <!-- <div style="font-size: 17pt; margin-top: 8pt;">새로운 소식과 공지를 확인하세요!</div> -->
+      <div style="font-size: 17pt; margin-top: 8pt;">{{t('common.noti.content')}}</div>
     </div>
 
     <div class="row row-cols-md-2 row-cols-1 px-5 mb-lg-5 mb-4 notice-content">
