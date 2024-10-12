@@ -68,7 +68,11 @@
     "newPwHolder": "Vui lòng nhập mật khẩu mới.",
     "checkPwHolder": "Xác nhận mật khẩu mới",
     "oldPw": "mật khẩu hiện có",
-    "oldPwHolder": "Vui lòng nhập mật khẩu của bạn."
+    "oldPwHolder": "Vui lòng nhập mật khẩu của bạn.",
+    "notpw": "Mật khẩu không khớp",
+    "infoedit": "Đã sửa đổi thông tin",
+    "info": "Bạn có muốn chỉnh sửa lại không?",
+    "file": "Kích thước tập tin phải nhỏ hơn 5MB"
   },
 
   "tradetype": {
@@ -179,5 +183,13 @@
     "etitle": "số hàng hóa : ",
     "monthly": "việc thuê nhà",
     "charter": "sự thuê riêng"
+  },
+  "sidebar": {
+    "mypage": "MY PAGE",
+    "status": "tình trạng của tôi",
+    "edit": "Sửa đổi thông tin cá nhân",
+    "wish": "danh sách hy vọng",
+    "blame": "danh sách khai báo",
+    "logout": "log out"
   }
 }
