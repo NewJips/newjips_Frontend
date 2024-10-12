@@ -1,7 +1,7 @@
 // buddizIntroApi.js
-import api from '@/api'; // Or your correct API setup
+import api from "@/api"; // Or your correct API setup
 
-const BASE_URL = '/api/buddiz/intro';
+const BASE_URL = "/api/buddiz/intro";
 
 export default {
   // Fetch all Buddiz introductions
@@ -10,18 +10,18 @@ export default {
       const { data } = await api.get(`${BASE_URL}`);
       return data;
     } catch (error) {
-      console.error('Error fetching all Buddiz intros:', error);
+      console.error("Error fetching all Buddiz intros:", error);
       throw error;
     }
   },
 
   // Fetch Buddiz intro by user ID (uno)
-  async getBuddizIntroById(uno) {
+  async getBuddizIntro(uno) {
     try {
       const { data } = await api.get(`${BASE_URL}/${uno}`);
       return data;
     } catch (error) {
-      console.error('Error fetching Buddiz intro by uno:', error);
+      console.error("Error fetching Buddiz intro by uno:", error);
       throw error;
     }
   },
@@ -32,7 +32,7 @@ export default {
       const response = await api.post(`${BASE_URL}/saveOrUpdate`, buddizIntro);
       return response.data;
     } catch (error) {
-      console.error('Error saving or updating Buddiz intro:', error);
+      console.error("Error saving or updating Buddiz intro:", error);
       throw error;
     }
   },

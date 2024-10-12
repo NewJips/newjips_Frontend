@@ -175,7 +175,7 @@ async function findBuddiz(uno) {
                 <h5 class="text-center my-2" style="color: white">{{ t('common.mystatus.watch_btn') }}</h5>
               </router-link>
               <router-link
-                :to="`/form/${uno}`"
+                :to="`/form`"
                 class="no-underline"
                 style="border: 1px solid #eaecef; border-radius: 10px; width: 30%; background-color: #eaecef; margin-left: 1rem"
               >
