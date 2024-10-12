@@ -85,7 +85,7 @@ const loans = [
     repayment: '일시 상환, 원리금 균등 상환 또는 혼합 상환 방식 가능',
     interest: '변동 금리, 연 3.74% 이내',
     usageInfo: '모든 조건을 충족해야 하며, 조건에 따라 우대 금리가 적용될 수 있습니다.',
-    link: 'https://obank.kbstar.com',
+    link: 'https://obank.kbstar.com/quics?page=C103507&cc=b104363%3Ab104516&isNew=N&prcode=LN20000041&QSL=F&QSL=F',
   },
   {
     id: 2,
@@ -97,7 +97,7 @@ const loans = [
     repayment: '일시 상환, 원리금 균등 상환 방식 가능',
     interest: '변동 금리, 연 3.5% 이내',
     usageInfo: '모든 조건을 충족해야 하며, 조건에 따라 이용 가능',
-    link: 'https://obank.kbstar.com',
+    link: 'https://obank.kbstar.com/quics?page=C103507&cc=b104363:b104516&isNew=N&prcode=LN20000064&QSL=F',
   },
   {
     id: 3,
@@ -109,7 +109,7 @@ const loans = [
     repayment: '일시 상환, 원리금 균등 상환 방식 가능',
     interest: '연 3.5%',
     usageInfo: '조건에 따라 이용 가능',
-    link: 'https://obank.kbstar.com',
+    link: 'https://obank.kbstar.com/quics?page=C103526',
   }
 ];
 
@@ -458,25 +458,31 @@ const goToLoanDetail = (loan) => {
 
     <!-- 전세 대출 추천 -->
     <div class="ms-5 me-5 mb-5">
-      <h4 class="head-title">{{ t('common.home.recommend_title') }}</h4>
+      <h4 class="head-title">{{ t('common.loan.header') }}</h4>
       <div class="d-flex mb-4">
-        <span class="subtitle ">{{ t('common.home.recommend_title') }}</span>
+        <span class="subtitle ">{{ t('common.loan.description') }}</span>
         <span class="position-absolute end-0 me-5">
           <router-link class="btn-more text-muted" to="/loanproduct">{{ t('common.home.plusbtn') }}</router-link>
         </span>
       </div>
 
       <div class="loan-grid pb-3">
-        <LoanCard
-            v-for="(loan, index) in loans"
-            :key="index"
-            :loan="loan"
-            @click="goToLoanDetail(loan)" />
+        <div 
+          v-for="(loan, index) in loans" 
+          :key="index" 
+          class="card shadow-sm card-hover border-0 h-100 loan-card"
+          @click="goToLoanDetail(loan)"
+        >
+          <div class="card-body">
+            <h5 class="loan-name">{{ loan.name }}</h5>
+            <p class="loan-subtitle">{{ loan.subtitle }}</p>
+            <a :href="loan.link" target="_blank" class="loan-link">자세히 보기</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
-
 <style scoped>
 
 .ms-8{
@@ -894,5 +900,56 @@ h3 {
 .dropend .dropdown-toggle::before {
   display: none;
 }
-</style>
 
+/* Loan cards container */
+.loan-cards {
+  margin-top: 40px;
+}
+
+.loan-cards h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+/* Loan cards grid */
+.loan-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* Individual loan card styling */
+.loan-card {
+  background-color: #446688;
+  padding: 20px;
+  border-radius: 12px;
+  color: white !important;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.loan-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.loan-card * {
+  color: white !important;
+}
+
+.loan-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.loan-card p {
+  font-size: 1rem;
+}
+
+</style>

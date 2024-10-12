@@ -14,6 +14,7 @@ const loanRoutes = [
     component: LoanDetailPage,
     props: true, // Pass loanId as prop
   },
+  
 ];
 
 export default loanRoutes;

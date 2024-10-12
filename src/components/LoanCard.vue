@@ -8,7 +8,7 @@ const props = defineProps({
 
 const emit = defineEmits(['click']);
 const selectLoan = () => {
-  emit('click', props.loan);
+  emit('click', props.loan);  // Emit selected loan object when clicked
 };
 </script>
 
