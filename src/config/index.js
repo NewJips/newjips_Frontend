@@ -18,6 +18,10 @@ export default {
       title: i18n.global.t('common.chat'),
       url: '/chat',
     },
+    {
+      title: i18n.global.t('common.loan'),
+      url: '/loanproduct',
+    },
   ],
 
   accoutMenus: {
