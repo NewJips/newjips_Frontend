@@ -17,7 +17,7 @@ const maxFileSize = 5 * 1024 * 1024;
 const oldPw = ref('');
 const newPw1 = ref('');
 const newPw2 = ref('');
-const warn = ref('비밀번호가 일치하지 않습니다.');
+const iscorrect = ref(true);
 
 const member = reactive({
   uno: auth.uno,
@@ -33,7 +33,7 @@ const onSubmit = async () => {
     member.avatar = avatar.value;
   }
 
-  if (!confirm('수정하시겠습니까?')) return;
+  if (!confirm(t('common.edit.info'))) return;
 
   try {
     const formData = new FormData();
@@ -46,7 +46,7 @@ const onSubmit = async () => {
     member.nickname = result.nickname;
     member.profilePic = result.profilePic;
     auth.changeProfile(member);
-    alert('정보를 수정하였습니다.');
+    alert(t('common.edit.infoedit'));
     router.go(0);
   } catch (e) {
     console.log(e);
@@ -56,29 +56,27 @@ const onSubmit = async () => {
 
 // 비밀번호 바꾸기
 const onChangePw = async () => {
+  try {
+    const formData = new FormData();
+    formData.append('newPassword', newPw1.value);
+    formData.append('oldPassword', oldPw.value);
+    formData.append('uno', member.uno);
 
-    try {
-      const formData = new FormData();
-      formData.append('newPassword', newPw1.value);
-      formData.append('oldPassword', oldPw.value);
-      formData.append('uno', member.uno);
-
-      await authApi.changePassword(formData);
-      alert('정보를 수정하였습니다.');
-      oldPw.value = '';
-      newPw1.value = '';
-      newPw2.value = '';
-    } catch (error) {
-      alert(error.message);
-    }
-  
+    await authApi.changePassword(formData);
+    alert(t('common.edit.infoedit'));
+    oldPw.value = '';
+    newPw1.value = '';
+    newPw2.value = '';
+  } catch (error) {
+    alert(error.message);
+  }
 };
 
 const newPwMatch = () => {
   if (newPw1.value === newPw2.value) {
-    warn.value = '';
+    iscorrect.value = true;
   } else {
-    warn.value = '비밀번호가 일치하지 않습니다.';
+    iscorrect.value = false;
   }
 };
 
@@ -87,7 +85,7 @@ const onFileChange = (event) => {
   const file = event.target.files[0];
   if (file) {
     if (file.size > maxFileSize) {
-      alert("파일 크기는 5MB 이하이어야 합니다.");
+      alert(t('common.edit.file'));
       return;
     }
 
@@ -183,7 +181,6 @@ const onFileChange = (event) => {
         </div>
         <!-- card-border End -->
 
-
         <!-- 비밀번호 변경 -->
         <div class="card border mb-5">
           <div class="card-header card-bottom">
@@ -192,7 +189,7 @@ const onFileChange = (event) => {
           <div class="card-body">
             <div class="mb-3">
               <label class="form-label">{{ t('common.edit.oldPw') }}</label>
-              <input class="form-control" v-model="oldPw" type="password" :placeholder="t('common.edit.oldPwHolder')"/>
+              <input class="form-control" v-model="oldPw" type="password" :placeholder="t('common.edit.oldPwHolder')" />
             </div>
             <div class="mb-3">
               <label class="form-label">{{ t('common.edit.newPw') }}</label>
@@ -201,7 +198,7 @@ const onFileChange = (event) => {
             <div class="mb-3">
               <label class="form-label">{{ t('common.edit.checkPw') }}</label>
               <input class="form-control" v-model="newPw2" type="password" :placeholder="t('common.edit.checkPwHolder')" @change="newPwMatch()" />
-              <span class="ms-2" style="color: red;">{{ warn }}</span>
+              <span v-if="!iscorrect" class="ms-2" style="color: red">{{ t('common.edit.notpw') }}</span>
             </div>
             <div class="col-12 text-end">
               <button @click="onChangePw()" class="btn mb-1 me-3" style="border: 1px solid #ff8f17; max-height: 100%; background-color: #ff8f17; color: white">

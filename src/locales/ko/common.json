@@ -82,7 +82,11 @@
     "newPwHolder": "새로운 비밀번호를 입력하세요.",
     "checkPwHolder": "새로운 비밀번호 확인",
     "oldPw": "기존 비밀번호",
-    "oldPwHolder": "비밀번호를 입력하세요."
+    "oldPwHolder": "비밀번호를 입력하세요.",
+    "notpw": "비밀번호가 일치하지 않습니다.",
+    "infoedit": "정보를 수정하였습니다.",
+    "info": "수정하시겠습니까?",
+    "file": "파일 크기를 5MB 이하이어야 합니다."
   },
 
   "blame": {
@@ -181,5 +185,13 @@
     "etitle": "매물번호 : ",
     "monthly": "월세",
     "charter": "전세"
+  },
+  "sidebar": {
+    "mypage": "마이 페이지",
+    "status": "내 상태",
+    "edit": "개인 정보 수정",
+    "wish": "위시리스트",
+    "blame": "신고목록",
+    "logout": "로그아웃"
   }
 }
