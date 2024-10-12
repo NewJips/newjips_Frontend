@@ -1,33 +1,78 @@
 <!-- buddizForm.vue -->
 <script setup>
-import { ref } from 'vue';
-import { useAuthStore } from '@/stores/auth'; // Adjust the path as needed
-import buddizIntroApi from '@/api/buddizIntroApi';
+import { ref, onMounted } from 'vue';
+import { useAuthStore } from '@/stores/auth'; 
+import buddizIntroApi from '@/api/buddizIntroApi'; 
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 
-const { locale } = useI18n(); // Destructure the locale properly
-console.log(locale.value); // You should see the current locale
-const nickname = ref('');
+const router = useRouter();
+const { locale } = useI18n(); 
+
+// Form fields
 const residence = ref('');
 const koreaExperience = ref('');
 const accompanyRegion = ref('');
 const transactionCount = ref('');
 const description = ref('');
 const price = ref(0);
-const currencyUnit = ref('$'); // Default currency unit
+const currencyUnit = ref('$');
 const selectedCharacteristics = ref([]);
 const selectedLanguages = ref([]);
 
 // Example lists for checkboxes
 const characteristics = ['Friendly', 'Emotional', 'Calm', 'Energetic', 'Silent', 'Organized', 'Sociable'];
 const languages = ['Vietnamese', 'Korean'];
-
-// Regions dropdown options
 const regions = ['서울', '부산', '대구', '인천', '광주'];
 
-const submitForm = async () => {
-  const authStore = useAuthStore(); // Initialize the store
-  const userUno = authStore.uno; // Fetch the logged-in user's `uno`
+// Fetch and pre-fill data if it exists
+onMounted(async () => {
+  const authStore = useAuthStore();
+  const userUno = authStore.uno;
+
+  if (!userUno) {
+    alert('User not logged in. Please log in to view the form.');
+    return;
+  }
+
+  try {
+    const data = await buddizIntroApi.getBuddizIntro(userUno);
+    
+    // Debugging: Log the raw fetched data
+    console.log('Fetched data from API:', data);
+
+    if (data) {
+      // Make sure the properties exist in the fetched data
+      console.log('Location:', data.location);
+      console.log('Live in Korea experience:', data.liveInKr);
+      
+      // Pre-fill the form with existing data (adding fallback empty strings)
+      residence.value = data.location || '';
+      koreaExperience.value = data.liveInKr || '';
+      accompanyRegion.value = data.accompanyRegion || '';
+      transactionCount.value = data.hiredTimes || '';
+      description.value = data.selfInfo || '';
+      price.value = data.cost || 0;
+      currencyUnit.value = data.currency || '$';
+      selectedCharacteristics.value = data.personality ? data.personality.split(',') : [];
+      selectedLanguages.value = data.useLan ? data.useLan.split(',') : [];
+      
+      // Log the values that are being set to confirm they are being assigned
+      console.log('Pre-filled residence:', residence.value);
+      console.log('Pre-filled characteristics:', selectedCharacteristics.value);
+    } else {
+      console.warn('No data found for the user');
+    }
+  } catch (error) {
+    console.error('Failed to fetch existing Buddiz data:', error);
+  }
+});
+
+
+// Form submission
+const submitForm = async () => {  
+  const authStore = useAuthStore();
+  const userUno = authStore.uno;
 
   if (!userUno) {
     alert('User not logged in. Please log in to submit your form.');
@@ -35,28 +80,27 @@ const submitForm = async () => {
   }
 
   const formData = {
-    uno: userUno,
-    liveInKr: koreaExperience.value || 0, // Ensure numeric value
-    personality: selectedCharacteristics.value.join(',') || 'Unknown', // Default if empty
-    cost: price.value || 0, // Ensure numeric value
-    hiredTimes: transactionCount.value || 0, // Ensure numeric value
-    rating: 5.0, // Placeholder for rating
-    selfInfo: description.value || 'No description provided', // Default if empty
-    lan: locale.value === 'ko' ? 'KR' : 'VN', // Default to 'KR' or 'VN'
-    location: residence.value || 'Unknown', // Default if empty
-    useLan: selectedLanguages.value.join(',') || 'Unknown', // Default if empty
+    uno: userUno,  
+    liveInKr: koreaExperience.value || 0,  
+    personality: selectedCharacteristics.value.join(',') || 'Unknown', 
+    cost: price.value || 0,  
+    hiredTimes: transactionCount.value || 0,  
+    rating: 5.0,  
+    selfInfo: description.value || 'No description provided',  
+    lan: locale.value === 'ko' ? 'KR' : 'VN',  
+    location: residence.value || 'Unknown',  
+    useLan: selectedLanguages.value.join(',') || 'Unknown',  
   };
-
-  console.log('Submitting form data:', formData); // For debugging
 
   try {
     const response = await buddizIntroApi.saveOrUpdateBuddizIntro(formData);
     console.log('Form submission response:', response);
     alert('Form submitted successfully!');
+    router.push('/mypage/mystatus');  // Redirect after successful submission
   } catch (error) {
     console.error('Error submitting form:', error);
     alert('Failed to submit the form.');
-  }
+  } 
 };
 </script>
 
@@ -64,18 +108,13 @@ const submitForm = async () => {
   <div class="fluid-container">
     <div class="type-header">
       <h2>버디즈 이력 등록</h2>
-      <div style="font-size: 17pt; margin-top: 8pt">버디즈로 활동하기 위한 나만의 소개를 입력해주세요!</div>
+      <div style="font-size: 17pt; margin-top: 8pt;">버디즈로 활동하기 위한 나만의 소개를 입력해주세요!</div>
     </div>
 
     <!-- Basic Info Section -->
-    <div class="fluid-container px-5 pt-5 pb-5" style="background-color: #fbfbfc">
+    <div class="fluid-container px-5 pt-5 pb-5" style="background-color: #fbfbfc;">
       <section class="section-card">
         <h2 class="section-title"><i class="section-icon"></i> Basic Info</h2>
-        <div class="input-group">
-          <label for="nickname">닉네임</label>
-          <input v-model="nickname" type="text" id="nickname" placeholder="닉네임을 입력해주세요" maxlength="48" />
-          <span class="character-limit">{{ 48 - nickname.length }} characters left</span>
-        </div>
 
         <div class="input-group">
           <label for="residence">거주 지역</label>
@@ -117,7 +156,6 @@ const submitForm = async () => {
 
       <!-- Characteristics and Languages -->
       <section class="section-card">
-        <!-- Characteristics organized in grid -->
         <div class="checkbox-group">
           <h4>성격</h4>
           <div class="left-align">
@@ -128,7 +166,6 @@ const submitForm = async () => {
           </div>
         </div>
 
-        <!-- Languages aligned in a single column -->
         <div class="checkbox-group">
           <h4>소통 가능한 언어</h4>
           <div class="left-align">
@@ -140,13 +177,10 @@ const submitForm = async () => {
         </div>
       </section>
 
+      <!-- Price Section -->
       <section class="section-card">
         <h2 class="section-title"><i class="section-icon"></i> Price</h2>
-
-        <!-- Label above inputs -->
         <label for="price">Price (per night) <span class="required-asterisk">*</span></label>
-
-        <!-- Price input and dropdown in a horizontal row -->
         <div class="price-group-inline">
           <input v-model="price" type="number" placeholder="Min" min="0" id="price" />
           <select v-model="currencyUnit">
@@ -157,15 +191,15 @@ const submitForm = async () => {
         </div>
       </section>
 
-      <!-- Submit Button -->
-      <button class="submit-btn" @click="submitForm">Save and continue</button>
+      <button class="submit-btn" @click="submitForm">저장하기</button>
     </div>
   </div>
 </template>
 
+
 <style scoped>
 .type-header {
-  background-color: #f5f6f7;
+  background-color: #F5F6F7;
   padding-top: 4vh;
   padding-bottom: 4vh;
   padding-left: 6vh;
@@ -296,3 +330,4 @@ input::placeholder {
   background-color: #ff8c00;
 }
 </style>
+
