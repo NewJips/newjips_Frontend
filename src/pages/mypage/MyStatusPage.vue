@@ -123,7 +123,7 @@ async function findBuddiz(uno) {
         <div class="history mb-4">
           <h4 class="mb-3">{{ t('common.mystatus.my_content')}}</h4>
           <div class="d-flex" style="border: 2px; border-style: solid; border-color: #eaecef; border-radius: 10px 10px 0 0; justify-content: center">
-            <h5 class="flex-fill text-center my-3" style="width: 25%">{{ t('common.mystatus.my_estate')}}</h5>
+            <h5 class="flex-fill text-center my-3" style="width: 25%">{{ t('common.mystatus.wish_estate')}}</h5>
             <h5 class="flex-fill text-center my-3" style="width: 25%">{{ t('common.mystatus.wish_buddiz')}}</h5>
             <h5 class="flex-fill text-center my-3" style="width: 25%">{{ t('common.mystatus.blame_estate')}}</h5>
             <h5 class="flex-fill text-center my-3" style="width: 25%">{{ t('common.mystatus.blame_buddiz')}}</h5>
@@ -163,13 +163,13 @@ async function findBuddiz(uno) {
         <!-- 버디즈 등록시 -->
         <div v-else>
           <div class="budiiz mb-5">
-            <h4 class="mb-3">버디즈 이력</h4>
+            <h4 class="mb-3">{{ t('common.mystatus.buddiz_e')}}</h4>
             <div class="budiiz-btn d-flex justify-content-start">
               <button style="border: 1px solid #eaecef; border-radius: 10px; width: 30%; background-color: #eaecef; background-color: #1e4475">
-                <h5 class="text-center my-2" style="color: white">게시글 보러가기</h5>
+                <h5 class="text-center my-2" style="color: white">{{ t('common.mystatus.watch_btn')}}</h5>
               </button>
               <button style="border: 1px solid #eaecef; border-radius: 10px; width: 30%; background-color: #eaecef; margin-left: 1rem">
-                <h5 class="text-center my-2" style="color: #616b79">수정하기</h5>
+                <h5 class="text-center my-2" style="color: #616b79">{{ t('common.mystatus.edit_btn')}}</h5>
               </button>
             </div>
           </div>

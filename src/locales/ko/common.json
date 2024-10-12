@@ -127,7 +127,12 @@
     "wish_buddiz": "찜한 버디즈",
     "blame_estate": "신고한 매물",
     "blame_buddiz": "신고한 버디즈",
-    "add_buddiz_btn": "버디즈 등록하기"},
+    "watch_buddiz": "게시글 보러가기",
+    "wabud_edit": "수정하기",
+    "buddiz_e": "버디즈 이력",
+    "watch_btn": "게시글 보러가기",
+    "edit_btn": "수정하기"
+  },
 
 
   "makeChat" : "채팅하기",
