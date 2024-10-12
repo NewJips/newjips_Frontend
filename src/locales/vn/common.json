@@ -117,15 +117,19 @@
     "estatenum": "số niêm yết",
     "address": "vị trí bất động sản"
   },
-  "mystatus": {
-    "profile": "프로필 정보",
-    "editbtn": "수정",
-    "my_content": "내역",
-    "wish_estate": "찜한 매물",
-    "wish_buddiz": "찜한 버디즈",
-    "blame_estate": "신고한 매물",
-    "blame_buddiz": "신고한 버디즈",
-    "add_buddiz_btn": "버디즈 등록하기"
+  "mystatus":{
+    "profile": "Thông tin hồ sơ",
+    "editbtn": "biên tập",
+    "my_content": "Chi tiết",
+    "wish_estate": "Các mục đã được thích",
+    "wish_buddiz": "ưa thích Buddiz",
+    "blame_estate": "hàng hóa được khai báo",
+    "blame_buddiz": "Đã báo cáo Buddiz",
+    "add_buddiz_btn": "Đăng ký Buddys",
+    "buddiz_e": "Lịch sử Buddiz",
+    "watch_btn": "Xem bài đăng",
+    "edit_btn": "Chỉnh sửa"
+
   },
 
   "makeChat": "trò chuyện",
