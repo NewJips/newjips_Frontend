@@ -62,7 +62,7 @@ const nextSlide = () => {
 // 이전 슬라이드로 이동 (총 매물 개수에 맞춰 순환)
 const prevSlide = () => {
   if (currentSlide.value === 0) {
-    currentSlide.value = wish_buildings.length.value - 4;
+    currentSlide.value = wish_buildings.value.length - 4;
   } else {
     currentSlide.value -= 1;
   }

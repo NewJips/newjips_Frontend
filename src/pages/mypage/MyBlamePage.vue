@@ -181,7 +181,7 @@ if (data === 'monthly') {
           <div v-else>
             <div class="text-center">
               <img src="@/assets/images/nothing.png" alt="nothing" class="img-fluid" style="max-width: 300px" />
-              <p>신고한 매물이 없습니다.</p>
+              <p>신고한 버디즈가 없습니다.</p>
             </div>
           </div>
         </div>
