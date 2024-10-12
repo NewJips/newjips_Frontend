@@ -461,8 +461,8 @@ const goToLoanDetail = (loan) => {
       <h4 class="head-title">{{ t('common.home.recommend_title') }}</h4>
       <div class="d-flex mb-4">
         <span class="subtitle ">{{ t('common.home.recommend_title') }}</span>
-        <span class="position-absolute end-0 me-5" to="/">
-          <router-link class="btn-more text-muted" >{{ t('common.home.plusbtn') }}</router-link>
+        <span class="position-absolute end-0 me-5">
+          <router-link class="btn-more text-muted" to="/loanproduct">{{ t('common.home.plusbtn') }}</router-link>
         </span>
       </div>
 
@@ -895,3 +895,4 @@ h3 {
   display: none;
 }
 </style>
+
