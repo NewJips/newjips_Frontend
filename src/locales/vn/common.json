@@ -117,7 +117,7 @@
     "estatenum": "số niêm yết",
     "address": "vị trí bất động sản"
   },
-  "mystatus":{
+  "mystatus": {
     "profile": "Thông tin hồ sơ",
     "editbtn": "biên tập",
     "my_content": "Chi tiết",
@@ -165,9 +165,17 @@
   "wish": {
     "wishestate": "hàng bán được quan tâm",
     "wishbuddiz": "Buddy được quan tâm",
-    "estate": "hàng bán, hàng hóa để bán",
     "notwishestate": "Không có mặt hàng được quan tâm",
     "notwishbuddiz": "Không có Buddy nào quan tâm cả.",
+    "etitle": "số hàng hóa : ",
+    "monthly": "việc thuê nhà",
+    "charter": "sự thuê riêng"
+  },
+  "blame": {
+    "blameestate": "hàng bán khai báo",
+    "blamebuddiz": "Buddy sự khai báo",
+    "notblameestate": "không có hàng hóa khai báo",
+    "notblamebuddiz": "Không có Buddy nào báo cáo hết",
     "etitle": "số hàng hóa : ",
     "monthly": "việc thuê nhà",
     "charter": "sự thuê riêng"

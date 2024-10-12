@@ -3,7 +3,9 @@ import { ref, computed, onMounted } from 'vue';
 import SideBar from '@/components/layouts/SideBar.vue';
 import { useAuthStore } from '@/stores/auth';
 import blameApi from '@/api/blameApi';
+import { useI18n } from 'vue-i18n';
 
+const { t, locale } = useI18n();
 const auth = useAuthStore();
 const uno = computed(() => auth.uno);
 console.log(auth.uno);
@@ -111,7 +113,7 @@ if (data === 'monthly') {
 
       <!-- 메인 콘텐츠 -->
       <div class="col-lg-9 col-md-9 col-sm-12">
-        <h2 class="mt-5" style="margin-left: 20px; margin-right: 0; margin-bottom: 20px">신고한 매물</h2>
+        <h2 class="mt-5" style="margin-left: 20px; margin-right: 0; margin-bottom: 20px">{{ t('common.blame.blameestate') }}</h2>
         <div class="position-relative">
           <div v-if="blame_buildings.length > 0">
             <!-- 왼쪽 화살표 -->
@@ -127,9 +129,10 @@ if (data === 'monthly') {
                     <img :src="buildings.img" class="img-fluid img-custom" :alt="blame_buildings.title" />
                   </div>
                   <div class="card-body">
-                    <h5 class="card-title">매물{{ currentSlide + index + 1 }}</h5>
+                    <h5 class="card-title">{{ t('common.blame.etitle') }}{{ currentSlide + index + 1 }}</h5>
                     <p class="card-text">{{ buildings.deposit }} / {{ buildings.monthlyPee }}</p>
-                    <p class="card-text">{{ tradeType }}</p>
+                    <p v-if="buildings.tradetype == 'monthly'" class="card-text">{{ t('common.wish.monthly') }}</p>
+                    <p v-else class="card-text">{{ t('common.wish.charter') }}</p>
                   </div>
                 </div>
               </div>
@@ -143,12 +146,12 @@ if (data === 'monthly') {
           <div v-else>
             <div class="text-center">
               <img src="@/assets/images/nothing.png" alt="nothing" class="img-fluid" style="max-width: 300px" />
-              <p>신고한 매물이 없습니다.</p>
+              <p>{{ t('common.blame.notblameestate') }}</p>
             </div>
           </div>
         </div>
         <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
-        <h2 class="mt-4" style="margin-left: 20px; margin-right: 0; margin-bottom: 20px">신고한 버디즈</h2>
+        <h2 class="mt-4" style="margin-left: 20px; margin-right: 0; margin-bottom: 20px">{{ t('common.blame.blamebuddiz') }}</h2>
         <div class="position-relative">
           <div v-if="blame_buddiz.length > 0">
             <!-- 왼쪽 화살표 -->
@@ -166,8 +169,6 @@ if (data === 'monthly') {
                   <div class="card-body">
                     <h5 class="card-title">{{ buddiz.blamedNickName }}</h5>
                     <!-- nickname -->
-                    <p class="card-text">{{ buddiz.blamedPersonality }}</p>
-                    <!-- content-->
                   </div>
                 </div>
               </div>
@@ -181,7 +182,7 @@ if (data === 'monthly') {
           <div v-else>
             <div class="text-center">
               <img src="@/assets/images/nothing.png" alt="nothing" class="img-fluid" style="max-width: 300px" />
-              <p>신고한 버디즈가 없습니다.</p>
+              <p>{{ t('common.blame.notblamebuddiz') }}</p>
             </div>
           </div>
         </div>

@@ -131,8 +131,6 @@
     "buddiz_e": "버디즈 이력",
     "watch_btn": "게시글 보러가기",
     "edit_btn": "수정하기",
-
-
     "add_buddiz_btn": "버디즈 등록하기"
   },
 
@@ -169,9 +167,17 @@
   "wish": {
     "wishestate": "관심 매물",
     "wishbuddiz": "관심 버디즈",
-    "estate": "매물",
     "notwishestate": "관심 매물이 없습니다.",
     "notwishbuddiz": "관심 버디즈가 없습니다.",
+    "etitle": "매물번호 : ",
+    "monthly": "월세",
+    "charter": "전세"
+  },
+  "blame": {
+    "blameestate": "신고 매물",
+    "blamebuddiz": "신고 버디즈",
+    "notblameestate": "신고 매물이 없습니다.",
+    "notblamebuddiz": "신고 버디즈가 없습니다.",
     "etitle": "매물번호 : ",
     "monthly": "월세",
     "charter": "전세"
