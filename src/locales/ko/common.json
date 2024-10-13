@@ -169,7 +169,6 @@
     "monthly": "월세",
     "charter": "전세"
   },
-
   "sidebar": {
     "mypage": "마이 페이지",
     "status": "내 상태",
@@ -188,7 +187,6 @@
     "subtitle": "NewJips가 알려주는 부동산 가이드",
     "description": "어려운 부동산 계약이 처음이든, 뉴집스가 준비한 한국에서 집구하기 A to Z.",
     "description2": "안전한 한국 생활을 돕기 위해 다양한 가이드가 준비되어 있습니다.",
-    
     "guide1": "허위매물 예방 5계명",
     "guide1_detail": "이 가이드는 집을 찾을 때 허위매물에 속지 않기 위한 다섯 가지 필수 규칙을 설명합니다.",
     "guide2": "주택임대차계약서 작성 시 알아두면 좋은 법률",
@@ -222,28 +220,28 @@
     "interest": "금리",
     "loanGuide": "이용 안내",
     "url": "상세 주소",
-    "otherLoans": "다른 대출 정보"
+    "otherLoans": "다른 대출 정보",
+    "goTolink": "바로가기"
   },
   "homecard": {
-    "indetail":"상세주소",
+    "indetail": "상세주소",
     "1": {
       "name": "KB WELCOME PLUS",
-      "subtitle": "임차보증금 80% 이내, 최대 2억까지"
+      "subtitle": "외국인 고객을 위한 장기 임대 보증금 대출"
     },
     "2": {
-      "name": "KB 전세실심 대출보증",
-      "subtitle": "전세보증금 90%까지"
+      "name": "KB 전세금 안심대출",
+      "subtitle": "전세보증금반환보증 지원"
     },
     "3": {
-      "name": "KB 외국인 전용 주택 전세자금 대출",
-      "subtitle": "외국인을 위한 전세자금 대출"
+      "name": "Kakao 전월세 보증금대출",
+      "subtitle": "전월세 임차보증금의 80%까지 지원"
     }
   },
   "pagination": {
     "older": "← Older posts",
     "newer": "Newer posts →"
   },
-
   "buddizForm": {
     "header": "버디즈 이력 등록",
     "subtitle": "버디즈로 활동하기 위한 나만의 소개를 입력해주세요!",

@@ -187,7 +187,6 @@
     "subtitle": "Hướng dẫn bất động sản từ NewJips",
     "description": "Dù bạn mới lần đầu ký hợp đồng bất động sản, NewJips đã chuẩn bị hướng dẫn đầy đủ từ A đến Z.",
     "description2": "Chúng tôi đã chuẩn bị nhiều hướng dẫn để giúp cuộc sống của bạn tại Hàn Quốc an toàn hơn.",
-    
     "guide1": "5 nguyên tắc phòng tránh bất động sản giả mạo",
     "guide1_detail": "Hướng dẫn này giải thích năm quy tắc cần thiết để tránh bất động sản giả mạo khi tìm nhà.",
     "guide2": "Những điều cần biết khi lập hợp đồng thuê nhà",
@@ -217,7 +216,8 @@
     "interest": "Lãi suất",
     "loanGuide": "Hướng dẫn sử dụng",
     "url": "Địa chỉ chi tiết",
-    "otherLoans": "Thông tin khoản vay khác"
+    "otherLoans": "Thông tin khoản vay khác",
+    "goToLink": "Đi tới liên kết"
   },
   "pagination": {
     "older": "← Bài cũ hơn",

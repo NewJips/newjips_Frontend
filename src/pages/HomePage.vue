@@ -109,7 +109,7 @@ const loans = [
     repayment: '일시 상환, 원리금 균등 상환 방식 가능',
     interest: '연 3.5%',
     usageInfo: '조건에 따라 이용 가능',
-    link: 'https://obank.kbstar.com/quics?page=C103526',
+    link: 'https://www.kakaobank.com/products/leaseLoan',
   }
 ];
 
