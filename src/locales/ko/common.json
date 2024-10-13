@@ -107,7 +107,14 @@
     "agentNm": "중개업소",
     "agentphone": "전화번호",
     "estatenum": "매물 번호",
-    "address": "매물 소재지"
+    "address": "매물 소재지",
+    "blameestate": "신고 매물",
+    "blamebuddiz": "신고 버디즈",
+    "notblameestate": "신고 매물이 없습니다.",
+    "notblamebuddiz": "신고 버디즈가 없습니다.",
+    "etitle": "매물번호 : ",
+    "monthly": "월세",
+    "charter": "전세"
   },
   "mystatus": {
     "profile": "프로필 정보",

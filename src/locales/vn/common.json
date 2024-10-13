@@ -107,7 +107,14 @@
     "agentNm": "Tên công ty môi giới",
     "agentphone": "Số điện thoại",
     "estatenum": "Số bất động sản",
-    "address": "Địa chỉ bất động sản"
+    "address": "Địa chỉ bất động sản",
+    "blameestate": "hàng bán khai báo",
+    "blamebuddiz": "Buddy sự khai báo",
+    "notblameestate": "không có hàng hóa khai báo",
+    "notblamebuddiz": "Không có Buddy nào báo cáo hết",
+    "etitle": "số hàng hóa : ",
+    "monthly": "việc thuê nhà",
+    "charter": "sự thuê riêng"
   },
   "mystatus": {
     "profile": "Thông tin hồ sơ",
@@ -163,12 +170,12 @@
     "charter": "Jeonse"
   },
   "sidebar": {
-    "mypage": "Trang của tôi",
+    "mypage": "MY PAGE",
     "status": "Trạng thái của tôi",
     "edit": "Chỉnh sửa thông tin cá nhân",
     "wish": "Danh sách yêu thích",
     "blame": "Danh sách báo cáo",
-    "logout": "Đăng xuất"
+    "logout": "log out"
   },
   "guide": {
     "categories": {
