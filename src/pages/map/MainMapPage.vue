@@ -34,19 +34,15 @@
         :estateId="selectedMarker.eno"
         :estateData="selectedMarker"
       />
-      <!-- <h2 v-if="estateDetail">매물 정보</h2>
-      <h3 v-if="estateDetail">ID: {{ selectedMarker.eno }}</h3>
-      <h3 v-if="estateDetail">주소: {{ estateDetail.address }}</h3>
-      <h3 v-if="estateDetail">가격: {{ estateDetail.price }}</h3>
-      <h3 v-if="estateDetail">면적: {{ estateDetail.roomSize }}</h3>
-
-      <BriefDetailEstate
-        v-for="(marker, index) in visibleMarkers"
-        :key="index"
-        :estateId="marker.eno"
-      /> -->
+      <div v-else>
+        <BriefDetailEstate
+          v-for="estate in estateList"
+          :key="estate.eno"
+          :estateId="estate.eno"
+          :estateData="estate"
+        />
+      </div>
     </div>
-
     <div id="map" ref="mapElement" class="map-container"></div>
   </div>
 </template>
@@ -56,17 +52,44 @@ import { useFilterStore } from '@/stores/filter';
 import DropDownFilter from '@/components/map/DropDownFilter.vue';
 import BriefDetailEstate from '@/components/map/BriefDetailEstate.vue';
 import { useMap } from './useMap';
-import { onMounted, ref } from 'vue';
-import estateApi from '@/api/estateApi';
+import { onMounted, ref, watch } from 'vue';
 
 const filterStore = useFilterStore();
-
+const estateList = ref([]);
 const mapElement = ref(null);
 const visibleMarkerCount = ref(0);
+let map = null;
 
-const { initializeMap, markers, selectedMarker } = useMap();
+const { initializeMap, markers, selectedMarker, getEstatesByLocation } =
+  useMap();
+
+const updateEstateList = async () => {
+  if (!selectedMarker.value && map) {
+    const center = map.getCenter();
+    const latitude = center.lat();
+    const longitude = center.lng();
+    const estates = await getEstatesByLocation(latitude, longitude);
+    estateList.value = estates;
+  }
+};
+
 onMounted(() => {
-  initializeMap(mapElement.value, visibleMarkerCount);
+  map = initializeMap(mapElement.value, visibleMarkerCount);
+
+  // 지도 중심이 변경될 때마다 매물 리스트 업데이트
+  naver.maps.Event.addListener(map, 'idle', updateEstateList);
+
+  // 초기 매물 리스트 로드
+  updateEstateList();
+});
+
+// selectedMarker가 변경될 때마다 estateList 업데이트
+watch(selectedMarker, (newValue) => {
+  if (newValue) {
+    estateList.value = [newValue];
+  } else {
+    updateEstateList();
+  }
 });
 </script>
 

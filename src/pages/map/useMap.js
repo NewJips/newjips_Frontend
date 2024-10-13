@@ -2,65 +2,82 @@ import { ref } from 'vue';
 import MarkerClustering from './markerClustering';
 import estateApi from '@/api/estateApi';
 import hotplaceApi from '@/api/hotplaceApi';
+import { useMarkerStore } from '@/stores/marker';
 
 export function useMap(HOME_PATH) {
   const visibleMarkerCount = 0;
   const markers = ref([]);
-  const estateMarkers = ref([]); // Estate 마커 배열
+  const estateMarkers = ref([]);
   const hotplaceMarkers = ref([]);
   const selectedMarker = ref(null);
+  const selectedCluster = ref([]);
+  let map = null;
 
   // 클러스터링 초기화 함수
-  function initializeClustering(map, markers) {
-    if (markers.length > 0) {
-      const markerClustering = new MarkerClustering({
-        minClusterSize: 2,
-        maxZoom: 18,
-        map: map,
-        markers: markers,
-        disableClickZoom: false,
-        gridSize: 120,
-        icons: [clusterMarker1],
-        indexGenerator: function (count) {
-          var index = 0;
+  function onLoad(map, markers) {
+    const cluster = new MarkerClustering({
+      minClusterSize: 3,
+      maxZoom: 18,
+      map: map,
+      markers: markers,
+      disableClickZoom: false,
+      gridSize: 120,
+      icons: [clusterMarker2],
+      indexGenerator: [1],
+      stylingFunction: (clusterMarker, count) => {
+        const element = clusterMarker.getElement();
+        const textElement = element.querySelector('div:first-child');
+        const adjustedCount = count - 1; // 클러스터 카운트 표시 수정
 
-          if (count >= 100 && count < 200) {
-            index = 1;
-          } else if (count >= 200 && count < 500) {
-            index = 2;
-          }
+        if (textElement) {
+          textElement.textContent = adjustedCount;
+          Object.assign(element.style, {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '3rem',
+            height: '3rem',
+            backgroundImage: "url('src/assets/icons/estate_marker.svg')",
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            cursor: 'pointer',
+            color: 'white',
+            fontWeight: 'bold',
+          });
+          textElement.style.transform = 'translateY(4px)';
+        }
 
-          return index;
-        },
-        stylingFunction: function (clusterMarker, count) {
-          const element = clusterMarker.getElement();
-          const textElement = element.querySelector('div:first-child');
-          var count = count - 1;
-          if (textElement) {
-            textElement.textContent = count;
+        // 클러스터 클릭 이벤트 리스너 추가
+        naver.maps.Event.addListener(clusterMarker, 'click', () => {
+          console.log('클러스터 클릭됨!');
+          console.log('클러스터 객체:', clusterMarker);
 
-            element.style.display = 'flex';
-            element.style.alignItems = 'center';
-            element.style.justifyContent = 'center';
-            element.style.width = '3rem';
-            element.style.height = '3rem';
-            element.style.backgroundImage =
-              "url('src/assets/icons/estate_marker.svg')";
-            element.style.backgroundSize = 'cover';
-            element.style.backgroundRepeat = 'no-repeat';
-            element.style.backgroundPosition = 'center';
-            element.style.cursor = 'pointer';
-            element.style.color = 'white';
-            element.style.fontWeight = 'bold';
-            textElement.style.transform = 'translateY(4px)';
-          }
-        },
-      });
-      console.log('Clustering initialized.'); // 클러스터링 초기화 완료 로그
-    } else {
-      console.warn('No markers to cluster.');
-    }
+          // // 클러스터에 포함된 멤버 정보 가져오기
+          // const members = clusterMarker.__targets || []; // __targets를 사용하여 멤버 가져오기
+          // selectedCluster.value = members.map((marker) => {
+          //   const estate = marker.estateData; // estateData가 정의되어 있는지 확인
+          //   return {
+          //     eno: estate.eno,
+          //     title: estate.title,
+          //     tradetype: estate.tradetype,
+          //     deposit: estate.deposit,
+          //     monthlyPee: estate.monthlyPee,
+          //     housetype: estate.housetype,
+          //     floor: estate.floor,
+          //     roomSize: estate.roomSize,
+          //     distToSub: estate.distToSub,
+          //     img: estate.img,
+          //     lan: estate.lan,
+          //   };
+          // });
+
+          console.log('클러스터 멤버 정보:', selectedCluster.value);
+        });
+      },
+    });
   }
+
   // 전세가 포맷
   const formatPrice = (price, tradetype) => {
     if (tradetype === 'monthly') {
@@ -94,7 +111,8 @@ export function useMap(HOME_PATH) {
       </div>
     `;
   };
-  const clusterMarker1 = {
+
+  const clusterMarker2 = {
     content: `
       <div style="display: flex; align-items: center; justify-content: center; width: 4rem; height: 4rem; background-image: url('../assets/icons/estate_marker.svg'); background-size: cover; background-repeat: no-repeat; background-position: center; cursor: pointer;">
       </div>
@@ -254,66 +272,111 @@ export function useMap(HOME_PATH) {
       });
 
     // Estate 마커 찍기
-    estateApi
-      .getEstateList()
-      .then((response) => {
-        const estates = response.data;
+    const loadEstates = () => {
+      estateApi
+        .getEstateList()
+        .then((response) => {
+          const estates = response.data;
 
-        estates.forEach((estate) => {
-          const position = new naver.maps.LatLng(
-            estate.latitude,
-            estate.longitude
-          );
+          estates.forEach((estate) => {
+            const position = new naver.maps.LatLng(
+              estate.latitude,
+              estate.longitude
+            );
+            const price =
+              estate.tradetype === 'monthly'
+                ? estate.monthlyPee
+                : estate.deposit;
 
-          const price =
-            estate.tradetype === 'monthly' ? estate.monthlyPee : estate.deposit;
+            const marker = new naver.maps.Marker({
+              map: map,
+              position: position,
+              title: estate.eno,
+              animation: naver.maps.Animation.DROP,
+              icon: {
+                content: estateMarker(estate.tradetype, price),
+                size: new naver.maps.Size(24, 37),
+                anchor: new naver.maps.Point(12, 37),
+                origin: new naver.maps.Point(0, 0),
+              },
+              zIndex: 100,
+            });
 
-          const marker = new naver.maps.Marker({
-            map: map,
-            position: position,
-            title: estate.title,
-            animation: naver.maps.Animation.DROP,
-            icon: {
-              content: estateMarker(estate.tradetype, price),
-              size: new naver.maps.Size(24, 37),
-              anchor: new naver.maps.Point(12, 37),
-              origin: new naver.maps.Point(0, 0),
-            },
-            zIndex: 100,
+            marker.estateData = estate;
+            naver.maps.Event.addListener(marker, 'click', () => {
+              console.log('Marker clicked:', estate);
+              selectedMarker.value = {
+                eno: estate.eno,
+                latitude: estate.latitude,
+                longitude: estate.longitude,
+                title: estate.title,
+                tradetype: estate.tradetype,
+                deposit: estate.deposit,
+                monthlyPee: estate.monthlyPee,
+                housetype: estate.housetype,
+                floor: estate.floor,
+                roomSize: estate.roomSize,
+                distToSub: estate.distToSub,
+                img: estate.img,
+                lan: estate.lan,
+              };
+            });
+
+            estateMarkers.value.push(marker);
           });
 
-          naver.maps.Event.addListener(marker, 'click', () => {
-            console.log('Marker clicked:', estate);
-            selectedMarker.value = {
-              eno: estate.eno,
-              latitude: estate.latitude,
-              longitude: estate.longitude,
-              title: estate.title,
-              tradetype: estate.tradetype,
-              deposit: estate.deposit,
-              monthlyPee: estate.monthlyPee,
-              housetype: estate.housetype,
-              floor: estate.floor,
-              roomSize: estate.roomSize,
-              distToSub: estate.distToSub,
-              img: estate.img,
-              lan: estate.lan,
-            };
-          });
+          // 모든 마커 추가 후 클러스터링 초기화
+          onLoad(map, estateMarkers.value);
+        })
+        .catch((error) => {
+          console.error('Error fetching estate data:', error);
+        });
+    };
 
-          estateMarkers.value.push(marker);
+    // 초기 매물 로드
+    loadEstates();
+
+    // 지도 idle 이벤트 처리
+    naver.maps.Event.addListener(map, 'idle', () => {
+      updateMarkers(map, estateMarkers.value);
+    });
+
+    return map;
+  };
+  // getEstatesByLocation 함수 수정 및 export
+  const getEstatesByLocation = async (latitude, longitude) => {
+    try {
+      const response = await estateApi.getEstateByLocation(latitude, longitude);
+      const estates = response.data;
+      estateMarkers.value = []; // 기존 마커 초기화
+
+      estates.forEach((estate) => {
+        const position = new naver.maps.LatLng(
+          estate.latitude,
+          estate.longitude
+        );
+        const marker = new naver.maps.Marker({
+          map: map,
+          position: position,
+          title: estate.eno,
+          icon: {
+            content: estateMarker(estate.tradetype, estate.deposit),
+            size: new naver.maps.Size(24, 37),
+            anchor: new naver.maps.Point(12, 37),
+          },
+          zIndex: 100,
         });
 
-        // 모든 마커 추가 후 클러스터링 초기화
-        initializeClustering(map, estateMarkers.value);
-      })
-      .catch((error) => {
-        console.error('Error fetching estate data:', error);
+        marker.estateData = estate;
+        estateMarkers.value.push(marker);
       });
 
-    naver.maps.Event.addListener(map, 'idle', () => {
-      updateMarkers(map, markers.value);
-    });
+      console.log('매물 리스트 가져오기 완료:', estates);
+      return estates; // 매물 리스트 반환
+    } catch (error) {
+      console.error('Error fetching estate data:', error);
+      return [];
+    }
   };
 
   // 필터 적용 함수
@@ -365,5 +428,7 @@ export function useMap(HOME_PATH) {
     initializeMap,
     markers,
     selectedMarker,
+    selectedCluster,
+    getEstatesByLocation,
   };
 }
