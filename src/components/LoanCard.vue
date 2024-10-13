@@ -22,7 +22,7 @@ const selectLoan = () => {
 
 <style scoped>
 .loan-card {
-  background-color: #446688;
+  background-color: #ff8c00;
   padding: 20px;
   border-radius: 12px;
   color: white;

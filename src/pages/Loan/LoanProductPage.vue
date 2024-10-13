@@ -32,7 +32,7 @@
       <!-- Updated URL section with the "바로가기" button -->
       <p><strong>{{ t('common.loan.url') }}</strong><br>
         <a :href="selectedLoan.url" target="_blank" class="loan-link-button">
-          {{ t('common.loan.goTolink') }}
+          {{ t('common.loan.goToLink') }}
         </a>
       </p>
     </section>
@@ -180,7 +180,7 @@ const goToLoanDetail = (loan) => {
 }
 
 .loan-card {
-  background-color: #446688;
+  background-color: #ff8c00;
   padding: 20px;
   border-radius: 12px;
   color: white !important;
@@ -224,6 +224,6 @@ const goToLoanDetail = (loan) => {
 }
 
 .loan-link-button:hover {
-  background-color: #324a66;
+  background-color: #ff8c00;
 }
 </style>

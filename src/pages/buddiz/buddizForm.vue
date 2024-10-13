@@ -137,7 +137,7 @@ const submitForm = async () => {
 
         <div class="input-group">
           <label for="transactionCount">{{ t('common.buddizForm.transaction_count') }}</label>
-          <input v-model="transactionCount" type="number" id="transactionCount" :placeholder="t('buddizForm.enter_transactions')" />
+          <input v-model="transactionCount" type="number" id="transactionCount" :placeholder="t('common.buddizForm.enter_transactions')" />
         </div>
       </section>
 

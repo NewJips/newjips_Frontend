@@ -478,15 +478,14 @@ const goToLoanDetail = (loan) => {
       </div>
 
       <div class="loan-grid pb-3">
-        <div v-for="(loan, index) in loans" :key="index" class="card shadow-sm card-hover border-0 h-100 loan-card"
-          @click="goToLoanDetail(loan)">
+        <a v-for="(loan, index) in loans" :key="index" :href="loan.link" target="_blank"
+          class="card shadow-sm card-hover border-0 h-100 loan-card" @click="goToLoanDetail(loan)">
           <div class="card-body">
             <!-- Use the index + 1 to access the corresponding entry in 'homecard' -->
             <h5 class="loan-name">{{ t(`common.homecard.${index + 1}.name`) }}</h5>
             <p class="loan-subtitle">{{ t(`common.homecard.${index + 1}.subtitle`) }}</p>
-            <a :href="loan.link" target="_blank" class="loan-link">{{t('common.homecard.indetail')}}</a>
           </div>
-        </div>
+        </a>
       </div>
     </div>
   </div>
@@ -676,79 +675,6 @@ h3 {
   line-height: 1.2;
 }
 
-.dropdown-item {
-  display: block;
-  width: 100%;
-  padding: 0.375rem 1rem;
-  clear: both;
-  font-weight: 400;
-  color: #454056;
-  text-align: inherit;
-  text-decoration: none;
-  white-space: nowrap;
-  background-color: transparent;
-  border: 0;
-}
-
-.dropdown-item:hover,
-.dropdown-item:focus {
-  color: #fd5631;
-  background-color: transparent;
-}
-
-.dropdown-item.active,
-.dropdown-item:active {
-  color: #fd5631;
-  text-decoration: none;
-  background-color: transparent;
-}
-
-.dropdown-item.disabled,
-.dropdown-item:disabled {
-  color: #9691a4;
-  pointer-events: none;
-  background-color: transparent;
-}
-
-.dropdown-menu li:hover>.dropdown-item {
-  color: #fd5631;
-}
-
-.dropdown-menu .active>.dropdown-item {
-  color: #fd5631;
-}
-
-.dropdown-menu .active>.dropdown-item,
-.dropdown-menu .dropdown-item.active {
-  pointer-events: none;
-}
-
-.dropdown-menu.dropdown-menu-dark li:hover>.dropdown-item {
-  color: #fff;
-}
-
-.dropdown-menu.dropdown-menu-dark .active>.dropdown-item {
-  color: #fff;
-}
-
-.dropdown-menu.w-100 {
-  min-width: 100%;
-}
-
-.dropdown-item {
-  transition: color 0.2s ease-in-out;
-}
-
-.dropdown-item>i {
-  margin-top: -0.125rem;
-  transition: opacity 0.25s ease-in-out;
-}
-
-.dropdown-item:hover>i,
-.dropdown-item.active>i {
-  opacity: 1 !important;
-}
-
 .d-block {
   display: block !important;
 }
@@ -832,9 +758,6 @@ h3 {
   opacity: 0.5 !important;
 }
 
-.dropdown-toggle.btn-link {
-  box-shadow: none;
-}
 
 .btn-link {
   border: 0;
@@ -856,14 +779,7 @@ h3 {
   color: #fff;
 }
 
-.dropdown-toggle.btn-link {
-  color: #9691a4;
-}
 
-.dropdown-toggle.btn-link:hover,
-.form-group .dropdown-toggle.btn-link.show {
-  color: #454056;
-}
 
 .form-group-light .dropdown-toggle.btn-link {
   color: rgba(255, 255, 255, 0.5);
@@ -901,30 +817,6 @@ h3 {
   border-top-right-radius: calc(0.75rem - 1px);
 }
 
-.dropdown-toggle {
-  display: block;
-  position: end;
-}
-
-.dropdown-toggle::after {
-  display: block;
-  position: absolute;
-  top: 50%;
-  right: 1rem;
-  margin-top: -0.3rem;
-}
-
-.dropdown-menu {
-  margin-bottom: 0.75rem;
-  padding-top: 0;
-  padding-bottom: 0;
-  border: 0;
-  border-left: 2px solid transparent;
-  border-radius: 0;
-  background-color: transparent;
-  box-shadow: none;
-}
-
 .form-group {
   display: flex;
   align-items: center;
@@ -935,11 +827,6 @@ h3 {
   box-shadow: 0 0.125rem 0.125rem -0.125rem rgba(31, 27, 45, 0.08), 0 0.25rem 0.75rem rgba(31, 27, 45, 0.08);
 }
 
-.dropdown .dropdown-toggle::before,
-.dropup .dropdown-toggle::before,
-.dropend .dropdown-toggle::before {
-  display: none;
-}
 
 /* Loan cards container */
 .loan-cards {
@@ -960,7 +847,7 @@ h3 {
 
 /* Individual loan card styling */
 .loan-card {
-  background-color: #446688;
+  background-color: #ff8c00;
   padding: 20px;
   border-radius: 12px;
   color: white !important;

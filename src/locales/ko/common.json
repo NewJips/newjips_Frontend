@@ -221,7 +221,7 @@
     "loanGuide": "이용 안내",
     "url": "상세 주소",
     "otherLoans": "다른 대출 정보",
-    "goTolink": "바로가기"
+    "goToLink": "바로가기"
   },
   "homecard": {
     "indetail": "상세주소",
@@ -267,7 +267,8 @@
     "no_description": "설명이 없습니다."
   },
   "alerts": {
-    "not_logged_in": "로그인되어 있지 않습니다. 로그인 후 다시 시도해주세요."
+    "not_logged_in": "로그인되어 있지 않습니다. 로그인 후 다시 시도해주세요.",
+    "form_submitted": "등록 되었습니다."
   },
   "errors": {
     "fetch_failed": "데이터를 불러오는데 실패했습니다.",
