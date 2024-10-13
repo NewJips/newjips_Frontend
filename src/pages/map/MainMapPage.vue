@@ -57,14 +57,20 @@ import { onMounted, ref, watch } from 'vue';
 const filterStore = useFilterStore();
 const estateList = ref([]);
 const mapElement = ref(null);
-const visibleMarkerCount = ref(0);
+
 let map = null;
 
-const { initializeMap, markers, selectedMarker, getEstatesByLocation } =
-  useMap();
+const {
+  initializeMap,
+  markers,
+  selectedMarker,
+  selectedCluster,
+  getEstatesByLocation,
+  getConvenientFacilities,
+} = useMap();
 
 const updateEstateList = async () => {
-  if (!selectedMarker.value && map) {
+  if (!selectedMarker.value && !selectedCluster.value.length && map) {
     const center = map.getCenter();
     const latitude = center.lat();
     const longitude = center.lng();
@@ -74,19 +80,26 @@ const updateEstateList = async () => {
 };
 
 onMounted(() => {
-  map = initializeMap(mapElement.value, visibleMarkerCount);
+  map = initializeMap(mapElement.value);
 
-  // 지도 중심이 변경될 때마다 매물 리스트 업데이트
-  naver.maps.Event.addListener(map, 'idle', updateEstateList);
+  naver.maps.Event.addListener(map, 'idle', () => {
+    updateEstateList();
+  });
 
-  // 초기 매물 리스트 로드
   updateEstateList();
 });
 
-// selectedMarker가 변경될 때마다 estateList 업데이트
 watch(selectedMarker, (newValue) => {
   if (newValue) {
     estateList.value = [newValue];
+  } else {
+    updateEstateList();
+  }
+});
+
+watch(selectedCluster, (newValue) => {
+  if (newValue.length > 0) {
+    estateList.value = newValue;
   } else {
     updateEstateList();
   }

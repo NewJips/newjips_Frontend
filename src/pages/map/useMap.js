@@ -1,33 +1,42 @@
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 import MarkerClustering from './markerClustering';
 import estateApi from '@/api/estateApi';
 import hotplaceApi from '@/api/hotplaceApi';
+import cctvApi from '@/api/cctvApi';
+import convenientApi from '@/api/convenientApi';
 import { useMarkerStore } from '@/stores/marker';
 
 export function useMap(HOME_PATH) {
-  const visibleMarkerCount = 0;
   const markers = ref([]);
   const estateMarkers = ref([]);
   const hotplaceMarkers = ref([]);
   const selectedMarker = ref(null);
   const selectedCluster = ref([]);
+  const cctvMarkers = ref([]);
+  const convenientMarkers = ref([]);
   let map = null;
+
+  const activeFilters = reactive({
+    hotplace: false,
+    safety: false,
+    convenient: false,
+  });
 
   // 클러스터링 초기화 함수
   function onLoad(map, markers) {
     const cluster = new MarkerClustering({
       minClusterSize: 3,
-      maxZoom: 18,
+      maxZoom: 16,
       map: map,
       markers: markers,
       disableClickZoom: false,
-      gridSize: 120,
-      icons: [clusterMarker2],
-      indexGenerator: [1],
+      gridSize: 80,
+      icons: [clusterMarker2, clusterMarker3, clusterMarker4, clusterMarker5],
+      indexGenerator: [1, 2, 3, 4],
       stylingFunction: (clusterMarker, count) => {
+        const adjustedCount = count - 1;
         const element = clusterMarker.getElement();
         const textElement = element.querySelector('div:first-child');
-        const adjustedCount = count - 1; // 클러스터 카운트 표시 수정
 
         if (textElement) {
           textElement.textContent = adjustedCount;
@@ -35,8 +44,8 @@ export function useMap(HOME_PATH) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            width: '3rem',
-            height: '3rem',
+            width: '4rem',
+            height: '4rem',
             backgroundImage: "url('src/assets/icons/estate_marker.svg')",
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
@@ -47,33 +56,6 @@ export function useMap(HOME_PATH) {
           });
           textElement.style.transform = 'translateY(4px)';
         }
-
-        // 클러스터 클릭 이벤트 리스너 추가
-        naver.maps.Event.addListener(clusterMarker, 'click', () => {
-          console.log('클러스터 클릭됨!');
-          console.log('클러스터 객체:', clusterMarker);
-
-          // // 클러스터에 포함된 멤버 정보 가져오기
-          // const members = clusterMarker.__targets || []; // __targets를 사용하여 멤버 가져오기
-          // selectedCluster.value = members.map((marker) => {
-          //   const estate = marker.estateData; // estateData가 정의되어 있는지 확인
-          //   return {
-          //     eno: estate.eno,
-          //     title: estate.title,
-          //     tradetype: estate.tradetype,
-          //     deposit: estate.deposit,
-          //     monthlyPee: estate.monthlyPee,
-          //     housetype: estate.housetype,
-          //     floor: estate.floor,
-          //     roomSize: estate.roomSize,
-          //     distToSub: estate.distToSub,
-          //     img: estate.img,
-          //     lan: estate.lan,
-          //   };
-          // });
-
-          console.log('클러스터 멤버 정보:', selectedCluster.value);
-        });
       },
     });
   }
@@ -81,11 +63,11 @@ export function useMap(HOME_PATH) {
   // 전세가 포맷
   const formatPrice = (price, tradetype) => {
     if (tradetype === 'monthly') {
-      return `${price}`; // 월세는 그대로 숫자 사용
+      return `${price}`;
     } else if (tradetype === 'charter') {
-      const won = price; // 가격을 만 단위로 변환하지 않음
-      const billion = Math.floor(won / 10000); // 억 단위 계산
-      const thousand = Math.floor((won % 10000) / 1000); // 천 단위 계산
+      const won = price;
+      const billion = Math.floor(won / 10000);
+      const thousand = Math.floor((won % 10000) / 1000);
 
       let result = '';
       if (billion > 0) {
@@ -94,13 +76,13 @@ export function useMap(HOME_PATH) {
       if (thousand > 0) {
         result += ` ${thousand}천`;
       }
-      return result.trim(); // 앞뒤 공백 제거 후 반환
+      return result.trim();
     }
-    return price; // 기본값 (예외 처리)
+    return price;
   };
   const estateMarker = (tradetype, price) => {
-    const displayTradeType = tradetype === 'monthly' ? '월세' : '전세'; // 'charter'를 '전세'로 가정
-    const formattedPrice = formatPrice(price, tradetype); // 가격 포맷
+    const displayTradeType = tradetype === 'monthly' ? '월세' : '전세';
+    const formattedPrice = formatPrice(price, tradetype);
 
     return `
       <div style="display: flex; align-items: center; justify-content: center; width: 4rem; height: 4rem; background-image: url('/src/assets/icons/estate_marker.svg'); background-size: contain; background-repeat: no-repeat; background-position: center; cursor: pointer;">
@@ -114,14 +96,30 @@ export function useMap(HOME_PATH) {
 
   const clusterMarker2 = {
     content: `
-      <div style="display: flex; align-items: center; justify-content: center; width: 4rem; height: 4rem; background-image: url('../assets/icons/estate_marker.svg'); background-size: cover; background-repeat: no-repeat; background-position: center; cursor: pointer;">
+      <div >
       </div>
     `,
-    size: N.Size(40, 40),
-    anchor: N.Point(20, 20),
+  };
+  const clusterMarker3 = {
+    content: `
+      <div >
+      </div>
+    `,
+  };
+  const clusterMarker4 = {
+    content: `
+      <div >
+      </div>
+    `,
+  };
+  const clusterMarker5 = {
+    content: `
+      <div >
+      </div>
+    `,
   };
 
-  const subWayMapMarker = `
+  const subWayMapMarker = (stationName) => `
  <div
     style="
       display: flex;
@@ -138,7 +136,7 @@ export function useMap(HOME_PATH) {
     <img src="../src/assets/icons/train_icon.svg" style="width: 24px; height: 24px" />
 
     <p style="color: white; margin-top: 15px; font-weight: bold">
-      어린이대공원역
+    ${stationName}
     </p>
   </div>
 `;
@@ -164,6 +162,16 @@ export function useMap(HOME_PATH) {
   </div>
 `;
   };
+  const cctvMarker = `
+  <img
+  src="../src/assets/icons/cctv.svg"
+  style="width: 24px; height: 24px; margin-right: 10px"
+  />
+  `;
+  const convenientStoreMarker = `<img src="../src/assets/icons/convenient_store.svg" style="width: 24px; height: 24px; margin-right: 10px" />`;
+  const cafeMarker = `<img src="../src/assets/icons/cafe.svg" style="width: 24px; height: 24px; margin-right: 10px" />`;
+  const bankMarker = `<img src="../src/assets/icons/bank.svg" style="width: 24px; height: 24px; margin-right: 10px" />`;
+  const hospitalMarker = `<img src="../src/assets/icons/hospital.svg" style="width: 24px; height: 24px; margin-right: 10px" />`;
 
   const initializeMap = (mapElement) => {
     const map = new naver.maps.Map(mapElement, {
@@ -181,11 +189,11 @@ export function useMap(HOME_PATH) {
 
     // 필터 버튼 HTML
     var filterButtonsHtml = `
-        <div class="filter-buttons">
-  <button class="btn_filter" id="hotplace" data-active="false">핫플</button>
-  <button class="btn_filter" id="safety" data-active="false">안전</button>
-  <button class="btn_filter" id="convenient" data-active="false">편의</button>
-</div>`;
+      <div class="filter-buttons">
+        <button class="btn_filter" id="hotplace" >핫플</button>
+        <button class="btn_filter" id="safety" >안전</button>
+        <button class="btn_filter" id="convenient" >편의</button>
+      </div>`;
 
     // 맵이 초기화되면 버튼 추가
     naver.maps.Event.once(map, 'init', function () {
@@ -204,38 +212,125 @@ export function useMap(HOME_PATH) {
       filterButtons.forEach(function (button) {
         button.addEventListener('click', function (e) {
           e.preventDefault();
-          // active 클래스 토글
-          if (button.classList.contains('active')) {
-            button.classList.remove('active');
-          } else {
-            button.classList.add('active');
-          }
+          const filterId = button.id;
+          activeFilters[filterId] = !activeFilters[filterId];
+
+          button.classList.toggle('active', activeFilters[filterId]);
+          button.dataset.active = activeFilters[filterId];
+
+          applyFilter(filterId, activeFilters[filterId]);
         });
       });
+
       map.controls[naver.maps.Position.RIGHT_CENTER].push(
         customControl.getElement()
       );
-    });
-    // subwway 고정 마커찍기
-    const subWayMarker = new naver.maps.Marker({
-      map: map,
+      // 초기 필터 상태 적용
+      applyInitialFilters();
 
-      position: { lat: 37.54785018, lng: 127.074454848 },
-
-      icon: {
-        content: subWayMapMarker,
-        size: new naver.maps.Size(22, 35),
-        origin: new naver.maps.Point(0, 0),
-        anchor: new naver.maps.Point(11, 35),
-      },
+      return map;
     });
-    // hotpalce 마커찍기
+    const stations = [
+      { lat: 37.54785018, lng: 127.074454848, name: '어린이대공원역' },
+      { lat: 37.4980669, lng: 127.0281517, name: '강남역' },
+      { lat: 37.5446007, lng: 127.0555885, name: '성수역' },
+      { lat: 37.557667, lng: 126.925666, name: '홍대입구역' },
+    ];
+    // 각 역에 대해 마커 생성
+    const subwayMarkers = stations.map((station) => {
+      return new naver.maps.Marker({
+        map: map,
+        position: new naver.maps.LatLng(station.lat, station.lng),
+        icon: {
+          content: subWayMapMarker(station.name),
+          size: new naver.maps.Size(22, 35),
+          origin: new naver.maps.Point(0, 0),
+          anchor: new naver.maps.Point(11, 35),
+        },
+        zIndex: 101,
+      });
+    });
+
+    // cctv 마커찍기
+
+    cctvApi
+      .getCctvList()
+      .then((response) => {
+        const cctvs = response.data;
+        cctvs.forEach((cctv) => {
+          const position = new naver.maps.LatLng(cctv.latitude, cctv.longitude);
+          const marker = new naver.maps.Marker({
+            position: position,
+            icon: {
+              content: cctvMarker,
+              size: new naver.maps.Size(24, 24),
+              anchor: new naver.maps.Point(12, 24),
+            },
+            zIndex: 100,
+            visible: activeFilters.safety, // 초기 가시성 설정
+          });
+          cctvMarkers.value.push(marker);
+          marker.setMap(map); // 마커를 지도에 추가
+        });
+      })
+      .catch((error) => {
+        console.error('Error fetching CCTV data:', error);
+      });
+    // 편의시설 마커 생성
+    convenientApi
+      .getConvenientLocations()
+      .then((data) => {
+        data.forEach((locationData) => {
+          Object.entries(locationData.categories).forEach(
+            ([category, facilities]) => {
+              facilities.forEach((facility) => {
+                const marker = new naver.maps.Marker({
+                  map: map,
+                  position: new naver.maps.LatLng(facility.y, facility.x),
+
+                  icon: {
+                    content: getConvenientMarkerIcon(category),
+                    size: new naver.maps.Size(24, 24),
+                    anchor: new naver.maps.Point(12, 12),
+                  },
+                  zIndex: 100,
+                  visible: activeFilters.convenient,
+                });
+                convenientMarkers.value.push(marker);
+              });
+            }
+          );
+        });
+        console.log(
+          'Convenient markers created:',
+          convenientMarkers.value.length
+        );
+        applyFilter('convenient', activeFilters.convenient);
+      })
+      .catch((error) => {
+        console.error('Error fetching convenient facility data:', error);
+      });
+
+    // 편의시설 마커 아이콘 가져오기
+    const getConvenientMarkerIcon = (category) => {
+      switch (category) {
+        case 'CS2':
+          return convenientStoreMarker;
+        case 'HP8':
+          return hospitalMarker;
+        case 'BK9':
+          return bankMarker;
+        case 'CE7':
+          return cafeMarker;
+        default:
+          return '';
+      }
+    };
+    // hotplace 마커찍기
     hotplaceApi
       .getHotplaceList()
       .then((response) => {
         const hotplaces = response.data;
-
-        // 다국어처리 해야해!!
         const krHotplaces = hotplaces.filter(
           (hotplace) => hotplace.lan === 'KR'
         );
@@ -244,27 +339,19 @@ export function useMap(HOME_PATH) {
             hotplace.longitude,
             hotplace.latitude
           );
-
           const marker = new naver.maps.Marker({
-            map: map,
             position: position,
             title: hotplace.hpName,
-
             icon: {
               content: hotplaceMarker(hotplace.hpName),
               size: new naver.maps.Size(24, 37),
               anchor: new naver.maps.Point(12, 37),
-              origin: new naver.maps.Point(0, 0),
             },
-            zIndex: 100,
+            zIndex: 101,
+            visible: activeFilters.hotplace,
           });
-
-          naver.maps.Event.addListener(marker, 'click', () => {
-            console.log('Hotplace clicked:', hotplace);
-            // 핫플레이스 관련 작업 수행
-          });
-
           hotplaceMarkers.value.push(marker);
+          marker.setMap(map);
         });
       })
       .catch((error) => {
@@ -292,7 +379,7 @@ export function useMap(HOME_PATH) {
               map: map,
               position: position,
               title: estate.eno,
-              animation: naver.maps.Animation.DROP,
+              // animation: naver.maps.Animation.DROP,
               icon: {
                 content: estateMarker(estate.tradetype, price),
                 size: new naver.maps.Size(24, 37),
@@ -337,7 +424,7 @@ export function useMap(HOME_PATH) {
     loadEstates();
 
     // 지도 idle 이벤트 처리
-    naver.maps.Event.addListener(map, 'idle', () => {
+    naver.maps.Event.addListener(map, 'idle', async () => {
       updateMarkers(map, estateMarkers.value);
     });
 
@@ -371,7 +458,6 @@ export function useMap(HOME_PATH) {
         estateMarkers.value.push(marker);
       });
 
-      console.log('매물 리스트 가져오기 완료:', estates);
       return estates; // 매물 리스트 반환
     } catch (error) {
       console.error('Error fetching estate data:', error);
@@ -379,38 +465,54 @@ export function useMap(HOME_PATH) {
     }
   };
 
-  // 필터 적용 함수
-  function applyFilter(type) {
-    // 모든 마커를 숨김
-    markers.value.forEach((marker) => {
-      marker.setMap(null);
-    });
+  // 필터 적용 함수 수정
+  function applyFilter(type, isActive) {
+    switch (type) {
+      case 'hotplace':
+        toggleMarkers(hotplaceMarkers.value, isActive);
+        break;
+      case 'safety':
+        toggleMarkers(cctvMarkers.value, isActive);
+        break;
+      case 'convenient':
+        toggleMarkers(convenientMarkers.value, isActive);
+        break;
+    }
+    console.log(`${type} 필터 ${isActive ? '적용' : '해제'}됨`);
+  }
 
-    // 선택된 타입의 마커만 표시
-    markers.value.forEach((marker) => {
-      if (marker.title === type) {
-        marker.setMap(map);
-      }
+  // 초기 필터 상태 적용 함수
+  function applyInitialFilters() {
+    Object.entries(activeFilters.value).forEach(([type, isActive]) => {
+      applyFilter(type, isActive);
     });
+  }
 
-    console.log(`${type} 필터 적용됨`);
+  // 마커 토글 함수 수정
+  function toggleMarkers(markerGroup, show) {
+    if (Array.isArray(markerGroup)) {
+      markerGroup.forEach((marker) => {
+        if (marker && marker.setVisible) {
+          marker.setVisible(show);
+        }
+      });
+    }
   }
 
   // 마커 업데이트 함수
-  const updateMarkers = (map, markers, visibleMarkerCount) => {
+  const updateMarkers = (map, markers) => {
     const mapBounds = map.getBounds();
-    visibleMarkerCount = 0;
+
     markers.forEach((marker) => {
       const position = marker.getPosition();
 
       if (mapBounds.hasLatLng(position)) {
         showMarker(map, marker);
-        visibleMarkerCount++;
       } else {
         hideMarker(marker);
       }
     });
-    console.log(`Visible markers count: ${visibleMarkerCount}`);
+
     console.log('penguin update log');
   };
 
@@ -430,5 +532,9 @@ export function useMap(HOME_PATH) {
     selectedMarker,
     selectedCluster,
     getEstatesByLocation,
+
+    activeFilters,
+
+    map: () => map,
   };
 }
