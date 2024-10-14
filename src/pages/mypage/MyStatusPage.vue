@@ -149,7 +149,7 @@ async function findBuddiz(uno) {
         <!-- 버디즈 미등록시-->
         <div v-if="isBuddiz === false">
           <div class="profile-info mt-5 mb-5 d-flex" style="justify-content: flex-end; flex-direction: row; align-items: center">
-            <router-link :to="`/form/${uno}`" class="text-center my-2" style="text-decoration: none; display: inline-block">
+            <router-link :to="`/form`" class="text-center my-2" style="text-decoration: none; display: inline-block">
               <button
                 class="btn-buddiz"
                 style="border: 1px solid #eaecef; border-radius: 10px; width: 100%; background-color: #eaecef; padding: 10px; font-size: 18px"

@@ -129,7 +129,7 @@ if (data === 'monthly') {
                     <img :src="buildings.img" class="img-fluid img-custom" :alt="blame_buildings.title" />
                   </div>
                   <div class="card-body">
-                    <h5 class="card-title">{{ t('common.blame.etitle') }}{{ currentSlide + index + 1 }}</h5>
+                    <h5 class="card-title">{{ t('common.blame.etitle') }}{{ buildings.blamedId }}</h5>
                     <p class="card-text">{{ buildings.deposit }} / {{ buildings.monthlyPee }}</p>
                     <p v-if="buildings.tradetype == 'monthly'" class="card-text">{{ t('common.wish.monthly') }}</p>
                     <p v-else class="card-text">{{ t('common.wish.charter') }}</p>

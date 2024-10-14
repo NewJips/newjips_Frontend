@@ -3,7 +3,9 @@ import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import authApi from '@/api/authApi';
 import { useAuthStore } from '@/stores/auth';
+import { useI18n } from 'vue-i18n';
 
+const { t, locale } = useI18n();
 const router = useRouter();
 const avatar = ref(null);
 const authStore = useAuthStore; //pinia store 사용을 위한 초기화
@@ -11,10 +13,10 @@ const authStore = useAuthStore; //pinia store 사용을 위한 초기화
 //////////////////////////////////////////////////////////
 const member = reactive({
   uno: '',
-  name: '닉네임기본값설정',
-  userId: '1234',
-  password: '1234',
-  password2: '1234',
+  name: '',
+  userId: '',
+  password: '',
+  password2: '',
   nickname: '',
   avatar: null,
   profilePic: '',
@@ -25,18 +27,18 @@ const disableSubmit = ref(true);
 const checkError = ref('');
 const checkId = async () => {
   if (!member.userId) {
-    return alert('사용자 ID를 입력하세요.');
+    return alert(t('common.join.checkid'));
   }
 
   disableSubmit.value = await authApi.checkId(member.userId);
   console.log(disableSubmit.value, typeof disableSubmit.value);
-  checkError.value = disableSubmit.value ? '이미 사용중인 ID입니다.' : '사용가능한 ID입니다.';
+  checkError.value = disableSubmit.value ? t('common.join.notid') : t('common.join.useid');
 };
 
 const changeId = () => {
   disableSubmit.value = true;
   if (member.userId) {
-    checkError.value = '아이디 중복 체크를 하셔야 합니다.';
+    checkError.value = t('common.join.overid1');
   } else {
     checkError.value = '';
   }
@@ -44,7 +46,7 @@ const changeId = () => {
 
 const join = async () => {
   if (member.password != member.password2) {
-    return alert('비밀번호가 일치하지 않습니다.');
+    return alert(t('common.join.notpassword'));
   }
 
   // if (avatar.value.files.length > 0) {
@@ -79,19 +81,25 @@ const join = async () => {
             <!-- 왼쪽화면 -->
             <div class="col-md-6 border-end-md p-sm-1" style="display: flex; flex-direction: column; align-items: center; margin-top: 3%">
               <h3 class="h3 mb-4 mb-sm-5">
-                NewJips에 가입하세요!<br />
-                당신을 위한 집과 버디즈를 만나요
+                {{ t('common.join.newjips1') }}<br />
+                {{ t('common.join.newjips2') }}
               </h3>
 
               <ul class="list mb-4 mb-sm-5" style="margin-bottom: 0%">
                 <li class="d-flex mb-2">
-                  <i class="fa-regular fa-circle-check"><span> 원하는 집을 찜하세요.</span></i>
+                  <i class="fa-regular fa-circle-check"
+                    ><span> {{ t('common.join.ment1') }}</span></i
+                  >
                 </li>
                 <li class="d-flex mb-2">
-                  <i class="fa-regular fa-circle-check"><span> 나와 딱 맞는 버디즈를 찾으세요.</span></i>
+                  <i class="fa-regular fa-circle-check"
+                    ><span> {{ t('common.join.ment2') }}</span></i
+                  >
                 </li>
                 <li class="d-flex mb-2">
-                  <i class="fa-regular fa-circle-check"><span> 나도 또다른 버디즈로 활동해보세요.</span></i>
+                  <i class="fa-regular fa-circle-check"
+                    ><span> {{ t('common.join.ment3') }}</span></i
+                  >
                 </li>
               </ul>
 
@@ -103,36 +111,36 @@ const join = async () => {
             <div class="col-md-6 px-2 pt-2 pb-2 px-sm-2 pb-sm-5 pt-md-5">
               <form class="needs-validation" @submit.prevent="join" novalidate>
                 <div class="mb-2">
-                  <label class="form-label" for="name">이름 </label>
-                  <input class="form-control" type="text" id="name" v-model="member.name" placeholder="이름을 입력하세요." required />
+                  <label class="form-label" for="name">{{ t('common.join.name') }}</label>
+                  <input class="form-control" type="text" id="name" v-model="member.name" :placeholder="t('common.join.namein')" required />
                 </div>
                 <div class="mb-2">
                   <label class="form-label" for="text"
-                    >아이디
-                    <button type="button" class="btn btn-success btn-sm py-0 me-2" @click="checkId">ID 중복 확인</button>
+                    >{{ t('common.join.id') }}
+                    <button type="button" class="btn btn-success btn-sm py-0 me-2" @click="checkId">{{ t('common.join.overid2') }}</button>
                     <span :class="disableSubmit.value ? 'text-primary' : 'text-danger'">{{ checkError }}</span>
                   </label>
-                  <input class="form-control" type="text" id="text" @input="changeId" v-model="member.userId" placeholder="아이디를 입력하세요." required />
+                  <input class="form-control" type="text" id="text" @input="changeId" v-model="member.userId" :placeholder="t('common.join.idin')" required />
                 </div>
                 <div class="mb-2">
-                  <label class="form-label" for="password">비밀번호</label>
+                  <label class="form-label" for="password">{{ t('common.join.password') }}</label>
                   <input class="form-control" type="password" id="password" v-model="member.password" required />
                 </div>
                 <div class="mb-2">
-                  <label class="form-label" for="password2">비밀번호 확인</label>
+                  <label class="form-label" for="password2">{{ t('common.join.checkpassword') }}</label>
                   <input class="form-control" type="password" id="password2" v-model="member.password2" required />
                 </div>
                 <div class="mb-2">
-                  <label class="form-label" for="nickname">닉네임</label>
-                  <input class="form-control" type="text" id="nickname" v-model="member.nickname" placeholder="닉네임을 입력하세요." required />
+                  <label class="form-label" for="nickname">{{ t('common.join.nickname') }}</label>
+                  <input class="form-control" type="text" id="nickname" v-model="member.nickname" :placeholder="t('common.join.nicknamein')" required />
                 </div>
                 <div class="mb-4">
-                  <label class="form-label">성별</label>
+                  <label class="form-label">{{ t('common.join.gender') }}</label>
                   <div>
                     <input type="radio" id="male" value="M" v-model="member.gender" required />
-                    <label for="male" class="me-3">남성</label>
+                    <label for="male" class="me-3">{{ t('common.join.man') }}</label>
                     <input type="radio" id="female" value="F" v-model="member.gender" required />
-                    <label for="female">여성</label>
+                    <label for="female">{{ t('common.join.woman') }}</label>
                   </div>
                 </div>
                 <button class="btn-orange btn-lg w-100" type="submit" :disabled="disableSubmit">Sign up</button>
