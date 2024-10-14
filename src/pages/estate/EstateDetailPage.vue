@@ -220,7 +220,11 @@
                     v-text="estateDetail.lan === 'KR' ? '연락하기' : 'Contact'"
                   ></span>
                 </button>
-                <button class="wishlist-button">
+                <button
+                  class="wishlist-button"
+                  :class="{ active: isLiked }"
+                  @click="handleLikeClick"
+                >
                   <i class="bi bi-heart-fill" style="margin-right: 1rem"></i>
                   <span
                     v-text="
@@ -250,6 +254,9 @@ import { defineProps } from 'vue';
 import axios from 'axios';
 import Vue3StickySidebar from 'vue3-sticky-sidebar';
 import detailConvenientApi from '@/api/detailConvenientApi';
+import { useAuthStore } from '@/stores/auth';
+import { useRouter } from 'vue-router';
+import { useLikedEstateStore } from '@/stores/likedEstate';
 
 const props = defineProps({
   eno: {
@@ -257,6 +264,28 @@ const props = defineProps({
     required: true,
   },
 });
+//좋아요관련
+const authStore = useAuthStore();
+const router = useRouter();
+const likedEstateStore = useLikedEstateStore();
+
+const isLogin = computed(() => authStore.isLogin);
+const isLiked = computed(() => likedEstateStore.isLiked(props.eno));
+
+const handleLikeClick = async () => {
+  if (!isLogin.value) {
+    alert('로그인이 필요한 서비스입니다.');
+    router.push('/auth/login');
+    return;
+  }
+
+  try {
+    await likedEstateStore.toggleLike(props.eno);
+  } catch (error) {
+    console.error('Error toggling like:', error);
+    alert('좋아요 처리 중 오류가 발생했습니다.');
+  }
+};
 
 // 매물 정보를 담는 ref
 const estateDetail = ref({});
@@ -749,5 +778,9 @@ function getConvenientMarkerIcon(category) {
 }
 .p-value {
   font-weight: 700;
+}
+.wishlist-button.active {
+  background-color: #ff8f17;
+  color: white;
 }
 </style>

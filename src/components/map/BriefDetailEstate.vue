@@ -14,8 +14,8 @@
     </div>
     <div class="briefArea">
       <i
-        :class="[isLiked(estateId) ? 'bi bi-heart-fill' : 'bi bi-heart']"
-        @click="toggleLike(estateId)"
+        :class="[isLiked ? 'bi bi-heart-fill' : 'bi bi-heart']"
+        @click.stop="handleLikeClick"
         class="heart-icon"
       ></i>
       <p style="font-weight: 600; font-size: 1.5rem">
@@ -23,7 +23,7 @@
           estateData.tradetype === 'monthly'
             ? `${formatDeposit(estateData.deposit)} / ${estateData.monthlyPee}`
             : formatDeposit(estateData.deposit)
-        }}만원
+        }}
       </p>
       <p>{{ estateData.housetype === 'villa' ? '빌라' : '오피스텔' }}</p>
       <p>{{ estateData.floor }}층, {{ estateData.roomSize }}㎡,</p>
@@ -34,8 +34,9 @@
 
 <script setup>
 import { useLikedEstateStore } from '@/stores/likedEstate';
-import { defineProps } from 'vue';
+import { defineProps, computed } from 'vue';
 import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/stores/auth';
 
 const props = defineProps({
   estateId: {
@@ -47,7 +48,9 @@ const props = defineProps({
     required: true,
   },
 });
+const authStore = useAuthStore();
 const router = useRouter();
+const isLogin = computed(() => authStore.isLogin);
 
 const goToDetail = (eno) => {
   router.push({ name: 'estate', params: { eno } });
@@ -66,10 +69,18 @@ const formatDeposit = (deposit) => {
   }
   return result.trim(); // 앞뒤 공백 제거 후 반환
 };
+const handleLikeClick = (event) => {
+  event.stopPropagation(); // 이벤트 전파 중지
+  if (!isLogin.value) {
+    alert('로그인이 필요한 서비스입니다.');
+    router.push('/auth/login');
+    return;
+  }
+  likedEstateStore.toggleLike(props.estateId);
+};
 
 const likedEstateStore = useLikedEstateStore();
-const isLiked = likedEstateStore.isLiked;
-const toggleLike = likedEstateStore.toggleLike;
+const isLiked = computed(() => likedEstateStore.isLiked(props.estateId));
 </script>
 
 <style scoped>

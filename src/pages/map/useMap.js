@@ -5,7 +5,7 @@ import hotplaceApi from '@/api/hotplaceApi';
 import cctvApi from '@/api/cctvApi';
 import convenientApi from '@/api/convenientApi';
 import { useMarkerStore } from '@/stores/marker';
-
+import { useFilterStore } from '@/stores/filter';
 export function useMap(HOME_PATH) {
   const markers = ref([]);
   const estateMarkers = ref([]);
@@ -16,7 +16,7 @@ export function useMap(HOME_PATH) {
   const convenientMarkers = ref([]);
   let map = null;
 
-  const activeFilters = reactive({
+  const activeToggles = reactive({
     hotplace: false,
     safety: false,
     convenient: false,
@@ -26,7 +26,7 @@ export function useMap(HOME_PATH) {
   function onLoad(map, markers) {
     const cluster = new MarkerClustering({
       minClusterSize: 3,
-      maxZoom: 16,
+      maxZoom: 20,
       map: map,
       markers: markers,
       disableClickZoom: false,
@@ -40,19 +40,21 @@ export function useMap(HOME_PATH) {
 
         if (textElement) {
           textElement.textContent = adjustedCount;
+          textElement.style.fontFamily = 'gmarket-font';
           Object.assign(element.style, {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             width: '4rem',
             height: '4rem',
-            backgroundImage: "url('src/assets/icons/estate_marker.svg')",
+            backgroundImage: "url('src/assets/icons/cluster-marker.svg')",
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
             cursor: 'pointer',
             color: 'white',
             fontWeight: 'bold',
+            fontSize: '1.5rem',
           });
           textElement.style.transform = 'translateY(4px)';
         }
@@ -175,8 +177,8 @@ export function useMap(HOME_PATH) {
 
   const initializeMap = (mapElement) => {
     const map = new naver.maps.Map(mapElement, {
-      center: new naver.maps.LatLng(37.564214, 127.001699),
-      zoom: 12,
+      center: new naver.maps.LatLng(37.54785018, 127.074454848),
+      zoom: 16,
       scaleControl: true,
       logoControl: false,
       mapDataControl: false,
@@ -188,7 +190,7 @@ export function useMap(HOME_PATH) {
     });
 
     // 필터 버튼 HTML
-    var filterButtonsHtml = `
+    var toggleButtonsHtml = `
       <div class="filter-buttons">
         <button class="btn_filter" id="hotplace" >핫플</button>
         <button class="btn_filter" id="safety" >안전</button>
@@ -198,27 +200,27 @@ export function useMap(HOME_PATH) {
     // 맵이 초기화되면 버튼 추가
     naver.maps.Event.once(map, 'init', function () {
       // 사용자 정의 컨트롤 추가
-      var customControl = new naver.maps.CustomControl(filterButtonsHtml, {
+      var customControl = new naver.maps.CustomControl(toggleButtonsHtml, {
         position: naver.maps.Position.RIGHT_BOTTOM,
       });
 
       customControl.setMap(map);
 
       // 각 버튼에 대한 클릭 이벤트 리스너 추가
-      var filterButtons = customControl
+      var toggleButtons = customControl
         .getElement()
         .querySelectorAll('.btn_filter');
 
-      filterButtons.forEach(function (button) {
+      toggleButtons.forEach(function (button) {
         button.addEventListener('click', function (e) {
           e.preventDefault();
-          const filterId = button.id;
-          activeFilters[filterId] = !activeFilters[filterId];
+          const toggleId = button.id;
+          activeToggles[toggleId] = !activeToggles[toggleId];
 
-          button.classList.toggle('active', activeFilters[filterId]);
-          button.dataset.active = activeFilters[filterId];
+          button.classList.toggle('active', activeToggles[toggleId]);
+          button.dataset.active = activeToggles[toggleId];
 
-          applyFilter(filterId, activeFilters[filterId]);
+          applyToggle(toggleId, activeToggles[toggleId]);
         });
       });
 
@@ -226,7 +228,7 @@ export function useMap(HOME_PATH) {
         customControl.getElement()
       );
       // 초기 필터 상태 적용
-      applyInitialFilters();
+      applyInitialToggles();
 
       return map;
     });
@@ -267,7 +269,7 @@ export function useMap(HOME_PATH) {
               anchor: new naver.maps.Point(12, 24),
             },
             zIndex: 100,
-            visible: activeFilters.safety,
+            visible: activeToggles.safety,
           });
           cctvMarkers.value.push(marker);
           marker.setMap(map);
@@ -294,7 +296,7 @@ export function useMap(HOME_PATH) {
                     anchor: new naver.maps.Point(12, 12),
                   },
                   zIndex: 100,
-                  visible: activeFilters.convenient,
+                  visible: activeToggles.convenient,
                 });
                 convenientMarkers.value.push(marker);
               });
@@ -305,7 +307,7 @@ export function useMap(HOME_PATH) {
           'Convenient markers created:',
           convenientMarkers.value.length
         );
-        applyFilter('convenient', activeFilters.convenient);
+        applyToggle('convenient', activeToggles.convenient);
       })
       .catch((error) => {
         console.error('Error fetching convenient facility data:', error);
@@ -348,7 +350,7 @@ export function useMap(HOME_PATH) {
               anchor: new naver.maps.Point(12, 37),
             },
             zIndex: 101,
-            visible: activeFilters.hotplace,
+            visible: activeToggles.hotplace,
           });
           hotplaceMarkers.value.push(marker);
           marker.setMap(map);
@@ -466,7 +468,7 @@ export function useMap(HOME_PATH) {
   };
 
   // 필터 적용 함수 수정
-  function applyFilter(type, isActive) {
+  function applyToggle(type, isActive) {
     switch (type) {
       case 'hotplace':
         toggleMarkers(hotplaceMarkers.value, isActive);
@@ -482,9 +484,9 @@ export function useMap(HOME_PATH) {
   }
 
   // 초기 필터 상태 적용 함수
-  function applyInitialFilters() {
-    Object.entries(activeFilters.value).forEach(([type, isActive]) => {
-      applyFilter(type, isActive);
+  function applyInitialToggles() {
+    Object.entries(activeToggles.value).forEach(([type, isActive]) => {
+      applyToggle(type, isActive);
     });
   }
 
@@ -533,7 +535,7 @@ export function useMap(HOME_PATH) {
     selectedCluster,
     getEstatesByLocation,
 
-    activeFilters,
+    activeToggles,
 
     map: () => map,
   };
