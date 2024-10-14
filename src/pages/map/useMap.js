@@ -267,10 +267,10 @@ export function useMap(HOME_PATH) {
               anchor: new naver.maps.Point(12, 24),
             },
             zIndex: 100,
-            visible: activeFilters.safety, // 초기 가시성 설정
+            visible: activeFilters.safety,
           });
           cctvMarkers.value.push(marker);
-          marker.setMap(map); // 마커를 지도에 추가
+          marker.setMap(map);
         });
       })
       .catch((error) => {
