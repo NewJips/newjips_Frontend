@@ -226,4 +226,5 @@ const goToLoanDetail = (loan) => {
 .loan-link-button:hover {
   background-color: #ff8c00;
 }
+
 </style>

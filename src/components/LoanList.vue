@@ -51,39 +51,6 @@ watch(locale, () => {
 }
 
 .loan-card-link > * {
-  height: 100%; /* Make sure the card takes up full height */
-}
-
-.loan-card {
-  background-color: #ff8c00;
-  padding: 20px;
-  border-radius: 12px;
-  color: white;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  min-height: 250px; /* Set a minimum height for uniformity */
-  max-height: 250px; /* Fix height to ensure uniformity */
-  overflow: hidden;
-}
-
-.loan-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-}
-
-.loan-card h3 {
-  font-size: 1.3rem;
-  margin-bottom: 0.5rem;
-  overflow: hidden; /* Prevent overflowing text */
-  word-wrap: break-word; /* Break long words */
-}
-
-.loan-card p {
-  font-size: 1rem;
-  line-height: 1.2rem; /* Control line height for better alignment */
+  height: 100%; /* Ensure the card takes up the full height */
 }
 </style>
