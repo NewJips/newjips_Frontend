@@ -44,6 +44,9 @@
       </div>
     </div>
     <div id="map" ref="mapElement" class="map-container"></div>
+    <div v-if="isLoading" class="loading-overlay">
+      <div class="lds-heart"><div></div></div>
+    </div>
   </div>
 </template>
 
@@ -67,6 +70,7 @@ const {
   selectedCluster,
   getEstatesByLocation,
   getConvenientFacilities,
+  isLoading,
 } = useMap();
 
 const updateEstateList = async () => {
@@ -142,5 +146,78 @@ watch(selectedCluster, (newValue) => {
 
 .scrollbar::-webkit-scrollbar-track {
   background: white;
+}
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.lds-heart,
+.lds-heart div,
+.lds-heart div:after,
+.lds-heart div:before {
+  box-sizing: border-box;
+}
+.lds-heart {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+  transform: rotate(45deg);
+  transform-origin: 40px 40px;
+}
+.lds-heart div {
+  top: 28px;
+  left: 28px;
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  background: #ff8f17;
+  animation: lds-heart 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.lds-heart div:after,
+.lds-heart div:before {
+  content: ' ';
+  position: absolute;
+  display: block;
+  width: 32px;
+  height: 32px;
+  background: #ff8f17;
+}
+.lds-heart div:before {
+  left: -24px;
+  border-radius: 50% 0 0 50%;
+}
+.lds-heart div:after {
+  top: -24px;
+  border-radius: 50% 50% 0 0;
+}
+@keyframes lds-heart {
+  0% {
+    transform: scale(0.95);
+  }
+  5% {
+    transform: scale(1.1);
+  }
+  39% {
+    transform: scale(0.85);
+  }
+  45% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(0.9);
+  }
 }
 </style>

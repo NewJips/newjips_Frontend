@@ -7,6 +7,7 @@ import convenientApi from '@/api/convenientApi';
 import { useMarkerStore } from '@/stores/marker';
 import { useFilterStore } from '@/stores/filter';
 export function useMap(HOME_PATH) {
+  const isLoading = ref(false);
   const markers = ref([]);
   const estateMarkers = ref([]);
   const hotplaceMarkers = ref([]);
@@ -362,6 +363,7 @@ export function useMap(HOME_PATH) {
 
     // Estate 마커 찍기
     const loadEstates = () => {
+      isLoading.value = true;
       estateApi
         .getEstateList()
         .then((response) => {
@@ -419,6 +421,9 @@ export function useMap(HOME_PATH) {
         })
         .catch((error) => {
           console.error('Error fetching estate data:', error);
+        })
+        .finally(() => {
+          isLoading.value = false; // 로딩 완료
         });
     };
 
@@ -534,7 +539,7 @@ export function useMap(HOME_PATH) {
     selectedMarker,
     selectedCluster,
     getEstatesByLocation,
-
+    isLoading,
     activeToggles,
 
     map: () => map,
