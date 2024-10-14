@@ -482,8 +482,6 @@ Cluster.prototype = {
       members[i].setMap(null);
     }
 
-    this._clusterMarker.setMap(null);
-
     this._clusterMarker = null;
     this._clusterCenter = null;
     this._clusterBounds = null;
