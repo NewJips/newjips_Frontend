@@ -177,6 +177,44 @@
     "blame": "신고목록",
     "logout": "로그아웃"
   },
+
+  "login1": {
+    "notid": "아이디 또는 비밀번호가 틀렸습니다.",
+    "binid": "아이디 또는 비밀번호가 비어 있습니다.",
+    "hellow1": "안녕하세요",
+    "hellow2": "다시 만나서 반가워요 :)",
+    "idinput": "아이디를 입력하세요",
+    "id": "아이디",
+    "passwordinput": "비밀번호를 입력하세요",
+    "password": "비밀번호",
+    "login": "로그인",
+    "account": "계정이 없으신가요??",
+    "join": "회원가입"
+  },
+  "join": {
+    "checkid": "사용자 ID를 입력하세요.",
+    "notid": "이미 사용중인 ID입니다.",
+    "useid": "사용가능한 ID입니다.",
+    "overid1": "아이디 중복 체크를 하셔야 합니다.",
+    "notpassword": "비밀번호가 일치하지 않습니다.",
+    "newjips1": "NewJips에 가입하세요!",
+    "newjips2": "당신을 위한 집과 버디즈를 만나요",
+    "ment1": "원하는 집을 찜하세요.",
+    "ment2": "나와 딱 맞는 버디즈를 찾으세요.",
+    "ment3": "나도 또다른 버디즈로 활동해보세요.",
+    "name": "이름",
+    "namein": "이름을 입력하세요",
+    "id": "아이디",
+    "idin": "아이디를 입력하세요",
+    "overid2": "ID 중복 확인",
+    "password": "비밀번호",
+    "checkpassword": "비밀번호 확인",
+    "nickname": "닉네임",
+    "nicknamein": "닉네임을 입력하세요",
+    "gender": "성별",
+    "man": "남성",
+    "woman": "여성"
+  },
   "guide": {
     "categories": {
       "living": "생활",

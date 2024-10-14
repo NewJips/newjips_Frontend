@@ -1,7 +1,6 @@
 <script setup>
-
 import { ref, computed, onMounted } from 'vue';
-import popularBuddizApi from '@/api/homeApi.js';  // 인기 버디즈 API 불러오기
+import popularBuddizApi from '@/api/homeApi.js'; // 인기 버디즈 API 불러오기
 import popularEstatesApi from '@/api/homeApi.js'; // 부동산 API 불러오기
 import exchangeRateApi from '@/api/changemoneyApi.js'; // 환율 API 호출
 import LoanCard from '@/components/LoanCard.vue';
@@ -18,25 +17,25 @@ const popularBuddiz = ref([]);
 const popularEstates = ref([]);
 
 // 한국 돈을 저장할 변수
-const koreaMoney = ref(0);  // 초기값 설정 (1000원)
+const koreaMoney = ref(0); // 초기값 설정 (1000원)
 
 // 베트남 돈을 저장할 변수
 const vietnamMoney = ref(0);
 
 // 환율을 저장할 변수 (KRW to VND)
-const exchangeRate = ref(18.55);  // 기본 환율
+const exchangeRate = ref(18.55); // 기본 환율
 
 // 한국 돈을 입력할 때 호출되는 함수
 const updateKoreaMoney = (event) => {
-  const value = event.target.value.replace(/[^0-9]/g, '');  // 숫자만 남김
-  koreaMoney.value = parseFloat(value) || 0;  // 숫자로 변환 후 저장
+  const value = event.target.value.replace(/[^0-9]/g, ''); // 숫자만 남김
+  koreaMoney.value = parseFloat(value) || 0; // 숫자로 변환 후 저장
   vietnamMoney.value = koreaMoney.value * exchangeRate.value; // 한국 돈을 베트남 돈으로 변환
 };
 
 // 베트남 돈을 입력할 때 호출되는 함수 (숫자만 허용)
 const updateVietnamMoney = (event) => {
-  const value = event.target.value.replace(/[^0-9]/g, '');  // 숫자만 남김
-  vietnamMoney.value = parseFloat(value) || 0;  // 숫자로 변환 후 저장
+  const value = event.target.value.replace(/[^0-9]/g, ''); // 숫자만 남김
+  vietnamMoney.value = parseFloat(value) || 0; // 숫자로 변환 후 저장
   koreaMoney.value = vietnamMoney.value / exchangeRate.value; // 베트남 돈을 한국 돈으로 변환
 };
 
@@ -58,6 +57,7 @@ onMounted(async () => {
 
     // 부동산 데이터를 API에서 받아옴
     popularEstates.value = await popularEstatesApi.getPopularEstate();
+    console.log('매물 데이터: ', popularEstates.value);
 
     // 환율 데이터를 API에서 받아옴
     const exchangeRateData = await exchangeRateApi.getExchangeRate();
@@ -80,8 +80,7 @@ const guides = ref([
     category: 'Living',
     title: '원룸? 1.5룸? 이란',
     date: 'September 1, 2023',
-    description:
-      'Learn the differences between one-room and 1.5-room apartments.',
+    description: 'Learn the differences between one-room and 1.5-room apartments.',
     link: 'https://spacediver.tistory.com/2',
   },
   {
@@ -107,48 +106,49 @@ const guides = ref([
     date: 'September 4, 2023',
     description: 'How to avoid fraudulent listings when searching for a house.',
     link: 'https://spacediver.tistory.com/5',
-  }
+  },
 ]);
 
+const tradeType = ref([]);
 
+const data = popularEstates.value;
+if (data === 'monthly') {
+  tradeType.value = '전세'; // monthly를 전세로 변환
+} else {
+  tradeType.value = '월세'; // charter를 월세로 변환
+}
 </script>
-
 
 <template>
   <div class="container-fluid px-0">
     <FloatingAi></FloatingAi>
     <!-- 메인 검색탭 -->
     <section class="mb-5">
-      <div class="container-fluid banner-container overflow-hidden "
-        style="background-color: #354962; min-height: 55vh; ">
+
+      <div class="container-fluid banner-container overflow-hidden" style="background-color: #354962; min-height: 55vh">
         <div class="row align-items-center px-4">
           <!-- 텍스트 및 버튼 -->
-          <div class="col-md-5 ps-5" style="margin-left: 17vh;">
+          <div class="col-md-5 ps-5" style="margin-left: 17vh">
             <h1 class="banner-text">{{ t('common.home.banner1') }}<br />{{ t('common.home.banner2') }}</h1>
             <p class="sub-text">
-              <span style="color: #FF8F17; font-weight: bold;">{{ t('common.buddiz') }}</span>{{
-                t('common.home.banner3') }}<br>
+              <span style="color: #ff8f17; font-weight: bold">{{ t('common.buddiz') }}</span
+              >{{ t('common.home.banner3') }}<br />
+
               {{ t('common.home.banner4') }}
             </p>
-
             <div class="btn-container">
               <router-link to="/buddiz" class="text-muted">
-                <button class="banner-btn btn btn-outline-light me-4 px-4 py-2">
-                  <i class="fas fa-user-friends me-2"></i>{{ t('common.home.find_buddiz') }}
-                </button>
+                <button class="banner-btn btn btn-outline-light me-4 px-4 py-2"><i class="fas fa-user-friends me-2"></i>{{ t('common.home.find_buddiz') }}</button>
               </router-link>
 
               <router-link to="/map" class="text-muted">
-                <button class="banner-btn btn btn-outline-light px-4 py-2">
-                  <i class="fas fa-home me-2"></i>{{ t('common.home.find_room') }}
-                </button>
+                <button class="banner-btn btn btn-outline-light px-4 py-2"><i class="fas fa-home me-2"></i>{{ t('common.home.find_room') }}</button>
               </router-link>
             </div>
           </div>
-
           <!-- 이미지 -->
           <div class="col-md-5 ms-4">
-            <img src="@/assets/images/banner_people.png" style="height: 45vh; ">
+            <img src="@/assets/images/banner_people.png" style="height: 45vh" />
           </div>
         </div>
       </div>
@@ -161,41 +161,41 @@ const guides = ref([
         <div class="col-md-8 pe-5">
           <h4 class="head-title">{{ t('common.home.popular_buddiz') }}</h4>
           <div class="d-flex mb-4">
-            <span class="subtitle ">{{ t('common.home.popular_buddiz_explain') }}</span>
+            <span class="subtitle">{{ t('common.home.popular_buddiz_explain') }}</span>
           </div>
 
           <div class="row ps-2">
             <div class="col d-flex" v-if="popularBuddiz.length >= 1">
-              <div class="rounded-circle ranking-num mt-2" style="background-color: #FFEC82;">1</div>
+              <div class="rounded-circle ranking-num mt-2" style="background-color: #ffec82">1</div>
               <div class="ms-4 d-flex flex-column align-items-center">
-                <img :src="popularBuddiz[0].imgFile" class="avatar ranking-img mb-3">
+                <img :src="popularBuddiz[0].imgFile" class="avatar ranking-img mb-3" />
                 <h5>{{ popularBuddiz[0].nickname }}</h5>
                 <div>
-                  <i class="fa fa-star" style="color: #FFC973;"></i>
+                  <i class="fa fa-star" style="color: #ffc973"></i>
                   <span class="ms-1">{{ popularBuddiz[0].averageRating }}</span>
                 </div>
               </div>
             </div>
 
             <div class="col d-flex" v-if="popularBuddiz.length >= 2">
-              <div class="rounded-circle ranking-num" style="background-color: #D5E1F4;">2</div>
+              <div class="rounded-circle ranking-num" style="background-color: #d5e1f4">2</div>
               <div class="ms-4 d-flex flex-column align-items-center">
-                <img :src="popularBuddiz[1].imgFile" class="avatar ranking-img mb-3">
+                <img :src="popularBuddiz[1].imgFile" class="avatar ranking-img mb-3" />
                 <h5>{{ popularBuddiz[1].nickname }}</h5>
                 <div>
-                  <i class="fa fa-star" style="color: #FFC973;"></i>
+                  <i class="fa fa-star" style="color: #ffc973"></i>
                   <span class="ms-1">{{ popularBuddiz[1].averageRating }}</span>
                 </div>
               </div>
             </div>
 
             <div class="col d-flex" v-if="popularBuddiz.length >= 3">
-              <div class="rounded-circle ranking-num" style="background-color: #CEB796;">3</div>
+              <div class="rounded-circle ranking-num" style="background-color: #ceb796">3</div>
               <div class="ms-4 d-flex flex-column align-items-center">
-                <img :src="popularBuddiz[2].imgFile" class="avatar ranking-img mb-3">
+                <img :src="popularBuddiz[2].imgFile" class="avatar ranking-img mb-3" />
                 <h5>{{ popularBuddiz[2].nickname }}</h5>
                 <div>
-                  <i class="fa fa-star" style="color: #FFC973;"></i>
+                  <i class="fa fa-star" style="color: #ffc973"></i>
                   <span class="ms-1">{{ popularBuddiz[2].averageRating }}</span>
                 </div>
               </div>
@@ -213,28 +213,23 @@ const guides = ref([
           <div class="flex ps-3 pt-3 align-items-center">
             <!-- 한국 -->
             <div class="mb-3 d-flex align-items-center">
-              <img src="@/assets/images/korea.png" class="avatar border me-3"
-                style="width: 8vh; height: 8vh; object-fit: cover;">
-              <div class="rounded-3 d-flex justify-content-end align-items-center px-3"
-                style="background-color: #EAECEF; height: 6vh;">
-                <input :value="formattedKoreaMoney" @input="updateKoreaMoney"
-                  style="all: unset; text-align: right; font-size: large; width: 18vh;" class="me-3">
-                <p style="all: unset; text-align: right; font-weight: bold;">KRW</p>
+
+              <img src="@/assets/images/korea.png" class="avatar border me-3" style="width: 8vh; height: 8vh; object-fit: cover" />
+              <div class="rounded-3 d-flex justify-content-end align-items-center px-3" style="background-color: #eaecef; height: 6vh">
+                <input :value="formattedKoreaMoney" @input="updateKoreaMoney" style="all: unset; text-align: right; font-size: large; width: 18vh" class="me-3" />
+                <p style="all: unset; text-align: right; font-weight: bold">KRW</p>
               </div>
             </div>
 
-            <i class="fas fa-arrows-alt-v fa-2x mb-3 ms-8 ps-5" style="padding-left: 20vh;"></i>
-
+            <i class="fas fa-arrows-alt-v fa-2x mb-3 ms-8 ps-5" style="padding-left: 20vh"></i>
 
             <!-- 베트남 (입력 가능) -->
             <div class="mb-3 d-flex align-items-center">
-              <img src="@/assets/images/vietnam.png" class="avatar border me-3"
-                style="width: 8vh; height: 8vh; object-fit: cover;">
-              <div class="rounded-3 d-flex justify-content-end align-items-center px-3"
-                style="background-color: #EAECEF; height: 6vh;">
-                <input :value="formattedVietnamMoney" @input="updateVietnamMoney"
-                  style="all: unset; text-align: right; font-size: large; width: 18vh;" class="me-3">
-                <p style="all: unset; text-align: right; font-weight: bold;">VND</p>
+
+              <img src="@/assets/images/vietnam.png" class="avatar border me-3" style="width: 8vh; height: 8vh; object-fit: cover" />
+              <div class="rounded-3 d-flex justify-content-end align-items-center px-3" style="background-color: #eaecef; height: 6vh">
+                <input :value="formattedVietnamMoney" @input="updateVietnamMoney" style="all: unset; text-align: right; font-size: large; width: 18vh" class="me-3" />
+                <p style="all: unset; text-align: right; font-weight: bold">VND</p>
               </div>
             </div>
           </div>
@@ -246,7 +241,7 @@ const guides = ref([
     <div class="ms-5 me-5 mb-5">
       <h4 class="head-title">{{ t('common.home.popular_estates') }}</h4>
       <div class="d-flex mb-4">
-        <span class="subtitle ">{{ t('common.home.popular_estates_explain') }}</span>
+        <span class="subtitle">{{ t('common.home.popular_estates_explain') }}</span>
         <span class="position-absolute end-0 me-5">
           <router-link class="btn-more text-muted" to="/map">{{ t('common.home.plusbtn') }}</router-link>
         </span>
@@ -271,16 +266,14 @@ const guides = ref([
                 <img :src="estate.img" alt="Image" />
               </div>
               <div class="card-body position-relative pb-3">
-                <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">{{ estate.tradetype }}</h4>
+                <h4 v-if="estate.tradetype == 'monthly'" class="mb-1 fs-xs fw-normal text-uppercase text-primary">{{ t('common.wish.monthly') }}</h4>
+                <h4 v-else class="mb-1 fs-xs fw-normal text-uppercase text-primary">{{ t('common.wish.charter') }}</h4>
                 <h3 class="h6 mb-2 fs-base">
                   <a class="nav-link stretched-link" href="real-estate-single-v1.html">{{ estate.address }} | {{
                     estate.roomSize }}㎡</a>
                 </h3>
                 <p class="mb-2 fs-sm text-muted">{{ estate.address }}</p>
-                <div class="fw-bold">
-                  <i class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>{{ estate.deposit }} / {{
-                    estate.monthlyPee }}
-                </div>
+                <div class="fw-bold"><i class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>{{ estate.deposit }} / {{ estate.monthlyPee }}</div>
               </div>
             </div>
           </div>
@@ -290,24 +283,23 @@ const guides = ref([
 
     <!-- 가이드 -->
     <div class="mb-5">
-      <div class="container-fluid banner-container overflow-hidden ps-5" style="background-color: #EAECEF;">
+      <div class="container-fluid banner-container overflow-hidden ps-5" style="background-color: #eaecef">
         <h4 class="head-title">{{ t('common.home.guide_kr') }}</h4>
         <div class="d-flex mb-4">
-          <span class="subtitle ">{{ t('common.home.guide_kr_explain') }}</span>
+          <span class="subtitle">{{ t('common.home.guide_kr_explain') }}</span>
           <span class="position-absolute end-0 me-5">
             <router-link class="btn-more text-muted" to="/guide">{{ t('common.home.plusbtn') }}</router-link>
           </span>
         </div>
 
-
         <div class="row me-5 h-100">
           <!-- 첫 번째 col -->
           <div class="flex col-6 h-100 pe-3">
-            <a href="https://spacediver.tistory.com/2" class="text-muted" style="text-decoration: none; ">
+            <a href="https://spacediver.tistory.com/2" class="text-muted" style="text-decoration: none">
               <div class="card shadow hover-animate h-100">
                 <div class="card-body d-flex flex-column justify-content-between">
                   <div class="icon-box mb-3">
-                    <img src="@/assets/icons/bank-note.svg" style="height: 5vh;">
+                    <img src="@/assets/icons/bank-note.svg" style="height: 5vh" />
                   </div>
                   <h5 class="guide-card-title">{{ t('common.home.guide_kr_card1') }}</h5>
                   <p>{{ t('common.home.guide_kr_card1_detail') }}</p>
@@ -319,7 +311,7 @@ const guides = ref([
           <!-- 두 번째 col -->
           <div class="col-3">
             <div class="row mb-3">
-              <a href="https://spacediver.tistory.com/10" class="text-muted" style="text-decoration: none; ">
+              <a href="https://spacediver.tistory.com/10" class="text-muted" style="text-decoration: none">
                 <div class="card shadow hover-animate">
                   <div class="card-body">
                     <h6 class="guide-card-title">{{ t('common.home.guide_kr_card2') }}</h6>
@@ -328,7 +320,7 @@ const guides = ref([
               </a>
             </div>
             <div class="row">
-              <a href="https://spacediver.tistory.com/6" class="text-muted" style="text-decoration: none; ">
+              <a href="https://spacediver.tistory.com/6" class="text-muted" style="text-decoration: none">
                 <div class="card shadow hover-animate">
                   <div class="card-body">
                     <h6 class="guide-card-title">{{ t('common.home.guide_kr_card3') }}</h6>
@@ -341,7 +333,7 @@ const guides = ref([
           <!-- 세 번째 col -->
           <div class="col-3">
             <div class="row mb-3">
-              <a href="https://spacediver.tistory.com/5" class="text-muted" style="text-decoration: none; ">
+              <a href="https://spacediver.tistory.com/5" class="text-muted" style="text-decoration: none">
                 <div class="card shadow hover-animate">
                   <div class="card-body">
                     <h6 class="guide-card-title">{{ t('common.home.guide_kr_card4') }}'</h6>
@@ -351,7 +343,7 @@ const guides = ref([
             </div>
 
             <div class="row">
-              <a href="https://spacediver.tistory.com/3" class="text-muted" style="text-decoration: none; ">
+              <a href="https://spacediver.tistory.com/3" class="text-muted" style="text-decoration: none">
                 <div class="card shadow hover-animate">
                   <div class="card-body">
                     <h6 class="guide-card-title">{{ t('common.home.guide_kr_card5') }}</h6>
@@ -360,7 +352,6 @@ const guides = ref([
               </a>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -369,15 +360,15 @@ const guides = ref([
     <div class="ms-5 me-5 mb-5">
       <h4 class="head-title">{{ t('common.home.hotplace') }}</h4>
       <div class="d-flex mb-4">
-        <span class="subtitle ">{{ t('common.home.hotplace_explain') }}</span>
+        <span class="subtitle">{{ t('common.home.hotplace_explain') }}</span>
       </div>
 
       <div class="hotPlace-grid pb-3">
         <!-- 홍대 -->
         <div class="col">
           <a class="card shadow-sm border-0" href="">
-            <div class="card-img-top card-img-hover" style="height: 27vh;">
-              <img src="https://i.pinimg.com/564x/66/a2/ab/66a2ab3dc8ed82cd11376c277c74d47c.jpg" alt="">
+            <div class="card-img-top card-img-hover" style="height: 27vh">
+              <img src="https://i.pinimg.com/564x/66/a2/ab/66a2ab3dc8ed82cd11376c277c74d47c.jpg" alt="" />
             </div>
             <div class="card-body text-center">
               <h3 class="mb-0 fs-base text-nav">{{ t('common.home.hotplace_card1') }}</h3>
@@ -388,9 +379,8 @@ const guides = ref([
         <!-- 성수 -->
         <div class="col">
           <a class="card shadow-sm border-0" href="">
-            <div class="card-img-top card-img-hover" style="height: 27vh;">
-              <img src="https://mediahub.seoul.go.kr/uploads/mediahub/2023/07/wHQEGwBLgYQBpvjKWCwKdRHPEmBMwLFy.png"
-                alt="">
+            <div class="card-img-top card-img-hover" style="height: 27vh">
+              <img src="https://mediahub.seoul.go.kr/uploads/mediahub/2023/07/wHQEGwBLgYQBpvjKWCwKdRHPEmBMwLFy.png" alt="" />
             </div>
             <div class="card-body text-center">
               <h3 class="mb-0 fs-base text-nav">{{ t('common.home.hotplace_card2') }}</h3>
@@ -401,8 +391,8 @@ const guides = ref([
         <!-- 강남 -->
         <div class="col">
           <a class="card shadow-sm border-0" href="">
-            <div class="card-img-top card-img-hover" style="height: 27vh;">
-              <img src="https://i.pinimg.com/564x/b3/e6/58/b3e658c5d2947f52b0b23bd96e0bf5a6.jpg" alt="">
+            <div class="card-img-top card-img-hover" style="height: 27vh">
+              <img src="https://i.pinimg.com/564x/b3/e6/58/b3e658c5d2947f52b0b23bd96e0bf5a6.jpg" alt="" />
             </div>
             <div class="card-body text-center">
               <h3 class="mb-0 fs-base text-nav">{{ t('common.home.hotplace_card3') }}</h3>
@@ -413,8 +403,8 @@ const guides = ref([
         <!-- 건대 -->
         <div class="col">
           <a class="card shadow-sm border-0" href="">
-            <div class="card-img-top card-img-hover" style="height: 27vh;">
-              <img src="https://cdn.news.unn.net/news/photo/202111/518970_321294_1325.jpg" alt="">
+            <div class="card-img-top card-img-hover" style="height: 27vh">
+              <img src="https://cdn.news.unn.net/news/photo/202111/518970_321294_1325.jpg" alt="" />
             </div>
             <div class="card-body text-center">
               <h3 class="mb-0 fs-base text-nav">{{ t('common.home.hotplace_card4') }}</h3>
@@ -439,7 +429,7 @@ const guides = ref([
 </template>
 <style scoped>
 .ms-8 {
-  margin-left: 8rem !important
+  margin-left: 8rem !important;
 }
 
 .ranking-num {
@@ -609,7 +599,6 @@ h3 {
   line-height: 1.3;
 }
 
-
 @media (min-width: 1200px) {
   .display-5 {
     font-size: 3rem;
@@ -661,7 +650,7 @@ h3 {
 
 .subtitle {
   font-size: large;
-  color: #3E444E;
+  color: #3e444e;
   font-weight: 500;
 }
 
@@ -677,7 +666,6 @@ h3 {
   border-top-right-radius: calc(0.75rem - 1px);
 }
 
-
 .icon-box {
   display: inline-block;
   width: 4rem;
@@ -685,7 +673,7 @@ h3 {
   border-radius: 50%;
   text-align: center;
   line-height: 4rem;
-  background-color: #F8E3ED;
+  background-color: #f8e3ed;
 }
 
 .img-overlay {
@@ -826,3 +814,4 @@ h3 {
   font-size: 1rem;
 }
 </style>
+

@@ -177,6 +177,44 @@
     "blame": "Danh sách báo cáo",
     "logout": "log out"
   },
+
+  "login1": {
+    "notid": "ID với mật khẩu sai rồi",
+    "binid": "ID và mật khẩu trống rỗng",
+    "hellow1": "Xin chào.",
+    "hellow2": "Rất vui được gặp lại các bạn :)",
+    "idinput": "Hãy nhập ID của bạn ấy đi ạ",
+    "id": "username",
+    "passwordinput": "Hãy nhập mật khẩu",
+    "password": "password",
+    "login": "Login",
+    "account": "Bạn không có tài khoản à??",
+    "join": "gia nhập hội viên"
+  },
+  "join": {
+    "checkid": "Hãy nhập ID người dùng.",
+    "notid": "Đây là ID đã được sử dụng rồi.",
+    "useid": "Đây là ID có thể sử dụng được.",
+    "overid1": "Bạn phải kiểm tra ID trùng lặp.",
+    "notpassword": "Mật khẩu không khớp.",
+    "newjips1": "Hãy gia nhập New jips nhé!",
+    "newjips2": "Gặp gỡ Buddy và ngôi nhà dành cho các bạn",
+    "ment1": "Hãy chọn nhà bạn muốn.",
+    "ment2": "Hãy tìm ra những Buddy hợp với mình nhất.",
+    "ment3": "Mình cũng sẽ hoạt động với tư cách là Buddy.",
+    "id": "ID",
+    "idin": "Hãy nhập ID của bạn ấy đi ạ",
+    "name": "tên gọi",
+    "namein": "Hãy nhập tên của bạn",
+    "overid2": "Kiểm tra ID trùng lặp",
+    "password": "mã số bí mật",
+    "checkpassword": "Kiểm tra mật khẩu",
+    "nickname": "nickname",
+    "nicknamein": "Hãy nhập nickname của bạn vào",
+    "gender": "giới tính",
+    "man": "đàn ông",
+    "woman": "phụ nữ"
+  },
   "guide": {
     "categories": {
       "living": "Cuộc sống",
