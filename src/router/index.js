@@ -27,6 +27,7 @@ const router = createRouter({
       name: 'home',
       component: HomePage,  // HomePage route
     },
+    
     {
       path: '/auth/join',
       name: 'joinPage',

@@ -18,6 +18,19 @@ export default {
       title: i18n.global.t('common.chat'),
       url: '/chat',
     },
+    {
+      title: i18n.global.t('common.loan'),
+      url: '/loanproduct',
+    },
+    
+    {
+      title: i18n.global.t('common.guide'),
+      url: '/guide',
+    },
+    {
+      title: i18n.global.t('form.guide'),
+      url: '/form',
+    },
   ],
 
   accoutMenus: {

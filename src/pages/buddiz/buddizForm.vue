@@ -1,125 +1,150 @@
-<!-- buddizForm.vue -->
 <script setup>
-import { ref } from 'vue';
-import { useAuthStore } from '@/stores/auth'; // Adjust the path as needed
-import buddizIntroApi from '@/api/buddizIntroApi';
+import { ref, onMounted } from 'vue';
+import { useAuthStore } from '@/stores/auth'; 
+import buddizIntroApi from '@/api/buddizIntroApi'; 
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 
-const { locale } = useI18n(); // Destructure the locale properly
-console.log(locale.value); // You should see the current locale
-const nickname = ref('');
+const router = useRouter();
+const { locale, t } = useI18n(); // Using locale and t for translation
+
+// Form fields
 const residence = ref('');
 const koreaExperience = ref('');
 const accompanyRegion = ref('');
 const transactionCount = ref('');
 const description = ref('');
 const price = ref(0);
-const currencyUnit = ref('$'); // Default currency unit
+const currencyUnit = ref('$');
 const selectedCharacteristics = ref([]);
 const selectedLanguages = ref([]);
 
 // Example lists for checkboxes
 const characteristics = ['Friendly', 'Emotional', 'Calm', 'Energetic', 'Silent', 'Organized', 'Sociable'];
 const languages = ['Vietnamese', 'Korean'];
-
-// Regions dropdown options
 const regions = ['서울', '부산', '대구', '인천', '광주'];
 
-const submitForm = async () => {
-  const authStore = useAuthStore(); // Initialize the store
-  const userUno = authStore.uno; // Fetch the logged-in user's `uno`
+// Fetch and pre-fill data if it exists
+onMounted(async () => {
+  const authStore = useAuthStore();
+  const userUno = authStore.uno;
 
   if (!userUno) {
-    alert('User not logged in. Please log in to submit your form.');
+    alert(t('alerts.not_logged_in')); // Use t() for translated alert
+    return;
+  }
+
+  try {
+    const data = await buddizIntroApi.getBuddizIntro(userUno);
+    console.log('Fetched data from API:', data);
+
+    if (data) {
+      residence.value = data.location || '';
+      koreaExperience.value = data.liveInKr || '';
+      accompanyRegion.value = data.accompanyRegion || '';
+      transactionCount.value = data.hiredTimes || '';
+      description.value = data.selfInfo || '';
+      price.value = data.cost || 0;
+      currencyUnit.value = data.currency || '$';
+      selectedCharacteristics.value = data.personality ? data.personality.split(',') : [];
+      selectedLanguages.value = data.useLan ? data.useLan.split(',') : [];
+    } else {
+      console.warn('No data found for the user');
+    }
+  } catch (error) {
+    console.error(t('common.errors.fetch_failed'), error);
+  }
+});
+
+// Form submission
+const submitForm = async () => {  
+  const authStore = useAuthStore();
+  const userUno = authStore.uno;
+
+  if (!userUno) {
+    alert(t('common.alerts.not_logged_in'));
     return;
   }
 
   const formData = {
-    uno: userUno,
-    liveInKr: koreaExperience.value || 0, // Ensure numeric value
-    personality: selectedCharacteristics.value.join(',') || 'Unknown', // Default if empty
-    cost: price.value || 0, // Ensure numeric value
-    hiredTimes: transactionCount.value || 0, // Ensure numeric value
-    rating: 5.0, // Placeholder for rating
-    selfInfo: description.value || 'No description provided', // Default if empty
-    lan: locale.value === 'ko' ? 'KR' : 'VN', // Default to 'KR' or 'VN'
-    location: residence.value || 'Unknown', // Default if empty
-    useLan: selectedLanguages.value.join(',') || 'Unknown', // Default if empty
+    uno: userUno,  
+    liveInKr: koreaExperience.value || 0,  
+    personality: selectedCharacteristics.value.join(',') || t('common.buddizForm.unknown'), 
+    cost: price.value || 0,  
+    hiredTimes: transactionCount.value || 0,  
+    rating: 5.0,  
+    selfInfo: description.value || t('common.buddizForm.no_description'),  
+    lan: locale.value === 'ko' ? 'KR' : 'VN',  
+    location: residence.value || t('common.buddizForm.unknown'),  
+    useLan: selectedLanguages.value.join(',') || t('common.buddizForm.unknown'),  
   };
-
-  console.log('Submitting form data:', formData); // For debugging
 
   try {
     const response = await buddizIntroApi.saveOrUpdateBuddizIntro(formData);
     console.log('Form submission response:', response);
-    alert('Form submitted successfully!');
+    alert(t('common.alerts.form_submitted'));
+    router.push('/mypage/mystatus');
   } catch (error) {
-    console.error('Error submitting form:', error);
-    alert('Failed to submit the form.');
-  }
+    console.error(t('common.errors.submit_failed'), error);
+    alert(t('common.errors.submit_failed'));
+  } 
 };
 </script>
 
 <template>
   <div class="fluid-container">
     <div class="type-header">
-      <h2>버디즈 이력 등록</h2>
-      <div style="font-size: 17pt; margin-top: 8pt">버디즈로 활동하기 위한 나만의 소개를 입력해주세요!</div>
+      <h2>{{ t('common.buddizForm.header') }}</h2>
+      <div style="font-size: 17pt; margin-top: 8pt;">{{ t('common.buddizForm.subtitle') }}</div>
     </div>
 
     <!-- Basic Info Section -->
-    <div class="fluid-container px-5 pt-5 pb-5" style="background-color: #fbfbfc">
+    <div class="fluid-container px-5 pt-5 pb-5" style="background-color: #fbfbfc;">
       <section class="section-card">
-        <h2 class="section-title"><i class="section-icon"></i> Basic Info</h2>
-        <div class="input-group">
-          <label for="nickname">닉네임</label>
-          <input v-model="nickname" type="text" id="nickname" placeholder="닉네임을 입력해주세요" maxlength="48" />
-          <span class="character-limit">{{ 48 - nickname.length }} characters left</span>
-        </div>
+        <h2 class="section-title"><i class="section-icon"></i> {{ t('common.buddizForm.basic_info') }}</h2>
 
         <div class="input-group">
-          <label for="residence">거주 지역</label>
+          <label for="residence">{{ t('common.buddizForm.residence') }}</label>
           <select v-model="residence" id="residence">
-            <option value="" disabled>지역 선택</option>
+            <option value="" disabled>{{ t('common.buddizForm.select_region') }}</option>
             <option v-for="region in regions" :key="region" :value="region">{{ region }}</option>
           </select>
         </div>
 
         <div class="input-group">
-          <label for="koreaExperience">한국 자취 경력 (년)</label>
-          <input v-model="koreaExperience" type="number" id="koreaExperience" placeholder="숫자로 입력해주세요." />
+          <label for="koreaExperience">{{ t('common.buddizForm.korea_experience') }}</label>
+          <input v-model="koreaExperience" type="number" id="koreaExperience" :placeholder="t('common.buddizForm.enter_years')" />
         </div>
       </section>
 
       <!-- Description Section -->
       <section class="section-card">
-        <h2 class="section-title"><i class="section-icon"></i> Description</h2>
-        <textarea v-model="description" placeholder="Describe your accommodation" maxlength="8000"></textarea>
-        <span class="character-limit">{{ 8000 - description.length }} characters left</span>
+        <h2 class="section-title"><i class="section-icon"></i> {{ t('common.buddizForm.description') }}</h2>
+        <textarea v-model="description" :placeholder="t('common.buddizForm.enter_description')" maxlength="8000"></textarea>
+        <span class="character-limit">{{ 8000 - description.length }} {{ t('common.buddizForm.characters_left') }}</span>
       </section>
 
       <!-- Accompany Region and Transaction Count -->
       <section class="section-card">
-        <h2 class="section-title"><i class="section-icon"></i> 추가 정보</h2>
+        <h2 class="section-title"><i class="section-icon"></i> {{ t('common.buddizForm.additional_info') }}</h2>
         <div class="input-group">
-          <label for="accompanyRegion">동행 가능 지역</label>
+          <label for="accompanyRegion">{{ t('common.buddizForm.accompany_region') }}</label>
           <select v-model="accompanyRegion" id="accompanyRegion">
-            <option value="" disabled>지역 선택</option>
+            <option value="" disabled>{{ t('common.buddizForm.select_region') }}</option>
             <option v-for="region in regions" :key="region" :value="region">{{ region }}</option>
           </select>
         </div>
 
         <div class="input-group">
-          <label for="transactionCount">거래 횟수</label>
-          <input v-model="transactionCount" type="number" id="transactionCount" placeholder="거래 횟수를 입력해주세요." />
+          <label for="transactionCount">{{ t('common.buddizForm.transaction_count') }}</label>
+          <input v-model="transactionCount" type="number" id="transactionCount" :placeholder="t('buddizForm.enter_transactions')" />
         </div>
       </section>
 
       <!-- Characteristics and Languages -->
       <section class="section-card">
-        <!-- Characteristics organized in grid -->
         <div class="checkbox-group">
-          <h4>성격</h4>
+          <h4>{{ t('common.buddizForm.characteristics') }}</h4>
           <div class="left-align">
             <div v-for="(characteristic, index) in characteristics" :key="index" class="checkbox-item">
               <input type="checkbox" :id="'char-' + index" :value="characteristic" v-model="selectedCharacteristics" />
@@ -128,9 +153,8 @@ const submitForm = async () => {
           </div>
         </div>
 
-        <!-- Languages aligned in a single column -->
         <div class="checkbox-group">
-          <h4>소통 가능한 언어</h4>
+          <h4>{{ t('common.buddizForm.languages') }}</h4>
           <div class="left-align">
             <div v-for="(language, index) in languages" :key="index" class="checkbox-item">
               <input type="checkbox" :id="'lang-' + index" :value="language" v-model="selectedLanguages" />
@@ -140,15 +164,12 @@ const submitForm = async () => {
         </div>
       </section>
 
+      <!-- Price Section -->
       <section class="section-card">
-        <h2 class="section-title"><i class="section-icon"></i> Price</h2>
-
-        <!-- Label above inputs -->
-        <label for="price">Price (per night) <span class="required-asterisk">*</span></label>
-
-        <!-- Price input and dropdown in a horizontal row -->
+        <h2 class="section-title"><i class="section-icon"></i> {{ t('common.buddizForm.price') }}</h2>
+        <label for="price">{{ t('common.buddizForm.price_label') }} <span class="required-asterisk">*</span></label>
         <div class="price-group-inline">
-          <input v-model="price" type="number" placeholder="Min" min="0" id="price" />
+          <input v-model="price" type="number" :placeholder="t('common.buddizForm.min')" min="0" id="price" />
           <select v-model="currencyUnit">
             <option value="$">$</option>
             <option value="€">w</option>
@@ -157,15 +178,15 @@ const submitForm = async () => {
         </div>
       </section>
 
-      <!-- Submit Button -->
-      <button class="submit-btn" @click="submitForm">Save and continue</button>
+      <button class="submit-btn" @click="submitForm">{{ t('common.buddizForm.submit') }}</button>
     </div>
   </div>
 </template>
 
+
 <style scoped>
 .type-header {
-  background-color: #f5f6f7;
+  background-color: #F5F6F7;
   padding-top: 4vh;
   padding-bottom: 4vh;
   padding-left: 6vh;
@@ -296,3 +317,4 @@ input::placeholder {
   background-color: #ff8c00;
 }
 </style>
+

@@ -1,14 +1,14 @@
+<!-- LoanProductPage.vue -->
 <template>
   <div class="fluid-container pb-5">
-    <!-- Header with grey background -->
     <div class="type-header">
-      <h2>외국인을 위한 대출</h2>
-      <div style="font-size: 17pt; margin-top: 8pt;">여러분을 위한 대출정보를 이용하세요!</div>
+      <h2>{{ t('common.loan.header') }}</h2>
+      <div style="font-size: 17pt; margin-top: 8pt;">{{ t('common.loan.description') }}</div>
     </div>
 
     <!-- Loan Details (Selected Loan Information) -->
     <section class="mt-4 mb-5 px-5" v-if="selectedLoan">
-      <h3>{{ selectedLoan.title }} 전세 자금 대출</h3>
+      <h3>{{ selectedLoan.title }} {{ t('common.loan.loanProduct') }}</h3>
       <p class="loan-subtitle">{{ selectedLoan.subtitle }}</p>
 
       <div class="highlight-box px-5 py-4">
@@ -18,23 +18,23 @@
       <div class="details-grid">
         <div class="detail-item">
           <img src="../../assets/icons/calendar-icon.png" alt="Calendar Icon" />
-          <p><strong>기간</strong><br>{{ selectedLoan.period }}</p>
+          <p><strong>{{ t('common.loan.period') }}</strong><br>{{ selectedLoan.period }}</p>
         </div>
         <div class="detail-item">
           <img src="../../assets/icons/hand-icon.png" alt="Money Icon" />
-          <p><strong>최고 금액</strong><br>{{ selectedLoan.loanLimit }}</p>
+          <p><strong>{{ t('common.loan.limit') }}</strong><br>{{ selectedLoan.loanLimit }}</p>
         </div>
       </div>
 
-      <p><strong>상환 방법</strong><br>{{ selectedLoan.howToRepay }}</p>
-      <p><strong>금리 및 이용</strong><br>{{ selectedLoan.interest }}</p>
-      <p><strong>이용 안내</strong><br>{{ selectedLoan.loanGuide }}</p>
-      <p><strong>상세 주소</strong><br><a :href="selectedLoan.url" target="_blank">{{ selectedLoan.url }}</a></p>
+      <p><strong>{{ t('common.loan.repaymentMethod') }}</strong><br>{{ selectedLoan.howToRepay }}</p>
+      <p><strong>{{ t('common.loan.interest') }}</strong><br>{{ selectedLoan.interest }}</p>
+      <p><strong>{{ t('common.loan.loanGuide') }}</strong><br>{{ selectedLoan.loanGuide }}</p>
+      <p><strong>{{ t('common.loan.url') }}</strong><br><a :href="selectedLoan.url" target="_blank">{{ selectedLoan.url }}</a></p>
     </section>
 
     <!-- Loan Cards Section -->
     <section class="loan-cards px-5">
-      <h2>다른 대출 정보</h2>
+      <h2>{{ t('common.loan.otherLoans') }}</h2>
       <div class="loan-grid">
         <LoanCard v-for="(loan, index) in loans" :key="index" :loan="loan" @click="goToLoanDetail(loan)" />
       </div>
@@ -43,28 +43,47 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import axios from 'axios';
 import LoanCard from '@/components/LoanCard.vue';
+import { useI18n } from 'vue-i18n';
+
+const { t, locale } = useI18n(); // Get t() function and locale
 
 const loans = ref([]);
 const selectedLoan = ref(null);
 
-onMounted(() => {
-  axios.get('http://localhost:8080/api/loan/list')
+// Fetch loans based on language
+const fetchLoans = () => {
+  const currentLanguage = locale.value === 'ko' ? 'KR' : 'VN';  // Dynamically determine the current language
+
+  axios.get('http://localhost:8080/api/loan/list', { params: { lan: currentLanguage } })
     .then(response => {
       loans.value = response.data;
     })
     .catch(error => {
       console.error('Failed to fetch loan data:', error);
     });
+};
+
+// Load loans on initial load
+onMounted(() => {
+  fetchLoans();
 });
 
+// Watch for language changes
+watch(locale, () => {
+  fetchLoans();  // Re-fetch loans when the language changes
+});
+
+// Fetch loan details
 const goToLoanDetail = (loan) => {
-  axios.get(`http://localhost:8080/api/loan/detail/${loan.lno}`)
+  const currentLanguage = locale.value === 'ko' ? 'KR' : 'VN';  // Dynamically determine the current language
+
+  axios.get(`http://localhost:8080/api/loan/detail/${loan.lno}`, { params: { lan: currentLanguage } })
     .then(response => {
       selectedLoan.value = response.data;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top after fetching details
     })
     .catch(error => {
       console.error('Failed to fetch loan details:', error);
@@ -80,7 +99,6 @@ const goToLoanDetail = (loan) => {
     padding-left: 6vh;
 }
 
-/* Grey background for the header section */
 .header.grey-background {
   background-color: #f5f5f5;
   padding: 40px;
@@ -99,11 +117,9 @@ const goToLoanDetail = (loan) => {
   color: #666;
 }
 
-/* Loan Details Section */
 .loan-details {
   margin-top: 20px;
   padding: 20px;
-
 }
 
 .loan-details h3 {
@@ -117,7 +133,6 @@ const goToLoanDetail = (loan) => {
   margin-bottom: 10px;
 }
 
-/* Highlighted Description Box */
 .highlight-box {
   background-color: #F5F6F7;
   border-radius: 8px;
@@ -127,7 +142,6 @@ const goToLoanDetail = (loan) => {
   color: #333;
 }
 
-/* Two-column layout for duration and amount */
 .details-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -145,11 +159,6 @@ const goToLoanDetail = (loan) => {
   margin-right: 10px;
 }
 
-.detail-item p {
-  margin: 0;
-}
-
-/* Loan Cards Section */
 .loan-cards {
   margin-top: 40px;
 }
@@ -159,7 +168,6 @@ const goToLoanDetail = (loan) => {
   margin-bottom: 20px;
 }
 
-/* Loan grid with smaller cards */
 .loan-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

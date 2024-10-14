@@ -85,7 +85,7 @@ const loans = [
     repayment: '일시 상환, 원리금 균등 상환 또는 혼합 상환 방식 가능',
     interest: '변동 금리, 연 3.74% 이내',
     usageInfo: '모든 조건을 충족해야 하며, 조건에 따라 우대 금리가 적용될 수 있습니다.',
-    link: 'https://obank.kbstar.com',
+    link: 'https://obank.kbstar.com/quics?page=C103507&cc=b104363%3Ab104516&isNew=N&prcode=LN20000041&QSL=F&QSL=F',
   },
   {
     id: 2,
@@ -97,7 +97,7 @@ const loans = [
     repayment: '일시 상환, 원리금 균등 상환 방식 가능',
     interest: '변동 금리, 연 3.5% 이내',
     usageInfo: '모든 조건을 충족해야 하며, 조건에 따라 이용 가능',
-    link: 'https://obank.kbstar.com',
+    link: 'https://obank.kbstar.com/quics?page=C103507&cc=b104363:b104516&isNew=N&prcode=LN20000064&QSL=F',
   },
   {
     id: 3,
@@ -109,8 +109,8 @@ const loans = [
     repayment: '일시 상환, 원리금 균등 상환 방식 가능',
     interest: '연 3.5%',
     usageInfo: '조건에 따라 이용 가능',
-    link: 'https://obank.kbstar.com',
-  },
+    link: 'https://obank.kbstar.com/quics?page=C103526',
+  }
 ];
 
 // 가이드 정보 예시
@@ -169,6 +169,7 @@ if (data === 'monthly') {
     <FloatingAi></FloatingAi>
     <!-- 메인 검색탭 -->
     <section class="mb-5">
+
       <div class="container-fluid banner-container overflow-hidden" style="background-color: #354962; min-height: 55vh">
         <div class="row align-items-center px-4">
           <!-- 텍스트 및 버튼 -->
@@ -177,9 +178,9 @@ if (data === 'monthly') {
             <p class="sub-text">
               <span style="color: #ff8f17; font-weight: bold">{{ t('common.buddiz') }}</span
               >{{ t('common.home.banner3') }}<br />
+
               {{ t('common.home.banner4') }}
             </p>
-
             <div class="btn-container">
               <router-link to="/buddiz" class="text-muted">
                 <button class="banner-btn btn btn-outline-light me-4 px-4 py-2"><i class="fas fa-user-friends me-2"></i>{{ t('common.home.find_buddiz') }}</button>
@@ -190,7 +191,6 @@ if (data === 'monthly') {
               </router-link>
             </div>
           </div>
-
           <!-- 이미지 -->
           <div class="col-md-5 ms-4">
             <img src="@/assets/images/banner_people.png" style="height: 45vh" />
@@ -258,6 +258,7 @@ if (data === 'monthly') {
           <div class="flex ps-3 pt-3 align-items-center">
             <!-- 한국 -->
             <div class="mb-3 d-flex align-items-center">
+
               <img src="@/assets/images/korea.png" class="avatar border me-3" style="width: 8vh; height: 8vh; object-fit: cover" />
               <div class="rounded-3 d-flex justify-content-end align-items-center px-3" style="background-color: #eaecef; height: 6vh">
                 <input :value="formattedKoreaMoney" @input="updateKoreaMoney" style="all: unset; text-align: right; font-size: large; width: 18vh" class="me-3" />
@@ -269,6 +270,7 @@ if (data === 'monthly') {
 
             <!-- 베트남 (입력 가능) -->
             <div class="mb-3 d-flex align-items-center">
+
               <img src="@/assets/images/vietnam.png" class="avatar border me-3" style="width: 8vh; height: 8vh; object-fit: cover" />
               <div class="rounded-3 d-flex justify-content-end align-items-center px-3" style="background-color: #eaecef; height: 6vh">
                 <input :value="formattedVietnamMoney" @input="updateVietnamMoney" style="all: unset; text-align: right; font-size: large; width: 18vh" class="me-3" />
@@ -301,7 +303,8 @@ if (data === 'monthly') {
                   <span class="d-table badge bg-danger">HOT</span>
                 </div>
                 <div class="content-overlay end-0 top-0 pt-3 pe-3">
-                  <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle" type="button" data-bs-toggle="tooltip" data-bs-placement="left" title="Add to Wishlist">
+                  <button class="btn btn-icon btn-light btn-xs text-primary rounded-circle" type="button"
+                    data-bs-toggle="tooltip" data-bs-placement="left" title="Add to Wishlist">
                     <i class="fi-heart"></i>
                   </button>
                 </div>
@@ -311,7 +314,8 @@ if (data === 'monthly') {
                 <h4 v-if="estate.tradetype == 'monthly'" class="mb-1 fs-xs fw-normal text-uppercase text-primary">{{ t('common.wish.monthly') }}</h4>
                 <h4 v-else class="mb-1 fs-xs fw-normal text-uppercase text-primary">{{ t('common.wish.charter') }}</h4>
                 <h3 class="h6 mb-2 fs-base">
-                  <a class="nav-link stretched-link" href="real-estate-single-v1.html">{{ estate.address }} | {{ estate.roomSize }}㎡</a>
+                  <a class="nav-link stretched-link" href="real-estate-single-v1.html">{{ estate.address }} | {{
+                    estate.roomSize }}㎡</a>
                 </h3>
                 <p class="mb-2 fs-sm text-muted">{{ estate.address }}</p>
                 <div class="fw-bold"><i class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>{{ estate.deposit }} / {{ estate.monthlyPee }}</div>
@@ -457,25 +461,33 @@ if (data === 'monthly') {
 
     <!-- 전세 대출 추천 -->
     <div class="ms-5 me-5 mb-5">
-      <h4 class="head-title">{{ t('common.home.recommend_title') }}</h4>
+      <h4 class="head-title">{{ t('common.loan.header') }}</h4>
       <div class="d-flex mb-4">
-        <span class="subtitle">{{ t('common.home.recommend_title') }}</span>
-        <span class="position-absolute end-0 me-5" to="/">
-          <router-link class="btn-more text-muted">{{ t('common.home.plusbtn') }}</router-link>
+        <span class="subtitle ">{{ t('common.loan.description') }}</span>
+        <span class="position-absolute end-0 me-5">
+          <router-link class="btn-more text-muted" to="/loanproduct">{{ t('common.home.plusbtn') }}</router-link>
         </span>
       </div>
 
       <div class="loan-grid pb-3">
-        <LoanCard v-for="(loan, index) in loans" :key="index" :loan="loan" @click="goToLoanDetail(loan)" />
+        <div v-for="(loan, index) in loans" :key="index" class="card shadow-sm card-hover border-0 h-100 loan-card"
+          @click="goToLoanDetail(loan)">
+          <div class="card-body">
+            <!-- Use the index + 1 to access the corresponding entry in 'homecard' -->
+            <h5 class="loan-name">{{ t(`common.homecard.${index + 1}.name`) }}</h5>
+            <p class="loan-subtitle">{{ t(`common.homecard.${index + 1}.subtitle`) }}</p>
+            <a :href="loan.link" target="_blank" class="loan-link">{{t('common.homecard.indetail')}}</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
-
 <style scoped>
 .ms-8 {
   margin-left: 8rem !important;
 }
+
 .ranking-num {
   font-size: 18px;
   width: 5vh;
@@ -495,12 +507,14 @@ if (data === 'monthly') {
   color: white;
   padding: 40px 0;
 }
+
 .banner-text {
   font-size: 35px;
   margin-bottom: 20px;
   line-height: 1.5;
   letter-spacing: 2.5px;
 }
+
 .sub-text {
   font-size: 18px;
   margin-bottom: 40px;
@@ -508,14 +522,16 @@ if (data === 'monthly') {
   letter-spacing: 1.8px;
   font-weight: 300;
 }
+
 .banner-btn {
   background-color: white;
   text-decoration: none;
   color: #354962;
 }
+
 .banner-btn:hover {
   text-decoration: none;
-  color: #ff8f17;
+  color: #FF8F17;
 }
 
 .ps-sm-3 {
@@ -525,6 +541,7 @@ if (data === 'monthly') {
 .fs-xs {
   font-size: 0.85rem !important;
 }
+
 .fw-normal {
   font-weight: 400 !important;
 }
@@ -545,7 +562,7 @@ if (data === 'monthly') {
   white-space: nowrap !important;
 }
 
-.card:hover > .card-img-hover .img-overlay {
+.card:hover>.card-img-hover .img-overlay {
   opacity: 0.33 !important;
 }
 
@@ -566,6 +583,7 @@ if (data === 'monthly') {
   overflow: hidden;
   -webkit-mask-image: -webkit-radial-gradient(white, black);
 }
+
 .card-img-hover .img-overlay {
   opacity: 0 !important;
 }
@@ -622,6 +640,7 @@ if (data === 'monthly') {
 .pb-md-3 {
   padding-bottom: 1rem !important;
 }
+
 .px-md-3 {
   padding-right: 1rem !important;
   padding-left: 1rem !important;
@@ -646,68 +665,6 @@ h3 {
   font-size: calc(1.425rem + 2.1vw);
   font-weight: 700;
   line-height: 1.2;
-}
-
-.dropdown-item {
-  display: block;
-  width: 100%;
-  padding: 0.375rem 1rem;
-  clear: both;
-  font-weight: 400;
-  color: #454056;
-  text-align: inherit;
-  text-decoration: none;
-  white-space: nowrap;
-  background-color: transparent;
-  border: 0;
-}
-.dropdown-item:hover,
-.dropdown-item:focus {
-  color: #fd5631;
-  background-color: transparent;
-}
-.dropdown-item.active,
-.dropdown-item:active {
-  color: #fd5631;
-  text-decoration: none;
-  background-color: transparent;
-}
-.dropdown-item.disabled,
-.dropdown-item:disabled {
-  color: #9691a4;
-  pointer-events: none;
-  background-color: transparent;
-}
-.dropdown-menu li:hover > .dropdown-item {
-  color: #fd5631;
-}
-.dropdown-menu .active > .dropdown-item {
-  color: #fd5631;
-}
-.dropdown-menu .active > .dropdown-item,
-.dropdown-menu .dropdown-item.active {
-  pointer-events: none;
-}
-.dropdown-menu.dropdown-menu-dark li:hover > .dropdown-item {
-  color: #fff;
-}
-.dropdown-menu.dropdown-menu-dark .active > .dropdown-item {
-  color: #fff;
-}
-.dropdown-menu.w-100 {
-  min-width: 100%;
-}
-
-.dropdown-item {
-  transition: color 0.2s ease-in-out;
-}
-.dropdown-item > i {
-  margin-top: -0.125rem;
-  transition: opacity 0.25s ease-in-out;
-}
-.dropdown-item:hover > i,
-.dropdown-item.active > i {
-  opacity: 1 !important;
 }
 
 .d-block {
@@ -803,12 +760,15 @@ h3 {
   font-weight: bold;
   text-decoration: none;
 }
+
 .btn-link:hover {
   color: #fd5631;
 }
+
 .btn-link.btn-light {
   color: rgba(255, 255, 255, 0.7);
 }
+
 .btn-link.btn-light:hover {
   color: #fff;
 }
@@ -825,6 +785,7 @@ h3 {
 .form-group-light .dropdown-toggle.btn-link {
   color: rgba(255, 255, 255, 0.5);
 }
+
 .form-group-light .dropdown-toggle.btn-link:hover,
 .form-group-light .dropdown-toggle.btn-link.show {
   color: #fff;
@@ -891,9 +852,56 @@ h3 {
   box-shadow: 0 0.125rem 0.125rem -0.125rem rgba(31, 27, 45, 0.08), 0 0.25rem 0.75rem rgba(31, 27, 45, 0.08);
 }
 
-.dropdown .dropdown-toggle::before,
-.dropup .dropdown-toggle::before,
-.dropend .dropdown-toggle::before {
-  display: none;
+
+/* Loan cards container */
+.loan-cards {
+  margin-top: 40px;
+}
+
+.loan-cards h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+/* Loan cards grid */
+.loan-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* Individual loan card styling */
+.loan-card {
+  background-color: #446688;
+  padding: 20px;
+  border-radius: 12px;
+  color: white !important;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.loan-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.loan-card * {
+  color: white !important;
+}
+
+.loan-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.loan-card p {
+  font-size: 1rem;
 }
 </style>
+

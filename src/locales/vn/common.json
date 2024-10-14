@@ -1,181 +1,113 @@
 {
-  "notice": "thông báo",
-  "buddiz": "buddiz",
-  "exchange": "tỷ giá hối đoái",
-  "map": "map",
-  "chat": "trò chuyện",
-  "login": "đăng nhập",
+  "notice": "Thông báo",
+  "buddiz": "Buddiz",
+  "exchange": "Tỷ giá",
+  "map": "Bản đồ",
+  "chat": "Trò chuyện",
   "mypage": "Trang của tôi",
-  "yes": "kiểm tra",
-  "cancle": "hủy bỏ",
-  "login": "Login",
-
+  "yes": "Xác nhận",
+  "cancle": "Hủy",
+  "login": "Đăng nhập",
   "footer": {
-    "question": "câu hỏi",
-    "copyright": "bản quyền"
+    "question": "Câu hỏi thường gặp",
+    "copyright": "Bản quyền"
   },
-
   "home": {
-    "banner1": "Tìm phòng ở Hàn Quốc,",
-    "banner2": "Bạn đang lo lắng và lo lắng?",
-    "banner3": "Tôi sẽ là người bạn, người đồng hành và người hỗ trợ mạnh mẽ của bạn!",
-    "banner4": "Tìm phòng bạn muốn tại NewZips và ghé thăm phòng đó cùng Bạn bè!",
+    "banner1": "Tìm nhà ở Hàn Quốc,",
+    "banner2": "Bạn có đang lo lắng?",
+    "banner3": "Chúng tôi sẽ là người bạn đồng hành và hỗ trợ đáng tin cậy của bạn!",
+    "banner4": "Hãy tìm phòng mong muốn tại NewJips và cùng thăm quan với Buddiz!",
     "find_buddiz": "Tìm Buddiz",
     "find_room": "Tìm phòng",
-    "popular_buddiz": "được mến mộ Buddiz",
-    "popular_buddiz_explain": "Là Buddiz nhận được nhiều điểm sao nhất",
-    "exchange": "tỷ giá hối đoái",
-    "exchange_explain": "Tỷ giá hối đoái giữa Hàn Quốc và Việt Nam.",
-    "popular_estates": "Các mặt hàng phổ biến",
-    "popular_estates_explain": "Đây là căn phòng được hấp nhiều nhất.",
+    "popular_buddiz": "Buddiz phổ biến",
+    "popular_buddiz_explain": "Buddiz được đánh giá cao nhất.",
+    "exchange": "Tỷ giá",
+    "exchange_explain": "Thông tin tỷ giá Hàn Quốc - Việt Nam.",
+    "popular_estates": "Bất động sản phổ biến",
+    "popular_estates_explain": "Phòng được nhiều người yêu thích nhất.",
     "plusbtn": "Xem thêm",
-    "guide_kr": "Hướng dẫn bất động sản Hàn Quốc",
-    "guide_kr_explain": "Hướng dẫn bất động sản đơn giản và dễ dàng do New Jobs hướng dẫn",
-    "guide_kr_card1": "[Tip] 5 điều răn phòng chống hàng giả",
-    "guide_kr_card1_detail": "Phân tích toàn bộ dữ liệu hàng hóa, loại hình và thông tin của hàng giả làm mê hoặc người tiêu dùng",
-    "guide_kr_card2": "Sau khi ký hợp đồng tại nhà, tổng kết các loại đăng ký và khai báo bắt buộc",
-    "guide_kr_card3": "[Tip] Khi tìm được ngôi nhà mà bạn muốn ký hợp đồng, nhất định phải kiểm tra 'cái này'!",
-    "guide_kr_card4": "[Tip hay của Newzips] Danh sách kiểm tra hàng hóa cần tham khảo khi tìm nhà",
-    "guide_kr_card5": "[Tip] Khi soạn hợp đồng thuê nhà bạn nên biết về kiến thức thông thường của pháp luật!",
-    "hotplace": "khu vực được ưa chuộng",
-    "hotplace_explain": "Đề cử khu vực nổi tiếng gần đây của Hàn Quốc",
+    "guide_kr": "Hướng dẫn Bất động sản Hàn Quốc",
+    "guide_kr_explain": "Hướng dẫn bất động sản đơn giản và dễ hiểu từ NewJips.",
+    "guide_kr_card1": "[Mẹo từ NewJips] 5 nguyên tắc phòng tránh bất động sản giả mạo",
+    "guide_kr_card1_detail": "Phân tích dữ liệu để tránh các loại bất động sản giả mạo.",
+    "guide_kr_card2": "[Mẹo từ NewJips] Tổng hợp các bước cần làm sau khi ký hợp đồng",
+    "guide_kr_card3": "[Mẹo từ NewJips] Điều cần xác nhận khi tìm nhà muốn ký hợp đồng",
+    "guide_kr_card4": "[Mẹo từ NewJips] Danh sách kiểm tra cần tham khảo khi tìm nhà",
+    "guide_kr_card5": "[Mẹo từ NewJips] Những điều cần biết khi lập hợp đồng thuê nhà.",
+    "hotplace": "Khu vực nổi bật",
+    "hotplace_explain": "Gợi ý những khu vực nổi bật tại Hàn Quốc.",
     "hotplace_card1": "Hongdae",
     "hotplace_card2": "Seongsu",
     "hotplace_card3": "Gangnam",
-    "hotplace_card4": "Konkuk University",
-    "recommend_title": "Đề cử cho vay thế chấp",
-    "recommend_explain": "Tôi khuyên bạn nên cho vay thế chấp cho người nước ngoài."
+    "hotplace_card4": "Kondae",
+    "recommend_title": "Gợi ý vay Jeonse",
+    "recommend_explain": "Đề xuất khoản vay Jeonse dành cho người nước ngoài."
   },
-
+  "tradetype": {
+    "monthly": "Thuê hàng tháng",
+    "charter": "Jeonse"
+  },
+  "housetype": {
+    "villa": "Biệt thự",
+    "officeTel": "Officetel",
+    "apartment": "Chung cư",
+    "etc": "Khác",
+    "oneRoom": "Một phòng",
+    "twoRoom": "Hai phòng"
+  },
   "chatting": {
     "torry": "NewJips Torry",
-    "placeholder": "Vui lòng nhập tin nhắn của bạn",
-    "special_terms": "điều khoản đặc biệt?",
-    "insurance": "vay tiền thuê nhà?",
-    "aiIntro": "Rất vui được gặp bạn, <br/>đây là Tori, chatbot của New Zip. <br/>Hãy hỏi bất kỳ câu hỏi nào của bạn về các điều<br/>khoản đặc biệt và bảo hiểm bảo hành! <br/><br/>MẸO khi đặt câu hỏi! <br/>Xin vui lòng đặt một câu hỏi đơn giản sử dụng các<br/>từ khóa liên quan đến bảo hiểm! <br/>(Ví dụ) Hợp đồng đặc biệt, loại bảo hiểm bảo hành <br/>",
-    "desc": "Hãy hỏi AI Tori<br/>để có được một hợp đồng bất động sản an toàn!"
+    "placeholder": "Nhập tin nhắn của bạn",
+    "special_terms": "Điều khoản đặc biệt là gì?",
+    "insurance": "Bảo hiểm đảm bảo là gì?",
+    "aiIntro": "Xin chào, tôi là chatbot Torry của NewJips.<br/>Hãy hỏi tôi về các điều khoản đặc biệt và bảo hiểm đảm bảo! <br/><br/>Mẹo đặt câu hỏi! <br/>Hỏi bằng từ khóa ngắn gọn như 'Điều khoản đặc biệt' hoặc 'Loại bảo hiểm đảm bảo'.",
+    "desc": "Để có hợp đồng bất động sản an toàn,<br/>hãy hỏi chatbot AI Torry!"
   },
-
   "edit": {
-    "edit": "Sửa chữa",
+    "edit": "Chỉnh sửa",
     "upload_img": "Tải lên ảnh hồ sơ của bạn.",
     "personal": "Thông tin cá nhân",
-    "nickname": "nickname",
-    "nicknameHolder": "Vui lòng nhập biệt hiệu của bạn.",
+    "nickname": "Biệt danh",
+    "nicknameHolder": "Nhập biệt danh của bạn.",
     "changePw": "Thay đổi mật khẩu",
-    "newPw": "mật khẩu mới",
-    "checkPw": "xác minh mật khẩu",
-    "newPwHolder": "Vui lòng nhập mật khẩu mới.",
-    "checkPwHolder": "Xác nhận mật khẩu mới",
-    "oldPw": "mật khẩu hiện có",
-    "oldPwHolder": "Vui lòng nhập mật khẩu của bạn.",
-    "notpw": "Mật khẩu không khớp",
-    "infoedit": "Đã sửa đổi thông tin",
-    "info": "Bạn có muốn chỉnh sửa lại không?",
-    "file": "Kích thước tập tin phải nhỏ hơn 5MB"
+    "newPw": "Mật khẩu mới",
+    "checkPw": "Xác nhận mật khẩu",
+    "newPwHolder": "Nhập mật khẩu mới của bạn.",
+    "checkPwHolder": "Xác nhận mật khẩu mới.",
+    "oldPw": "Mật khẩu cũ",
+    "oldPwHolder": "Nhập mật khẩu cũ.",
+    "notpw": "Mật khẩu không khớp.",
+    "infoedit": "Thông tin đã được chỉnh sửa.",
+    "info": "Bạn có chắc chắn muốn chỉnh sửa?",
+    "file": "Kích thước tệp phải dưới 5MB."
   },
-
-  "tradetype": {
-    "monthly": "Monthly",
-    "charter": "Charter"
-  },
-
-  "housetype": {
-    "villa": "Villa",
-    "officeTel": "OfficeTel",
-    "apartment": "Apartment",
-    "etc": "etc",
-    "oneRoom": "One room",
-    "twoRoom": "Two room"
-  },
-
   "blame": {
     "blame": "Báo cáo",
-    "des": "Báo cáo vấn đề với các mặt hàng để bán, bất động sản, cặp đồng bộ, v.v.!",
-    "binfo": "Báo cáo thông tin Buddiz",
-    "id": "tên",
+    "des": "Báo cáo các vấn đề liên quan đến bất động sản, Buddiz, v.v.!",
+    "binfo": "Thông tin Buddiz bị báo cáo",
+    "id": "Tên",
     "reason": "Lý do báo cáo",
-    "content": "Chi tiết báo cáo",
-    "holder": "Vui lòng nhập chi tiết báo cáo của bạn.",
-
-    "b1": "sự sai trái",
-    "b2": "hành vi phân biệt chủng tộc",
-    "b3": "chửi bới, hành hung",
-    "b4": "Lặn sau khi được phê duyệt kèm theo",
-    "b5": "Buddiz không phù hợp khác",
-
-    "e1": "Danh sách có thông tin giá sai/phóng đại",
-    "e2": "Các mặt hàng được rao bán được hiển thị trực tuyến ngay cả sau khi giao dịch đã hoàn tất hoặc đã rút",
-    "e3": "Vật phẩm đấu giá đáng ngờ",
-    "e4": "Tài sản mạo danh người bán",
-    "e5": "Danh sách có thông tin không chính xác vì lý do khác",
-
-    "successT": "Báo cáo đã hoàn tất!",
-    "successD": "Chúng tôi xin lỗi vì trải nghiệm bất tiện này.<br/>Nó đã giúp nhiều người dùng có được các hoạt động an toàn.<br/>NewJips sẽ nỗ lực hết mình để chỉ cung cấp những trải nghiệm tốt trong tương lai.<br/>",
-    "goBlameList": "Để báo cáo danh sách",
+    "content": "Nội dung báo cáo",
+    "holder": "Nhập nội dung báo cáo.",
+    "b1": "Hành vi bất hợp pháp",
+    "b2": "Phân biệt chủng tộc",
+    "b3": "Lăng mạ, bạo hành",
+    "b4": "Mất liên lạc sau khi đồng ý đồng hành",
+    "b5": "Hành vi không thích hợp khác",
+    "e1": "Thông tin giá cả sai lệch hoặc phóng đại",
+    "e2": "Bất động sản vẫn hiển thị sau khi hoàn tất giao dịch hoặc hủy bỏ",
+    "e3": "Bất động sản đáng nghi là đang đấu giá",
+    "e4": "Bất động sản giả mạo người bán",
+    "e5": "Thông tin bất động sản không chính xác vì lý do khác",
+    "successT": "Báo cáo đã hoàn thành!",
+    "successD": "Xin lỗi vì đã mang lại trải nghiệm không tốt cho bạn.<br/>Cảm ơn bạn đã giúp chúng tôi đảm bảo an toàn cho mọi người.<br/>NewJips sẽ tiếp tục cố gắng để mang lại những trải nghiệm tốt hơn.",
+    "goBlameList": "Xem danh sách báo cáo",
     "goBack": "Quay lại",
-
-    "einfo": "Thông tin tài sản được báo cáo",
-    "agentNm": "Môi giới",
-    "agentphone": "số điện thoại",
-    "estatenum": "số niêm yết",
-    "address": "vị trí bất động sản"
-  },
-  "mystatus": {
-    "profile": "Thông tin hồ sơ",
-    "editbtn": "biên tập",
-    "my_content": "Chi tiết",
-    "wish_estate": "Các mục đã được thích",
-    "wish_buddiz": "ưa thích Buddiz",
-    "blame_estate": "hàng hóa được khai báo",
-    "blame_buddiz": "Đã báo cáo Buddiz",
-    "add_buddiz_btn": "Đăng ký Buddys",
-    "buddiz_e": "Lịch sử Buddiz",
-    "watch_btn": "Xem bài đăng",
-    "edit_btn": "Chỉnh sửa",
-    "add_buddiz_btn": "Đăng ký Buddiz"
-  },
-
-  "makeChat": "trò chuyện",
-
-  "budi": {
-    "lived": "dấu vết",
-    "years": "y",
-    "active": "hoạt động",
-    "count": "",
-    "pick": "Buddiz Cứu",
-    "review": "Buddiz Đánh giá",
-    "writeReview": "Viết đánh giá",
-    "title": "Buddiz",
-    "content": "Hãy tìm người bạn phù hợp với bạn!",
-    "searchNm": "Tìm kiếm biệt danh",
-    "searchFilter": "Lọc Tìm kiếm",
-    "searchSort": "mảng",
-    "sortf": "nữ giới",
-    "sortm": "nam giới",
-    "sortReview": "Nhiều đánh giá nhất",
-    "sortPrice": "Theo giá",
-    "sortStar": "phạm vi",
-    "searchPH": "Nhập cụm từ tìm kiếm",
-    "star": "đánh giá",
-    "reviewContent": "Xem lại nội dung",
-    "reviewPH": "Vui lòng nhập đánh giá.",
-    "confirm": "Đăng ký đánh giá"
-  },
-  "noti": {
-    "title": "điều khoản thông báo",
-    "content": "Hãy kiểm tra thông báo và tin tức mới."
-  },
-  "wish": {
-    "wishestate": "hàng bán được quan tâm",
-    "wishbuddiz": "Buddy được quan tâm",
-    "notwishestate": "Không có mặt hàng được quan tâm",
-    "notwishbuddiz": "Không có Buddy nào quan tâm cả.",
-    "etitle": "số hàng hóa : ",
-    "monthly": "việc thuê nhà",
-    "charter": "sự thuê riêng"
-  },
-  "blame": {
+    "einfo": "Thông tin bất động sản bị báo cáo",
+    "agentNm": "Tên công ty môi giới",
+    "agentphone": "Số điện thoại",
+    "estatenum": "Số bất động sản",
+    "address": "Địa chỉ bất động sản",
     "blameestate": "hàng bán khai báo",
     "blamebuddiz": "Buddy sự khai báo",
     "notblameestate": "không có hàng hóa khai báo",
@@ -184,14 +116,68 @@
     "monthly": "việc thuê nhà",
     "charter": "sự thuê riêng"
   },
+  "mystatus": {
+    "profile": "Thông tin hồ sơ",
+    "editbtn": "Chỉnh sửa",
+    "my_content": "Lịch sử của tôi",
+    "wish_estate": "Bất động sản yêu thích",
+    "wish_buddiz": "Buddiz yêu thích",
+    "blame_estate": "Bất động sản bị báo cáo",
+    "blame_buddiz": "Buddiz bị báo cáo",
+    "watch_buddiz": "Xem bài viết",
+    "wabud_edit": "Chỉnh sửa",
+    "buddiz_e": "Lịch sử Buddiz",
+    "watch_btn": "Xem bài viết",
+    "edit_btn": "Chỉnh sửa",
+    "add_buddiz_btn": "Đăng ký Buddiz"
+  },
+  "makeChat": "Trò chuyện",
+  "budi": {
+    "lived": "Sống ở Hàn Quốc",
+    "years": "năm",
+    "active": "hoạt động",
+    "count": "lần",
+    "pick": "Chọn Buddiz",
+    "review": "Đánh giá Buddiz",
+    "writeReview": "Viết đánh giá",
+    "title": "Buddiz",
+    "content": "Tìm Buddiz phù hợp với bạn!",
+    "searchNm": "Tìm kiếm theo biệt danh",
+    "searchFilter": "Tìm kiếm bằng bộ lọc",
+    "searchSort": "Sắp xếp",
+    "sortf": "Nữ",
+    "sortm": "Nam",
+    "sortReview": "Nhiều đánh giá nhất",
+    "sortPrice": "Giá thấp nhất",
+    "sortStar": "Xếp hạng sao",
+    "searchPH": "Nhập từ khóa",
+    "star": "Xếp hạng",
+    "reviewContent": "Nội dung đánh giá",
+    "reviewPH": "Nhập đánh giá của bạn.",
+    "confirm": "Đăng đánh giá"
+  },
+  "noti": {
+    "title": "Thông báo",
+    "content": "Kiểm tra những tin tức và thông báo mới!"
+  },
+  "wish": {
+    "wishestate": "Bất động sản yêu thích",
+    "wishbuddiz": "Buddiz yêu thích",
+    "notwishestate": "Không có bất động sản nào yêu thích.",
+    "notwishbuddiz": "Không có Buddiz nào yêu thích.",
+    "etitle": "Mã bất động sản: ",
+    "monthly": "Thuê hàng tháng",
+    "charter": "Jeonse"
+  },
   "sidebar": {
     "mypage": "MY PAGE",
-    "status": "tình trạng của tôi",
-    "edit": "Sửa đổi thông tin cá nhân",
-    "wish": "danh sách hy vọng",
-    "blame": "danh sách khai báo",
+    "status": "Trạng thái của tôi",
+    "edit": "Chỉnh sửa thông tin cá nhân",
+    "wish": "Danh sách yêu thích",
+    "blame": "Danh sách báo cáo",
     "logout": "log out"
   },
+
   "login1": {
     "notid": "ID với mật khẩu sai rồi",
     "binid": "ID và mật khẩu trống rỗng",
@@ -228,5 +214,97 @@
     "gender": "giới tính",
     "man": "đàn ông",
     "woman": "phụ nữ"
+  },
+  "guide": {
+    "categories": {
+      "living": "Cuộc sống",
+      "finance": "Tài chính",
+      "legal": "Pháp lý"
+    },
+    "title": "Hướng dẫn",
+    "subtitle": "Hướng dẫn bất động sản từ NewJips",
+    "description": "Dù bạn mới lần đầu ký hợp đồng bất động sản, NewJips đã chuẩn bị hướng dẫn đầy đủ từ A đến Z.",
+    "description2": "Chúng tôi đã chuẩn bị nhiều hướng dẫn để giúp cuộc sống của bạn tại Hàn Quốc an toàn hơn.",
+    
+    "guide1": "5 nguyên tắc phòng tránh bất động sản giả mạo",
+    "guide1_detail": "Hướng dẫn này giải thích năm quy tắc cần thiết để tránh bất động sản giả mạo khi tìm nhà.",
+    "guide2": "Những điều cần biết khi lập hợp đồng thuê nhà",
+    "guide2_detail": "Hướng dẫn này giải thích các điều cần biết khi lập hợp đồng thuê nhà tại Hàn Quốc.",
+    "guide3": "Vị trí của các trạm phát hành tài liệu tự động tại các ga lớn",
+    "guide3_detail": "Hướng dẫn này chỉ cách tìm các trạm phát hành tài liệu tự động tại các ga lớn.",
+    "guide4": "Danh sách kiểm tra cần tham khảo khi tìm nhà",
+    "guide4_detail": "Hướng dẫn này cung cấp danh sách kiểm tra quan trọng khi tìm kiếm bất động sản.",
+    "guide5": "Những điều cần xác nhận khi tìm nhà muốn ký hợp đồng",
+    "guide5_detail": "Hướng dẫn này đề cập đến những điều cần xác nhận khi tìm nhà để ký hợp đồng.",
+    "guide6": "Cẩm nang cần biết khi chuẩn bị dọn nhà",
+    "guide6_detail": "Hướng dẫn này cung cấp thông tin quan trọng khi chuẩn bị dọn nhà.",
+    "guide7": "Jeonse và thuê hàng tháng? Điều đó là gì?",
+    "guide7_detail": "Hướng dẫn này giải thích sự khác biệt giữa Jeonse và thuê hàng tháng và những điều cần cân nhắc khi lựa chọn.",
+    "guide8": "Tại sao người ta phát bánh khi chuyển nhà?",
+    "guide8_detail": "Hướng dẫn này giải thích truyền thống phát bánh khi chuyển nhà và ý nghĩa của nó.",
+    "guide9": "Các bước cần làm sau khi ký hợp đồng và đăng ký sổ đỏ",
+    "guide9_detail": "Hướng dẫn này giải thích các thủ tục cần làm sau khi ký hợp đồng nhà."
+  },
+  "loan": {
+    "header": "Khoản vay dành cho người nước ngoài",
+    "description": "Hãy sử dụng thông tin khoản vay dành cho bạn!",
+    "loanProduct": "Khoản vay Jeonse",
+    "period": "Thời gian",
+    "limit": "Số tiền tối đa",
+    "repaymentMethod": "Phương thức hoàn trả",
+    "interest": "Lãi suất",
+    "loanGuide": "Hướng dẫn sử dụng",
+    "url": "Địa chỉ chi tiết",
+    "otherLoans": "Thông tin khoản vay khác"
+  },
+  "pagination": {
+    "older": "← Bài cũ hơn",
+    "newer": "Bài mới hơn →"
+  },
+  "buddizForm": {
+    "header": "Đăng ký thông tin Buddiz",
+    "subtitle": "Vui lòng nhập giới thiệu cá nhân của bạn để tham gia hoạt động Buddiz!",
+    "basic_info": "Thông tin cơ bản",
+    "residence": "Nơi cư trú",
+    "select_region": "Chọn khu vực",
+    "korea_experience": "Kinh nghiệm sống tại Hàn Quốc (năm)",
+    "enter_years": "Vui lòng nhập số năm.",
+    "description": "Mô tả",
+    "enter_description": "Mô tả nơi cư trú của bạn.",
+    "characters_left": "kí tự còn lại",
+    "additional_info": "Thông tin bổ sung",
+    "accompany_region": "Khu vực có thể đồng hành",
+    "transaction_count": "Số lượng giao dịch",
+    "enter_transactions": "Vui lòng nhập số lượng giao dịch.",
+    "characteristics": "Tính cách",
+    "languages": "Ngôn ngữ có thể giao tiếp",
+    "price": "Giá cả",
+    "price_label": "Giá (mỗi đêm)",
+    "min": "Giá tối thiểu",
+    "submit": "Lưu lại",
+    "unknown": "Không rõ",
+    "no_description": "Không có mô tả."
+  },
+  "alerts": {
+    "not_logged_in": "Bạn chưa đăng nhập. Vui lòng đăng nhập để thực hiện thao tác này."
+  },
+  "errors": {
+    "fetch_failed": "Không thể tải dữ liệu.",
+    "submit_failed": "Gửi biểu mẫu thất bại."
+  },
+  "homecard": {
+    "indetail": "Địa chỉ chi tiết",
+    "1": {
+      "name": "KB WELCOME PLUS",
+      "subtitle": "Cho vay tối đa 80% tiền thuê, lên đến 2 tỷ đồng"
+    },
+    "2": {
+      "name": "Bảo lãnh cho vay ký quỹ KB",
+      "subtitle": "Tối đa 90% tiền ký quỹ"
+    },
+    "3": {
+      "name": "Cho vay ký quỹ nhà ở cho người nước ngoài KB",
+      "subtitle": "Cho vay ký quỹ nhà cho người nước ngoài"
+    }
   }
 }
