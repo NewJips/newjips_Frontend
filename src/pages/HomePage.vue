@@ -109,7 +109,7 @@ const loans = [
     repayment: '일시 상환, 원리금 균등 상환 방식 가능',
     interest: '연 3.5%',
     usageInfo: '조건에 따라 이용 가능',
-    link: 'https://obank.kbstar.com/quics?page=C103526',
+    link: 'https://www.kakaobank.com/products/leaseLoan',
   }
 ];
 
@@ -470,15 +470,14 @@ if (data === 'monthly') {
       </div>
 
       <div class="loan-grid pb-3">
-        <div v-for="(loan, index) in loans" :key="index" class="card shadow-sm card-hover border-0 h-100 loan-card"
-          @click="goToLoanDetail(loan)">
+        <a v-for="(loan, index) in loans" :key="index" :href="loan.link" target="_blank"
+          class="card shadow-sm card-hover border-0 h-100 loan-card" @click="goToLoanDetail(loan)">
           <div class="card-body">
             <!-- Use the index + 1 to access the corresponding entry in 'homecard' -->
             <h5 class="loan-name">{{ t(`common.homecard.${index + 1}.name`) }}</h5>
             <p class="loan-subtitle">{{ t(`common.homecard.${index + 1}.subtitle`) }}</p>
-            <a :href="loan.link" target="_blank" class="loan-link">{{t('common.homecard.indetail')}}</a>
           </div>
-        </div>
+        </a>
       </div>
     </div>
   </div>
@@ -749,9 +748,6 @@ h3 {
   opacity: 0.5 !important;
 }
 
-.dropdown-toggle.btn-link {
-  box-shadow: none;
-}
 
 .btn-link {
   border: 0;
@@ -773,14 +769,7 @@ h3 {
   color: #fff;
 }
 
-.dropdown-toggle.btn-link {
-  color: #9691a4;
-}
 
-.dropdown-toggle.btn-link:hover,
-.form-group .dropdown-toggle.btn-link.show {
-  color: #454056;
-}
 
 .form-group-light .dropdown-toggle.btn-link {
   color: rgba(255, 255, 255, 0.5);
@@ -818,30 +807,6 @@ h3 {
   border-top-right-radius: calc(0.75rem - 1px);
 }
 
-.dropdown-toggle {
-  display: block;
-  position: end;
-}
-
-.dropdown-toggle::after {
-  display: block;
-  position: absolute;
-  top: 50%;
-  right: 1rem;
-  margin-top: -0.3rem;
-}
-
-.dropdown-menu {
-  margin-bottom: 0.75rem;
-  padding-top: 0;
-  padding-bottom: 0;
-  border: 0;
-  border-left: 2px solid transparent;
-  border-radius: 0;
-  background-color: transparent;
-  box-shadow: none;
-}
-
 .form-group {
   display: flex;
   align-items: center;
@@ -872,7 +837,7 @@ h3 {
 
 /* Individual loan card styling */
 .loan-card {
-  background-color: #446688;
+  background-color: #ff8c00;
   padding: 20px;
   border-radius: 12px;
   color: white !important;

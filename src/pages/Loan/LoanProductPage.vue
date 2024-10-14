@@ -1,4 +1,3 @@
-<!-- LoanProductPage.vue -->
 <template>
   <div class="fluid-container pb-5">
     <div class="type-header">
@@ -29,7 +28,13 @@
       <p><strong>{{ t('common.loan.repaymentMethod') }}</strong><br>{{ selectedLoan.howToRepay }}</p>
       <p><strong>{{ t('common.loan.interest') }}</strong><br>{{ selectedLoan.interest }}</p>
       <p><strong>{{ t('common.loan.loanGuide') }}</strong><br>{{ selectedLoan.loanGuide }}</p>
-      <p><strong>{{ t('common.loan.url') }}</strong><br><a :href="selectedLoan.url" target="_blank">{{ selectedLoan.url }}</a></p>
+
+      <!-- Updated URL section with the "바로가기" button -->
+      <p><strong>{{ t('common.loan.url') }}</strong><br>
+        <a :href="selectedLoan.url" target="_blank" class="loan-link-button">
+          {{ t('common.loan.goToLink') }}
+        </a>
+      </p>
     </section>
 
     <!-- Loan Cards Section -->
@@ -93,10 +98,10 @@ const goToLoanDetail = (loan) => {
 
 <style scoped>
 .type-header {
-    background-color: #F5F6F7;
-    padding-top: 4vh;
-    padding-bottom: 4vh;
-    padding-left: 6vh;
+  background-color: #F5F6F7;
+  padding-top: 4vh;
+  padding-bottom: 4vh;
+  padding-left: 6vh;
 }
 
 .header.grey-background {
@@ -175,7 +180,7 @@ const goToLoanDetail = (loan) => {
 }
 
 .loan-card {
-  background-color: #446688;
+  background-color: #ff8c00;
   padding: 20px;
   border-radius: 12px;
   color: white !important;
@@ -207,7 +212,18 @@ const goToLoanDetail = (loan) => {
   font-size: 1rem;
 }
 
-.loan-card .rate {
-  font-size: 1rem;
+.loan-link-button {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #ff8c00;
+  color: white;
+  border-radius: 8px;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.loan-link-button:hover {
+  background-color: #ff8c00;
 }
 </style>

@@ -20,10 +20,10 @@
         v-for="(guide, index) in paginatedGuides"
         :key="index"
         :imageSrc="guide.imageSrc"
-        :category="t(guide.category)"
-        :title="t(guide.title)"
+        :category="guide.translatedCategory"
+        :title="guide.translatedTitle"
         :date="guide.date"
-        :description="t(guide.description)"
+        :description="guide.translatedDescription"
         :link="guide.link"
       />
     </section>
@@ -41,101 +41,115 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import GuideCard from '@/components/GuideCard.vue';
 import { useI18n } from 'vue-i18n';
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
-// Guide data with category, title, description keys referencing translations in common.json
-// Guide data with t() for translations in common.json
+// Guide data without direct translations
 const guides = ref([
   {
     imageSrc: '../src/assets/images/guide1.jpeg',
-    category: t('common.guide.categories.living'), // Category: Living
-    title: t('common.guide.guide1'), 
+    category: 'common.guide.categories.living', 
+    title: 'common.guide.guide1',
     date: 'September 1, 2023',
-    description: t('common.guide.guide1_detail'), 
+    description: 'common.guide.guide1_detail', 
     link: 'https://spacediver.tistory.com/2'
   },
   {
     imageSrc: '../src/assets/images/guide2.jpeg',
-    category: t('common.guide.categories.finance'), // Category: Finance
-    title: t('common.guide.guide2'), 
+    category: 'common.guide.categories.finance', 
+    title: 'common.guide.guide2',
     date: 'September 2, 2023',
-    description: t('common.guide.guide2_detail'), 
+    description: 'common.guide.guide2_detail', 
     link: 'https://spacediver.tistory.com/3'
   },
   {
     imageSrc: '../src/assets/images/guide3.jpeg',
-    category: t('common.guide.categories.living'), // Category: Living
-    title: t('common.guide.guide3'), 
+    category: 'common.guide.categories.living', 
+    title: 'common.guide.guide3',
     date: 'September 3, 2023',
-    description: t('common.guide.guide3_detail'), 
+    description: 'common.guide.guide3_detail', 
     link: 'https://spacediver.tistory.com/4'
   },
   {
     imageSrc: '../src/assets/images/guide4.jpeg',
-    category: t('common.guide.categories.legal'), // Category: Legal
-    title: t('common.guide.guide4'), 
+    category: 'common.guide.categories.legal', 
+    title: 'common.guide.guide4',
     date: 'September 4, 2023',
-    description: t('common.guide.guide4_detail'), 
+    description: 'common.guide.guide4_detail', 
     link: 'https://spacediver.tistory.com/5'
   },
   {
     imageSrc: '../src/assets/images/guide5.jpeg',
-    category: t('common.guide.categories.living'), // Category: Living
-    title: t('common.guide.guide5'), 
+    category: 'common.guide.categories.living', 
+    title: 'common.guide.guide5',
     date: 'September 5, 2023',
-    description: t('common.guide.guide5_detail'), 
+    description: 'common.guide.guide5_detail', 
     link: 'https://spacediver.tistory.com/6'
   },
   {
     imageSrc: '../src/assets/images/guide6.jpeg',
-    category: t('common.guide.categories.legal'), // Category: Legal
-    title: t('common.guide.guide6'), 
+    category: 'common.guide.categories.legal', 
+    title: 'common.guide.guide6',
     date: 'September 6, 2023',
-    description: t('common.guide.guide6_detail'), 
+    description: 'common.guide.guide6_detail', 
     link: 'https://spacediver.tistory.com/7'
   },
   {
     imageSrc: '../src/assets/images/guide7.jpeg',
-    category: t('common.guide.categories.finance'), // Category: Finance
-    title: t('common.guide.guide7'), 
+    category: 'common.guide.categories.finance', 
+    title: 'common.guide.guide7',
     date: 'September 7, 2023',
-    description: t('common.guide.guide7_detail'), 
+    description: 'common.guide.guide7_detail', 
     link: 'https://spacediver.tistory.com/8'
   },
   {
     imageSrc: '../src/assets/images/guide8.jpeg',
-    category: t('common.guide.categories.finance'), // Category: Finance
-    title: t('common.guide.guide8'), 
+    category: 'common.guide.categories.finance', 
+    title: 'common.guide.guide8',
     date: 'September 8, 2023',
-    description: t('common.guide.guide8_detail'), 
+    description: 'common.guide.guide8_detail', 
     link: 'https://spacediver.tistory.com/9'
   },
   {
     imageSrc: '../src/assets/images/guide9.jpeg',
-    category: t('common.guide.categories.legal'), // Category: Legal
-    title: t('common.guide.guide9'), 
+    category: 'common.guide.categories.legal', 
+    title: 'common.guide.guide9',
     date: 'September 9, 2023',
-    description: t('common.guide.guide9_detail'), 
+    description: 'common.guide.guide9_detail', 
     link: 'https://spacediver.tistory.com/10'
   }
 ]);
+
+// Function to translate guide data dynamically
+const getTranslatedGuides = () => {
+  return guides.value.map(guide => ({
+    ...guide,
+    translatedCategory: t(guide.category),
+    translatedTitle: t(guide.title),
+    translatedDescription: t(guide.description),
+  }));
+};
+
+// Recompute the translated values whenever the language changes
+const translatedGuides = ref(getTranslatedGuides());
+
+watch(locale, () => {
+  translatedGuides.value = getTranslatedGuides();
+});
 
 // Pagination logic
 const currentPage = ref(1);
 const itemsPerPage = 6;
 
-const totalPages = computed(() => {
-  return Math.ceil(guides.value.length / itemsPerPage);
-});
+const totalPages = computed(() => Math.ceil(translatedGuides.value.length / itemsPerPage));
 
 const paginatedGuides = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
   const end = start + itemsPerPage;
-  return guides.value.slice(start, end);
+  return translatedGuides.value.slice(start, end);
 });
 
 const nextPage = () => {

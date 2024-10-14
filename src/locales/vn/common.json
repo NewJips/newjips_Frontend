@@ -223,27 +223,30 @@
     },
     "title": "Hướng dẫn",
     "subtitle": "Hướng dẫn bất động sản từ NewJips",
-    "description": "Dù bạn mới lần đầu ký hợp đồng bất động sản, NewJips đã chuẩn bị hướng dẫn đầy đủ từ A đến Z.",
-    "description2": "Chúng tôi đã chuẩn bị nhiều hướng dẫn để giúp cuộc sống của bạn tại Hàn Quốc an toàn hơn.",
-    
+    "description": "Cho dù bạn mới lần đầu ký hợp đồng bất động sản, NewJips đã chuẩn bị hướng dẫn đầy đủ từ A đến Z về việc tìm nhà tại Hàn Quốc.",
+    "description2": "Chúng tôi đã chuẩn bị nhiều hướng dẫn để giúp bạn sống an toàn hơn tại Hàn Quốc.",
     "guide1": "5 nguyên tắc phòng tránh bất động sản giả mạo",
     "guide1_detail": "Hướng dẫn này giải thích năm quy tắc cần thiết để tránh bất động sản giả mạo khi tìm nhà.",
-    "guide2": "Những điều cần biết khi lập hợp đồng thuê nhà",
-    "guide2_detail": "Hướng dẫn này giải thích các điều cần biết khi lập hợp đồng thuê nhà tại Hàn Quốc.",
-    "guide3": "Vị trí của các trạm phát hành tài liệu tự động tại các ga lớn",
-    "guide3_detail": "Hướng dẫn này chỉ cách tìm các trạm phát hành tài liệu tự động tại các ga lớn.",
-    "guide4": "Danh sách kiểm tra cần tham khảo khi tìm nhà",
+    "guide2": "Những điều luật cần biết khi lập hợp đồng thuê nhà",
+    "guide2_detail": "Hướng dẫn này giải thích các điều luật hữu ích khi lập hợp đồng thuê nhà tại Hàn Quốc.",
+    "guide3": "Vị trí của các máy cấp giấy tờ tự động tại các ga chính",
+    "guide3_detail": "Hướng dẫn này chỉ cách tìm vị trí của các máy cấp giấy tờ tự động tại các ga chính.",
+    "guide4": "Danh sách kiểm tra quan trọng khi tìm bất động sản",
     "guide4_detail": "Hướng dẫn này cung cấp danh sách kiểm tra quan trọng khi tìm kiếm bất động sản.",
-    "guide5": "Những điều cần xác nhận khi tìm nhà muốn ký hợp đồng",
+    "guide5": "Những điều cần xác nhận khi muốn ký hợp đồng thuê nhà",
     "guide5_detail": "Hướng dẫn này đề cập đến những điều cần xác nhận khi tìm nhà để ký hợp đồng.",
-    "guide6": "Cẩm nang cần biết khi chuẩn bị dọn nhà",
-    "guide6_detail": "Hướng dẫn này cung cấp thông tin quan trọng khi chuẩn bị dọn nhà.",
-    "guide7": "Jeonse và thuê hàng tháng? Điều đó là gì?",
-    "guide7_detail": "Hướng dẫn này giải thích sự khác biệt giữa Jeonse và thuê hàng tháng và những điều cần cân nhắc khi lựa chọn.",
+    "guide6": "Những điều cần biết khi chuẩn bị chuyển nhà",
+    "guide6_detail": "Hướng dẫn này cung cấp các thông tin cần thiết khi chuẩn bị chuyển nhà.",
+    "guide7": "Jeonse và thuê hàng tháng là gì?",
+    "guide7_detail": "Hướng dẫn này giải thích sự khác biệt giữa Jeonse và thuê hàng tháng, cùng những điều cần cân nhắc khi lựa chọn.",
     "guide8": "Tại sao người ta phát bánh khi chuyển nhà?",
     "guide8_detail": "Hướng dẫn này giải thích truyền thống phát bánh khi chuyển nhà và ý nghĩa của nó.",
-    "guide9": "Các bước cần làm sau khi ký hợp đồng và đăng ký sổ đỏ",
-    "guide9_detail": "Hướng dẫn này giải thích các thủ tục cần làm sau khi ký hợp đồng nhà."
+    "guide9": "Các thủ tục cần thực hiện sau khi ký hợp đồng nhà",
+    "guide9_detail": "Hướng dẫn này giải thích các thủ tục cần thiết sau khi ký hợp đồng và đăng ký quyền sở hữu.",
+    "pagination": {
+      "older": "← Bài cũ hơn",
+      "newer": "Bài mới hơn →"
+    }
   },
   "loan": {
     "header": "Khoản vay dành cho người nước ngoài",
@@ -255,7 +258,8 @@
     "interest": "Lãi suất",
     "loanGuide": "Hướng dẫn sử dụng",
     "url": "Địa chỉ chi tiết",
-    "otherLoans": "Thông tin khoản vay khác"
+    "otherLoans": "Thông tin khoản vay khác",
+    "goToLink": "Đi tới liên kết"
   },
   "pagination": {
     "older": "← Bài cũ hơn",
@@ -286,7 +290,8 @@
     "no_description": "Không có mô tả."
   },
   "alerts": {
-    "not_logged_in": "Bạn chưa đăng nhập. Vui lòng đăng nhập để thực hiện thao tác này."
+    "not_logged_in": "Bạn chưa đăng nhập. Vui lòng đăng nhập để thực hiện thao tác này.",
+    "form_submitted": "Đã được đăng ký."
   },
   "errors": {
     "fetch_failed": "Không thể tải dữ liệu.",
