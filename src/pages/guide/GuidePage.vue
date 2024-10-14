@@ -1,16 +1,14 @@
-<!-- GuidePage.vue -->
 <template>
   <div class="guide-page">
     <!-- Hero Section -->
     <section class="hero">
       <div class="hero-content">
         <div class="hero-card">
-          <h2>가이드</h2>
-          <h1>NewJips가 알려주는 부동산 가이드</h1>
+          <h2>{{ t('common.guide.title') }}</h2>
+          <h1>{{ t('common.guide.subtitle') }}</h1>
           <p>
-            어려운 부동산 계약이 처음이든, 뉴집스가 준비한 한국에서 집구하기 A
-            to Z.<br />
-            안전한 한국 생활을 돕기 위해 다양한 가이드가 준비되어 있습니다.
+            {{ t('common.guide.description') }}<br />
+            {{ t('common.guide.description2') }}
           </p>
         </div>
       </div>
@@ -22,127 +20,136 @@
         v-for="(guide, index) in paginatedGuides"
         :key="index"
         :imageSrc="guide.imageSrc"
-        :category="guide.category"
-        :title="guide.title"
+        :category="guide.translatedCategory"
+        :title="guide.translatedTitle"
         :date="guide.date"
-        :description="guide.description"
+        :description="guide.translatedDescription"
         :link="guide.link"
       />
     </section>
 
     <!-- Pagination -->
     <div class="pagination px-5">
-      <a
-        href="#"
-        class="pagination-link"
-        @click.prevent="prevPage"
-        :disabled="currentPage === 1"
-        >← Older posts</a
-      >
-      <a
-        href="#"
-        class="pagination-link"
-        @click.prevent="nextPage"
-        :disabled="currentPage === totalPages"
-        >Newer posts →</a
-      >
+      <a href="#" class="pagination-link" @click.prevent="prevPage" :disabled="currentPage === 1">
+        {{ t('common.pagination.older') }}
+      </a>
+      <a href="#" class="pagination-link" @click.prevent="nextPage" :disabled="currentPage === totalPages">
+        {{ t('common.pagination.newer') }}
+      </a>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import GuideCard from '@/components/GuideCard.vue';
+import { useI18n } from 'vue-i18n';
 
-// Update the image paths to reference images from the public folder
+const { t, locale } = useI18n();
+
+// Guide data without direct translations
 const guides = ref([
   {
     imageSrc: '../src/assets/images/guide1.jpeg',
-    category: 'Living',
-    title: '원룸? 1.5룸? 이란',
+    category: 'common.guide.categories.living', 
+    title: 'common.guide.guide1',
     date: 'September 1, 2023',
-    description:
-      'Learn the differences between one-room and 1.5-room apartments.',
-    link: 'https://spacediver.tistory.com/2',
+    description: 'common.guide.guide1_detail', 
+    link: 'https://spacediver.tistory.com/2'
   },
   {
     imageSrc: '../src/assets/images/guide2.jpeg',
-    category: 'Finance',
-    title: '전세 대출 방법',
+    category: 'common.guide.categories.finance', 
+    title: 'common.guide.guide2',
     date: 'September 2, 2023',
-    description: 'Step-by-step guide on how to get a Jeonse loan in Korea.',
-    link: 'https://spacediver.tistory.com/3',
+    description: 'common.guide.guide2_detail', 
+    link: 'https://spacediver.tistory.com/3'
   },
   {
     imageSrc: '../src/assets/images/guide3.jpeg',
-    category: 'Living',
-    title: '집을 구하는 과정',
+    category: 'common.guide.categories.living', 
+    title: 'common.guide.guide3',
     date: 'September 3, 2023',
-    description: 'A guide to finding and securing your ideal home in Korea.',
-    link: 'https://spacediver.tistory.com/4',
+    description: 'common.guide.guide3_detail', 
+    link: 'https://spacediver.tistory.com/4'
   },
   {
     imageSrc: '../src/assets/images/guide4.jpeg',
-    category: 'Legal',
-    title: '허위 매물 예방 방법',
+    category: 'common.guide.categories.legal', 
+    title: 'common.guide.guide4',
     date: 'September 4, 2023',
-    description: 'How to avoid fraudulent listings when searching for a house.',
-    link: 'https://spacediver.tistory.com/5',
+    description: 'common.guide.guide4_detail', 
+    link: 'https://spacediver.tistory.com/5'
   },
   {
     imageSrc: '../src/assets/images/guide5.jpeg',
-    category: 'Living',
-    title: '한국 생활 가이드',
+    category: 'common.guide.categories.living', 
+    title: 'common.guide.guide5',
     date: 'September 5, 2023',
-    description: 'The complete guide to living comfortably in Korea.',
-    link: 'https://spacediver.tistory.com/6',
+    description: 'common.guide.guide5_detail', 
+    link: 'https://spacediver.tistory.com/6'
   },
   {
     imageSrc: '../src/assets/images/guide6.jpeg',
-    category: 'Legal',
-    title: '부동산 계약 팁',
+    category: 'common.guide.categories.legal', 
+    title: 'common.guide.guide6',
     date: 'September 6, 2023',
-    description:
-      'Tips on how to successfully sign a real estate contract in Korea.',
-    link: 'https://spacediver.tistory.com/7',
+    description: 'common.guide.guide6_detail', 
+    link: 'https://spacediver.tistory.com/7'
   },
   {
     imageSrc: '../src/assets/images/guide7.jpeg',
-    category: 'Finance',
-    title: '보증금 돌려받는 법',
+    category: 'common.guide.categories.finance', 
+    title: 'common.guide.guide7',
     date: 'September 7, 2023',
-    description: 'How to get your deposit back after your lease ends.',
-    link: 'https://spacediver.tistory.com/8',
+    description: 'common.guide.guide7_detail', 
+    link: 'https://spacediver.tistory.com/8'
   },
   {
     imageSrc: '../src/assets/images/guide8.jpeg',
-    category: 'Finance',
-    title: '월세 대출 방법',
+    category: 'common.guide.categories.finance', 
+    title: 'common.guide.guide8',
     date: 'September 8, 2023',
-    description: 'Guide to applying for a rent loan in Korea.',
-    link: 'https://spacediver.tistory.com/9',
+    description: 'common.guide.guide8_detail', 
+    link: 'https://spacediver.tistory.com/9'
   },
   {
     imageSrc: '../src/assets/images/guide9.jpeg',
-    category: 'Legal',
-    title: '집주인과의 분쟁 해결 방법',
+    category: 'common.guide.categories.legal', 
+    title: 'common.guide.guide9',
     date: 'September 9, 2023',
-    description: 'How to resolve disputes with your landlord in Korea.',
-    link: 'https://spacediver.tistory.com/10',
-  },
+    description: 'common.guide.guide9_detail', 
+    link: 'https://spacediver.tistory.com/10'
+  }
 ]);
 
+// Function to translate guide data dynamically
+const getTranslatedGuides = () => {
+  return guides.value.map(guide => ({
+    ...guide,
+    translatedCategory: t(guide.category),
+    translatedTitle: t(guide.title),
+    translatedDescription: t(guide.description),
+  }));
+};
+
+// Recompute the translated values whenever the language changes
+const translatedGuides = ref(getTranslatedGuides());
+
+watch(locale, () => {
+  translatedGuides.value = getTranslatedGuides();
+});
+
+// Pagination logic
 const currentPage = ref(1);
 const itemsPerPage = 6;
 
-const totalPages = computed(() => {
-  return Math.ceil(guides.value.length / itemsPerPage);
-});
+const totalPages = computed(() => Math.ceil(translatedGuides.value.length / itemsPerPage));
 
 const paginatedGuides = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
   const end = start + itemsPerPage;
-  return guides.value.slice(start, end);
+  return translatedGuides.value.slice(start, end);
 });
 
 const nextPage = () => {
@@ -165,24 +172,24 @@ const prevPage = () => {
 
 /* Hero Section Styles */
 .hero {
-  background-image: url('@/assets/images/banner.png'); /* Set the background image */
+  background-image: url('@/assets/images/banner.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   padding: 13vh 0;
-  text-align: left; /* Align text to the left */
+  text-align: left;
   position: relative;
-  min-height: 30vh; /* Set a minimum height for the banner */
+  min-height: 30vh;
 }
 
 .hero-content {
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
-  justify-content: flex-start; /* Align content to the left */
-  align-items: center; /* Vertically center the content */
+  justify-content: flex-start;
+  align-items: center;
   height: 100%;
-  padding-left: 50px; /* Add left padding to move the card a bit */
+  padding-left: 50px;
 }
 
 .hero-card {
@@ -213,12 +220,12 @@ const prevPage = () => {
 /* Guide Cards Layout - 3 Columns */
 .guide-cards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  grid-template-columns: repeat(3, 1fr);
   gap: 30px;
   margin-top: 40px;
 }
 
-/* Pagination Controls - Styled like "Read More" buttons with arrows */
+/* Pagination Controls */
 .pagination {
   display: flex;
   justify-content: space-between;
@@ -239,7 +246,6 @@ const prevPage = () => {
   font-weight: bold;
 }
 
-/* Disable link style when at the beginning/end of pages */
 .pagination-link:disabled {
   color: #ccc;
   cursor: not-allowed;

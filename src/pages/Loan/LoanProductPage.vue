@@ -1,42 +1,45 @@
 <template>
   <div class="fluid-container pb-5">
-    <!-- Header with grey background -->
     <div class="type-header">
-        <h2>외국인을 위한 대출</h2>
-        <div style="font-size: 17pt; margin-top: 8pt;">여러분을 위한 대출정보를 이용하세요!</div>
+      <h2>{{ t('common.loan.header') }}</h2>
+      <div style="font-size: 17pt; margin-top: 8pt;">{{ t('common.loan.description') }}</div>
     </div>
 
     <!-- Loan Details (Selected Loan Information) -->
     <section class="mt-4 mb-5 px-5" v-if="selectedLoan">
-      <h3>{{ selectedLoan.name }} 전세 자금 대출</h3>
+      <h3>{{ selectedLoan.title }} {{ t('common.loan.loanProduct') }}</h3>
       <p class="loan-subtitle">{{ selectedLoan.subtitle }}</p>
 
-      <!-- Highlighted Description -->
       <div class="highlight-box px-5 py-4">
-        임대차 계약을 체결한 외국인 고객 및 소득을 증명할 수 있는 고객 대상. 대출 기간은 3개월에서 2년, 최대 10년까지 연장 가능.
+        {{ selectedLoan.content }}
       </div>
 
-      <!-- Two-column layout for key details -->
       <div class="details-grid">
         <div class="detail-item">
           <img src="../../assets/icons/calendar-icon.png" alt="Calendar Icon" />
-          <p><strong>기간</strong><br>{{ selectedLoan.duration }}</p>
+          <p><strong>{{ t('common.loan.period') }}</strong><br>{{ selectedLoan.period }}</p>
         </div>
         <div class="detail-item">
           <img src="../../assets/icons/hand-icon.png" alt="Money Icon" />
-          <p><strong>최고 금액</strong><br>{{ selectedLoan.maxAmount }}</p>
+          <p><strong>{{ t('common.loan.limit') }}</strong><br>{{ selectedLoan.loanLimit }}</p>
         </div>
       </div>
 
-      <p><strong>상환 방법</strong><br>{{ selectedLoan.repayment }}</p>
-      <p><strong>금리 및 이용</strong><br>{{ selectedLoan.interest }}</p>
-      <p><strong>이용 안내</strong><br>{{ selectedLoan.usageInfo }}</p>
-      <p><strong>상세 주소</strong><br><a :href="selectedLoan.link" target="_blank">{{ selectedLoan.link }}</a></p>
+      <p><strong>{{ t('common.loan.repaymentMethod') }}</strong><br>{{ selectedLoan.howToRepay }}</p>
+      <p><strong>{{ t('common.loan.interest') }}</strong><br>{{ selectedLoan.interest }}</p>
+      <p><strong>{{ t('common.loan.loanGuide') }}</strong><br>{{ selectedLoan.loanGuide }}</p>
+
+      <!-- Updated URL section with the "바로가기" button -->
+      <p><strong>{{ t('common.loan.url') }}</strong><br>
+        <a :href="selectedLoan.url" target="_blank" class="loan-link-button">
+          {{ t('common.loan.goToLink') }}
+        </a>
+      </p>
     </section>
 
     <!-- Loan Cards Section -->
     <section class="loan-cards px-5">
-      <h2>다른 대출 정보</h2>
+      <h2>{{ t('common.loan.otherLoans') }}</h2>
       <div class="loan-grid">
         <LoanCard v-for="(loan, index) in loans" :key="index" :loan="loan" @click="goToLoanDetail(loan)" />
       </div>
@@ -45,90 +48,62 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, watch } from 'vue';
+import axios from 'axios';
 import LoanCard from '@/components/LoanCard.vue';
+import { useI18n } from 'vue-i18n';
 
-const loans = [
-  {
-    id: 1,
-    name: 'KB WELCOME PLUS 전세대출',
-    subtitle: '임차보증금 80% 이내, 최대 2억까지',
-    maxAmount: '최대 2억 원',
-    rate: '연 3.74% 이내',
-    duration: '3개월에서 2년',
-    repayment: '일시 상환, 원리금 균등 상환 또는 혼합 상환 방식 가능',
-    interest: 'COFIX 기준 변동 금리, 연 3.74% 이내',
-    usageInfo: '모든 조건을 충족해야 하며, 조건에 따라 우대 금리가 적용될 수 있습니다.',
-    link: 'https://obank.kbstar.com'
-  },
-  {
-    id: 2,
-    name: 'KB 전세자금대출 상품',
-    subtitle: '전세보증금반환보증 지원',
-    maxAmount: '최대 4억 원 (보증금의 80%)',
-    rate: '최저 4.27% ~ 최고 6.29%',
-    duration: '10개월 ~ 25개월',
-    repayment: '만기일시상환',
-    interest: '연 4.27% ~ 6.29%',
-    usageInfo: '신용등급, 연소득, 주택가액 등에 따라 대출 한도 및 금리 적용',
-    link: 'https://obank.kbstar.com/quics?page=C019479'
-  },
-  {
-    id: 3,
-    name: 'KB 전세자금대출',
-    subtitle: '임차보증금의 80%까지 보증서 담보로 대출 제공',
-    maxAmount: '최대 2억2천2백만원, 채권보전시 4억4천4백만원',
-    rate: '최저 4.21% ~ 최고 6.22%',
-    duration: '최소 1년, 최대 10년',
-    repayment: '일시상환, 혼합상환',
-    interest: '최저 4.21%, 최고 6.22%',
-    usageInfo: '보증료, 인지세 등',
-    link: 'https://obank.kbstar.com/quics?page=C019479'
-  },
-  {
-    id: 4,
-    name: '카카오뱅크 전월세 보증금대출',
-    subtitle: '전월세 임차보증금의 80%까지 지원',
-    maxAmount: '최대 4억원',
-    rate: '최저 4.057% ~ 최고 6.172%',
-    duration: '10개월 이상 25개월 이내',
-    repayment: '일시상환',
-    interest: '연 4.057% ~ 6.172%',
-    usageInfo: '신용평가, 소득에 따라 대출 한도와 금리 결정',
-    link: 'https://www.kakaobank.com/products/leaseLoan'
-  },
-  {
-    id: 5,
-    name: '하나은행 대출',
-    subtitle: '최대 5천만 원까지 대출 가능',
-    maxAmount: '최대 5천만 원',
-    rate: '최저 4.057% ~ 최고 6.172%',
-    duration: '일시상환: 1년, 분할상환: 5년 이내',
-    repayment: '일시상환, 통장대출, 원(리)금균등분할상환',
-    interest: '최저 4.057% ~ 최고 6.172%',
-    usageInfo: '신용평가, 거래 실적에 따라 대출 한도와 금리 결정, 금리 인하 요구권 행사 가능',
-    link: 'https://www.kebhana.com/cont/mall/mall09/mall0903/mall090301/index.jsp'
-  }
-]
-  ;
+const { t, locale } = useI18n(); // Get t() function and locale
 
+const loans = ref([]);
 const selectedLoan = ref(null);
 
+// Fetch loans based on language
+const fetchLoans = () => {
+  const currentLanguage = locale.value === 'ko' ? 'KR' : 'VN';  // Dynamically determine the current language
+
+  axios.get('http://localhost:8080/api/loan/list', { params: { lan: currentLanguage } })
+    .then(response => {
+      loans.value = response.data;
+    })
+    .catch(error => {
+      console.error('Failed to fetch loan data:', error);
+    });
+};
+
+// Load loans on initial load
+onMounted(() => {
+  fetchLoans();
+});
+
+// Watch for language changes
+watch(locale, () => {
+  fetchLoans();  // Re-fetch loans when the language changes
+});
+
+// Fetch loan details
 const goToLoanDetail = (loan) => {
-  selectedLoan.value = loan;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  const currentLanguage = locale.value === 'ko' ? 'KR' : 'VN';  // Dynamically determine the current language
+
+  axios.get(`http://localhost:8080/api/loan/detail/${loan.lno}`, { params: { lan: currentLanguage } })
+    .then(response => {
+      selectedLoan.value = response.data;
+      window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top after fetching details
+    })
+    .catch(error => {
+      console.error('Failed to fetch loan details:', error);
+    });
 };
 </script>
 
 <style scoped>
 .type-header {
-    background-color: #F5F6F7;
-    padding-top: 4vh;
-    padding-bottom: 4vh;
-    padding-left: 6vh;
+  background-color: #F5F6F7;
+  padding-top: 4vh;
+  padding-bottom: 4vh;
+  padding-left: 6vh;
 }
 
-/* Grey background for the header section */
 .header.grey-background {
   background-color: #f5f5f5;
   padding: 40px;
@@ -147,11 +122,9 @@ const goToLoanDetail = (loan) => {
   color: #666;
 }
 
-/* Loan Details Section */
 .loan-details {
   margin-top: 20px;
   padding: 20px;
-
 }
 
 .loan-details h3 {
@@ -165,7 +138,6 @@ const goToLoanDetail = (loan) => {
   margin-bottom: 10px;
 }
 
-/* Highlighted Description Box */
 .highlight-box {
   background-color: #F5F6F7;
   border-radius: 8px;
@@ -175,7 +147,6 @@ const goToLoanDetail = (loan) => {
   color: #333;
 }
 
-/* Two-column layout for duration and amount */
 .details-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -193,11 +164,6 @@ const goToLoanDetail = (loan) => {
   margin-right: 10px;
 }
 
-.detail-item p {
-  margin: 0;
-}
-
-/* Loan Cards Section */
 .loan-cards {
   margin-top: 40px;
 }
@@ -207,7 +173,6 @@ const goToLoanDetail = (loan) => {
   margin-bottom: 20px;
 }
 
-/* Loan grid with smaller cards */
 .loan-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -215,7 +180,7 @@ const goToLoanDetail = (loan) => {
 }
 
 .loan-card {
-  background-color: #446688;
+  background-color: #ff8c00;
   padding: 20px;
   border-radius: 12px;
   color: white !important;
@@ -247,7 +212,19 @@ const goToLoanDetail = (loan) => {
   font-size: 1rem;
 }
 
-.loan-card .rate {
-  font-size: 1rem;
+.loan-link-button {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #ff8c00;
+  color: white;
+  border-radius: 8px;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
 }
+
+.loan-link-button:hover {
+  background-color: #ff8c00;
+}
+
 </style>

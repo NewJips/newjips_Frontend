@@ -1,7 +1,9 @@
 <script setup>
 import { useAuthStore } from '@/stores/auth';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 
+const { t, locale } = useI18n();
 const store = useAuthStore();
 
 const router = useRouter();
@@ -14,6 +16,6 @@ const logout = (e) => {
 <template>
   <a href="#" class="nav-link" @click.prevent="logout">
     <i class="logout"></i>
-    로그아웃
+    {{ t('common.sidebar.logout') }}
   </a>
 </template>

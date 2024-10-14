@@ -4,25 +4,45 @@
   "exchange": "환율",
   "map": "지도",
   "chat": "채팅",
-  "login": "로그인",
   "mypage": "마이페이지",
   "yes": "확인",
   "cancle": "취소",
-
+  "login": "로그인",
   "footer": {
     "question": "자주묻는 질문",
     "copyright": "저작권"
   },
-
   "home": {
     "banner1": "한국에서 방 구하기,",
     "banner2": "고민되고 걱정 되시나요?",
     "banner3": "가 친구, 동행자, 든든한 지원군이 되어줄게요!",
     "banner4": "뉴집스에서 원하는 방을 찾고 버디즈와 함께 방문해보세요!",
     "find_buddiz": "버디즈 찾기",
-    "find_room": "방 찾기"
+    "find_room": "방 찾기",
+    "popular_buddiz": "인기 버디즈",
+    "popular_buddiz_explain": "가장 많은 별점을 받은 버디즈 입니다.",
+    "exchange": "환율",
+    "exchange_explain": "한국-베트남 환율 정보입니다.",
+    "popular_estates": "인기 매물",
+    "popular_estates_explain": "찜을 가장 많이 받은 방입니다.",
+    "plusbtn": "더보기",
+    "guide_kr": "한국 부동산 가이드",
+    "guide_kr_explain": "New Jips가 알려주는 쉽고 간단한 부동산 가이드",
+    "guide_kr_card1": "[뉴집스 꿀팁] 허위매물 예방 5계명",
+    "guide_kr_card1_detail": "전체 매물 데이터를 분석하여 소비자를 현혹시키는 허위매물의 유형과 정보",
+    "guide_kr_card2": "[뉴집스 꿀팁] 집 계약 후 필수 신고 및 등기 신청 종류 총정리",
+    "guide_kr_card3": "[뉴집스 꿀팁] 계약하고 싶은 집 찾을 때 ‘이것’ 꼭 확인해요!",
+    "guide_kr_card4": "[뉴집스 꿀팁] 집 구할 때 꼭! 참고해야 할 '매물 체크리스트",
+    "guide_kr_card5": "[뉴집스 꿀팁] 주택임대차계약서 작성 시 알아두면 좋은 법률 상식~!",
+    "hotplace": "핫플 지역",
+    "hotplace_explain": "한국의 최근 인기 지역을 추천합니다.",
+    "hotplace_card1": "홍대",
+    "hotplace_card2": "성수",
+    "hotplace_card3": "강남",
+    "hotplace_card4": "건대",
+    "recommend_title": "전세 대출 추천",
+    "recommend_explain": "외국인을 위한 전세 대출을 추천합니다."
   },
-
   "tradetype": {
     "monthly": "월세",
     "charter": "전세"
@@ -35,15 +55,14 @@
     "oneRoom": "원룸",
     "twoRoom": "투룸"
   },
-
   "chatting": {
     "torry": "뉴집스 토리",
     "placeholder": "메시지를 입력해주세요",
     "special_terms": "특약이란?",
     "insurance": "보증보험이란?",
-    "aiIntro": "반가워요, 뉴집스챗봇 토리입니다.<br/>특약사항, 보증보험 관련된 궁금한 내용을 물어보세요! <br/><br/>질문하기 TIP! <br/>보험 관련 핵심단어로 간단하게 질문해 주세요! <br/>(예시) 특약, 보증보험 종류 <br/>"
+    "aiIntro": "반가워요, 뉴집스챗봇 토리입니다.<br/>특약사항, 보증보험 관련된 궁금한 내용을 물어보세요! <br/><br/>질문하기 TIP! <br/>보험 관련 핵심단어로 간단하게 질문해 주세요! <br/>(예시) 특약, 보증보험 종류 <br/>",
+    "desc": "안전한 부동산 계약을 위해<br/>AI 토리에게 물어보세요 !"
   },
-
   "edit": {
     "edit": "수정",
     "upload_img": "프로필 사진을 업로드하세요.",
@@ -56,41 +75,241 @@
     "newPwHolder": "새로운 비밀번호를 입력하세요.",
     "checkPwHolder": "새로운 비밀번호 확인",
     "oldPw": "기존 비밀번호",
-    "oldPwHolder": "비밀번호를 입력하세요."
+    "oldPwHolder": "비밀번호를 입력하세요.",
+    "notpw": "비밀번호가 일치하지 않습니다.",
+    "infoedit": "정보를 수정하였습니다.",
+    "info": "수정하시겠습니까?",
+    "file": "파일 크기를 5MB 이하이어야 합니다."
   },
-
-  "map": {},
-
   "blame": {
     "blame": "신고하기",
-    "des": "매물, 부동산, 버디즈 등 문제 상황을 신고하세요 !",
+    "des": "매물, 부동산, 버디즈 등 문제 상황을 신고하세요!",
     "binfo": "신고 버디즈 정보",
-    "id": "아이디",
+    "id": "이름",
     "reason": "신고 사유",
     "content": "신고 내용",
     "holder": "신고 내용을 입력해주세요.",
-
     "b1": "불법 행위",
     "b2": "인종차별적 행위",
     "b3": "폭언, 폭행",
     "b4": "동행 승인 후 잠수",
     "b5": "기타 부적절한 버디즈",
-
     "e1": "허위 / 과장된 가격정보를 가진 매물",
     "e2": "거래 완료 혹은 철회에도 온라인상에 노출 중인 매물",
     "e3": "경매 의심 매물",
     "e4": "매도자 사칭 매물",
     "e5": "기타 사유로 정보가 부정확한 매물",
-
-    "successT": "신고를 완료했습니다 !",
+    "successT": "신고를 완료했습니다!",
     "successD": "불편한 경험을 드려 죄송합니다.<br/>많은 유저들의 안전한 활동에 도움이 되었습니다.<br/>앞으로 좋은 경험만 가질 수 있도록<br/>열심히 노력하는 NewJips가 되겠습니다.",
     "goBlameList": "신고 목록으로",
     "goBack": "돌아가기",
-
     "einfo": "신고 매물 정보",
     "agentNm": "중개업소",
     "agentphone": "전화번호",
     "estatenum": "매물 번호",
-    "address": "매물 소재지"
+    "address": "매물 소재지",
+    "blameestate": "신고 매물",
+    "blamebuddiz": "신고 버디즈",
+    "notblameestate": "신고 매물이 없습니다.",
+    "notblamebuddiz": "신고 버디즈가 없습니다.",
+    "etitle": "매물번호 : ",
+    "monthly": "월세",
+    "charter": "전세"
+  },
+  "mystatus": {
+    "profile": "프로필 정보",
+    "editbtn": "수정",
+    "my_content": "내역",
+    "wish_estate": "찜한 매물",
+    "wish_buddiz": "찜한 버디즈",
+    "blame_estate": "신고한 매물",
+    "blame_buddiz": "신고한 버디즈",
+    "watch_buddiz": "게시글 보러가기",
+    "wabud_edit": "수정하기",
+    "buddiz_e": "버디즈 이력",
+    "watch_btn": "게시글 보러가기",
+    "edit_btn": "수정하기",
+    "add_buddiz_btn": "버디즈 등록하기"
+  },
+  "makeChat": "채팅하기",
+  "budi": {
+    "lived": "한국 자취",
+    "years": "년차",
+    "active": "활동",
+    "count": "회",
+    "pick": "버디즈 찜하기",
+    "review": "버디즈 후기",
+    "writeReview": "리뷰 남기기",
+    "title": "버디즈",
+    "content": "나에게 꼭 맞는 버디를 찾아보세요!",
+    "searchNm": "닉네임으로 검색",
+    "searchFilter": "필터로 검색",
+    "searchSort": "정렬",
+    "sortf": "여성",
+    "sortm": "남성",
+    "sortReview": "리뷰 많은 순",
+    "sortPrice": "가격순",
+    "sortStar": "별점순",
+    "searchPH": "검색어 입력",
+    "star": "평점",
+    "reviewContent": "리뷰 내용",
+    "reviewPH": "리뷰를 입력하세요.",
+    "confirm": "리뷰 등록"
+  },
+  "noti": {
+    "title": "공지 사항",
+    "content": "새로운 소식과 공지를 확인하세요!"
+  },
+  "wish": {
+    "wishestate": "관심 매물",
+    "wishbuddiz": "관심 버디즈",
+    "notwishestate": "관심 매물이 없습니다.",
+    "notwishbuddiz": "관심 버디즈가 없습니다.",
+    "etitle": "매물번호 : ",
+    "monthly": "월세",
+    "charter": "전세"
+  },
+  "sidebar": {
+    "mypage": "마이 페이지",
+    "status": "내 상태",
+    "edit": "개인 정보 수정",
+    "wish": "위시리스트",
+    "blame": "신고목록",
+    "logout": "로그아웃"
+  },
+
+  "login1": {
+    "notid": "아이디 또는 비밀번호가 틀렸습니다.",
+    "binid": "아이디 또는 비밀번호가 비어 있습니다.",
+    "hellow1": "안녕하세요",
+    "hellow2": "다시 만나서 반가워요 :)",
+    "idinput": "아이디를 입력하세요",
+    "id": "아이디",
+    "passwordinput": "비밀번호를 입력하세요",
+    "password": "비밀번호",
+    "login": "로그인",
+    "account": "계정이 없으신가요??",
+    "join": "회원가입"
+  },
+  "join": {
+    "checkid": "사용자 ID를 입력하세요.",
+    "notid": "이미 사용중인 ID입니다.",
+    "useid": "사용가능한 ID입니다.",
+    "overid1": "아이디 중복 체크를 하셔야 합니다.",
+    "notpassword": "비밀번호가 일치하지 않습니다.",
+    "newjips1": "NewJips에 가입하세요!",
+    "newjips2": "당신을 위한 집과 버디즈를 만나요",
+    "ment1": "원하는 집을 찜하세요.",
+    "ment2": "나와 딱 맞는 버디즈를 찾으세요.",
+    "ment3": "나도 또다른 버디즈로 활동해보세요.",
+    "name": "이름",
+    "namein": "이름을 입력하세요",
+    "id": "아이디",
+    "idin": "아이디를 입력하세요",
+    "overid2": "ID 중복 확인",
+    "password": "비밀번호",
+    "checkpassword": "비밀번호 확인",
+    "nickname": "닉네임",
+    "nicknamein": "닉네임을 입력하세요",
+    "gender": "성별",
+    "man": "남성",
+    "woman": "여성"
+  },
+  "guide": {
+    "categories": {
+      "living": "생활",
+      "finance": "금융",
+      "legal": "법률"
+    },
+    "title": "가이드",
+    "subtitle": "NewJips가 알려주는 부동산 가이드",
+    "description": "어려운 부동산 계약이 처음이든, 뉴집스가 준비한 한국에서 집구하기 A to Z.",
+    "description2": "안전한 한국 생활을 돕기 위해 다양한 가이드가 준비되어 있습니다.",
+    "guide1": "허위매물 예방 5계명",
+    "guide1_detail": "이 가이드는 집을 찾을 때 허위매물에 속지 않기 위한 다섯 가지 필수 규칙을 설명합니다.",
+    "guide2": "주택임대차계약서 작성 시 알아두면 좋은 법률",
+    "guide2_detail": "이 가이드는 한국에서 전세 계약서를 작성할 때 알아두면 유용한 법률 사항을 설명합니다.",
+    "guide3": "주요 역사 내 무인민원발급기 위치",
+    "guide3_detail": "이 가이드는 주요 역사 내에서 무인민원발급기의 위치를 찾는 방법을 안내합니다.",
+    "guide4": "참고해야 할 매물 체크리스트",
+    "guide4_detail": "이 가이드는 부동산을 검색할 때 참고해야 할 중요한 체크리스트를 제시합니다.",
+    "guide5": "계약하고 싶은 집 찾을 때 ‘이것’ 꼭 확인해요!",
+    "guide5_detail": "이 가이드는 계약을 진행하고 싶은 집을 찾을 때 확인해야 할 필수 사항을 다룹니다.",
+    "guide6": "이사 준비하는 사람 필독!",
+    "guide6_detail": "이 가이드는 이사를 준비할 때 필수적으로 알아야 할 정보를 제공합니다.",
+    "guide7": "전세와 월세? 그게 뭘까",
+    "guide7_detail": "이 가이드는 전세와 월세의 차이점을 설명하고, 한국에서 전세나 월세를 선택할 때 고려해야 할 사항을 제시합니다.",
+    "guide8": "이사 떡 돌리는 이유!",
+    "guide8_detail": "이 가이드는 이사 시 떡을 돌리는 전통과 그 의미를 설명합니다.",
+    "guide9": "집 계약 후 필수 신고 및 등기 신청 종류",
+    "guide9_detail": "이 가이드는 집 계약 후 필수적으로 해야 할 신고 및 등기 신청 절차를 안내합니다.",
+    "pagination": {
+      "older": "← Older posts",
+      "newer": "Newer posts →"
+    }
+  },
+  "loan": {
+    "header": "외국인을 위한 대출",
+    "description": "여러분을 위한 대출정보를 이용하세요!",
+    "loanProduct": "전세 자금 대출",
+    "period": "기간",
+    "limit": "최고 금액",
+    "repaymentMethod": "상환 방법",
+    "interest": "금리",
+    "loanGuide": "이용 안내",
+    "url": "상세 주소",
+    "otherLoans": "다른 대출 정보",
+    "goToLink": "바로가기"
+  },
+  "homecard": {
+    "indetail": "상세주소",
+    "1": {
+      "name": "KB WELCOME PLUS",
+      "subtitle": "외국인 고객을 위한 장기 임대 보증금 대출"
+    },
+    "2": {
+      "name": "KB 전세금 안심대출",
+      "subtitle": "전세보증금반환보증 지원"
+    },
+    "3": {
+      "name": "Kakao 전월세 보증금대출",
+      "subtitle": "전월세 임차보증금의 80%까지 지원"
+    }
+  },
+  "pagination": {
+    "older": "← Older posts",
+    "newer": "Newer posts →"
+  },
+  "buddizForm": {
+    "header": "버디즈 이력 등록",
+    "subtitle": "버디즈로 활동하기 위한 나만의 소개를 입력해주세요!",
+    "basic_info": "기본 정보",
+    "residence": "거주 지역",
+    "select_region": "지역 선택",
+    "korea_experience": "한국 자취 경력 (년)",
+    "enter_years": "숫자로 입력해주세요.",
+    "description": "설명",
+    "enter_description": "거주지에 대해 설명해주세요.",
+    "characters_left": "남은 문자",
+    "additional_info": "추가 정보",
+    "accompany_region": "동행 가능 지역",
+    "transaction_count": "거래 횟수",
+    "enter_transactions": "거래 횟수를 입력해주세요.",
+    "characteristics": "성격",
+    "languages": "소통 가능한 언어",
+    "price": "가격",
+    "price_label": "가격 (1박당)",
+    "min": "최소 가격",
+    "submit": "저장하기",
+    "unknown": "알 수 없음",
+    "no_description": "설명이 없습니다."
+  },
+  "alerts": {
+    "not_logged_in": "로그인되어 있지 않습니다. 로그인 후 다시 시도해주세요.",
+    "form_submitted": "등록 되었습니다."
+  },
+  "errors": {
+    "fetch_failed": "데이터를 불러오는데 실패했습니다.",
+    "submit_failed": "제출하는데 실패했습니다."
   }
 }

@@ -3,7 +3,9 @@ import { ref, computed, onMounted } from 'vue';
 import SideBar from '@/components/layouts/SideBar.vue';
 import { useAuthStore } from '@/stores/auth';
 import blameApi from '@/api/blameApi';
+import { useI18n } from 'vue-i18n';
 
+const { t, locale } = useI18n();
 const auth = useAuthStore();
 const uno = computed(() => auth.uno);
 console.log(auth.uno);
@@ -90,6 +92,16 @@ const prevBuddySlide = () => {
     currentBuddySlide.value -= 1;
   }
 };
+
+const tradeType = ref([]);
+
+const data = blame_buildings.tradetype; // 'value'를 제거하고 tradetype에 직접 접근
+
+if (data === 'monthly') {
+  tradeType.value = '전세'; // monthly를 전세로 변환
+} else {
+  tradeType.value = '월세'; // charter를 월세로 변환
+}
 </script>
 <template>
   <div class="container-fluid">
@@ -101,7 +113,7 @@ const prevBuddySlide = () => {
 
       <!-- 메인 콘텐츠 -->
       <div class="col-lg-9 col-md-9 col-sm-12">
-        <h2 class="mt-5" style="margin-left: 20px; margin-right: 0; margin-bottom: 20px">신고한 매물</h2>
+        <h2 class="mt-5" style="margin-left: 20px; margin-right: 0; margin-bottom: 20px">{{ t('common.blame.blameestate') }}</h2>
         <div class="position-relative">
           <div v-if="blame_buildings.length > 0">
             <!-- 왼쪽 화살표 -->
@@ -117,8 +129,10 @@ const prevBuddySlide = () => {
                     <img :src="buildings.img" class="img-fluid img-custom" :alt="blame_buildings.title" />
                   </div>
                   <div class="card-body">
-                    <h5 class="card-title">매물{{ currentSlide + index + 1 }}</h5>
-                    <p class="card-text">{{ buildings.content }}</p>
+                    <h5 class="card-title">{{ t('common.blame.etitle') }}{{ buildings.blamedId }}</h5>
+                    <p class="card-text">{{ buildings.deposit }} / {{ buildings.monthlyPee }}</p>
+                    <p v-if="buildings.tradetype == 'monthly'" class="card-text">{{ t('common.wish.monthly') }}</p>
+                    <p v-else class="card-text">{{ t('common.wish.charter') }}</p>
                   </div>
                 </div>
               </div>
@@ -132,12 +146,12 @@ const prevBuddySlide = () => {
           <div v-else>
             <div class="text-center">
               <img src="@/assets/images/nothing.png" alt="nothing" class="img-fluid" style="max-width: 300px" />
-              <p>신고한 매물이 없습니다.</p>
+              <p>{{ t('common.blame.notblameestate') }}</p>
             </div>
           </div>
         </div>
         <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
-        <h2 class="mt-4" style="margin-left: 20px; margin-right: 0; margin-bottom: 20px">신고한 버디즈</h2>
+        <h2 class="mt-4" style="margin-left: 20px; margin-right: 0; margin-bottom: 20px">{{ t('common.blame.blamebuddiz') }}</h2>
         <div class="position-relative">
           <div v-if="blame_buddiz.length > 0">
             <!-- 왼쪽 화살표 -->
@@ -155,8 +169,6 @@ const prevBuddySlide = () => {
                   <div class="card-body">
                     <h5 class="card-title">{{ buddiz.blamedNickName }}</h5>
                     <!-- nickname -->
-                    <p class="card-text">{{ buddiz.content }}</p>
-                    <!-- content-->
                   </div>
                 </div>
               </div>
@@ -170,7 +182,7 @@ const prevBuddySlide = () => {
           <div v-else>
             <div class="text-center">
               <img src="@/assets/images/nothing.png" alt="nothing" class="img-fluid" style="max-width: 300px" />
-              <p>신고한 매물이 없습니다.</p>
+              <p>{{ t('common.blame.notblamebuddiz') }}</p>
             </div>
           </div>
         </div>
@@ -179,7 +191,7 @@ const prevBuddySlide = () => {
   </div>
 </template>
 
-<style>
+<style scoped>
 .nav-pills .nav-link.active {
   background-color: #ff8f17;
   color: white;

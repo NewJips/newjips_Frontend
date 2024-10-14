@@ -2,7 +2,9 @@
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import LogoutMenuItem from '../layouts/menu/LogoutMenuItem.vue';
+import { useI18n } from 'vue-i18n';
 
+const { t, locale } = useI18n();
 const route = useRoute(); // 전체 route 객체 사용
 const validPaths = ['/mypage/mystatus', '/mypage/myedit', '/mypage/wish', '/mypage/blame'];
 const showSidebar = computed(() => validPaths.includes(route.path));
@@ -17,14 +19,16 @@ const active = (path) => {
     <!-- 사이드바 -->
     <div class="sidebar">
       <!-- mt-4 mb-4로 top,bottom 마진줌. -->
-      <h2 class="sidebar-header mt-4 mb-4 ms-2">마이 페이지</h2>
+      <h2 class="sidebar-header mt-4 mb-4 ms-2">
+        <router-link class="mypage" to="/mypage/mystatus">{{ t('common.sidebar.mypage') }}</router-link>
+      </h2>
       <nav class="nav nav-pills flex-column">
         <!-- 아래쪽마진/활성화 -->
         <!-- 활성화했을 때 붙이고 싶으면 mb-2빼 -->
-        <router-link :class="active('/mypage/mystatus')" to="/mypage/mystatus">내 상태</router-link>
-        <router-link :class="active('/mypage/myedit')" to="/mypage/myedit"> 개인 정보 수정 </router-link>
-        <router-link :class="active('/mypage/wish')" to="/mypage/wish"> 위시리스트 </router-link>
-        <router-link :class="active('/mypage/blame')" to="/mypage/blame"> 신고목록 </router-link>
+        <router-link :class="active('/mypage/mystatus')" to="/mypage/mystatus">{{ t('common.sidebar.status') }}</router-link>
+        <router-link :class="active('/mypage/myedit')" to="/mypage/myedit"> {{ t('common.sidebar.edit') }} </router-link>
+        <router-link :class="active('/mypage/wish')" to="/mypage/wish"> {{ t('common.sidebar.wish') }} </router-link>
+        <router-link :class="active('/mypage/blame')" to="/mypage/blame"> {{ t('common.sidebar.blame') }} </router-link>
         <LogoutMenuItem />
       </nav>
     </div>
@@ -52,5 +56,9 @@ const active = (path) => {
   margin-bottom: 20px;
   margin-right: 10px; /* 사이드바와 콘텐츠 사이 간격 */
   width: 180px; /* 사이드바 너비 고정 */
+}
+.mypage {
+  text-decoration: none; /* 밑줄 제거 */
+  color: black;
 }
 </style>

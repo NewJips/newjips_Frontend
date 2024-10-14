@@ -166,6 +166,10 @@ const requestBlame = async () => {
     vertical-align: middle;
 }
 
+.table td {
+   padding-left : 15px;
+}
+
 input[type="radio"]:checked + span {
         color: #FF8F17;
         font-weight: bold;

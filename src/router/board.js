@@ -3,12 +3,12 @@ import { isAuthenticated } from '@/util/guards';
 
 export default [
   {
-    path: '/board/list',
-    name: 'board/list',
+    path: '/board',
+    name: 'board',
     component: () => import('../pages/board/BoardListPage.vue'),
   },
   {
-    path: '/board/detail/:no',
+    path: '/board/detail/:nno',
     name: 'board/detail',
     component: () => import('../pages/board/BoardDetailPage.vue'),
   },
