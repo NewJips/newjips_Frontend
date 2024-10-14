@@ -1,4 +1,3 @@
-<!-- GuidePage.vue -->
 <template>
   <div class="guide-page">
     <!-- Hero Section -->
@@ -182,12 +181,6 @@ const prevPage = () => {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  padding: 13vh 0;
-  text-align: left;
-  position: relative;
-  min-height: 30vh;
-  
-
   padding: 13vh 0;
   text-align: left;
   position: relative;
