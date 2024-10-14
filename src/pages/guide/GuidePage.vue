@@ -1,3 +1,4 @@
+<!-- GuidePage.vue -->
 <template>
   <div class="guide-page">
     <!-- Hero Section -->
