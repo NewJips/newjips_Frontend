@@ -16,16 +16,9 @@
 
     <!-- Guide Cards Section -->
     <section class="guide-cards px-5">
-      <GuideCard
-        v-for="(guide, index) in paginatedGuides"
-        :key="index"
-        :imageSrc="guide.imageSrc"
-        :category="guide.translatedCategory"
-        :title="guide.translatedTitle"
-        :date="guide.date"
-        :description="guide.translatedDescription"
-        :link="guide.link"
-      />
+      <GuideCard v-for="(guide, index) in paginatedGuides" :key="index" :imageSrc="guide.imageSrc"
+        :category="guide.translatedCategory" :title="guide.translatedTitle" :date="guide.date"
+        :description="guide.translatedDescription" :link="guide.link" />
     </section>
 
     <!-- Pagination -->
@@ -47,89 +40,101 @@ import { useI18n } from 'vue-i18n';
 
 const { t, locale } = useI18n();
 
-// Guide data without direct translations
+// Guide data with separate links for different languages
 const guides = ref([
   {
     imageSrc: '../src/assets/images/guide1.jpeg',
-    category: 'common.guide.categories.living', 
+    category: 'common.guide.categories.living',
     title: 'common.guide.guide1',
     date: 'September 1, 2023',
-    description: 'common.guide.guide1_detail', 
-    link: 'https://spacediver.tistory.com/2'
+    description: 'common.guide.guide1_detail',
+    linkKR: 'https://spacediver.tistory.com/2',  // Korean link
+    linkVN: 'https://spacediver.tistory.com/11'   // Vietnamese link
   },
   {
     imageSrc: '../src/assets/images/guide2.jpeg',
-    category: 'common.guide.categories.finance', 
+    category: 'common.guide.categories.finance',
     title: 'common.guide.guide2',
     date: 'September 2, 2023',
-    description: 'common.guide.guide2_detail', 
-    link: 'https://spacediver.tistory.com/3'
+    description: 'common.guide.guide2_detail',
+    linkKR: 'https://spacediver.tistory.com/3',
+    linkVN: 'https://spacediver.tistory.com/12'
   },
   {
     imageSrc: '../src/assets/images/guide3.jpeg',
-    category: 'common.guide.categories.living', 
+    category: 'common.guide.categories.living',
     title: 'common.guide.guide3',
     date: 'September 3, 2023',
-    description: 'common.guide.guide3_detail', 
-    link: 'https://spacediver.tistory.com/4'
+    description: 'common.guide.guide3_detail',
+    linkKR: 'https://spacediver.tistory.com/4',
+    linkVN: 'https://spacediver.tistory.com/13'
   },
   {
     imageSrc: '../src/assets/images/guide4.jpeg',
-    category: 'common.guide.categories.legal', 
+    category: 'common.guide.categories.legal',
     title: 'common.guide.guide4',
     date: 'September 4, 2023',
-    description: 'common.guide.guide4_detail', 
-    link: 'https://spacediver.tistory.com/5'
+    description: 'common.guide.guide4_detail',
+    linkKR: 'https://spacediver.tistory.com/5',
+    linkVN: 'https://spacediver.tistory.com/14'
   },
   {
     imageSrc: '../src/assets/images/guide5.jpeg',
-    category: 'common.guide.categories.living', 
+    category: 'common.guide.categories.living',
     title: 'common.guide.guide5',
     date: 'September 5, 2023',
-    description: 'common.guide.guide5_detail', 
-    link: 'https://spacediver.tistory.com/6'
+    description: 'common.guide.guide5_detail',
+    linkKR: 'https://spacediver.tistory.com/6',
+    linkVN: 'https://spacediver.tistory.com/15'
   },
   {
     imageSrc: '../src/assets/images/guide6.jpeg',
-    category: 'common.guide.categories.legal', 
+    category: 'common.guide.categories.legal',
     title: 'common.guide.guide6',
     date: 'September 6, 2023',
-    description: 'common.guide.guide6_detail', 
-    link: 'https://spacediver.tistory.com/7'
+    description: 'common.guide.guide6_detail',
+    linkKR: 'https://spacediver.tistory.com/7',
+    linkVN: 'https://spacediver.tistory.com/16'
   },
   {
     imageSrc: '../src/assets/images/guide7.jpeg',
-    category: 'common.guide.categories.finance', 
+    category: 'common.guide.categories.finance',
     title: 'common.guide.guide7',
     date: 'September 7, 2023',
-    description: 'common.guide.guide7_detail', 
-    link: 'https://spacediver.tistory.com/8'
+    description: 'common.guide.guide7_detail',
+    linkKR: 'https://spacediver.tistory.com/8',
+    linkVN: 'https://spacediver.tistory.com/17'
   },
   {
     imageSrc: '../src/assets/images/guide8.jpeg',
-    category: 'common.guide.categories.finance', 
+    category: 'common.guide.categories.finance',
     title: 'common.guide.guide8',
     date: 'September 8, 2023',
-    description: 'common.guide.guide8_detail', 
-    link: 'https://spacediver.tistory.com/9'
+    description: 'common.guide.guide8_detail',
+    linkKR: 'https://spacediver.tistory.com/9',
+    linkVN: 'https://spacediver.tistory.com/18'
   },
   {
     imageSrc: '../src/assets/images/guide9.jpeg',
-    category: 'common.guide.categories.legal', 
+    category: 'common.guide.categories.legal',
     title: 'common.guide.guide9',
     date: 'September 9, 2023',
-    description: 'common.guide.guide9_detail', 
-    link: 'https://spacediver.tistory.com/10'
+    description: 'common.guide.guide9_detail',
+    linkKR: 'https://spacediver.tistory.com/10',
+    linkVN: 'https://spacediver.tistory.com/19'
   }
 ]);
 
 // Function to translate guide data dynamically
 const getTranslatedGuides = () => {
+  const currentLanguage = locale.value === 'ko' ? 'KR' : 'VN';
+
   return guides.value.map(guide => ({
     ...guide,
     translatedCategory: t(guide.category),
     translatedTitle: t(guide.title),
     translatedDescription: t(guide.description),
+    link: currentLanguage === 'KR' ? guide.linkKR : guide.linkVN // Dynamic link based on language
   }));
 };
 
@@ -176,6 +181,12 @@ const prevPage = () => {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  padding: 13vh 0;
+  text-align: left;
+  position: relative;
+  min-height: 30vh;
+  
+
   padding: 13vh 0;
   text-align: left;
   position: relative;
