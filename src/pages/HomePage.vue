@@ -8,7 +8,7 @@ import LoanCard from '@/components/LoanCard.vue';
 import FloatingAi from '@/components/FloatingAi.vue';
 import GuideCard from '@/components/GuideCard.vue';
 import { useI18n } from 'vue-i18n';
-
+import LoanList from '@/components/LoanList.vue';  // Import the LoanList component
 const { t } = useI18n();
 
 // 인기 버디즈 데이터를 저장할 배열
@@ -73,46 +73,6 @@ onMounted(async () => {
   }
 });
 
-// 대출 정보 예시
-const loans = [
-  {
-    id: 1,
-    name: 'KB WELCOME PLUS',
-    subtitle: '임차보증금 80% 이내, 최대 2억까지',
-    maxAmount: '최고 1.5%',
-    rate: '연 3.5 ~ 5.5%',
-    duration: '3개월에서 2년',
-    repayment: '일시 상환, 원리금 균등 상환 또는 혼합 상환 방식 가능',
-    interest: '변동 금리, 연 3.74% 이내',
-    usageInfo: '모든 조건을 충족해야 하며, 조건에 따라 우대 금리가 적용될 수 있습니다.',
-    link: 'https://obank.kbstar.com/quics?page=C103507&cc=b104363%3Ab104516&isNew=N&prcode=LN20000041&QSL=F&QSL=F',
-  },
-  {
-    id: 2,
-    name: 'KB 전세실심 대출보증',
-    subtitle: '전세보증금 90%까지',
-    maxAmount: '최고 1.5%',
-    rate: '연 3.5 ~ 5.5%',
-    duration: '3개월에서 2년',
-    repayment: '일시 상환, 원리금 균등 상환 방식 가능',
-    interest: '변동 금리, 연 3.5% 이내',
-    usageInfo: '모든 조건을 충족해야 하며, 조건에 따라 이용 가능',
-    link: 'https://obank.kbstar.com/quics?page=C103507&cc=b104363:b104516&isNew=N&prcode=LN20000064&QSL=F',
-  },
-  {
-    id: 3,
-    name: 'KB 외국인 전용 주택 전세자금 대출',
-    subtitle: '외국인을 위한 전세자금 대출',
-    maxAmount: '최고 1.5%',
-    rate: '연 3.5 ~ 5.5%',
-    duration: '3개월에서 2년',
-    repayment: '일시 상환, 원리금 균등 상환 방식 가능',
-    interest: '연 3.5%',
-    usageInfo: '조건에 따라 이용 가능',
-    link: 'https://www.kakaobank.com/products/leaseLoan',
-  }
-];
-
 // 가이드 정보 예시
 const guides = ref([
   {
@@ -150,10 +110,7 @@ const guides = ref([
   }
 ]);
 
-// 대출 상세 페이지로 이동하는 함수
-const goToLoanDetail = (loan) => {
-  // 대출 상세 페이지로 URL 요청 처리
-};
+
 </script>
 
 
@@ -476,17 +433,7 @@ const goToLoanDetail = (loan) => {
           <router-link class="btn-more text-muted" to="/loanproduct">{{ t('common.home.plusbtn') }}</router-link>
         </span>
       </div>
-
-      <div class="loan-grid pb-3">
-        <a v-for="(loan, index) in loans" :key="index" :href="loan.link" target="_blank"
-          class="card shadow-sm card-hover border-0 h-100 loan-card" @click="goToLoanDetail(loan)">
-          <div class="card-body">
-            <!-- Use the index + 1 to access the corresponding entry in 'homecard' -->
-            <h5 class="loan-name">{{ t(`common.homecard.${index + 1}.name`) }}</h5>
-            <p class="loan-subtitle">{{ t(`common.homecard.${index + 1}.subtitle`) }}</p>
-          </div>
-        </a>
-      </div>
+      <LoanList/>
     </div>
   </div>
 </template>

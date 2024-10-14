@@ -37,7 +37,13 @@ const router = createRouter({
       path: '/loanproduct/:loanId',  // Dynamic route for loan product page
       name: 'loan-product',
       component: LoanProductPage,
-      props: true,  // Pass loanId as a prop to the LoanProductPage component
+      props: true,
+    },
+    {
+      path: '/loanproduct/:lno', // Dynamic route for loan product page
+      name: 'LoanProductPage',
+      component: () => import('@/pages/Loan/LoanProductPage.vue'), // Corrected path
+      props: true,
     },
     {
       path: '/board',  // Board List Page
