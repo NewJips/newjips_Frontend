@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import GuideCard from '@/components/GuideCard.vue';
 import { useI18n } from 'vue-i18n';
 
@@ -160,14 +160,26 @@ const paginatedGuides = computed(() => {
 const nextPage = () => {
   if (currentPage.value < totalPages.value) {
     currentPage.value += 1;
+    scrollToTop(); // Ensure scrolling to the top when navigating pages
   }
 };
 
 const prevPage = () => {
   if (currentPage.value > 1) {
     currentPage.value -= 1;
+    scrollToTop(); // Ensure scrolling to the top when navigating pages
   }
 };
+
+// Scroll to top when the guide page is mounted
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+// Ensure the scroll is at the top when the page is opened
+onMounted(() => {
+  scrollToTop();
+});
 </script>
 
 <style scoped>
@@ -177,18 +189,18 @@ const prevPage = () => {
 
 /* Hero Section Styles */
 .hero {
-  background-image: url('@/assets/images/banner.png');
+  background-image: url('@/assets/images/banner9.png'); /* Set the background image */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   padding: 13vh 0;
-  text-align: left;
+  text-align: left; /* Align text to the left */
   position: relative;
-  min-height: 30vh;
+  min-height: 30vh; /* Set a minimum height for the banner */
 }
 
 .hero-content {
-  max-width: 1200px;
+  max-width: 1800px;
   margin: 0 auto;
   display: flex;
   justify-content: flex-start;
