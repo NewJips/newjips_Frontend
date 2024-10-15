@@ -10,7 +10,8 @@ import { useAuthStore } from '@/stores/auth';
 // 이미지 가져오기
 const messageIcon = new URL('@/assets/icons/message.png', import.meta.url).href;
 console.log('Avatar URL:', messageIcon); // URL 확인
-const messageOnIcon = new URL('@/assets/icons/messageon.png', import.meta.url).href;
+const messageOnIcon = new URL('@/assets/icons/messageon.png', import.meta.url)
+  .href;
 console.log('Avatar URL:', messageOnIcon); // URL 확인
 
 const messageIconUrl = ref(messageIcon);
@@ -39,7 +40,7 @@ const isChatActive = ref(false); // 필요에 따라 true로 설정
 
 ///////// 안읽은 메시지 확인 /////////
 const auth = useAuthStore();
-const uno = computed(() => auth.uno); 
+const uno = computed(() => auth.uno);
 const pollingInterval = ref(null);
 
 const requestChatRoom = async () => {
@@ -47,7 +48,10 @@ const requestChatRoom = async () => {
     const chatRooms = await chatApi.getRoomList(uno.value);
     const cnt = ref(0);
     chatRooms.forEach((room) => {
-      if ((room.requesterFrom && room.senderUnreadCount > 0) || (!room.requesterFrom && room.receiverUnreadCount > 0)) {
+      if (
+        (room.requesterFrom && room.senderUnreadCount > 0) ||
+        (!room.requesterFrom && room.receiverUnreadCount > 0)
+      ) {
         cnt.value++;
       }
       if (cnt.value > 0) isChatActive.value = true;
@@ -62,7 +66,7 @@ const requestChatRoom = async () => {
 const startPolling = () => {
   pollingInterval.value = setInterval(() => {
     requestChatRoom(); // 일정 간격으로 메시지를 가져옴
-  }, 1000); // 
+  }, 1000); //
 };
 
 // 폴링을 중단하는 함수
@@ -74,40 +78,52 @@ const stopPolling = () => {
 };
 
 // 컴포넌트가 마운트되면 폴링을 시작
-onMounted(() => {
-  startPolling();
-});
+// onMounted(() => {
+//   startPolling();
+// });
 
-// 컴포넌트가 언마운트될 때 폴링을 중단
-onBeforeUnmount(() => {
-  stopPolling();
-});
+// // 컴포넌트가 언마운트될 때 폴링을 중단
+// onBeforeUnmount(() => {
+//   stopPolling();
+// });
 </script>
 
 <template>
   <ul class="navbar-nav">
     <template v-for="(menu, index) in menus" :key="menu.title">
       <!-- 채팅 메뉴는 아이콘만 표시 -->
-       <div v-if="auth.isLogin">
+      <div v-if="auth.isLogin">
         <li v-if="index === 3" class="nav-item">
           <router-link to="/chat">
-            <img class="mt-2" :src="isChatActive ? messageOnIconUrl : messageIconUrl" style="height: 23px;"/>
+            <img
+              class="mt-2"
+              :src="isChatActive ? messageOnIconUrl : messageIconUrl"
+              style="height: 23px"
+            />
           </router-link>
         </li>
-       </div>
+      </div>
       <MenuItem v-if="menu.title != t('common.chat')" :menu="menu" />
 
       <!-- '공지사항' 후에 드롭다운 추가 -->
       <li v-if="index === 2" class="nav-item dropdown">
-        <button class="btn dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown"  style="color: #111111;">
+        <button
+          class="btn dropdown-toggle"
+          type="button"
+          id="languageDropdown"
+          data-bs-toggle="dropdown"
+          style="color: #111111"
+        >
           {{ displayLanguage }}
         </button>
         <ul class="dropdown-menu" aria-labelledby="languageDropdown">
           <li @click="changing('ko')">
-            <a class="dropdown-item" href="#"  style="color: #111111;">한국어</a>
+            <a class="dropdown-item" href="#" style="color: #111111">한국어</a>
           </li>
           <li @click="changing('vn')">
-            <a class="dropdown-item" href="#"  style="color: #111111;">vietnamese</a>
+            <a class="dropdown-item" href="#" style="color: #111111"
+              >vietnamese</a
+            >
           </li>
         </ul>
       </li>

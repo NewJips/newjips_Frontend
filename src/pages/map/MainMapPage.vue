@@ -1,32 +1,10 @@
 <template>
   <div class="filter-container">
-    <DropDownFilter
-      title="거래유형"
-      checkboxLabel="거래유형"
-      :checkboxes="['월세', '전세']"
-      priceLabel="가격"
-      :sliders="[
-        filterStore.filters.sliders.deposit,
-        filterStore.filters.sliders.rent,
-      ]"
-    />
-
-    <DropDownFilter
-      title="방 크기"
-      :sliders="[filterStore.filters.sliders.size]"
-    />
-    <DropDownFilter
-      title="층수"
-      checkboxLabel="층수"
-      :checkboxes="['1층', '2층 이상', '반지하', '옥탑방']"
-    />
-    <DropDownFilter
-      title="구조"
-      checkboxLabel="구조"
-      :checkboxes="['원룸', '투룸', '쓰리룸 이상', '오피스텔']"
-    />
+    <TradeTypeFilter />
+    <DepositFilter />
+    <MonthlyPeeFilter />
+    <RoomSizeFilter />
   </div>
-
   <div class="container">
     <div class="detail-container scrollbar">
       <BriefDetailEstate
@@ -52,7 +30,10 @@
 
 <script setup>
 import { useFilterStore } from '@/stores/filter';
-import DropDownFilter from '@/components/map/DropDownFilter.vue';
+import TradeTypeFilter from '@/components/map/TradeTypeFilter.vue';
+import DepositFilter from '@/components/map/DepositFilter.vue';
+import MonthlyPeeFilter from '@/components/map/MonthlyPeeFilter.vue';
+import RoomSizeFilter from '@/components/map/RoomSizeFilter.vue';
 import BriefDetailEstate from '@/components/map/BriefDetailEstate.vue';
 import { useMap } from './useMap';
 import { onMounted, ref, watch } from 'vue';
@@ -71,6 +52,8 @@ const {
   getEstatesByLocation,
   getConvenientFacilities,
   isLoading,
+
+  updateMarkersVisibility,
 } = useMap();
 
 const updateEstateList = async () => {
@@ -101,13 +84,13 @@ watch(selectedMarker, (newValue) => {
   }
 });
 
-watch(selectedCluster, (newValue) => {
-  if (newValue.length > 0) {
-    estateList.value = newValue;
-  } else {
-    updateEstateList();
-  }
-});
+// watch(selectedCluster, (newValue) => {
+//   if (newValue.length > 0) {
+//     estateList.value = newValue;
+//   } else {
+//     updateEstateList();
+//   }
+// });
 </script>
 
 <style scoped>
@@ -130,9 +113,9 @@ watch(selectedCluster, (newValue) => {
 .filter-container {
   display: flex;
   width: 100%;
-  gap: 10px;
+  gap: 15px;
   border-bottom: 1px solid #8f9bb3;
-  height: 10vh;
+  height: 8vh;
   align-items: center;
 }
 .scrollbar::-webkit-scrollbar {
