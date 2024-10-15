@@ -70,10 +70,14 @@ const formatDeposit = (deposit) => {
   return result.trim(); // 앞뒤 공백 제거 후 반환
 };
 const handleLikeClick = (event) => {
-  event.stopPropagation(); // 이벤트 전파 중지
+  event.stopPropagation();
   if (!isLogin.value) {
     alert('로그인이 필요한 서비스입니다.');
-    router.push('/auth/login');
+    // 현재 페이지 경로를 쿼리 파라미터로 넘기기
+    router.push({
+      path: '/auth/login',
+      query: { redirect: router.currentRoute.value.fullPath },
+    });
     return;
   }
   likedEstateStore.toggleLike(props.estateId);
@@ -85,6 +89,7 @@ const isLiked = computed(() => likedEstateStore.isLiked(props.estateId));
 
 <style scoped>
 .brief-detail {
+  cursor: pointer;
   display: flex;
   border-bottom: 1px solid #8f9bb3;
   padding: 10px;

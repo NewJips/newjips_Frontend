@@ -260,6 +260,15 @@ import { useLikedEstateStore } from '@/stores/likedEstate';
 import { useBlameStore } from '@/stores/blame';
 const blameStore = useBlameStore();
 const goBlame = () => {
+  if (!isLogin.value) {
+    alert('로그인이 필요한 서비스입니다.');
+    // 현재 페이지 경로를 쿼리 파라미터로 넘기기
+    router.push({
+      path: '/auth/login',
+      query: { redirect: router.currentRoute.value.fullPath },
+    });
+    return;
+  }
   blameStore.blamedId = estateDetail.value.eno;
   // blameStore.buddizProfile = buddiz.value.profilePic;
   blameStore.agentNm = estateDetail.value.businessName;
