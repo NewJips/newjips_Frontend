@@ -12,7 +12,7 @@ import LoanList from '@/components/LoanList.vue'; // Import the LoanList compone
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-const enoList = [537, 536, 606, 538];
+const enoList = [537, 536, 606, 388];
 
 const goToMap = (lat, lng) => {
   router.push({
@@ -257,23 +257,35 @@ const gotobuddiz = (uno) => {
         </div>
       </div>
     </div>
-
+    <!-- 인기 매물 -->
     <div class="ms-5 me-5 mb-5">
       <h4 class="head-title">{{ t('common.home.popular_estates') }}</h4>
       <div class="d-flex mb-4">
         <span class="subtitle">{{ t('common.home.popular_estates_explain') }}</span>
         <span class="position-absolute end-0 me-5">
-          <router-link class="btn-more text-muted" to="/map">
-            {{ t('common.home.plusbtn') }}
-          </router-link>
+          <router-link class="btn-more text-muted" to="/map">{{
+            t('common.home.plusbtn')
+          }}</router-link>
         </span>
       </div>
-      <!-- 인기 매물 -->
+
       <div>
         <div class="row gx-4 mx-0 pb-3" v-if="popularEstates.length">
-          <div v-for="(estate, index) in popularEstates" :key="index" class="col">
-            <div class="card shadow-sm card-hover border-0 h-100" @click="goToEstateDetail(index)">
+
+          <!-- 부동산 항목 렌더링 -->
+          <div
+            v-for="(estate, index) in popularEstates"
+            :key="index"
+            class="col"
+            @click="goToEstateDetail(index)"
+          >
+            <div
+              class="card shadow-sm card-hover border-0 h-100"
+              style="cursor: pointer"
+            >
+
               <div class="card-img-top card-img-hover">
+                <a class="img-overlay" @click="goToEstateDetail(index)"></a>
                 <div class="position-absolute start-0 top-0 pt-3 ps-3">
                   <span class="d-table badge bg-danger">HOT</span>
                 </div>
@@ -292,12 +304,17 @@ const gotobuddiz = (uno) => {
                   {{ t('common.wish.charter') }}
                 </h4>
                 <h3 class="h6 mb-2 fs-base">
-                  <a class="nav-link stretched-link">{{ estate.address }} | {{ estate.roomSize }}㎡</a>
+                  <a
+                    class="nav-link stretched-link"
+                    @click="goToEstateDetail(index)"
+                    >{{ estate.address }} | {{ estate.roomSize }}㎡</a
+                  >
                 </h3>
                 <p class="mb-2 fs-sm text-muted">{{ estate.address }}</p>
                 <div class="fw-bold">
-                  <i class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i>
-                  {{ estate.deposit }} / {{ estate.monthlyPee }}
+                  <i class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i
+                  >{{ estate.deposit }} / {{ estate.monthlyPee }}
+
                 </div>
               </div>
             </div>

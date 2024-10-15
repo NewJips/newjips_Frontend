@@ -17,7 +17,7 @@
         }}</label>
         <div id="boxes">
           <div
-            v-for="(value, key) in structures"
+            v-for="(value, key) in structureLabels"
             :key="key"
             class="checkbox-item"
           >
@@ -39,17 +39,25 @@
 
 <script setup>
 import { useFilterStore } from '@/stores/filter';
-import { reactive } from 'vue';
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+
 const { t } = useI18n();
 
 const filterStore = useFilterStore();
 
-const structures = reactive({
-  oneRoom: t('common.filter.one'),
-  twoRoom: t('common.filter.two'),
-  threeRoomPlus: t('common.filter.three'),
-  officeTel: t('common.filter.office_tel'),
+const structures = {
+  oneRoom: 'common.filter.one',
+  twoRoom: 'common.filter.two',
+  threeRoomPlus: 'common.filter.three',
+  officeTel: 'common.filter.office_tel',
+};
+
+const structureLabels = computed(() => {
+  return Object.entries(structures).reduce((acc, [key, value]) => {
+    acc[key] = t(value);
+    return acc;
+  }, {});
 });
 
 const handleStructureChange = (key) => {
@@ -63,13 +71,11 @@ const handleStructureChange = (key) => {
 }
 .custom-checkbox {
   accent-color: #3f54e3;
-
   width: 1rem;
   height: 1rem;
   margin-right: 1rem;
   margin-top: 1rem;
 }
-
 .custom-label {
   font-size: 1rem;
 }

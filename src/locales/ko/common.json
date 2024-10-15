@@ -320,6 +320,22 @@
     "monthly": "월세",
     "structure": "구조",
     "select_structure": "구조 선택",
-    "charter": "전세"
+    "charter": "전세",
+    "one": "원룸",
+    "two": "투룸",
+    "three": "쓰리룸 이상",
+    "office_tel": "오피스텔",
+    "floor": "층수",
+    "select_floor": "층수 선택",
+    "floor_one": "1층",
+    "floor_two": "2층 이상",
+    "under": "반지하",
+    "room_size": "방 크기"
+  },
+  "stations": {
+    "childrens_grand_park": "어린이대공원역",
+    "gangnam": "강남역",
+    "seongsu": "성수역",
+    "hongik_university": "홍대입구역"
   }
 }

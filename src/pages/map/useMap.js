@@ -7,8 +7,11 @@ import convenientApi from '@/api/convenientApi';
 import { useMarkerStore } from '@/stores/marker';
 import { useFilterStore } from '@/stores/filter';
 import { useRoute } from 'vue-router';
-
+import { useI18n } from 'vue-i18n';
 export function useMap(HOME_PATH) {
+  //다국어
+  const { t } = useI18n();
+  //라우트
   const route = useRoute();
   //필터
   const filterStore = useFilterStore();
@@ -262,10 +265,18 @@ export function useMap(HOME_PATH) {
       return map;
     });
     const stations = [
-      { lat: 37.54785018, lng: 127.074454848, name: '어린이대공원역' },
-      { lat: 37.4980669, lng: 127.0281517, name: '강남역' },
-      { lat: 37.5446007, lng: 127.0555885, name: '성수역' },
-      { lat: 37.557667, lng: 126.925666, name: '홍대입구역' },
+      {
+        lat: 37.54785018,
+        lng: 127.074454848,
+        name: t('common.stations.childrens_grand_park'),
+      },
+      { lat: 37.4980669, lng: 127.0281517, name: t('common.stations.gangnam') },
+      { lat: 37.5446007, lng: 127.0555885, name: t('common.stations.seongsu') },
+      {
+        lat: 37.557667,
+        lng: 126.925666,
+        name: t('common.stations.hongik_university'),
+      },
     ];
     // 각 역에 대해 마커 생성
     const subwayMarkers = stations.map((station) => {

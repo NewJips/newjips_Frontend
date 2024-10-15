@@ -324,6 +324,18 @@
     "one": "Một phòng",
     "two": "hai phòng",
     "three": "3 phòng trở lên",
-    "office_tel": "Officetel"
+    "office_tel": "Officetel",
+    "floor": "số tầng",
+    "select_floor": "Chọn số tầng",
+    "floor_one": "Tầng 1",
+    "floor_two": "Tầng 2 trở lên",
+    "under": "nửa hầm",
+    "room_size": "kích thước phòng"
+  },
+  "stations": {
+    "childrens_grand_park": "Children's Grand Park Station",
+    "gangnam": "Gangnam Station",
+    "seongsu": "Seongsu Station",
+    "hongik_university": "Hongik University Station"
   }
 }
