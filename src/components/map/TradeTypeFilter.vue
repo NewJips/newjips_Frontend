@@ -7,12 +7,12 @@
       aria-expanded="false"
       data-bs-auto-close="outside"
     >
-      거래유형 및 가격
+      {{ t('common.filter.tradeandprice') }}
       <span class="custom-arrow"><i class="fas fa-chevron-down"></i></span>
     </button>
     <form class="dropdown-menu p-4">
       <div id="check-container">
-        <label class="form-label">거래유형</label>
+        <label class="form-label">{{ t('common.filter.tradetype') }}</label>
         <div id="boxes">
           <div
             v-for="(value, key) in filterStore.filters.tradetype"
@@ -35,7 +35,7 @@
       </div>
 
       <div>
-        <label class="form-label">보증금</label>
+        <label class="form-label">{{ t('common.filter.deposit') }}</label>
         <PriceSlider
           :slider="{
             minRange: 0,
@@ -49,7 +49,7 @@
       </div>
 
       <div>
-        <label class="form-label">월세</label>
+        <label class="form-label">{{ t('common.filter.monthly') }}</label>
         <PriceSlider
           :slider="{
             minRange: 0,
@@ -68,7 +68,8 @@
 <script setup>
 import { useFilterStore } from '@/stores/filter';
 import PriceSlider from './PriceSlider.vue';
-
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 const filterStore = useFilterStore();
 
 const handleTradeTypeChange = (key) => {
@@ -76,7 +77,10 @@ const handleTradeTypeChange = (key) => {
 };
 
 const getDisplayName = (key) => {
-  const displayNames = { charter: '전세', monthly: '월세' };
+  const displayNames = {
+    charter: t('common.filter.charter'),
+    monthly: t('common.filter.monthly'),
+  };
   return displayNames[key] || key;
 };
 </script>
