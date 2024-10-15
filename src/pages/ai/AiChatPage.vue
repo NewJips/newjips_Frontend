@@ -192,7 +192,75 @@
         this.messages.push({ text: message, isUser: false, id: Date.now() });
         this.$nextTick(() => this.scrollToBottom());  // AI 메시지 추가 후 스크롤 맨 아래로 이동
       },
+
       async fetchAIResponse(prompt) {
+
+        if ((prompt.toLowerCase().includes("특약") && prompt.toLowerCase().includes("추천") && prompt.toLowerCase().includes("전세자금대출")) || (prompt.toLowerCase().includes("추천") && prompt.toLowerCase().includes("전세자금대출"))) {
+          return "전세자금대출 특약사항 문구 추천으로는 몇가지가 있습니다.\n" +
+              "\n" +
+              "- “물건의 하자로 전세자금대출이 불가할 경우 계약을 해지하고 계약금을 반환해준다.”\n" +
+              "- 임대인은 전세자금대출에 적극 협조한다.\n" +
+              "- 전세반환보증 가입이 불가한 경우에는 계약을 해지하고 반환해준다.\n" +
+              "(계약서 작성 전에 은행에 방문하여 대출 여부와 한도 등을 확인 후 진행하는 것이 좋습니다.)\n" +
+              "- 단, 임차인의 문제로 인해 대출이 나오지 않아 잔금을 치르지 못하는 것에 대해 계약금이나 보증금을 반환받을 수 없습니다.\n" +
+              "\n" +
+              "더 정확한 정보나 자세한 정보는 전문가와 상담해 보는 걸 권장해 드립니다.";
+        }
+        if ((prompt.toLowerCase().includes("특약") && prompt.toLowerCase().includes("추천") && prompt.toLowerCase().includes("권리")) || (prompt.toLowerCase().includes("추천")  && prompt.toLowerCase().includes("권리"))) {
+          return "권리주장에 관한 특약사항 문구 추천으로는 몇 가지가 있습니다.\n" +
+              "\n" +
+              "- “잔금일 익일까지 근저당권 등의 권리 설정을 하지 않는다.”\n" +
+              "- “선순위 근저당은 잔금일 이전에 말소한다.”\n" +
+              "- \"선순위 근저당은 잔금을 치르는 동시에 말소한다.”\n" +
+              "- 대항력은 확정일자를 전입신고한 다음날 0시부터 효력이 발생하므로 그 전에 권리 등을 설정하지 못하도록 특약에 적어놔야 합니다.\n" +
+              "- 근저당권은 설정 당일날에 바로 효력이 발생하지만, 전입신고 일자와 확정일자는 전입신고와 확정일자를 받은 다음날부터 효력이 발생하기 때문\n" +
+              "\n" +
+              "더 정확한 정보나 자세한 정보는 전문가와 상담해 보는 걸 권장해 드립니다.";
+        }
+        if ((prompt.toLowerCase().includes("특약") && prompt.toLowerCase().includes("추천") && prompt.toLowerCase().includes("국세 완납")) || (prompt.toLowerCase().includes("추천")  && prompt.toLowerCase().includes("국세 완납"))) {
+          return "국세 완납 사실 확인 특약사항 문구 추천으로는 몇 가지가 있습니다.\n" +
+              "\n" +
+              "- “임대인에게 국세 지방세 미납이 있을 경우 계약을 해지한다.”\n" +
+              "- 세금 미납 사실에 대한 임차인의 보호를 위함\n" +
+              "\n" +
+              "더 정확한 정보나 자세한 정보는 전문가와 상담해 보는 걸 권장해 드립니다.";
+        }
+        if ((prompt.toLowerCase().includes("특약") && prompt.toLowerCase().includes("추천") && prompt.toLowerCase().includes("전세반환보증")) || (prompt.toLowerCase().includes("추천")  && prompt.toLowerCase().includes("전세 반환 보증"))) {
+          return "전세반환보증 특약사항 문구 추천으로는 몇 가지가 있습니다. \n" +
+              "- “전세반환보증 보험 가입 불가능할 시 계약을 해지한다.”\n" +
+              "계약 전 전세반환보증이 가능한지 여부를 미리 열람하고 확인하는 것이 중요\n" +
+              "더 정확한 정보나 자세한 정보는 전문가와 상담해 보는 걸 권장해 드립니다.";
+        }
+        if ((prompt.toLowerCase().includes("특약") && prompt.toLowerCase().includes("추천") && prompt.toLowerCase().includes("불량")) || (prompt.toLowerCase().includes("추천") && prompt.toLowerCase().includes("불량"))) {
+          return "입주 전 계약 된 집 가구나 물품, 벽지, 장판 불량 관련 특약사항 문구 추천으로는 몇 가지가 있습니다. \n" +
+              "- “임차인의 부주의로 내부 파손 시 원상회복하고 중대한 하자는 임대인이, 사소한 하자는(수리비 5만원 이하, 소모품) 임차인이 부담하기로 한다.”\n" +
+              "“도배는 임대인 부담으로 입주 전까지 완료하기로 함.”\n" +
+              "더 정확한 정보나 자세한 정보는 전문가와 상담해 보는 걸 권장해 드립니다.";
+        }
+        if ((prompt.toLowerCase().includes("버디즈") && prompt.toLowerCase().includes("뭐"))  || (prompt.toLowerCase().includes("버디즈")  && prompt.toLowerCase().includes("뭔"))) {
+          return "버디즈란, 저희 뉴집스에서 한국의 부동산이 낯선 외국인 분들에게 제공하는 서비스로서, \n" +
+              "실제 한국에 거주하고 있는 외국인 분들 혹은, 외국어가 가능한 한국분들이 좋은 매물을 보는법이나,”\n" +
+              "안전하게 거래하기 위해 체크해야 할 상황을 같이 고민해주고, 매물을 같이 보러 다니기도 하는 서비스 입니다.\n" +
+              "안전하고, 낯선환경에서 집을 구하기 부담스러우시다면, 버디즈 서비스를 경험해 보세요!";
+        }
+        if ((prompt.toLowerCase().includes("좋은") && prompt.toLowerCase().includes("버디즈")) || (prompt.toLowerCase().includes("버디즈")  && prompt.toLowerCase().includes("팁"))) {
+          return "좋은 버디즈를 구하는 방법에는 크게 몇가지가 있습니다. \n" +
+              "1. 홈화면에 인기 버디즈 탭을 참고해 보세요! 실시간으로 평점이 좋은 버디즈 분들이 홈화면에 게시됩니다!”\n" +
+              "2. 상단바 > 버디즈 페이지에서, 자신에게 맞는 성향을 지닌 버디즈, 별점이 높은 버디즈, 혹은 한국에서 오래 거주했던 경험 등, 원하는 기준으로 버디즈를 구해보세요!\n" +
+              "다양한 버디즈 분들이 있는 뉴집스에서 안전한 부동산 거래 해보세요!";
+        }
+        if ((prompt.toLowerCase().includes("buddiz") && prompt.toLowerCase().includes("gì"))  || (prompt.toLowerCase().includes("buddiz")  && prompt.toLowerCase().includes("là gì"))) {
+          return "Buddiz là dịch vụ mà NewJips của chúng tôi cung cấp cho những người nước ngoài cảm thấy lạ lẫm với bất động sản Hàn Quốc. \n" +
+              "Những người nước ngoài đang sinh sống tại Hàn Quốc hoặc người Hàn Quốc có khả năng nói tiếng nước ngoài sẽ giúp bạn cách xem các tài sản tốt, \n" +
+              "cùng nhau suy nghĩ về những điểm cần kiểm tra để giao dịch an toàn, và thậm chí đi cùng bạn để xem các bất động sản. \n" +
+              "Nếu bạn cảm thấy khó khăn trong việc tìm kiếm nhà ở một môi trường xa lạ và muốn giao dịch an toàn, hãy trải nghiệm dịch vụ Buddiz!";
+        }
+        if ((prompt.toLowerCase().includes("buddiz") && prompt.toLowerCase().includes("như thế nào")) || (prompt.toLowerCase().includes("buddiz") && prompt.toLowerCase().includes("mẹo"))) {
+          return "Có một số cách để tìm Buddiz tốt. \n" +
+              "1. Hãy tham khảo thẻ Buddiz phổ biến trên màn hình chính! Những Buddiz có đánh giá cao sẽ được hiển thị trên màn hình chính theo thời gian thực!\n" +
+              "2. Trên thanh điều hướng trên cùng > trang Buddiz, bạn có thể tìm kiếm Buddiz phù hợp với tính cách của mình, Buddiz có xếp hạng cao, hoặc những người đã sống ở Hàn Quốc trong thời gian dài dựa trên tiêu chí bạn muốn!\n" +
+              "Hãy trải nghiệm giao dịch bất động sản an toàn tại NewJips với nhiều Buddiz khác nhau!";
+        }
         if (prompt.toLowerCase() === "Xin chào") {
           return "Xin chào! Tôi có thể giúp gì cho bạn?";
         }
@@ -323,72 +391,7 @@
               "\n" +
               "5. 입주 전 계약 된 집 가구나 물품, 벽지, 장판 불량 관련 특약사항 문구 추천";
         }
-        if ((prompt.toLowerCase().includes("특약") && prompt.toLowerCase().includes("추천") && prompt.toLowerCase().includes("전세자금대출")) || (prompt.toLowerCase().includes("추천") && prompt.toLowerCase().includes("전세자금대출"))) {
-          return "전세자금대출 특약사항 문구 추천으로는 몇가지가 있습니다.\n" +
-              "\n" +
-              "- “물건의 하자로 전세자금대출이 불가할 경우 계약을 해지하고 계약금을 반환해준다.”\n" +
-              "- 임대인은 전세자금대출에 적극 협조한다.\n" +
-              "- 전세반환보증 가입이 불가한 경우에는 계약을 해지하고 반환해준다.\n" +
-              "(계약서 작성 전에 은행에 방문하여 대출 여부와 한도 등을 확인 후 진행하는 것이 좋습니다.)\n" +
-              "- 단, 임차인의 문제로 인해 대출이 나오지 않아 잔금을 치르지 못하는 것에 대해 계약금이나 보증금을 반환받을 수 없습니다.\n" +
-              "\n" +
-              "더 정확한 정보나 자세한 정보는 전문가와 상담해 보는 걸 권장해 드립니다.";
-        }
-        if ((prompt.toLowerCase().includes("특약") && prompt.toLowerCase().includes("추천") && prompt.toLowerCase().includes("권리")) || (prompt.toLowerCase().includes("추천")  && prompt.toLowerCase().includes("권리"))) {
-          return "권리주장에 관한 특약사항 문구 추천으로는 몇 가지가 있습니다.\n" +
-              "\n" +
-              "- “잔금일 익일까지 근저당권 등의 권리 설정을 하지 않는다.”\n" +
-              "- “선순위 근저당은 잔금일 이전에 말소한다.”\n" +
-              "- \"선순위 근저당은 잔금을 치르는 동시에 말소한다.”\n" +
-              "- 대항력은 확정일자를 전입신고한 다음날 0시부터 효력이 발생하므로 그 전에 권리 등을 설정하지 못하도록 특약에 적어놔야 합니다.\n" +
-              "- 근저당권은 설정 당일날에 바로 효력이 발생하지만, 전입신고 일자와 확정일자는 전입신고와 확정일자를 받은 다음날부터 효력이 발생하기 때문\n" +
-              "\n" +
-              "더 정확한 정보나 자세한 정보는 전문가와 상담해 보는 걸 권장해 드립니다.";
-        }
-        if ((prompt.toLowerCase().includes("특약") && prompt.toLowerCase().includes("추천") && prompt.toLowerCase().includes("국세 완납")) || (prompt.toLowerCase().includes("추천")  && prompt.toLowerCase().includes("국세 완납"))) {
-          return "국세 완납 사실 확인 특약사항 문구 추천으로는 몇 가지가 있습니다.\n" +
-              "\n" +
-              "- “임대인에게 국세 지방세 미납이 있을 경우 계약을 해지한다.”\n" +
-              "- 세금 미납 사실에 대한 임차인의 보호를 위함\n" +
-              "\n" +
-              "더 정확한 정보나 자세한 정보는 전문가와 상담해 보는 걸 권장해 드립니다.";
-        }
-        if ((prompt.toLowerCase().includes("특약") && prompt.toLowerCase().includes("추천") && prompt.toLowerCase().includes("전세반환보증")) || (prompt.toLowerCase().includes("추천")  && prompt.toLowerCase().includes("전세 반환 보증"))) {
-          return "전세반환보증 특약사항 문구 추천으로는 몇 가지가 있습니다. \n" +
-              "- “전세반환보증 보험 가입 불가능할 시 계약을 해지한다.”\n" +
-              "계약 전 전세반환보증이 가능한지 여부를 미리 열람하고 확인하는 것이 중요\n" +
-              "더 정확한 정보나 자세한 정보는 전문가와 상담해 보는 걸 권장해 드립니다.";
-        }
-        if ((prompt.toLowerCase().includes("특약") && prompt.toLowerCase().includes("추천") && prompt.toLowerCase().includes("불량")) || (prompt.toLowerCase().includes("추천") && prompt.toLowerCase().includes("불량"))) {
-          return "입주 전 계약 된 집 가구나 물품, 벽지, 장판 불량 관련 특약사항 문구 추천으로는 몇 가지가 있습니다. \n" +
-              "- “임차인의 부주의로 내부 파손 시 원상회복하고 중대한 하자는 임대인이, 사소한 하자는(수리비 5만원 이하, 소모품) 임차인이 부담하기로 한다.”\n" +
-              "“도배는 임대인 부담으로 입주 전까지 완료하기로 함.”\n" +
-              "더 정확한 정보나 자세한 정보는 전문가와 상담해 보는 걸 권장해 드립니다.";
-        }
-        if ((prompt.toLowerCase().includes("버디즈") && prompt.toLowerCase().includes("뭐"))  || (prompt.toLowerCase().includes("버디즈")  && prompt.toLowerCase().includes("뭔"))) {
-          return "버디즈란, 저희 뉴집스에서 한국의 부동산이 낯선 외국인 분들에게 제공하는 서비스로서, \n" +
-              "실제 한국에 거주하고 있는 외국인 분들 혹은, 외국어가 가능한 한국분들이 좋은 매물을 보는법이나,”\n" +
-              "안전하게 거래하기 위해 체크해야 할 상황을 같이 고민해주고, 매물을 같이 보러 다니기도 하는 서비스 입니다.\n" +
-              "안전하고, 낯선환경에서 집을 구하기 부담스러우시다면, 버디즈 서비스를 경험해 보세요!";
-        }
-        if ((prompt.toLowerCase().includes("좋은") && prompt.toLowerCase().includes("버디즈")) || (prompt.toLowerCase().includes("버디즈")  && prompt.toLowerCase().includes("팁"))) {
-          return "좋은 버디즈를 구하는 방법에는 크게 몇가지가 있습니다. \n" +
-              "1. 홈화면에 인기 버디즈 탭을 참고해 보세요! 실시간으로 평점이 좋은 버디즈 분들이 홈화면에 게시됩니다!”\n" +
-              "2. 상단바 > 버디즈 페이지에서, 자신에게 맞는 성향을 지닌 버디즈, 별점이 높은 버디즈, 혹은 한국에서 오래 거주했던 경험 등, 원하는 기준으로 버디즈를 구해보세요!\n" +
-              "다양한 버디즈 분들이 있는 뉴집스에서 안전한 부동산 거래 해보세요!";
-        }
-        if ((prompt.toLowerCase().includes("buddiz") && prompt.toLowerCase().includes("gì"))  || (prompt.toLowerCase().includes("buddiz")  && prompt.toLowerCase().includes("là gì"))) {
-          return "Buddiz là dịch vụ mà NewJips của chúng tôi cung cấp cho những người nước ngoài cảm thấy lạ lẫm với bất động sản Hàn Quốc. \n" +
-              "Những người nước ngoài đang sinh sống tại Hàn Quốc hoặc người Hàn Quốc có khả năng nói tiếng nước ngoài sẽ giúp bạn cách xem các tài sản tốt, \n" +
-              "cùng nhau suy nghĩ về những điểm cần kiểm tra để giao dịch an toàn, và thậm chí đi cùng bạn để xem các bất động sản. \n" +
-              "Nếu bạn cảm thấy khó khăn trong việc tìm kiếm nhà ở một môi trường xa lạ và muốn giao dịch an toàn, hãy trải nghiệm dịch vụ Buddiz!";
-        }
-        if ((prompt.toLowerCase().includes("buddiz") && prompt.toLowerCase().includes("như thế nào")) || (prompt.toLowerCase().includes("buddiz") && prompt.toLowerCase().includes("mẹo"))) {
-          return "Có một số cách để tìm Buddiz tốt. \n" +
-              "1. Hãy tham khảo thẻ Buddiz phổ biến trên màn hình chính! Những Buddiz có đánh giá cao sẽ được hiển thị trên màn hình chính theo thời gian thực!\n" +
-              "2. Trên thanh điều hướng trên cùng > trang Buddiz, bạn có thể tìm kiếm Buddiz phù hợp với tính cách của mình, Buddiz có xếp hạng cao, hoặc những người đã sống ở Hàn Quốc trong thời gian dài dựa trên tiêu chí bạn muốn!\n" +
-              "Hãy trải nghiệm giao dịch bất động sản an toàn tại NewJips với nhiều Buddiz khác nhau!";
-        }
+
 
   
         const requestOptions = {
@@ -398,11 +401,11 @@
             'Authorization': `Bearer ${this.apiKey}`
           },
           body: JSON.stringify({
-            model: "gpt-3.5-turbo",
+            model: "gpt-4-turbo",
             messages: [
               {
                 "role": "system",
-                "content": "너는 한국 부동산에 관해서 전문가인데, 한국인과 베트남인을 상대로 한국의 부동산 문화에 대해서 설명을 해 줘야하는 상황이야. 베트남어로 질문하면, 베트남어로 친절하게 대답을 해줘. 한국어로 물어보면 한국어로 대답하고, 베트남어로 질문하면 베트남어로 반드시 대답해."
+                "content": "너는 한국 부동산에 관해서 전문가인데, 한국인과 베트남인을 상대로 한국의 부동산 문화에 대해서 설명을 해 줘야하는 상황이야. 베트남어로 질문하면, 베트남어로 친절하게 대답을 해줘. 한국어로 물어보면 한국어로 반드시 대답하고, 베트남어로 질문하면 베트남어로 반드시 대답해. 절대로 한국어로 물어봤을때 베트남어로 말하지마. 베트남어로 말했을때, 한국어로도 말하지마."
               },
               {
                 role: "user",
