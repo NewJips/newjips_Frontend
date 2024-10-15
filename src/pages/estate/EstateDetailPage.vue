@@ -232,7 +232,7 @@
                     "
                   ></span>
                 </button>
-                <button class="report-button">
+                <button class="report-button" @click="goBlame">
                   <span
                     v-text="
                       estateDetail.lan === 'KR' ? '신고하기' : 'Declaration'
@@ -257,7 +257,17 @@ import detailConvenientApi from '@/api/detailConvenientApi';
 import { useAuthStore } from '@/stores/auth';
 import { useRouter } from 'vue-router';
 import { useLikedEstateStore } from '@/stores/likedEstate';
-
+import { useBlameStore } from '@/stores/blame';
+const blameStore = useBlameStore();
+const goBlame = () => {
+  blameStore.blamedId = estateDetail.value.eno;
+  // blameStore.buddizProfile = buddiz.value.profilePic;
+  blameStore.agentNm = estateDetail.value.businessName;
+  blameStore.agentPhone = estateDetail.value.agentContact;
+  blameStore.eno = estateDetail.value.eno;
+  blameStore.estateAddress = estateDetail.value.address;
+  router.replace('/blame/agent');
+};
 const props = defineProps({
   eno: {
     type: Number,
