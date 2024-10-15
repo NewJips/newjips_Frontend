@@ -1,4 +1,4 @@
-import { ref, reactive } from 'vue';
+import { ref, reactive, watch, computed } from 'vue';
 import MarkerClustering from './markerClustering';
 import estateApi from '@/api/estateApi';
 import hotplaceApi from '@/api/hotplaceApi';
@@ -7,6 +7,11 @@ import convenientApi from '@/api/convenientApi';
 import { useMarkerStore } from '@/stores/marker';
 import { useFilterStore } from '@/stores/filter';
 export function useMap(HOME_PATH) {
+  //필터
+  const filterStore = useFilterStore();
+  //로딩
+  const isLoading = ref(false);
+  //마커
   const markers = ref([]);
   const estateMarkers = ref([]);
   const hotplaceMarkers = ref([]);
@@ -21,10 +26,14 @@ export function useMap(HOME_PATH) {
     safety: false,
     convenient: false,
   });
-
+  let markerCluster = null;
+  let estatesLoaded = false;
   // 클러스터링 초기화 함수
   function onLoad(map, markers) {
-    const cluster = new MarkerClustering({
+    if (markerCluster) {
+      markerCluster.clearMarkers();
+    }
+    markerCluster = new MarkerClustering({
       minClusterSize: 3,
       maxZoom: 20,
       map: map,
@@ -47,10 +56,8 @@ export function useMap(HOME_PATH) {
             justifyContent: 'center',
             width: '4rem',
             height: '4rem',
-            backgroundImage: "url('src/assets/icons/cluster-marker.svg')",
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'center',
+            backgroundColor: '#ff5722',
+            borderRadius: '50%',
             cursor: 'pointer',
             color: 'white',
             fontWeight: 'bold',
@@ -62,6 +69,14 @@ export function useMap(HOME_PATH) {
     });
   }
 
+  const updateClustering = () => {
+    if (map && estateMarkers.value.length > 0) {
+      onLoad(
+        map,
+        estateMarkers.value.filter((marker) => marker.getVisible())
+      );
+    }
+  };
   // 전세가 포맷
   const formatPrice = (price, tradetype) => {
     if (tradetype === 'monthly') {
@@ -189,7 +204,7 @@ export function useMap(HOME_PATH) {
       },
     });
 
-    // 필터 버튼 HTML
+    // 토글 버튼 HTML
     var toggleButtonsHtml = `
       <div class="filter-buttons">
         <button class="btn_filter" id="hotplace" >핫플</button>
@@ -227,7 +242,7 @@ export function useMap(HOME_PATH) {
       map.controls[naver.maps.Position.RIGHT_CENTER].push(
         customControl.getElement()
       );
-      // 초기 필터 상태 적용
+      // 초기 토글 상태 적용
       applyInitialToggles();
 
       return map;
@@ -359,14 +374,18 @@ export function useMap(HOME_PATH) {
       .catch((error) => {
         console.error('Error fetching hotplace data:', error);
       });
+    // estate 마커 찍기
 
-    // Estate 마커 찍기
     const loadEstates = () => {
+      if (estatesLoaded) return;
+      isLoading.value = true;
       estateApi
         .getEstateList()
         .then((response) => {
           const estates = response.data;
-
+          const filters = filterStore.filters; // 현재 필터 상태 가져오기
+          estatesLoaded = true;
+          updateClustering();
           estates.forEach((estate) => {
             const position = new naver.maps.LatLng(
               estate.latitude,
@@ -377,11 +396,13 @@ export function useMap(HOME_PATH) {
                 ? estate.monthlyPee
                 : estate.deposit;
 
+            // 필터 조건에 따라 마커의 초기 가시성 결정
+            const isVisible = applyFilters(estate, filters);
+
             const marker = new naver.maps.Marker({
-              map: map,
               position: position,
               title: estate.eno,
-              // animation: naver.maps.Animation.DROP,
+              map: map,
               icon: {
                 content: estateMarker(estate.tradetype, price),
                 size: new naver.maps.Size(24, 37),
@@ -389,9 +410,10 @@ export function useMap(HOME_PATH) {
                 origin: new naver.maps.Point(0, 0),
               },
               zIndex: 100,
+              visible: isVisible,
             });
-
             marker.estateData = estate;
+
             naver.maps.Event.addListener(marker, 'click', () => {
               console.log('Marker clicked:', estate);
               selectedMarker.value = {
@@ -415,19 +437,22 @@ export function useMap(HOME_PATH) {
           });
 
           // 모든 마커 추가 후 클러스터링 초기화
+
           onLoad(map, estateMarkers.value);
         })
         .catch((error) => {
           console.error('Error fetching estate data:', error);
+        })
+        .finally(() => {
+          isLoading.value = false; // 로딩 완료
         });
     };
-
-    // 초기 매물 로드
     loadEstates();
 
     // 지도 idle 이벤트 처리
-    naver.maps.Event.addListener(map, 'idle', async () => {
+    naver.maps.Event.addListener(map, 'idle', () => {
       updateMarkers(map, estateMarkers.value);
+      updateClustering();
     });
 
     return map;
@@ -437,37 +462,43 @@ export function useMap(HOME_PATH) {
     try {
       const response = await estateApi.getEstateByLocation(latitude, longitude);
       const estates = response.data;
-      estateMarkers.value = []; // 기존 마커 초기화
 
       estates.forEach((estate) => {
-        const position = new naver.maps.LatLng(
-          estate.latitude,
-          estate.longitude
-        );
-        const marker = new naver.maps.Marker({
-          map: map,
-          position: position,
-          title: estate.eno,
-          icon: {
-            content: estateMarker(estate.tradetype, estate.deposit),
-            size: new naver.maps.Size(24, 37),
-            anchor: new naver.maps.Point(12, 37),
-          },
-          zIndex: 100,
-        });
+        if (
+          !estateMarkers.value.some(
+            (marker) => marker.estateData.eno === estate.eno
+          )
+        ) {
+          const position = new naver.maps.LatLng(
+            estate.latitude,
+            estate.longitude
+          );
+          const marker = new naver.maps.Marker({
+            position: position,
+            title: estate.eno,
+            icon: {
+              content: estateMarker(estate.tradetype, estate.deposit),
+              size: new naver.maps.Size(24, 37),
+              anchor: new naver.maps.Point(12, 37),
+            },
+            zIndex: 100,
+          });
 
-        marker.estateData = estate;
-        estateMarkers.value.push(marker);
+          marker.estateData = estate;
+          estateMarkers.value.push(marker);
+        }
       });
 
-      return estates; // 매물 리스트 반환
+      estatesLoaded = true;
+      updateClustering();
+      return estates;
     } catch (error) {
       console.error('Error fetching estate data:', error);
       return [];
     }
   };
 
-  // 필터 적용 함수 수정
+  // 토글 적용 함수 수정
   function applyToggle(type, isActive) {
     switch (type) {
       case 'hotplace':
@@ -480,10 +511,10 @@ export function useMap(HOME_PATH) {
         toggleMarkers(convenientMarkers.value, isActive);
         break;
     }
-    console.log(`${type} 필터 ${isActive ? '적용' : '해제'}됨`);
+    console.log(`${type} 토글 ${isActive ? '적용' : '해제'}됨`);
   }
 
-  // 초기 필터 상태 적용 함수
+  // 초기 토글 상태 적용 함수
   function applyInitialToggles() {
     Object.entries(activeToggles.value).forEach(([type, isActive]) => {
       applyToggle(type, isActive);
@@ -507,36 +538,100 @@ export function useMap(HOME_PATH) {
 
     markers.forEach((marker) => {
       const position = marker.getPosition();
-
       if (mapBounds.hasLatLng(position)) {
-        showMarker(map, marker);
+        if (!marker.getMap()) marker.setMap(map);
       } else {
-        hideMarker(marker);
+        if (marker.getMap()) marker.setMap(null);
       }
     });
 
-    console.log('penguin update log');
+    console.log(
+      'Map updated, visible markers:',
+      markers.filter((m) => m.getMap()).length
+    );
   };
 
-  const showMarker = (map, marker) => {
-    if (marker.getMap()) return;
-    marker.setMap(map);
+  const updateMarkersVisibility = () => {
+    const filters = filterStore.filters;
+
+    estateMarkers.value.forEach((marker) => {
+      const estate = marker.estateData;
+      const isVisible = applyFilters(estate, filters);
+      marker.setVisible(isVisible);
+    });
+
+    updateClustering();
   };
 
-  const hideMarker = (marker) => {
-    if (!marker.getMap()) return;
-    marker.setMap(null);
+  const applyFilters = (estate, filters) => {
+    let isVisible = true;
+
+    // 거래유형 필터
+    if (filters.tradetype.charter || filters.tradetype.monthly) {
+      isVisible =
+        (filters.tradetype.charter && estate.tradetype === 'charter') ||
+        (filters.tradetype.monthly && estate.tradetype === 'monthly');
+    }
+
+    // 보증금 필터
+    if (isVisible && estate.deposit !== undefined) {
+      isVisible =
+        estate.deposit >= filters.deposit.min &&
+        estate.deposit <= filters.deposit.max;
+    }
+
+    // 월세 필터 (월세인 경우에만 적용)
+    if (
+      isVisible &&
+      estate.tradetype === 'monthly' &&
+      estate.monthlyPee !== undefined
+    ) {
+      isVisible =
+        estate.monthlyPee >= filters.monthlyPee.min &&
+        estate.monthlyPee <= filters.monthlyPee.max;
+    }
+
+    // 방 크기 필터
+    if (isVisible && estate.roomSize !== undefined) {
+      isVisible =
+        estate.roomSize >= filters.roomSize.min &&
+        estate.roomSize <= filters.roomSize.max;
+    }
+
+    // 층수 필터
+    if (
+      isVisible &&
+      (filters.floor['1층'] ||
+        filters.floor['2층 이상'] ||
+        filters.floor['반지하'])
+    ) {
+      isVisible =
+        (filters.floor['1층'] && estate.floor === 1) ||
+        (filters.floor['2층 이상'] && estate.floor >= 2) ||
+        (filters.floor['반지하'] && estate.floor < 0);
+    }
+
+    // 구조 필터
+    if (isVisible && Object.values(filters.housetype).some((v) => v)) {
+      isVisible = filters.housetype[estate.housetype];
+    }
+
+    return isVisible;
   };
 
+  // 필터 상태 변경 감지
+  watch(() => filterStore.filters, updateMarkersVisibility, { deep: true });
   return {
     initializeMap,
     markers,
     selectedMarker,
     selectedCluster,
     getEstatesByLocation,
-
+    isLoading,
     activeToggles,
-
+    applyFilters,
+    // visibleMarkers,
     map: () => map,
+    updateMarkersVisibility,
   };
 }
