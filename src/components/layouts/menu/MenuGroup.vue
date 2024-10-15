@@ -76,7 +76,7 @@ const stopPolling = () => {
     pollingInterval.value = null;
   }
 };
-
+// 시연시 이 부분 꼭 주석 해제하기
 // 컴포넌트가 마운트되면 폴링을 시작
 // onMounted(() => {
 //   startPolling();

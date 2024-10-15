@@ -294,7 +294,11 @@ const isLiked = computed(() => likedEstateStore.isLiked(props.eno));
 const handleLikeClick = async () => {
   if (!isLogin.value) {
     alert('로그인이 필요한 서비스입니다.');
-    router.push('/auth/login');
+
+    router.push({
+      path: '/auth/login',
+      query: { redirect: router.currentRoute.value.fullPath },
+    });
     return;
   }
 
