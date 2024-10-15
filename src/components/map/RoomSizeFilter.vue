@@ -13,8 +13,8 @@
     <form class="dropdown-menu p-4">
       <PriceSlider
         :slider="{
-          minRange: 0,
-          maxRange: 200,
+          minRange: 10,
+          maxRange: 100,
           step: 5,
           from: filterStore.filters.roomSize.min,
           to: filterStore.filters.roomSize.max,
@@ -31,3 +31,21 @@ import PriceSlider from './PriceSlider.vue';
 
 const filterStore = useFilterStore();
 </script>
+
+<style scoped>
+.dropdown-menu {
+  width: 400px;
+}
+.custom-checkbox {
+  accent-color: #3f54e3;
+
+  width: 1rem;
+  height: 1rem;
+  margin-right: 1rem;
+  margin-top: 1rem;
+}
+
+.custom-label {
+  font-size: 1rem;
+}
+</style>

@@ -25,12 +25,10 @@ export const useFilterStore = defineStore('filter', () => {
       반지하: false,
     },
     housetype: {
-      apartment: false,
       oneRoom: false,
-      officeTel: false,
       twoRoom: false,
-      villa: false,
-      etc: false,
+      threeRoomPlus: false,
+      officeTel: false,
     },
   });
   const setSliderValues = (type, min, max) => {
