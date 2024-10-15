@@ -331,5 +331,11 @@
     "floor_two": "Tầng 2 trở lên",
     "under": "nửa hầm",
     "room_size": "kích thước phòng"
+  },
+  "stations": {
+    "childrens_grand_park": "Children's Grand Park Station",
+    "gangnam": "Gangnam Station",
+    "seongsu": "Seongsu Station",
+    "hongik_university": "Hongik University Station"
   }
 }

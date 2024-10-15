@@ -331,5 +331,11 @@
     "floor_two": "2층 이상",
     "under": "반지하",
     "room_size": "방 크기"
+  },
+  "stations": {
+    "childrens_grand_park": "어린이대공원역",
+    "gangnam": "강남역",
+    "seongsu": "성수역",
+    "hongik_university": "홍대입구역"
   }
 }
