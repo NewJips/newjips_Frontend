@@ -7,7 +7,7 @@
       aria-expanded="false"
       data-bs-auto-close="outside"
     >
-      방 크기
+      {{ t('common.filter.room_size') }}
       <span class="custom-arrow"><i class="fas fa-chevron-down"></i></span>
     </button>
     <form class="dropdown-menu p-4">
@@ -28,6 +28,8 @@
 <script setup>
 import { useFilterStore } from '@/stores/filter';
 import PriceSlider from './PriceSlider.vue';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 
 const filterStore = useFilterStore();
 </script>

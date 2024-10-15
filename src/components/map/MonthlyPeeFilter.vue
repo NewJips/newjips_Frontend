@@ -7,15 +7,15 @@
       aria-expanded="false"
       data-bs-auto-close="outside"
     >
-      층수
+      {{ t('common.filter.floor') }}
       <span class="custom-arrow"><i class="fas fa-chevron-down"></i></span>
     </button>
     <form class="dropdown-menu p-4">
       <div id="check-container">
-        <label class="form-label">층수 선택</label>
+        <label class="form-label">{{ t('common.filter.select_floor') }}</label>
         <div id="boxes">
           <div
-            v-for="(value, key) in filterStore.filters.floor"
+            v-for="(value, key) in floorLabels"
             :key="key"
             class="checkbox-item"
           >
@@ -27,9 +27,7 @@
               @change="handleFloorChange(key)"
               class="custom-checkbox"
             />
-            <label :for="key" class="custom-label">{{
-              getDisplayName(key)
-            }}</label>
+            <label :for="key" class="custom-label">{{ value }}</label>
           </div>
         </div>
       </div>
@@ -39,20 +37,28 @@
 
 <script setup>
 import { useFilterStore } from '@/stores/filter';
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const filterStore = useFilterStore();
 
-const handleFloorChange = (key) => {
-  filterStore.setFloor(key, filterStore.filters.floor[key]);
+const floors = {
+  '1층': 'common.filter.floor_one',
+  '2층 이상': 'common.filter.floor_two',
+  반지하: 'common.filter.under',
 };
 
-const getDisplayName = (key) => {
-  const displayNames = {
-    '1층': '1층',
-    '2층 이상': '2층 이상',
-    반지하: '반지하',
-  };
-  return displayNames[key] || key;
+const floorLabels = computed(() => {
+  return Object.entries(floors).reduce((acc, [key, value]) => {
+    acc[key] = t(value);
+    return acc;
+  }, {});
+});
+
+const handleFloorChange = (key) => {
+  filterStore.setFloor(key, filterStore.filters.floor[key]);
 };
 </script>
 
@@ -62,13 +68,11 @@ const getDisplayName = (key) => {
 }
 .custom-checkbox {
   accent-color: #3f54e3;
-
   width: 1rem;
   height: 1rem;
   margin-right: 1rem;
   margin-top: 1rem;
 }
-
 .custom-label {
   font-size: 1rem;
 }
