@@ -180,10 +180,10 @@ const goToLoanDetail = (loan) => {
 }
 
 .loan-card {
-  background-color: #ff8c00;
+  background-color: rgba(255, 229, 165, 0.85);
   padding: 20px;
   border-radius: 12px;
-  color: white !important;
+  color: #000000 !important;
   text-align: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
@@ -200,7 +200,7 @@ const goToLoanDetail = (loan) => {
 }
 
 .loan-card * {
-  color: white !important;
+  color: #000000 !important;
 }
 
 .loan-card h3 {
@@ -215,8 +215,8 @@ const goToLoanDetail = (loan) => {
 .loan-link-button {
   display: inline-block;
   padding: 8px 16px;
-  background-color: #ff8c00;
-  color: white;
+  background-color: rgba(255, 229, 165, 0.85);
+  color: #000000;
   border-radius: 8px;
   text-align: center;
   text-decoration: none;

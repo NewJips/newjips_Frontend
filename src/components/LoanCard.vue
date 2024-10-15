@@ -23,10 +23,10 @@
 
 <style scoped>
 .loan-card {
-  background-color: #ff8c00;
+  background-color: rgba(255, 229, 165, 0.85);
   padding: 20px;
   border-radius: 12px;
-  color: white;
+  color: #000000;
   text-align: center;
   cursor: pointer;
   display: flex;

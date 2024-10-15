@@ -22,90 +22,103 @@ import { useFilterStore } from '@/stores/filter';
 
 const props = defineProps({
   sliderIndex: Number,
-  slider: Object,
+  slider: {
+    type: Object,
+    required: true,
+    validator: (value) => {
+      return value.minRange !== undefined && value.maxRange !== undefined;
+    },
+  },
+  type: {
+    type: String,
+    required: true,
+    validator: (value) => ['deposit', 'monthlyPee', 'roomSize'].includes(value),
+  },
 });
 
 const filterStore = useFilterStore();
 const sliderSnap = ref(null);
 
 const sliderValues = ref({
-  from: props.slider.from,
-  to: props.slider.to,
+  from: props.slider.from || props.slider.minRange,
+  to: props.slider.to || props.slider.maxRange,
 });
 
-// 단위와 포맷팅 함수
 const formatValue = (value) => {
-  if (props.slider.label === '보증금') {
-    const smallUnit = value % 10000;
-    const bigUnit = Math.floor(value / 10000);
-    if (bigUnit > 0) {
-      // smallUnit이 0이면 '만원'을 생략
-      return smallUnit > 0 ? `${bigUnit}억 ${smallUnit}만원`.trim() : `${bigUnit}억`.trim();
-    }
-    return `${smallUnit}만원`.trim();
+  switch (props.type) {
+    case 'deposit':
+      const billion = Math.floor(value / 10000);
+      const million = value % 10000;
+      if (billion > 0) {
+        return million > 0 ? `${billion}억 ${million}만원` : `${billion}억`;
+      }
+      return `${million}만원`;
+    case 'monthlyPee':
+      return `${value}만원`;
+    case 'roomSize':
+      return `${value}m²`;
+    default:
+      return value;
   }
-  if (props.slider.label === '방 크기') {
-    return `${value}평`;
-  }
-  return `${value}만원`; // 월세의 경우
 };
 
 const formattedFrom = computed(() => formatValue(sliderValues.value.from));
 const formattedTo = computed(() => {
   const baseValue = formatValue(sliderValues.value.to);
-
-  // 보증금 슬라이더일 때만 물결표시 추가
-  if (props.slider.label === '보증금' && sliderValues.value.to >= props.slider.maxRange) {
-    return `${baseValue}~`; // 최대값 도달 시
-  }
-
-  // 월세와 방 크기 슬라이더일 때 최대값 도달 시 최대값과 물결표시 추가
-  if ((props.slider.label === '월세' || props.slider.label === '방 크기') && sliderValues.value.to >= props.slider.maxRange) {
-    return `${baseValue}~`; // 최대값 도달 시
-  }
-
-  return baseValue;
+  return sliderValues.value.to >= props.slider.maxRange
+    ? `${baseValue}~`
+    : baseValue;
 });
 
-// props.slider가 업데이트되면 로컬 상태도 업데이트
 watch(
   () => props.slider,
   (newValue) => {
-    sliderValues.value.from = newValue.from;
-    sliderValues.value.to = newValue.to;
-
-    if (sliderSnap.value) {
-      sliderSnap.value.noUiSlider.set([newValue.from, newValue.to]);
+    if (sliderSnap.value && sliderSnap.value.noUiSlider) {
+      sliderValues.value.from = newValue.from || newValue.minRange;
+      sliderValues.value.to = newValue.to || newValue.maxRange;
+      sliderSnap.value.noUiSlider.updateOptions({
+        range: {
+          min: newValue.minRange,
+          max: newValue.maxRange,
+        },
+      });
+      sliderSnap.value.noUiSlider.set([
+        sliderValues.value.from,
+        sliderValues.value.to,
+      ]);
     }
-  }
+  },
+  { deep: true }
 );
 
 onMounted(() => {
+  if (
+    props.slider.minRange === undefined ||
+    props.slider.maxRange === undefined
+  ) {
+    console.error('Slider min or max range is undefined');
+    return;
+  }
+
   noUiSlider.create(sliderSnap.value, {
     start: [sliderValues.value.from, sliderValues.value.to],
     connect: true,
-    step: props.slider.step,
+    step: props.slider.step || 1,
     range: {
       min: props.slider.minRange,
       max: props.slider.maxRange,
     },
   });
 
-  // 슬라이더 업데이트 시 로컬 상태 및 필터 스토어 업데이트
   sliderSnap.value.noUiSlider.on('update', (values) => {
-    const from = Math.round(values[0]);
-    const to = Math.round(values[1]);
-
-    // 로컬 상태 업데이트
+    const from = Math.round(parseFloat(values[0]));
+    const to = Math.round(parseFloat(values[1]));
     sliderValues.value.from = from;
     sliderValues.value.to = to;
-
-    // 필터 스토어 업데이트
-    filterStore.setSliderValues(props.sliderIndex, from, to);
+    filterStore.setSliderValues(props.type, from, to);
   });
 });
 </script>
-
 <style scoped>
 /*
 * ===================================================
