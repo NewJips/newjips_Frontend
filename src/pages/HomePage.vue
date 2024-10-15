@@ -8,6 +8,17 @@ import FloatingAi from '@/components/FloatingAi.vue';
 import GuideCard from '@/components/GuideCard.vue';
 import { useI18n } from 'vue-i18n';
 import LoanList from '@/components/LoanList.vue'; // Import the LoanList component
+// 핫플레이스 라우터
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const goToMap = (lat, lng) => {
+  router.push({
+    path: '/map',
+    query: { centerLat: lat, centerLng: lng },
+  });
+};
 const { t } = useI18n();
 
 // 인기 버디즈 데이터를 저장할 배열
@@ -515,7 +526,7 @@ if (data === 'monthly') {
       <div class="hotPlace-grid pb-3">
         <!-- 홍대 -->
         <div class="col">
-          <a class="card shadow-sm border-0" href="">
+          <a class="card shadow-sm border-0" @click="goToMap(37.5585, 126.925)">
             <div class="card-img-top card-img-hover" style="height: 27vh">
               <img
                 src="https://i.pinimg.com/564x/66/a2/ab/66a2ab3dc8ed82cd11376c277c74d47c.jpg"
@@ -532,7 +543,10 @@ if (data === 'monthly') {
 
         <!-- 성수 -->
         <div class="col">
-          <a class="card shadow-sm border-0" href="">
+          <a
+            class="card shadow-sm border-0"
+            @click="goToMap(37.5464025531618, 127.044349655211)"
+          >
             <div class="card-img-top card-img-hover" style="height: 27vh">
               <img
                 src="https://mediahub.seoul.go.kr/uploads/mediahub/2023/07/wHQEGwBLgYQBpvjKWCwKdRHPEmBMwLFy.png"
@@ -549,7 +563,10 @@ if (data === 'monthly') {
 
         <!-- 강남 -->
         <div class="col">
-          <a class="card shadow-sm border-0" href="">
+          <a
+            class="card shadow-sm border-0"
+            @click="goToMap(37.4993192768461, 127.033205638158)"
+          >
             <div class="card-img-top card-img-hover" style="height: 27vh">
               <img
                 src="https://i.pinimg.com/564x/b3/e6/58/b3e658c5d2947f52b0b23bd96e0bf5a6.jpg"
@@ -566,7 +583,10 @@ if (data === 'monthly') {
 
         <!-- 건대 -->
         <div class="col">
-          <a class="card shadow-sm border-0" href="">
+          <a
+            class="card shadow-sm border-0"
+            @click="goToMap(37.542859399475, 127.06921649818)"
+          >
             <div class="card-img-top card-img-hover" style="height: 27vh">
               <img
                 src="https://cdn.news.unn.net/news/photo/202111/518970_321294_1325.jpg"

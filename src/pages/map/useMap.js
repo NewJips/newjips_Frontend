@@ -6,7 +6,10 @@ import cctvApi from '@/api/cctvApi';
 import convenientApi from '@/api/convenientApi';
 import { useMarkerStore } from '@/stores/marker';
 import { useFilterStore } from '@/stores/filter';
+import { useRoute } from 'vue-router';
+
 export function useMap(HOME_PATH) {
+  const route = useRoute();
   //필터
   const filterStore = useFilterStore();
   //로딩
@@ -22,7 +25,7 @@ export function useMap(HOME_PATH) {
   let map = null;
 
   const activeToggles = reactive({
-    hotplace: false,
+    hotplace: true,
     safety: false,
     convenient: false,
   });
@@ -189,10 +192,21 @@ export function useMap(HOME_PATH) {
   const cafeMarker = `<img src="../src/assets/icons/cafe.svg" style="width: 24px; height: 24px; margin-right: 10px" />`;
   const bankMarker = `<img src="../src/assets/icons/bank.svg" style="width: 24px; height: 24px; margin-right: 10px" />`;
   const hospitalMarker = `<img src="../src/assets/icons/hospital.svg" style="width: 24px; height: 24px; margin-right: 10px" />`;
+  // 기본값 설정 (쿼리 파라미터가 없을 경우)
+  const defaultLat = 37.54785018;
+  const defaultLng = 127.074454848;
+
+  // 쿼리 파라미터로 받은 값 또는 기본값 사용
+  const centerLat = route.query.centerLat
+    ? parseFloat(route.query.centerLat)
+    : defaultLat;
+  const centerLng = route.query.centerLng
+    ? parseFloat(route.query.centerLng)
+    : defaultLng;
 
   const initializeMap = (mapElement) => {
     const map = new naver.maps.Map(mapElement, {
-      center: new naver.maps.LatLng(37.54785018, 127.074454848),
+      center: new naver.maps.LatLng(centerLat, centerLng),
       zoom: 16,
       scaleControl: true,
       logoControl: false,
@@ -208,8 +222,8 @@ export function useMap(HOME_PATH) {
     var toggleButtonsHtml = `
       <div class="filter-buttons">
         <button class="btn_filter" id="hotplace" >핫플</button>
-        <button class="btn_filter" id="safety" >안전</button>
-        <button class="btn_filter" id="convenient" >편의</button>
+        <button class="btn_filter" id="safety">안전</button>
+        <button class="btn_filter" id="convenient">편의</button>
       </div>`;
 
     // 맵이 초기화되면 버튼 추가
@@ -516,8 +530,15 @@ export function useMap(HOME_PATH) {
 
   // 초기 토글 상태 적용 함수
   function applyInitialToggles() {
-    Object.entries(activeToggles.value).forEach(([type, isActive]) => {
+    Object.entries(activeToggles).forEach(([type, isActive]) => {
       applyToggle(type, isActive);
+
+      // 버튼 요소를 찾아 클래스를 업데이트합니다.
+      const button = document.getElementById(type);
+      if (button) {
+        button.classList.toggle('active', isActive);
+        button.dataset.active = isActive.toString();
+      }
     });
   }
 
@@ -613,7 +634,23 @@ export function useMap(HOME_PATH) {
 
     // 구조 필터
     if (isVisible && Object.values(filters.housetype).some((v) => v)) {
-      isVisible = filters.housetype[estate.housetype];
+      if (filters.housetype.oneRoom && estate.housetype === 'oneRoom') {
+        isVisible = true;
+      } else if (filters.housetype.twoRoom && estate.housetype === 'twoRoom') {
+        isVisible = true;
+      } else if (
+        filters.housetype.threeRoomPlus &&
+        ['villa', 'apartment', 'etc'].includes(estate.housetype)
+      ) {
+        isVisible = true;
+      } else if (
+        filters.housetype.officeTel &&
+        estate.housetype === 'officeTel'
+      ) {
+        isVisible = true;
+      } else {
+        isVisible = false;
+      }
     }
 
     return isVisible;
