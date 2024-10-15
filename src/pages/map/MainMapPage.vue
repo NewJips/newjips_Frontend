@@ -1,9 +1,14 @@
 <template>
   <div class="filter-container">
-    <TradeTypeFilter />
-    <DepositFilter />
-    <MonthlyPeeFilter />
-    <RoomSizeFilter />
+    <div style="display: flex; flex-direction: row; gap: 1rem">
+      <TradeTypeFilter />
+      <DepositFilter />
+      <MonthlyPeeFilter />
+      <RoomSizeFilter />
+    </div>
+    <div>
+      <ResetFilterButton />
+    </div>
   </div>
   <div class="container">
     <div class="detail-container scrollbar">
@@ -34,9 +39,12 @@ import TradeTypeFilter from '@/components/map/TradeTypeFilter.vue';
 import DepositFilter from '@/components/map/DepositFilter.vue';
 import MonthlyPeeFilter from '@/components/map/MonthlyPeeFilter.vue';
 import RoomSizeFilter from '@/components/map/RoomSizeFilter.vue';
+import ResetFilterButton from '@/components/map/ResetFilterButton.vue';
 import BriefDetailEstate from '@/components/map/BriefDetailEstate.vue';
 import { useMap } from './useMap';
 import { onMounted, ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 
 const filterStore = useFilterStore();
 const estateList = ref([]);
@@ -112,6 +120,7 @@ watch(selectedMarker, (newValue) => {
 }
 .filter-container {
   display: flex;
+  justify-content: space-between;
   width: 100%;
   gap: 15px;
   border-bottom: 1px solid #8f9bb3;

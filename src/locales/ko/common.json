@@ -311,5 +311,15 @@
   "errors": {
     "fetch_failed": "데이터를 불러오는데 실패했습니다.",
     "submit_failed": "제출하는데 실패했습니다."
+  },
+  "filter": {
+    "reset": "필터 초기화",
+    "tradeandprice": "거래유형 및 가격",
+    "tradetype": "거래유형",
+    "deposit": "보증금",
+    "monthly": "월세",
+    "structure": "구조",
+    "select_structure": "구조 선택",
+    "charter": "전세"
   }
 }

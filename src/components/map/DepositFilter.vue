@@ -7,12 +7,14 @@
       aria-expanded="false"
       data-bs-auto-close="outside"
     >
-      구조
+      {{ t('common.filter.structure') }}
       <span class="custom-arrow"><i class="fas fa-chevron-down"></i></span>
     </button>
     <form class="dropdown-menu p-4">
       <div id="check-container">
-        <label class="form-label">구조 선택</label>
+        <label class="form-label">{{
+          t('common.filter.select_structure')
+        }}</label>
         <div id="boxes">
           <div
             v-for="(value, key) in structures"
@@ -38,14 +40,16 @@
 <script setup>
 import { useFilterStore } from '@/stores/filter';
 import { reactive } from 'vue';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 
 const filterStore = useFilterStore();
 
 const structures = reactive({
-  oneRoom: '원룸',
-  twoRoom: '투룸',
-  threeRoomPlus: '쓰리룸 이상',
-  officeTel: '오피스텔',
+  oneRoom: t('common.filter.one'),
+  twoRoom: t('common.filter.two'),
+  threeRoomPlus: t('common.filter.three'),
+  officeTel: t('common.filter.office_tel'),
 });
 
 const handleStructureChange = (key) => {

@@ -311,5 +311,19 @@
       "name": "Cho vay ký quỹ nhà ở cho người nước ngoài KB",
       "subtitle": "Cho vay ký quỹ nhà cho người nước ngoài"
     }
+  },
+  "filter": {
+    "reset": "Đặt lại bộ lọc",
+    "tradeandprice": "Loại giao dịch và giá cả",
+    "tradetype": "Loại giao dịch",
+    "deposit": "bảo vệ",
+    "monthly": "tiền thuê hàng tháng",
+    "structure": "kết cấu",
+    "select_structure": "Lựa chọn cấu trúc",
+    "charter": "điều lệ",
+    "one": "Một phòng",
+    "two": "hai phòng",
+    "three": "3 phòng trở lên",
+    "office_tel": "Officetel"
   }
 }

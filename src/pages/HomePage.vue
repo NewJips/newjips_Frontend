@@ -12,6 +12,7 @@ import LoanList from '@/components/LoanList.vue'; // Import the LoanList compone
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
+const enoList = [537, 536, 606, 538];
 
 const goToMap = (lat, lng) => {
   router.push({
@@ -19,6 +20,12 @@ const goToMap = (lat, lng) => {
     query: { centerLat: lat, centerLng: lng },
   });
 };
+// 상세 페이지로 이동하는 함수
+const goToEstateDetail = (index) => {
+  const eno = enoList[index] || 0;
+  router.push(`/estate/${eno}`);
+};
+
 const { t } = useI18n();
 
 // 인기 버디즈 데이터를 저장할 배열
@@ -328,7 +335,6 @@ if (data === 'monthly') {
       </div>
     </div>
 
-    <!-- 인기 매물 -->
     <div class="ms-5 me-5 mb-5">
       <h4 class="head-title">{{ t('common.home.popular_estates') }}</h4>
       <div class="d-flex mb-4">
@@ -336,23 +342,24 @@ if (data === 'monthly') {
           t('common.home.popular_estates_explain')
         }}</span>
         <span class="position-absolute end-0 me-5">
-          <router-link class="btn-more text-muted" to="/map">{{
-            t('common.home.plusbtn')
-          }}</router-link>
+          <router-link class="btn-more text-muted" to="/map">
+            {{ t('common.home.plusbtn') }}
+          </router-link>
         </span>
       </div>
-
+      <!-- 인기 매물 -->
       <div>
         <div class="row gx-4 mx-0 pb-3" v-if="popularEstates.length">
-          <!-- 부동산 항목 렌더링 -->
           <div
             v-for="(estate, index) in popularEstates"
             :key="index"
             class="col"
           >
-            <div class="card shadow-sm card-hover border-0 h-100">
+            <div
+              class="card shadow-sm card-hover border-0 h-100"
+              @click="goToEstateDetail(index)"
+            >
               <div class="card-img-top card-img-hover">
-                <a class="img-overlay" href="real-estate-single-v1.html"></a>
                 <div class="position-absolute start-0 top-0 pt-3 ps-3">
                   <span class="d-table badge bg-danger">HOT</span>
                 </div>
@@ -383,16 +390,16 @@ if (data === 'monthly') {
                   {{ t('common.wish.charter') }}
                 </h4>
                 <h3 class="h6 mb-2 fs-base">
-                  <a
-                    class="nav-link stretched-link"
-                    href="real-estate-single-v1.html"
+                  <a class="nav-link stretched-link"
                     >{{ estate.address }} | {{ estate.roomSize }}㎡</a
                   >
                 </h3>
                 <p class="mb-2 fs-sm text-muted">{{ estate.address }}</p>
                 <div class="fw-bold">
-                  <i class="fi-cash mt-n1 me-2 lead align-middle opacity-70"></i
-                  >{{ estate.deposit }} / {{ estate.monthlyPee }}
+                  <i
+                    class="fi-cash mt-n1 me-2 lead align-middle opacity-70"
+                  ></i>
+                  {{ estate.deposit }} / {{ estate.monthlyPee }}
                 </div>
               </div>
             </div>
