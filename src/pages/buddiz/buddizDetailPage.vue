@@ -330,6 +330,15 @@ const submit = async () => {
 
 const wishSubmit = async () => {
   try {
+    if (!isLogin.value) {
+      alert('로그인이 필요한 서비스입니다.');
+      // 현재 페이지 경로를 쿼리 파라미터로 넘기기
+      router.push({
+        path: '/auth/login',
+        query: { redirect: router.currentRoute.value.fullPath },
+      });
+      return;
+    }
     await buddizApi.reviewWish(uno);
     isLiked.value = !isLiked.value; // Toggle the like state
   } catch (error) {

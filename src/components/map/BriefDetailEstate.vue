@@ -25,7 +25,7 @@
             : formatDeposit(estateData.deposit)
         }}
       </p>
-      <p>{{ estateData.housetype === 'villa' ? '빌라' : '오피스텔' }}</p>
+      <p>{{ translateHouseType(estateData.housetype, estateData.lan) }}</p>
       <p>{{ estateData.floor }}층, {{ estateData.roomSize }}㎡,</p>
       <p>{{ estateData.distToSub }}</p>
     </div>
@@ -55,7 +55,25 @@ const isLogin = computed(() => authStore.isLogin);
 const goToDetail = (eno) => {
   router.push({ name: 'estate', params: { eno } });
 };
+const translateHouseType = (housetype, lan) => {
+  const housetypeMapping = {
+    oneRoom: { KR: '원룸', VN: 'One Room' },
+    twoRoom: { KR: '투룸', VN: 'Two Room' },
+    officeTel: { KR: '오피스텔', VN: 'Officetel' },
+    etc: { KR: '기타', VN: 'etc' },
+    villa: { KR: '빌라', VN: 'Villa' },
+    apartment: { KR: '아파트', VN: 'Apartment' },
+  };
 
+  // housetype이 유효한지 확인
+  if (!housetypeMapping[housetype]) {
+    console.warn(`Unknown housetype: ${housetype}`);
+    return housetypeMapping['etc'][lan]; // 기본값은 '기타'로 설정
+  }
+
+  // 해당 housetype에 맞는 언어 값 반환
+  return housetypeMapping[housetype][lan] || housetypeMapping[housetype]['KR']; // 기본값은 한국어
+};
 const formatDeposit = (deposit) => {
   const billion = Math.floor(deposit / 10000); // 억 단위
   const thousand = Math.floor((deposit % 10000) / 1000); // 천 단위 정수로 변환

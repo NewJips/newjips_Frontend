@@ -18,6 +18,13 @@
         :estateData="selectedMarker"
       />
       <div v-else>
+        <div v-if="isListLoading">
+          <div
+            v-for="index in estateList.length"
+            :key="index"
+            class="loader"
+          ></div>
+        </div>
         <BriefDetailEstate
           v-for="estate in estateList"
           :key="estate.eno"
@@ -28,7 +35,11 @@
     </div>
     <div id="map" ref="mapElement" class="map-container"></div>
     <div v-if="isLoading" class="loading-overlay">
-      <div class="lds-heart"><div></div></div>
+      <img
+        src="@/assets/icons/newjeans-spinner.svg"
+        alt="Loading"
+        class="rotate-center"
+      />
     </div>
   </div>
 </template>
@@ -60,6 +71,7 @@ const {
   getEstatesByLocation,
   getConvenientFacilities,
   isLoading,
+  isListLoading,
 
   updateMarkersVisibility,
 } = useMap();
@@ -151,65 +163,73 @@ watch(selectedMarker, (newValue) => {
   align-items: center;
   z-index: 1000;
 }
+.rotate-center {
+  -webkit-animation: rotate-center 2s ease-in-out infinite both;
+  animation: rotate-center 2s ease-in-out infinite both;
 
-.lds-heart,
-.lds-heart div,
-.lds-heart div:after,
-.lds-heart div:before {
-  box-sizing: border-box;
+  width: 300px;
+  height: 300px;
 }
-.lds-heart {
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
-  transform: rotate(45deg);
-  transform-origin: 40px 40px;
-}
-.lds-heart div {
-  top: 28px;
-  left: 28px;
-  position: absolute;
-  width: 32px;
-  height: 32px;
-  background: #ff8f17;
-  animation: lds-heart 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
-}
-.lds-heart div:after,
-.lds-heart div:before {
-  content: ' ';
-  position: absolute;
-  display: block;
-  width: 32px;
-  height: 32px;
-  background: #ff8f17;
-}
-.lds-heart div:before {
-  left: -24px;
-  border-radius: 50% 0 0 50%;
-}
-.lds-heart div:after {
-  top: -24px;
-  border-radius: 50% 50% 0 0;
-}
-@keyframes lds-heart {
+@-webkit-keyframes rotate-center {
   0% {
-    transform: scale(0.95);
-  }
-  5% {
-    transform: scale(1.1);
-  }
-  39% {
-    transform: scale(0.85);
-  }
-  45% {
-    transform: scale(1);
-  }
-  60% {
-    transform: scale(0.95);
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
   }
   100% {
-    transform: scale(0.9);
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotate-center {
+  0% {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.loader {
+  width: 320px;
+  height: 150px;
+  margin: auto;
+  display: block;
+  position: relative;
+  background: #fff;
+  box-sizing: border-box;
+}
+.loader::after {
+  content: '';
+  width: calc(100% - 30px);
+  height: calc(100% - 30px);
+  top: 15px;
+  left: 15px;
+  position: absolute;
+  background-image: linear-gradient(
+      100deg,
+      transparent,
+      rgba(255, 255, 255, 0.5) 50%,
+      transparent 80%
+    ),
+    linear-gradient(#ddd 56px, transparent 0),
+    linear-gradient(#ddd 24px, transparent 0),
+    linear-gradient(#ddd 18px, transparent 0),
+    linear-gradient(#ddd 66px, transparent 0);
+  background-repeat: no-repeat;
+  background-size: 75px 130px, 55px 56px, 160px 30px, 260px 20px, 290px 56px;
+  background-position: 0% 0, 0 0, 70px 5px, 70px 38px, 0px 66px;
+  box-sizing: border-box;
+  animation: animloader 1s linear infinite;
+}
+
+@keyframes animloader {
+  0% {
+    background-position: 0% 0, 0 0, 70px 5px, 70px 38px, 0px 66px;
+  }
+  100% {
+    background-position: 150% 0, 0 0, 70px 5px, 70px 38px, 0px 66px;
   }
 }
 </style>
