@@ -78,14 +78,14 @@ const stopPolling = () => {
 };
 // 시연시 이 부분 꼭 주석 해제하기
 // 컴포넌트가 마운트되면 폴링을 시작
-// onMounted(() => {
-//   startPolling();
-// });
+onMounted(() => {
+  startPolling();
+});
 
-// // 컴포넌트가 언마운트될 때 폴링을 중단
-// onBeforeUnmount(() => {
-//   stopPolling();
-// });
+// 컴포넌트가 언마운트될 때 폴링을 중단
+onBeforeUnmount(() => {
+  stopPolling();
+});
 </script>
 
 <template>
