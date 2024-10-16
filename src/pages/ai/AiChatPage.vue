@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="ms-3">
-                  <div class="flex" style="margin-right: 65.2vh;" @click="sendBtnMessage(0)">
+                  <div class="flex" style="margin-right: 65.2vh; width: 49vh;" @click="sendBtnMessage(0)">
                     <div class="card mt-2 rounded-top-md-left-0" style="background-color: #FF8F18; border: none; cursor: pointer;">
                       <div class="card-body p-3" >
                         <h6 class="mb-0" style="text-align: center; color: white; font-weight: 600; letter-spacing: 2px;">
@@ -41,7 +41,7 @@
                 </div>
 
                 <div class="ms-3">
-                  <div class="flex" style="margin-right: 65.2vh;" @click="sendBtnMessage(1)">
+                  <div class="flex" style="margin-right: 65.2vh; width : 49vh;" @click="sendBtnMessage(1)">
                     <div class="card mt-2 rounded-top-md-left-0" style="background-color: #FF8F18; border: none; cursor: pointer;">
                       <div class="card-body p-3">
                         <h6 class="mb-0" style="text-align: center; color: white; font-weight: 600; letter-spacing: 2px;">
